@@ -6,8 +6,6 @@
 //  Copyright © 2018 Bofei Zhu. All rights reserved.
 //
 
-import Foundation
-
 /// Used to track data stats while diffing.
 struct ListEntry {
      /// The number of times the data occurs in the old array
