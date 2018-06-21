@@ -10,6 +10,7 @@
 		828DF97B20DC550700C03E36 /* ListKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 828DF97120DC550700C03E36 /* ListKit.framework */; };
 		828DF98020DC550700C03E36 /* ListKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828DF97F20DC550700C03E36 /* ListKitTests.swift */; };
 		828DF98220DC550700C03E36 /* ListKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 828DF97420DC550700C03E36 /* ListKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		828DF98E20DC587D00C03E36 /* ListDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828DF98D20DC587D00C03E36 /* ListDiff.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +30,7 @@
 		828DF97A20DC550700C03E36 /* ListKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ListKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		828DF97F20DC550700C03E36 /* ListKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListKitTests.swift; sourceTree = "<group>"; };
 		828DF98120DC550700C03E36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		828DF98D20DC587D00C03E36 /* ListDiff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDiff.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,7 +55,7 @@
 		828DF96720DC550700C03E36 = {
 			isa = PBXGroup;
 			children = (
-				828DF97320DC550700C03E36 /* ListKit */,
+				828DF97320DC550700C03E36 /* Source */,
 				828DF97E20DC550700C03E36 /* ListKitTests */,
 				828DF97220DC550700C03E36 /* Products */,
 			);
@@ -68,13 +70,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		828DF97320DC550700C03E36 /* ListKit */ = {
+		828DF97320DC550700C03E36 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				828DF98C20DC563200C03E36 /* Common */,
 				828DF97420DC550700C03E36 /* ListKit.h */,
 				828DF97520DC550700C03E36 /* Info.plist */,
 			);
-			path = ListKit;
+			path = Source;
 			sourceTree = "<group>";
 		};
 		828DF97E20DC550700C03E36 /* ListKitTests */ = {
@@ -84,6 +87,14 @@
 				828DF98120DC550700C03E36 /* Info.plist */,
 			);
 			path = ListKitTests;
+			sourceTree = "<group>";
+		};
+		828DF98C20DC563200C03E36 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				828DF98D20DC587D00C03E36 /* ListDiff.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -148,6 +159,7 @@
 				TargetAttributes = {
 					828DF97020DC550700C03E36 = {
 						CreatedOnToolsVersion = 9.4;
+						LastSwiftMigration = 0940;
 					};
 					828DF97920DC550700C03E36 = {
 						CreatedOnToolsVersion = 9.4;
@@ -194,6 +206,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				828DF98E20DC587D00C03E36 /* ListDiff.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,6 +352,7 @@
 		828DF98620DC550700C03E36 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -348,6 +362,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = ListKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -356,6 +371,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhubofei.ListKit;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -364,6 +380,7 @@
 		828DF98720DC550700C03E36 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -373,6 +390,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = ListKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -389,6 +407,7 @@
 		828DF98920DC550700C03E36 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 89L63C4YK8;
 				INFOPLIST_FILE = ListKitTests/Info.plist;
@@ -407,6 +426,7 @@
 		828DF98A20DC550700C03E36 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 89L63C4YK8;
 				INFOPLIST_FILE = ListKitTests/Info.plist;
