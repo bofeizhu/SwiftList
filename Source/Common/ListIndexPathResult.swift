@@ -65,7 +65,7 @@ class ListIndexPathResult {
      - Parameters:
         - identifier: The diff identifier of the object.
      
-     - Returns: An optional index path of the object before the diff.
+     - Returns: The optional index path of the object before the diff.
          - See: `ListDiffable.diffIdentifier`.
      */
     func oldIndexPathForIdentifier(identifier: AnyHashable) -> IndexPath? {
@@ -77,7 +77,7 @@ class ListIndexPathResult {
      - Parameters:
         - identifier: The diff identifier of the object.
      
-     - Returns: The index path of the object after the diff, or `nil`.
+     - Returns: The optional index path of the object after the diff.
         - See: `ListDiffable.diffIdentifier`.
      */
     func newIndexPathForIdentifier(identifier: AnyHashable) -> IndexPath? {

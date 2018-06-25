@@ -15,6 +15,7 @@
 		82C6B9FF20E00BFE0085B85A /* ListIndexPathResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C6B9FE20E00BFE0085B85A /* ListIndexPathResult.swift */; };
 		82C6BA0120E010CA0085B85A /* ListMoveIndexPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C6BA0020E010CA0085B85A /* ListMoveIndexPath.swift */; };
 		82F9732F20E0552D00F7D50E /* ListMoveIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F9732E20E0552D00F7D50E /* ListMoveIndex.swift */; };
+		82F9733120E12F8000F7D50E /* ListIndexSetResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F9733020E12F8000F7D50E /* ListIndexSetResult.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +40,7 @@
 		82C6B9FE20E00BFE0085B85A /* ListIndexPathResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListIndexPathResult.swift; sourceTree = "<group>"; };
 		82C6BA0020E010CA0085B85A /* ListMoveIndexPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListMoveIndexPath.swift; sourceTree = "<group>"; };
 		82F9732E20E0552D00F7D50E /* ListMoveIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListMoveIndex.swift; sourceTree = "<group>"; };
+		82F9733020E12F8000F7D50E /* ListIndexSetResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListIndexSetResult.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 				828DF98D20DC587D00C03E36 /* ListDiff.swift */,
 				828DF98F20DC668E00C03E36 /* ListDiffable.swift */,
 				82C6B9FE20E00BFE0085B85A /* ListIndexPathResult.swift */,
+				82F9733020E12F8000F7D50E /* ListIndexSetResult.swift */,
 				82C6BA0020E010CA0085B85A /* ListMoveIndexPath.swift */,
 				82F9732E20E0552D00F7D50E /* ListMoveIndex.swift */,
 			);
@@ -222,6 +225,7 @@
 				828DF98E20DC587D00C03E36 /* ListDiff.swift in Sources */,
 				82C6BA0120E010CA0085B85A /* ListMoveIndexPath.swift in Sources */,
 				82C6B9FF20E00BFE0085B85A /* ListIndexPathResult.swift in Sources */,
+				82F9733120E12F8000F7D50E /* ListIndexSetResult.swift in Sources */,
 				82F9732F20E0552D00F7D50E /* ListMoveIndex.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
