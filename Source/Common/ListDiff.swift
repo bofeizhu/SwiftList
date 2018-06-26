@@ -11,9 +11,9 @@
  */
 enum ListDiffOption {
     /**
-     Compare objects using pointer personality.
+     Compare objects using personality.
      */
-    case ListDiffPointerPersonality
+    case ListDiffPersonality
     
     /**
      Compare objects using `ListDiffable.isEqualToDiffableObject()`.
@@ -156,6 +156,45 @@ fileprivate func ListDiffing(returnIndexPaths: Bool, fromSection: Int, toSection
     // record the original index of the item in the old array
     // MUST be done in descending order to respect the oldIndexes stack construction
     var oldResultsArray = Array(repeating: ListRecord(), count: oldCount)
+    for i in stride(from: oldCount - 1, through: 0, by: -1) {
+        let key = oldArray[i].diffIndentifier
+        var entry: ListEntry
+        if let tableEntry = table[key] {
+            entry = tableEntry
+        } else {
+            entry = ListEntry()
+            table[key] = entry
+        }
+        entry.oldCounter += 1
+        
+        // push the original indices where the item occurred onto the index stack
+        entry.oldIndexes.append(i);
+        oldResultsArray[i].entry = entry
+    }
+    
+    // pass 3
+    // handle data that occurs in both arrays
+    for i in 0..<newCount {
+        if let entry = newResultsArray[i].entry {
+            assert(!entry.oldIndexes.isEmpty, "Old indexes is empty while iterating new item \(i). Should have nil")
+            if let top = entry.oldIndexes.popLast(),
+                let originalIndex = top {
+                // originalIndex is not nil
+                if originalIndex < oldCount {
+                    let n = newArray[i]
+                    let o = oldArray[originalIndex]
+                    switch option {
+                    case .ListDiffPersonality:
+                        if n === o {
+                            
+                        }
+                    case .ListDiffEquality:
+                        <#code#>
+                    }
+                }
+            }
+        }
+    }
 }
 
 
