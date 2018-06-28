@@ -6,17 +6,13 @@
 //  Copyright © 2018 Bofei Zhu. All rights reserved.
 //
 
-/**
- An option for how to do comparisons between similar objects.
- */
 enum ListDiffOption {
     /**
-     Compare objects using personality.
+     Compare objects using `ObjectIdentifier`.
      */
-    case ListDiffPersonality
-    
+    case ListDiffObjectIdentifier
     /**
-     Compare objects using `ListDiffable.isEqualToDiffableObject()`.
+     Compare objects using `hashValue`.
      */
     case ListDiffEquality
 }
@@ -39,43 +35,43 @@ fileprivate class ListRecord {
     var index: Int?
 }
 
-fileprivate extension Dictionary where Key == AnyHashable, Value == Any {
-    mutating func addIndex(useIndexPath: Bool, section: Int, index: Int, object: ListDiffable) {
+fileprivate extension Dictionary where Key == AnyListDiffable, Value == Any {
+    mutating func addIndex(useIndexPath: Bool, section: Int, index: Int, object: AnyListDiffable) {
         var value: Any
         if useIndexPath {
             value = IndexPath(item: index, section: section)
         } else {
             value = index
         }
-        self[object.diffIndentifier] = value
+        self[object] = value
     }
     
-    mutating func indexPathsAndPopulateMap(array: [ListDiffable], section: Int) -> [IndexPath] {
+    mutating func indexPathsAndPopulateMap(array: [AnyListDiffable], section: Int) -> [IndexPath] {
         var paths: [IndexPath] = []
         for (idx, obj) in array.enumerated() {
             let path = IndexPath(item: idx, section: section)
             paths.append(path)
-            self[obj.diffIndentifier] = paths
+            self[obj] = paths
         }
         return paths
     }
 }
 
 fileprivate func ListDiffing(returnIndexPaths: Bool, fromSection: Int, toSection: Int,
-                             oldArray: [ListDiffable], newArray: [ListDiffable],
+                             oldArray: [AnyListDiffable], newArray: [AnyListDiffable],
                              option: ListDiffOption, experiments: ListExperiment) -> Any {
     let newCount = newArray.count
     let oldCount = oldArray.count
     
-    var oldDict: [AnyHashable: Any] = [:]
-    var newDict: [AnyHashable: Any] = [:]
+    var oldDict: [AnyListDiffable: Any] = [:]
+    var newDict: [AnyListDiffable: Any] = [:]
     
     // if no new objects, everything from the oldArray is deleted
     // take a shortcut and just build a delete-everything result
     if newCount == 0 {
         if returnIndexPaths {
-            guard let oldIndexPathDict = oldDict as? [AnyHashable : IndexPath],
-                let newIndexPathDict = newDict as? [AnyHashable : IndexPath] else {
+            guard let oldIndexPathDict = oldDict as? [AnyListDiffable : IndexPath],
+                let newIndexPathDict = newDict as? [AnyListDiffable : IndexPath] else {
                     preconditionFailure("Cannot downcast dictionary to dictionary of IndexPath")
             }
             return ListIndexPathResult(inserts: [],
@@ -84,8 +80,8 @@ fileprivate func ListDiffing(returnIndexPaths: Bool, fromSection: Int, toSection
                                        oldIndexPathDict: oldIndexPathDict,
                                        newIndexPathDict: newIndexPathDict)
         } else {
-            guard let oldIndexDict = oldDict as? [AnyHashable : Int],
-                let newIndexDict = newDict as? [AnyHashable : Int] else {
+            guard let oldIndexDict = oldDict as? [AnyListDiffable : Int],
+                let newIndexDict = newDict as? [AnyListDiffable : Int] else {
                     preconditionFailure("Cannot downcast dictionary to dictionary of Int")
             }
             for (idx, obj) in oldArray.enumerated() {
@@ -103,8 +99,8 @@ fileprivate func ListDiffing(returnIndexPaths: Bool, fromSection: Int, toSection
     // take a shortcut and just build an insert-everything result
     if oldCount == 0 {
         if returnIndexPaths {
-            guard let oldIndexPathDict = oldDict as? [AnyHashable : IndexPath],
-                let newIndexPathDict = newDict as? [AnyHashable : IndexPath] else {
+            guard let oldIndexPathDict = oldDict as? [AnyListDiffable : IndexPath],
+                let newIndexPathDict = newDict as? [AnyListDiffable : IndexPath] else {
                     preconditionFailure("Cannot downcast dictionary to dictionary of IndexPath")
             }
             return ListIndexPathResult(inserts: newDict.indexPathsAndPopulateMap(array: newArray, section: toSection),
@@ -112,8 +108,8 @@ fileprivate func ListDiffing(returnIndexPaths: Bool, fromSection: Int, toSection
                                        oldIndexPathDict: oldIndexPathDict,
                                        newIndexPathDict: newIndexPathDict)
         } else {
-            guard let oldIndexDict = oldDict as? [AnyHashable : Int],
-                let newIndexDict = newDict as? [AnyHashable : Int] else {
+            guard let oldIndexDict = oldDict as? [AnyListDiffable : Int],
+                let newIndexDict = newDict as? [AnyListDiffable : Int] else {
                     preconditionFailure("Cannot downcast dictionary to dictionary of Int")
             }
             for (idx, obj) in newArray.enumerated() {
@@ -128,14 +124,14 @@ fileprivate func ListDiffing(returnIndexPaths: Bool, fromSection: Int, toSection
     }
     
     // symbol table uses the old/new array diffIdentifier as the key and IGListEntry as the value
-    var table: [AnyHashable: ListEntry] = [:]
+    var table: [AnyListDiffable: ListEntry] = [:]
     
     // pass 1
     // create an entry for every item in the new array
     // increment its new count for each occurence
     var newResultsArray = Array(repeating: ListRecord(), count: newCount)
     for i in 0..<newCount {
-        let key = newArray[i].diffIndentifier
+        let key = newArray[i]
         var entry: ListEntry
         if let tableEntry = table[key] {
             entry = tableEntry
@@ -157,7 +153,7 @@ fileprivate func ListDiffing(returnIndexPaths: Bool, fromSection: Int, toSection
     // MUST be done in descending order to respect the oldIndexes stack construction
     var oldResultsArray = Array(repeating: ListRecord(), count: oldCount)
     for i in stride(from: oldCount - 1, through: 0, by: -1) {
-        let key = oldArray[i].diffIndentifier
+        let key = oldArray[i]
         var entry: ListEntry
         if let tableEntry = table[key] {
             entry = tableEntry
@@ -183,14 +179,6 @@ fileprivate func ListDiffing(returnIndexPaths: Bool, fromSection: Int, toSection
                 if originalIndex < oldCount {
                     let n = newArray[i]
                     let o = oldArray[originalIndex]
-                    switch option {
-                    case .ListDiffPersonality:
-                        if n === o {
-                            
-                        }
-                    case .ListDiffEquality:
-                        <#code#>
-                    }
                 }
             }
         }

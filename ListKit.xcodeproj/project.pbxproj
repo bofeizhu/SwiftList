@@ -11,12 +11,12 @@
 		828DF98020DC550700C03E36 /* ListKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828DF97F20DC550700C03E36 /* ListKitTests.swift */; };
 		828DF98220DC550700C03E36 /* ListKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 828DF97420DC550700C03E36 /* ListKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		828DF98E20DC587D00C03E36 /* ListDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828DF98D20DC587D00C03E36 /* ListDiff.swift */; };
-		828DF99020DC668E00C03E36 /* ListDiffable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828DF98F20DC668E00C03E36 /* ListDiffable.swift */; };
 		82C6B9FF20E00BFE0085B85A /* ListIndexPathResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C6B9FE20E00BFE0085B85A /* ListIndexPathResult.swift */; };
 		82C6BA0120E010CA0085B85A /* ListMoveIndexPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C6BA0020E010CA0085B85A /* ListMoveIndexPath.swift */; };
 		82F9732F20E0552D00F7D50E /* ListMoveIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F9732E20E0552D00F7D50E /* ListMoveIndex.swift */; };
 		82F9733120E12F8000F7D50E /* ListIndexSetResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F9733020E12F8000F7D50E /* ListIndexSetResult.swift */; };
 		82F9733320E1853800F7D50E /* ListExperiments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F9733220E1853800F7D50E /* ListExperiments.swift */; };
+		82F9733520E4017C00F7D50E /* ListDiffable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F9733420E4017C00F7D50E /* ListDiffable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,12 +37,12 @@
 		828DF97F20DC550700C03E36 /* ListKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListKitTests.swift; sourceTree = "<group>"; };
 		828DF98120DC550700C03E36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		828DF98D20DC587D00C03E36 /* ListDiff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDiff.swift; sourceTree = "<group>"; };
-		828DF98F20DC668E00C03E36 /* ListDiffable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDiffable.swift; sourceTree = "<group>"; };
 		82C6B9FE20E00BFE0085B85A /* ListIndexPathResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListIndexPathResult.swift; sourceTree = "<group>"; };
 		82C6BA0020E010CA0085B85A /* ListMoveIndexPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListMoveIndexPath.swift; sourceTree = "<group>"; };
 		82F9732E20E0552D00F7D50E /* ListMoveIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListMoveIndex.swift; sourceTree = "<group>"; };
 		82F9733020E12F8000F7D50E /* ListIndexSetResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListIndexSetResult.swift; sourceTree = "<group>"; };
 		82F9733220E1853800F7D50E /* ListExperiments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListExperiments.swift; sourceTree = "<group>"; };
+		82F9733420E4017C00F7D50E /* ListDiffable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDiffable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,7 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				828DF98D20DC587D00C03E36 /* ListDiff.swift */,
-				828DF98F20DC668E00C03E36 /* ListDiffable.swift */,
+				82F9733420E4017C00F7D50E /* ListDiffable.swift */,
 				82C6B9FE20E00BFE0085B85A /* ListIndexPathResult.swift */,
 				82F9733020E12F8000F7D50E /* ListIndexSetResult.swift */,
 				82C6BA0020E010CA0085B85A /* ListMoveIndexPath.swift */,
@@ -224,12 +224,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				828DF99020DC668E00C03E36 /* ListDiffable.swift in Sources */,
 				828DF98E20DC587D00C03E36 /* ListDiff.swift in Sources */,
 				82C6BA0120E010CA0085B85A /* ListMoveIndexPath.swift in Sources */,
 				82F9733320E1853800F7D50E /* ListExperiments.swift in Sources */,
 				82C6B9FF20E00BFE0085B85A /* ListIndexPathResult.swift in Sources */,
 				82F9733120E12F8000F7D50E /* ListIndexSetResult.swift in Sources */,
+				82F9733520E4017C00F7D50E /* ListDiffable.swift in Sources */,
 				82F9732F20E0552D00F7D50E /* ListMoveIndex.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
