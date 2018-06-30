@@ -45,13 +45,13 @@ class ListIndexSetResult {
     private var changeCount: Int {
         return inserts.count + deletes.count + updates.count + moves.count
     }
-    private var oldIndexDict: [AnyHashable: Int]
-    private var newIndexDict: [AnyHashable: Int]
+    private var oldIndexDict: [AnyListDiffable: Int]
+    private var newIndexDict: [AnyListDiffable: Int]
     
     init(inserts: IndexSet, deletes: IndexSet, updates: IndexSet,
          moves: [ListMoveIndex],
-         oldIndexDict: [AnyHashable: Int],
-         newIndexDict: [AnyHashable: Int]) {
+         oldIndexDict: [AnyListDiffable: Int],
+         newIndexDict: [AnyListDiffable: Int]) {
         self.inserts = inserts
         self.deletes = deletes
         self.updates = updates
@@ -68,7 +68,7 @@ class ListIndexSetResult {
      - Returns: The optional index of the object before the diff.
         - See: `ListDiffable.diffIdentifier`.
      */
-    func oldIndexForIdentifier(identifier: AnyHashable) -> Int? {
+    func oldIndexForIdentifier(identifier: AnyListDiffable) -> Int? {
         return oldIndexDict[identifier]
     }
     
@@ -80,7 +80,7 @@ class ListIndexSetResult {
      - Returns: The optional index of the object after the diff.
         - See: `ListDiffable.diffIdentifier`.
      */
-    func newIndexForIdentifier(identifier: AnyHashable) -> Int? {
+    func newIndexForIdentifier(identifier: AnyListDiffable) -> Int? {
         return newIndexDict[identifier]
     }
     

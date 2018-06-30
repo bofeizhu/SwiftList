@@ -45,13 +45,13 @@ class ListIndexPathResult {
     private var changeCount: Int {
         return inserts.count + deletes.count + updates.count + moves.count
     }
-    private var oldIndexPathDict: [AnyHashable: IndexPath]
-    private var newIndexPathDict: [AnyHashable: IndexPath]
+    private var oldIndexPathDict: [AnyListDiffable: IndexPath]
+    private var newIndexPathDict: [AnyListDiffable: IndexPath]
     
     init(inserts: [IndexPath], deletes: [IndexPath], updates: [IndexPath],
          moves: [ListMoveIndexPath],
-         oldIndexPathDict: [AnyHashable: IndexPath],
-         newIndexPathDict: [AnyHashable: IndexPath]) {
+         oldIndexPathDict: [AnyListDiffable: IndexPath],
+         newIndexPathDict: [AnyListDiffable: IndexPath]) {
         self.inserts = inserts
         self.deletes = deletes
         self.updates = updates
@@ -68,7 +68,7 @@ class ListIndexPathResult {
      - Returns: The optional index path of the object before the diff.
          - See: `ListDiffable.diffIdentifier`.
      */
-    func oldIndexPathForIdentifier(identifier: AnyHashable) -> IndexPath? {
+    func oldIndexPathForIdentifier(identifier: AnyListDiffable) -> IndexPath? {
         return oldIndexPathDict[identifier]
     }
     
@@ -80,7 +80,7 @@ class ListIndexPathResult {
      - Returns: The optional index path of the object after the diff.
         - See: `ListDiffable.diffIdentifier`.
      */
-    func newIndexPathForIdentifier(identifier: AnyHashable) -> IndexPath? {
+    func newIndexPathForIdentifier(identifier: AnyListDiffable) -> IndexPath? {
         return newIndexPathDict[identifier]
     }
     

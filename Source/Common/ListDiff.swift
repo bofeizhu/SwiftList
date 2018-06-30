@@ -6,6 +6,9 @@
 //  Copyright © 2018 Bofei Zhu. All rights reserved.
 //
 
+/**
+ An option for how to do comparisons between similar objects.
+ */
 enum ListDiffOption {
     /**
      Compare objects using `ObjectIdentifier`.
@@ -35,15 +38,10 @@ fileprivate class ListRecord {
     var index: Int?
 }
 
-fileprivate extension Dictionary where Key == AnyListDiffable, Value == Any {
-    mutating func addIndex(useIndexPath: Bool, section: Int, index: Int, object: AnyListDiffable) {
-        var value: Any
-        if useIndexPath {
-            value = IndexPath(item: index, section: section)
-        } else {
-            value = index
-        }
-        self[object] = value
+fileprivate extension Dictionary where Key == AnyListDiffable, Value == IndexPath {
+    mutating func addIndexPath(section: Int, index: Int, object: AnyListDiffable) {
+        let indexPath = IndexPath(item: index, section: section)
+        self[object] = indexPath
     }
     
     mutating func indexPathsAndPopulateMap(array: [AnyListDiffable], section: Int) -> [IndexPath] {
@@ -51,9 +49,15 @@ fileprivate extension Dictionary where Key == AnyListDiffable, Value == Any {
         for (idx, obj) in array.enumerated() {
             let path = IndexPath(item: idx, section: section)
             paths.append(path)
-            self[obj] = paths
+            self[obj] = path
         }
         return paths
+    }
+}
+
+fileprivate extension Dictionary where Key == AnyListDiffable, Value == Int {
+    mutating func addIndex(index: Int, object: AnyListDiffable) {
+        self[object] = index
     }
 }
 
@@ -63,30 +67,24 @@ fileprivate func ListDiffing(returnIndexPaths: Bool, fromSection: Int, toSection
     let newCount = newArray.count
     let oldCount = oldArray.count
     
-    var oldDict: [AnyListDiffable: Any] = [:]
-    var newDict: [AnyListDiffable: Any] = [:]
+    var oldIndexPathDict: [AnyListDiffable: IndexPath] = [:]
+    var newIndexPathDict: [AnyListDiffable: IndexPath] = [:]
+    var oldIndexDict: [AnyListDiffable: Int] = [:]
+    var newIndexDict: [AnyListDiffable: Int] = [:]
     
     // if no new objects, everything from the oldArray is deleted
     // take a shortcut and just build a delete-everything result
     if newCount == 0 {
         if returnIndexPaths {
-            guard let oldIndexPathDict = oldDict as? [AnyListDiffable : IndexPath],
-                let newIndexPathDict = newDict as? [AnyListDiffable : IndexPath] else {
-                    preconditionFailure("Cannot downcast dictionary to dictionary of IndexPath")
-            }
+            let deletes = oldIndexPathDict.indexPathsAndPopulateMap(array: oldArray, section: fromSection)
             return ListIndexPathResult(inserts: [],
-                                       deletes: oldDict.indexPathsAndPopulateMap(array: oldArray, section: fromSection),
+                                       deletes: deletes,
                                        updates: [], moves: [],
                                        oldIndexPathDict: oldIndexPathDict,
                                        newIndexPathDict: newIndexPathDict)
         } else {
-            guard let oldIndexDict = oldDict as? [AnyListDiffable : Int],
-                let newIndexDict = newDict as? [AnyListDiffable : Int] else {
-                    preconditionFailure("Cannot downcast dictionary to dictionary of Int")
-            }
             for (idx, obj) in oldArray.enumerated() {
-                oldDict.addIndex(useIndexPath: returnIndexPaths, section: fromSection,
-                                 index: idx, object: obj)
+                oldIndexDict.addIndex(index: idx, object: obj)
             }
             return ListIndexSetResult(inserts: IndexSet(), deletes: IndexSet(0..<oldCount),
                                       updates: IndexSet(), moves: [],
@@ -99,22 +97,14 @@ fileprivate func ListDiffing(returnIndexPaths: Bool, fromSection: Int, toSection
     // take a shortcut and just build an insert-everything result
     if oldCount == 0 {
         if returnIndexPaths {
-            guard let oldIndexPathDict = oldDict as? [AnyListDiffable : IndexPath],
-                let newIndexPathDict = newDict as? [AnyListDiffable : IndexPath] else {
-                    preconditionFailure("Cannot downcast dictionary to dictionary of IndexPath")
-            }
-            return ListIndexPathResult(inserts: newDict.indexPathsAndPopulateMap(array: newArray, section: toSection),
-                                       deletes: [], updates: [], moves: [],
+            let inserts = newIndexPathDict.indexPathsAndPopulateMap(array: newArray, section: toSection)
+            return ListIndexPathResult(inserts: inserts, deletes: [],
+                                       updates: [], moves: [],
                                        oldIndexPathDict: oldIndexPathDict,
                                        newIndexPathDict: newIndexPathDict)
         } else {
-            guard let oldIndexDict = oldDict as? [AnyListDiffable : Int],
-                let newIndexDict = newDict as? [AnyListDiffable : Int] else {
-                    preconditionFailure("Cannot downcast dictionary to dictionary of Int")
-            }
             for (idx, obj) in newArray.enumerated() {
-                newDict.addIndex(useIndexPath: returnIndexPaths, section: toSection,
-                                 index: idx, object: obj)
+                newIndexDict.addIndex(index: idx, object: obj)
             }
             return ListIndexSetResult(inserts: IndexSet(0..<newCount), deletes: IndexSet(),
                                       updates: IndexSet(), moves: [],
@@ -141,7 +131,7 @@ fileprivate func ListDiffing(returnIndexPaths: Bool, fromSection: Int, toSection
         }
         entry.newCounter += 1
         
-        // add NSNotFound for each occurence of the item in the new array
+        // add nil for each occurence of the item in the new array
         entry.oldIndexes.append(nil)
         newResultsArray[i].entry = entry
     }
@@ -179,10 +169,153 @@ fileprivate func ListDiffing(returnIndexPaths: Bool, fromSection: Int, toSection
                 if originalIndex < oldCount {
                     let n = newArray[i]
                     let o = oldArray[originalIndex]
+                    switch option {
+                    case .ListDiffObjectIdentifier:
+                        assert(type(of: n.base) is AnyClass && type(of: o.base) is AnyClass,
+                               "Objects should have class-type when using `ListDiffObjectIdentifier`")
+                        let nobj = n.base as AnyObject
+                        let oobj = o.base as AnyObject
+                        if nobj !== oobj {
+                            entry.updated = true
+                        }
+                        
+                    case .ListDiffEquality:
+                        if n != o {
+                            entry.updated = true
+                        }
+                    }
+                }
+                
+                if entry.newCounter > 0, entry.oldCounter > 0 {
+                    newResultsArray[i].index = originalIndex
+                    oldResultsArray[originalIndex].index = i
                 }
             }
         }
     }
+    
+    // storage for final IndexPaths
+    var indexPathInserts = [IndexPath](), indexPathUpdates = [IndexPath](), indexPathDeletes = [IndexPath]()
+    var indexPathMoves = [ListMoveIndexPath]()
+    
+    // storage for final indexes
+    var indexInserts = IndexSet(), indexUpdates = IndexSet(), indexDeletes = IndexSet()
+    var indexMoves = [ListMoveIndex]()
+    
+    // track offsets from deleted items to calculate where items have moved
+    var deleteOffsets = Array(repeating: 0, count: oldCount)
+    var insertOffsets = Array(repeating: 0, count: newCount)
+    var runningOffset = 0
+    
+    // iterate old array records checking for deletes
+    // incremement offset for each delete
+    for i in 0..<oldCount {
+        deleteOffsets[i] = runningOffset
+        let record = oldResultsArray[i]
+        // if the record index in the new array doesn't exist, its a delete
+        if record.index == nil {
+            if returnIndexPaths {
+                let indexPath = IndexPath(item: i, section: fromSection)
+                indexPathDeletes.append(indexPath)
+            } else {
+                indexDeletes.insert(i)
+            }
+            runningOffset += 1
+        }
+        
+        if returnIndexPaths {
+            oldIndexPathDict.addIndexPath(section: fromSection, index: i, object: oldArray[i])
+        } else {
+            oldIndexDict.addIndex(index: i, object: oldArray[i])
+        }
+    }
+    
+    // reset and track offsets from inserted items to calculate where items have moved
+    runningOffset = 0
+    for i in 0..<newCount {
+        insertOffsets[i] = runningOffset
+        let record = newResultsArray[i]
+        if let oldIndex = record.index {
+            // note that an entry can be updated /and/ moved
+            if let entry = record.entry, entry.updated {
+                if returnIndexPaths {
+                    let indexPath = IndexPath(item: oldIndex, section: fromSection)
+                    indexPathUpdates.append(indexPath)
+                } else {
+                    indexUpdates.insert(oldIndex)
+                }
+            }
+            
+            // calculate the offset and determine if there was a move
+            // if the indexes match, ignore the index
+            let insertOffset = insertOffsets[i]
+            let deleteOffset = deleteOffsets[oldIndex]
+            if oldIndex - deleteOffset + insertOffset != i {
+                if returnIndexPaths {
+                    let from = IndexPath(item: oldIndex, section: fromSection)
+                    let to = IndexPath(item: i, section: toSection)
+                    let move = ListMoveIndexPath(from: from, to: to)
+                    indexPathMoves.append(move)
+                } else {
+                    let move = ListMoveIndex(from: oldIndex, to: i)
+                    indexMoves.append(move)
+                }
+            }
+        } else {
+            // add to inserts if the opposing index is nil
+            if returnIndexPaths {
+                let indexPath = IndexPath(item: i, section: toSection)
+                indexPathInserts.append(indexPath)
+            } else {
+                indexUpdates.insert(i)
+            }
+            runningOffset += 1
+        }
+        
+        if returnIndexPaths {
+            newIndexPathDict.addIndexPath(section: toSection, index: i, object: newArray[i])
+        } else {
+            newIndexDict.addIndex(index: i, object: newArray[i])
+        }
+    }
+    
+    if returnIndexPaths {
+        assert(oldCount + indexPathInserts.count - indexPathDeletes.count == newCount,
+               "Sanity check failed applying \(indexPathInserts.count) inserts and \(indexPathDeletes.count) deletes to old count \(oldCount) equaling new count \(newCount)")
+        return ListIndexPathResult(inserts: indexPathInserts, deletes: indexPathDeletes,
+                                   updates: indexPathUpdates, moves: indexPathMoves,
+                                   oldIndexPathDict: oldIndexPathDict, newIndexPathDict: newIndexPathDict)
+    } else {
+        assert(oldCount + indexInserts.count - indexDeletes.count == newCount,
+               "Sanity check failed applying \(indexInserts.count) inserts and \(indexDeletes.count) deletes to old count \(oldCount) equaling new count \(newCount)")
+        return ListIndexSetResult(inserts: indexInserts, deletes: indexDeletes,
+                                  updates: indexUpdates, moves: indexMoves,
+                                  oldIndexDict: oldIndexDict, newIndexDict: newIndexDict)
+    }
 }
 
+func ListDiff(oldArray: [AnyListDiffable], newArray: [AnyListDiffable], option: ListDiffOption) -> ListIndexSetResult {
+    let result = ListDiffing(returnIndexPaths: false, fromSection: 0, toSection: 0,
+                             oldArray: oldArray, newArray: newArray,
+                             option: option, experiments: ListExperiment(rawValue: 0))
+    guard let indexSetResult = result as? ListIndexSetResult else {
+        preconditionFailure("Cannot cast diff result to `ListIndexSetResult`")
+    }
+    return indexSetResult
+}
+
+func ListDiffPaths(fromSection: Int, toSection: Int,
+                   oldArray: [AnyListDiffable], newArray: [AnyListDiffable],
+                   option: ListDiffOption) -> ListIndexPathResult {
+    let result = ListDiffing(returnIndexPaths: true,
+                             fromSection: fromSection, toSection: toSection,
+                             oldArray: oldArray, newArray: newArray,
+                             option: option, experiments: ListExperiment(rawValue: 0))
+    guard let indexPathResult = result as? ListIndexPathResult else {
+        preconditionFailure("Cannot cast diff result to `ListIndexPathResult`")
+    }
+    return indexPathResult
+}
+
+//TODO: Add Experiments
 
