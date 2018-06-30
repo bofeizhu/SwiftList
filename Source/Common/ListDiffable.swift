@@ -9,5 +9,5 @@
 /**
  The `ListDiffable` protocol provides methods needed to compare the identity and equality of two objects.
  */
-typealias ListDiffable = Hashable
-typealias AnyListDiffable = AnyHashable
+public typealias ListDiffable = Hashable
+public typealias AnyListDiffable = AnyHashable

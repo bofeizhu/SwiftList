@@ -9,55 +9,33 @@
 /**
  A result object returned when diffing with indexes.
  */
-class ListIndexSetResult {
+public class ListIndexSetResult {
     /**
      The indexes inserted into the new collection.
      */
-    let inserts: IndexSet
+    public let inserts: IndexSet
     
     /**
      The indexes deleted from the old collection.
      */
-    let deletes: IndexSet
+    public let deletes: IndexSet
     
     /**
      The indexes in the old collection that need updated.
      */
-    let updates: IndexSet
+    public let updates: IndexSet
     
     /**
      The moves from an index in the old collection to an index in the new collection.
      */
-    let moves: [ListMoveIndex]
+    public let moves: [ListMoveIndex]
     
     /**
      A Read-only boolean that indicates whether the result has any changes or not.
      true if the result has changes, false otherwise.
      */
-    var hasChanges: Bool {
+    public var hasChanges: Bool {
         return changeCount > 0
-    }
-    
-    var description: String {
-        return "<\(type(of: self)); \(inserts.count) inserts; \(deletes.count) deletes; \(updates.count) updates; \(moves.count) moves>"
-    }
-    
-    private var changeCount: Int {
-        return inserts.count + deletes.count + updates.count + moves.count
-    }
-    private var oldIndexDict: [AnyListDiffable: Int]
-    private var newIndexDict: [AnyListDiffable: Int]
-    
-    init(inserts: IndexSet, deletes: IndexSet, updates: IndexSet,
-         moves: [ListMoveIndex],
-         oldIndexDict: [AnyListDiffable: Int],
-         newIndexDict: [AnyListDiffable: Int]) {
-        self.inserts = inserts
-        self.deletes = deletes
-        self.updates = updates
-        self.moves = moves
-        self.oldIndexDict = oldIndexDict
-        self.newIndexDict = newIndexDict
     }
     
     /**
@@ -68,7 +46,7 @@ class ListIndexSetResult {
      - Returns: The optional index of the object before the diff.
         - See: `ListDiffable.diffIdentifier`.
      */
-    func oldIndexForIdentifier(identifier: AnyListDiffable) -> Int? {
+    public func oldIndexForIdentifier(identifier: AnyListDiffable) -> Int? {
         return oldIndexDict[identifier]
     }
     
@@ -80,14 +58,14 @@ class ListIndexSetResult {
      - Returns: The optional index of the object after the diff.
         - See: `ListDiffable.diffIdentifier`.
      */
-    func newIndexForIdentifier(identifier: AnyListDiffable) -> Int? {
+    public func newIndexForIdentifier(identifier: AnyListDiffable) -> Int? {
         return newIndexDict[identifier]
     }
     
     /**
      Creates a new result object with operations safe for use in `UITableView` and `UICollectionView` batch updates.
      */
-    func resultForBatchUpdates() -> ListIndexSetResult {
+    public func resultForBatchUpdates() -> ListIndexSetResult {
         var deletes = self.deletes
         var inserts = self.inserts
         var filteredUpdates = self.updates
@@ -121,4 +99,28 @@ class ListIndexSetResult {
                                    oldIndexDict: oldIndexDict,
                                    newIndexDict: newIndexDict)
     }
+    
+    var description: String {
+        return "<\(type(of: self)); \(inserts.count) inserts; \(deletes.count) deletes; \(updates.count) updates; \(moves.count) moves>"
+    }
+    
+    var changeCount: Int {
+        return inserts.count + deletes.count + updates.count + moves.count
+    }
+    
+    private var oldIndexDict: [AnyListDiffable: Int]
+    private var newIndexDict: [AnyListDiffable: Int]
+    
+    init(inserts: IndexSet, deletes: IndexSet, updates: IndexSet,
+         moves: [ListMoveIndex],
+         oldIndexDict: [AnyListDiffable: Int],
+         newIndexDict: [AnyListDiffable: Int]) {
+        self.inserts = inserts
+        self.deletes = deletes
+        self.updates = updates
+        self.moves = moves
+        self.oldIndexDict = oldIndexDict
+        self.newIndexDict = newIndexDict
+    }
+    
 }

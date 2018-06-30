@@ -9,7 +9,7 @@
 /**
  An option for how to do comparisons between similar objects.
  */
-enum ListDiffOption {
+public enum ListDiffOption {
     /**
      Compare objects using `ObjectIdentifier`.
      */
@@ -294,7 +294,7 @@ fileprivate func ListDiffing(returnIndexPaths: Bool, fromSection: Int, toSection
     }
 }
 
-func ListDiff(oldArray: [AnyListDiffable], newArray: [AnyListDiffable], option: ListDiffOption) -> ListIndexSetResult {
+public func ListDiff(oldArray: [AnyListDiffable], newArray: [AnyListDiffable], option: ListDiffOption) -> ListIndexSetResult {
     let result = ListDiffing(returnIndexPaths: false, fromSection: 0, toSection: 0,
                              oldArray: oldArray, newArray: newArray,
                              option: option, experiments: ListExperiment(rawValue: 0))
@@ -304,7 +304,7 @@ func ListDiff(oldArray: [AnyListDiffable], newArray: [AnyListDiffable], option: 
     return indexSetResult
 }
 
-func ListDiffPaths(fromSection: Int, toSection: Int,
+public func ListDiffPaths(fromSection: Int, toSection: Int,
                    oldArray: [AnyListDiffable], newArray: [AnyListDiffable],
                    option: ListDiffOption) -> ListIndexPathResult {
     let result = ListDiffing(returnIndexPaths: true,

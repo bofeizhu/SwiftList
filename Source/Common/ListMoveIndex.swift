@@ -9,16 +9,16 @@
 /**
  An object representing a move between indexes.
  */
-struct ListMoveIndex: Hashable {
+public struct ListMoveIndex: Hashable {
     /**
      An index in the old collection.
      */
-    let from: Int
+    public let from: Int
     
     /**
      An index in the new collection.
      */
-    let to: Int
+    public let to: Int
     
     init(from: Int, to: Int) {
         self.from = from
@@ -27,11 +27,11 @@ struct ListMoveIndex: Hashable {
 }
 
 extension ListMoveIndex: Comparable {
-    static func == (lhs: ListMoveIndex, rhs: ListMoveIndex) -> Bool {
+    public static func == (lhs: ListMoveIndex, rhs: ListMoveIndex) -> Bool {
         return lhs.from == rhs.from && lhs.to == rhs.to
     }
     
-    static func < (lhs: ListMoveIndex, rhs: ListMoveIndex) -> Bool {
+    public static func < (lhs: ListMoveIndex, rhs: ListMoveIndex) -> Bool {
         return lhs.from < rhs.from
     }
 }
