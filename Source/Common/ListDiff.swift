@@ -33,7 +33,7 @@ fileprivate class ListEntry {
 }
 
 /// Track both the entry and algorithm index.
-fileprivate class ListRecord {
+fileprivate struct ListRecord {
     fileprivate var entry: ListEntry?
     var index: Int?
 }
@@ -119,7 +119,7 @@ fileprivate func ListDiffing(returnIndexPaths: Bool, fromSection: Int, toSection
     // pass 1
     // create an entry for every item in the new array
     // increment its new count for each occurence
-    var newResultsArray = Array(repeating: ListRecord(), count: newCount)
+    var newResultsArray = [ListRecord](repeating: ListRecord(), count: newCount)
     for i in 0..<newCount {
         let key = newArray[i]
         var entry: ListEntry
@@ -141,7 +141,7 @@ fileprivate func ListDiffing(returnIndexPaths: Bool, fromSection: Int, toSection
     // increment its old count for each occurence
     // record the original index of the item in the old array
     // MUST be done in descending order to respect the oldIndexes stack construction
-    var oldResultsArray = Array(repeating: ListRecord(), count: oldCount)
+    var oldResultsArray = [ListRecord](repeating: ListRecord(), count: oldCount)
     for i in stride(from: oldCount - 1, through: 0, by: -1) {
         let key = oldArray[i]
         var entry: ListEntry
@@ -232,6 +232,7 @@ fileprivate func ListDiffing(returnIndexPaths: Bool, fromSection: Int, toSection
     
     // reset and track offsets from inserted items to calculate where items have moved
     runningOffset = 0
+    
     for i in 0..<newCount {
         insertOffsets[i] = runningOffset
         let record = newResultsArray[i]

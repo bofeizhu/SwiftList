@@ -104,7 +104,6 @@ public class ListIndexPathResult {
         return "<\(type(of: self)); \(inserts.count) inserts; \(deletes.count) deletes; \(updates.count) updates; \(moves.count) moves>"
     }
     
-    
     var changeCount: Int {
         return inserts.count + deletes.count + updates.count + moves.count
     }
