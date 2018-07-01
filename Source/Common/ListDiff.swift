@@ -34,7 +34,7 @@ fileprivate class ListEntry {
 
 /// Track both the entry and algorithm index.
 fileprivate struct ListRecord {
-    fileprivate var entry: ListEntry?
+    var entry: ListEntry?
     var index: Int?
 }
 

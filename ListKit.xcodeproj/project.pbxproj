@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		820A0C9B20E7EAD80035EC74 /* ListDiffTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820A0C9A20E7EAD80035EC74 /* ListDiffTests.swift */; };
+		820A0C9E20E854710035EC74 /* ListTestObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820A0C9D20E854710035EC74 /* ListTestObject.swift */; };
 		828DF97B20DC550700C03E36 /* ListKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 828DF97120DC550700C03E36 /* ListKit.framework */; };
 		828DF98220DC550700C03E36 /* ListKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 828DF97420DC550700C03E36 /* ListKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		828DF98E20DC587D00C03E36 /* ListDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828DF98D20DC587D00C03E36 /* ListDiff.swift */; };
@@ -31,6 +32,7 @@
 
 /* Begin PBXFileReference section */
 		820A0C9A20E7EAD80035EC74 /* ListDiffTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDiffTests.swift; sourceTree = "<group>"; };
+		820A0C9D20E854710035EC74 /* ListTestObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTestObject.swift; sourceTree = "<group>"; };
 		828DF97120DC550700C03E36 /* ListKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ListKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		828DF97420DC550700C03E36 /* ListKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListKit.h; sourceTree = "<group>"; };
 		828DF97520DC550700C03E36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -64,6 +66,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		820A0C9C20E854270035EC74 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				820A0C9D20E854710035EC74 /* ListTestObject.swift */,
+			);
+			path = Objects;
+			sourceTree = "<group>";
+		};
 		828DF96720DC550700C03E36 = {
 			isa = PBXGroup;
 			children = (
@@ -95,6 +105,7 @@
 		828DF97E20DC550700C03E36 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				820A0C9C20E854270035EC74 /* Objects */,
 				820A0C9A20E7EAD80035EC74 /* ListDiffTests.swift */,
 				828DF98120DC550700C03E36 /* Info.plist */,
 			);
@@ -238,6 +249,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				820A0C9E20E854710035EC74 /* ListTestObject.swift in Sources */,
 				820A0C9B20E7EAD80035EC74 /* ListDiffTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
