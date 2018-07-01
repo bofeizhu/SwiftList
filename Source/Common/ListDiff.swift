@@ -61,6 +61,10 @@ fileprivate extension Dictionary where Key == AnyListDiffable, Value == Int {
     }
 }
 
+fileprivate func ListTableKey(object: AnyListDiffable) -> Int {
+    return object.hashValue
+}
+
 fileprivate func ListDiffing(returnIndexPaths: Bool, fromSection: Int, toSection: Int,
                              oldArray: [AnyListDiffable], newArray: [AnyListDiffable],
                              option: ListDiffOption, experiments: ListExperiment) -> Any {
@@ -114,20 +118,20 @@ fileprivate func ListDiffing(returnIndexPaths: Bool, fromSection: Int, toSection
     }
     
     // symbol table uses the old/new array diffIdentifier as the key and IGListEntry as the value
-    var table: [AnyListDiffable: ListEntry] = [:]
+    var table: [Int: ListEntry] = [:]
     
     // pass 1
     // create an entry for every item in the new array
     // increment its new count for each occurence
     var newResultsArray = [ListRecord](repeating: ListRecord(), count: newCount)
     for i in 0..<newCount {
-        let key = newArray[i]
+        let object = newArray[i]
         var entry: ListEntry
-        if let tableEntry = table[key] {
+        if let tableEntry = table[ListTableKey(object: object)] {
             entry = tableEntry
         } else {
             entry = ListEntry()
-            table[key] = entry
+            table[ListTableKey(object: object)] = entry
         }
         entry.newCounter += 1
         
@@ -143,13 +147,13 @@ fileprivate func ListDiffing(returnIndexPaths: Bool, fromSection: Int, toSection
     // MUST be done in descending order to respect the oldIndexes stack construction
     var oldResultsArray = [ListRecord](repeating: ListRecord(), count: oldCount)
     for i in stride(from: oldCount - 1, through: 0, by: -1) {
-        let key = oldArray[i]
+        let object = oldArray[i]
         var entry: ListEntry
-        if let tableEntry = table[key] {
+        if let tableEntry = table[ListTableKey(object: object)] {
             entry = tableEntry
         } else {
             entry = ListEntry()
-            table[key] = entry
+            table[ListTableKey(object: object)] = entry
         }
         entry.oldCounter += 1
         
@@ -268,7 +272,7 @@ fileprivate func ListDiffing(returnIndexPaths: Bool, fromSection: Int, toSection
                 let indexPath = IndexPath(item: i, section: toSection)
                 indexPathInserts.append(indexPath)
             } else {
-                indexUpdates.insert(i)
+                indexInserts.insert(i)
             }
             runningOffset += 1
         }
@@ -295,7 +299,8 @@ fileprivate func ListDiffing(returnIndexPaths: Bool, fromSection: Int, toSection
     }
 }
 
-public func ListDiff(oldArray: [AnyListDiffable], newArray: [AnyListDiffable], option: ListDiffOption) -> ListIndexSetResult {
+public func ListDiff(oldArray: [AnyListDiffable], newArray: [AnyListDiffable],
+                     option: ListDiffOption) -> ListIndexSetResult {
     let result = ListDiffing(returnIndexPaths: false, fromSection: 0, toSection: 0,
                              oldArray: oldArray, newArray: newArray,
                              option: option, experiments: ListExperiment(rawValue: 0))

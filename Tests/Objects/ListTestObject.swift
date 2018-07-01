@@ -25,5 +25,4 @@ struct ListTestObject: ListDiffable {
     static func == (lhs: ListTestObject, rhs: ListTestObject) -> Bool {
         return lhs.key == rhs.key && lhs.value == rhs.value
     }
-    
 }
