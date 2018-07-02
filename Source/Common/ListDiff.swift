@@ -38,10 +38,10 @@ fileprivate struct ListRecord {
     var index: Int?
 }
 
-fileprivate extension Dictionary where Key == AnyListDiffable, Value == IndexPath {
+fileprivate extension Dictionary where Key == Int, Value == IndexPath {
     mutating func addIndexPath(section: Int, index: Int, object: AnyListDiffable) {
         let indexPath = IndexPath(item: index, section: section)
-        self[object] = indexPath
+        self[object.hashValue] = indexPath
     }
     
     mutating func indexPathsAndPopulateMap(array: [AnyListDiffable], section: Int) -> [IndexPath] {
@@ -49,15 +49,15 @@ fileprivate extension Dictionary where Key == AnyListDiffable, Value == IndexPat
         for (idx, obj) in array.enumerated() {
             let path = IndexPath(item: idx, section: section)
             paths.append(path)
-            self[obj] = path
+            self[obj.hashValue] = path
         }
         return paths
     }
 }
 
-fileprivate extension Dictionary where Key == AnyListDiffable, Value == Int {
+fileprivate extension Dictionary where Key == Int, Value == Int {
     mutating func addIndex(index: Int, object: AnyListDiffable) {
-        self[object] = index
+        self[object.hashValue] = index
     }
 }
 
@@ -71,10 +71,10 @@ fileprivate func ListDiffing(returnIndexPaths: Bool, fromSection: Int, toSection
     let newCount = newArray.count
     let oldCount = oldArray.count
     
-    var oldIndexPathDict: [AnyListDiffable: IndexPath] = [:]
-    var newIndexPathDict: [AnyListDiffable: IndexPath] = [:]
-    var oldIndexDict: [AnyListDiffable: Int] = [:]
-    var newIndexDict: [AnyListDiffable: Int] = [:]
+    var oldIndexPathDict: [Int: IndexPath] = [:]
+    var newIndexPathDict: [Int: IndexPath] = [:]
+    var oldIndexDict: [Int: Int] = [:]
+    var newIndexDict: [Int: Int] = [:]
     
     // if no new objects, everything from the oldArray is deleted
     // take a shortcut and just build a delete-everything result

@@ -219,62 +219,111 @@ class ListDiffTests: XCTestCase {
         let o = [1, 2, 3, 4, 5, 6, 7]
         let n = [2, 9, 3, 1, 5, 6, 8]
         let result = ListDiff(oldArray: o, newArray: n, option: .ListDiffEquality)
-        XCTAssertEqual(result.oldIndexForIdentifier(identifier: 1), 0)
-        XCTAssertEqual(result.oldIndexForIdentifier(identifier: 2), 1)
-        XCTAssertEqual(result.oldIndexForIdentifier(identifier: 3), 2)
-        XCTAssertEqual(result.oldIndexForIdentifier(identifier: 4), 3)
-        XCTAssertEqual(result.oldIndexForIdentifier(identifier: 5), 4)
-        XCTAssertEqual(result.oldIndexForIdentifier(identifier: 6), 5)
-        XCTAssertEqual(result.oldIndexForIdentifier(identifier: 7), 6)
-        XCTAssertNil(result.oldIndexForIdentifier(identifier: 8))
-        XCTAssertNil(result.oldIndexForIdentifier(identifier: 9))
+        XCTAssertEqual(result.oldIndexFor(hashValue: 1.hashValue), 0)
+        XCTAssertEqual(result.oldIndexFor(hashValue: 2.hashValue), 1)
+        XCTAssertEqual(result.oldIndexFor(hashValue: 3.hashValue), 2)
+        XCTAssertEqual(result.oldIndexFor(hashValue: 4.hashValue), 3)
+        XCTAssertEqual(result.oldIndexFor(hashValue: 5.hashValue), 4)
+        XCTAssertEqual(result.oldIndexFor(hashValue: 6.hashValue), 5)
+        XCTAssertEqual(result.oldIndexFor(hashValue: 7.hashValue), 6)
+        XCTAssertNil(result.oldIndexFor(hashValue: 8.hashValue))
+        XCTAssertNil(result.oldIndexFor(hashValue: 9.hashValue))
     }
     
     func testWhenDiffingThatNewIndexesMatch() {
         let o = [1, 2, 3, 4, 5, 6, 7]
         let n = [2, 9, 3, 1, 5, 6, 8]
         let result = ListDiff(oldArray: o, newArray: n, option: .ListDiffEquality)
-        XCTAssertEqual(result.newIndexForIdentifier(identifier: 1), 3)
-        XCTAssertEqual(result.newIndexForIdentifier(identifier: 2), 0)
-        XCTAssertEqual(result.newIndexForIdentifier(identifier: 3), 2)
-        XCTAssertNil(result.newIndexForIdentifier(identifier: 4))
-        XCTAssertEqual(result.newIndexForIdentifier(identifier: 5), 4)
-        XCTAssertEqual(result.newIndexForIdentifier(identifier: 6), 5)
-        XCTAssertNil(result.newIndexForIdentifier(identifier: 7))
-        XCTAssertEqual(result.newIndexForIdentifier(identifier: 8), 6)
-        XCTAssertEqual(result.newIndexForIdentifier(identifier: 9), 1)
+        XCTAssertEqual(result.newIndexFor(hashValue: 1.hashValue), 3)
+        XCTAssertEqual(result.newIndexFor(hashValue: 2.hashValue), 0)
+        XCTAssertEqual(result.newIndexFor(hashValue: 3.hashValue), 2)
+        XCTAssertNil(result.newIndexFor(hashValue: 4.hashValue))
+        XCTAssertEqual(result.newIndexFor(hashValue: 5.hashValue), 4)
+        XCTAssertEqual(result.newIndexFor(hashValue: 6.hashValue), 5)
+        XCTAssertNil(result.newIndexFor(hashValue: 7.hashValue))
+        XCTAssertEqual(result.newIndexFor(hashValue: 8.hashValue), 6)
+        XCTAssertEqual(result.newIndexFor(hashValue: 9.hashValue), 1)
     }
     
     func testWhenDiffingThatOldIndexPathsMatch() {
         let o = [1, 2, 3, 4, 5, 6, 7]
         let n = [2, 9, 3, 1, 5, 6, 8]
         let result = ListDiffPaths(fromSection: 0, toSection: 1, oldArray: o, newArray: n, option: .ListDiffEquality)
-        XCTAssertEqual(result.oldIndexPathForIdentifier(identifier: 1), IndexPath(item: 0, section: 0))
-        XCTAssertEqual(result.oldIndexPathForIdentifier(identifier: 2), IndexPath(item: 1, section: 0))
-        XCTAssertEqual(result.oldIndexPathForIdentifier(identifier: 3), IndexPath(item: 2, section: 0))
-        XCTAssertEqual(result.oldIndexPathForIdentifier(identifier: 4), IndexPath(item: 3, section: 0))
-        XCTAssertEqual(result.oldIndexPathForIdentifier(identifier: 5), IndexPath(item: 4, section: 0))
-        XCTAssertEqual(result.oldIndexPathForIdentifier(identifier: 6), IndexPath(item: 5, section: 0))
-        XCTAssertEqual(result.oldIndexPathForIdentifier(identifier: 7), IndexPath(item: 6, section: 0))
-        XCTAssertNil(result.oldIndexPathForIdentifier(identifier: 8))
-        XCTAssertNil(result.oldIndexPathForIdentifier(identifier: 9))
+        XCTAssertEqual(result.oldIndexPathFor(hashValue: 1.hashValue), IndexPath(item: 0, section: 0))
+        XCTAssertEqual(result.oldIndexPathFor(hashValue: 2.hashValue), IndexPath(item: 1, section: 0))
+        XCTAssertEqual(result.oldIndexPathFor(hashValue: 3.hashValue), IndexPath(item: 2, section: 0))
+        XCTAssertEqual(result.oldIndexPathFor(hashValue: 4.hashValue), IndexPath(item: 3, section: 0))
+        XCTAssertEqual(result.oldIndexPathFor(hashValue: 5.hashValue), IndexPath(item: 4, section: 0))
+        XCTAssertEqual(result.oldIndexPathFor(hashValue: 6.hashValue), IndexPath(item: 5, section: 0))
+        XCTAssertEqual(result.oldIndexPathFor(hashValue: 7.hashValue), IndexPath(item: 6, section: 0))
+        XCTAssertNil(result.oldIndexPathFor(hashValue: 8.hashValue))
+        XCTAssertNil(result.oldIndexPathFor(hashValue: 9.hashValue))
     }
     
     func testWhenDiffingThatNewIndexPathsMatch() {
         let o = [1, 2, 3, 4, 5, 6, 7]
         let n = [2, 9, 3, 1, 5, 6, 8]
         let result = ListDiffPaths(fromSection: 0, toSection: 1, oldArray: o, newArray: n, option: .ListDiffEquality)
-        XCTAssertEqual(result.newIndexPathForIdentifier(identifier: 1), IndexPath(item: 3, section: 1))
-        XCTAssertEqual(result.newIndexPathForIdentifier(identifier: 2), IndexPath(item: 0, section: 1))
-        XCTAssertEqual(result.newIndexPathForIdentifier(identifier: 3), IndexPath(item: 2, section: 1))
-        XCTAssertNil(result.newIndexPathForIdentifier(identifier: 4))
-        XCTAssertEqual(result.newIndexPathForIdentifier(identifier: 5), IndexPath(item: 4, section: 1))
-        XCTAssertEqual(result.newIndexPathForIdentifier(identifier: 6), IndexPath(item: 5, section: 1))
-        XCTAssertNil(result.newIndexPathForIdentifier(identifier: 7))
-        XCTAssertEqual(result.newIndexPathForIdentifier(identifier: 8), IndexPath(item: 6, section: 1))
-        XCTAssertEqual(result.newIndexPathForIdentifier(identifier: 9), IndexPath(item: 1, section: 1))
+        XCTAssertEqual(result.newIndexPathFor(hashValue: 1.hashValue), IndexPath(item: 3, section: 1))
+        XCTAssertEqual(result.newIndexPathFor(hashValue: 2.hashValue), IndexPath(item: 0, section: 1))
+        XCTAssertEqual(result.newIndexPathFor(hashValue: 3.hashValue), IndexPath(item: 2, section: 1))
+        XCTAssertNil(result.newIndexPathFor(hashValue: 4.hashValue))
+        XCTAssertEqual(result.newIndexPathFor(hashValue: 5.hashValue), IndexPath(item: 4, section: 1))
+        XCTAssertEqual(result.newIndexPathFor(hashValue: 6.hashValue), IndexPath(item: 5, section: 1))
+        XCTAssertNil(result.newIndexPathFor(hashValue: 7.hashValue))
+        XCTAssertEqual(result.newIndexPathFor(hashValue: 8.hashValue), IndexPath(item: 6, section: 1))
+        XCTAssertEqual(result.newIndexPathFor(hashValue: 9.hashValue), IndexPath(item: 1, section: 1))
     }
     
+    func testWhenDiffingWithBatchUpdateResultThatIndexesMatch() {
+        let o = [ListTestObject(key: 1, value: 1),
+                 ListTestObject(key: 2, value: 1),
+                 ListTestObject(key: 3, value: 1),
+                 ListTestObject(key: 4, value: 1),
+                 ListTestObject(key: 5, value: 1),
+                 ListTestObject(key: 6, value: 1)]
+        let n = [ListTestObject(key: 2, value: 2), // deleted & updated
+                 ListTestObject(key: 5, value: 1), // moved
+                 ListTestObject(key: 4, value: 1),
+                 ListTestObject(key: 7, value: 1), // inserted
+                 ListTestObject(key: 6, value: 2), // updated
+                 ListTestObject(key: 3, value: 2)] // moved + updated
+        let result = ListDiff(oldArray: o, newArray: n, option: .ListDiffEquality).resultForBatchUpdates()
+        XCTAssertEqual(result.updates.count, 0)
+        let expectedMoves = [ListMoveIndex(from: 4, to: 1)]
+        XCTAssertEqual(result.moves, expectedMoves)
+        let expectedDeletes = IndexSet([0, 1, 2, 5])
+        XCTAssertEqual(result.deletes, expectedDeletes)
+        let expectedInserts = IndexSet([0, 3, 4, 5])
+        XCTAssertEqual(result.inserts, expectedInserts)
+    }
+    
+    func testwhenDiffingWithBatchUpdateResultThatIndexPathsMatch() {
+        let o = [ListTestObject(key: 1, value: 1),
+                 ListTestObject(key: 2, value: 1),
+                 ListTestObject(key: 3, value: 1),
+                 ListTestObject(key: 4, value: 1),
+                 ListTestObject(key: 5, value: 1),
+                 ListTestObject(key: 6, value: 1)]
+        let n = [ListTestObject(key: 2, value: 2), // deleted & updated
+            ListTestObject(key: 5, value: 1), // moved
+            ListTestObject(key: 4, value: 1),
+            ListTestObject(key: 7, value: 1), // inserted
+            ListTestObject(key: 6, value: 2), // updated
+            ListTestObject(key: 3, value: 2)] // moved + updated
+        let result = ListDiffPaths(fromSection: 0, toSection: 1,
+                                   oldArray: o, newArray: n,
+                                   option: .ListDiffEquality).resultForBatchUpdates()
+        XCTAssertEqual(result.updates.count, 0)
+        let expectedMoves = [ListMoveIndexPath(from: IndexPath(item: 4, section: 0), to: IndexPath(item: 1, section: 1))]
+        XCTAssertEqual(result.moves, expectedMoves)
+        let expectedDeletes = [IndexPath(item: 0, section: 0), IndexPath(item: 1, section: 0),
+                               IndexPath(item: 2, section: 0), IndexPath(item: 5, section: 0)]
+        XCTAssertEqual(result.deletes.sorted(), expectedDeletes)
+        let expectedInserts = [IndexPath(item: 0, section: 1), IndexPath(item: 3, section: 1),
+                               IndexPath(item: 4, section: 1), IndexPath(item: 5, section: 1)]
+        XCTAssertEqual(result.inserts.sorted(), expectedInserts)
+    }
     
     //TODO: Tests for `ListDiffObjectIdentifier`
 }

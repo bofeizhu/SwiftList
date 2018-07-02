@@ -39,27 +39,25 @@ public class ListIndexPathResult {
     }
 
     /**
-     Returns the index path of the object with the specified identifier *before* the diff.
+     Returns the index path of the object with the specified hashValue *before* the diff.
      - Parameters:
-        - identifier: The diff identifier of the object.
+        - hashValue: The hashValue of the object.
      
      - Returns: The optional index path of the object before the diff.
-         - See: `ListDiffable.diffIdentifier`.
      */
-    public func oldIndexPathForIdentifier(identifier: AnyListDiffable) -> IndexPath? {
-        return oldIndexPathDict[identifier]
+    public func oldIndexPathFor(hashValue: Int) -> IndexPath? {
+        return oldIndexPathDict[hashValue]
     }
     
     /**
-     Returns the index path of the object with the specified identifier *after* the diff.
+     Returns the index path of the object with the specified hashValue *after* the diff.
      - Parameters:
-        - identifier: The diff identifier of the object.
+        - hashValue: The hashValue of the object.
      
      - Returns: The optional index path of the object after the diff.
-        - See: `ListDiffable.diffIdentifier`.
      */
-    public func newIndexPathForIdentifier(identifier: AnyListDiffable) -> IndexPath? {
-        return newIndexPathDict[identifier]
+    public func newIndexPathFor(hashValue: Int) -> IndexPath? {
+        return newIndexPathDict[hashValue]
     }
     
     /**
@@ -73,7 +71,7 @@ public class ListIndexPathResult {
         
         // convert move+update to delete+insert, respecting the from/to of the move
         let moveCount = moves.count;
-        for i in stride(from: moveCount, through: 0, by: -1) {
+        for i in stride(from: moveCount - 1, through: 0, by: -1) {
             let move = moves[i]
             if filteredUpdates.contains(move.from) {
                 filteredMoves.remove(at: i)
@@ -108,13 +106,13 @@ public class ListIndexPathResult {
         return inserts.count + deletes.count + updates.count + moves.count
     }
     
-    private var oldIndexPathDict: [AnyListDiffable: IndexPath]
-    private var newIndexPathDict: [AnyListDiffable: IndexPath]
+    private var oldIndexPathDict: [Int: IndexPath]
+    private var newIndexPathDict: [Int: IndexPath]
     
     init(inserts: [IndexPath], deletes: [IndexPath], updates: [IndexPath],
          moves: [ListMoveIndexPath],
-         oldIndexPathDict: [AnyListDiffable: IndexPath],
-         newIndexPathDict: [AnyListDiffable: IndexPath]) {
+         oldIndexPathDict: [Int: IndexPath],
+         newIndexPathDict: [Int: IndexPath]) {
         self.inserts = inserts
         self.deletes = deletes
         self.updates = updates

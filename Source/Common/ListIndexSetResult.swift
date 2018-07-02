@@ -39,27 +39,25 @@ public class ListIndexSetResult {
     }
     
     /**
-     Returns the index of the object with the specified identifier *before* the diff.
+     Returns the index of the object with the specified hashValue *before* the diff.
      - Parameters:
-        - identifier: The diff identifier of the object.
+        - hashValue: The hashValue of the object.
      
      - Returns: The optional index of the object before the diff.
-        - See: `ListDiffable.diffIdentifier`.
      */
-    public func oldIndexForIdentifier(identifier: AnyListDiffable) -> Int? {
-        return oldIndexDict[identifier]
+    public func oldIndexFor(hashValue: Int) -> Int? {
+        return oldIndexDict[hashValue]
     }
     
     /**
-     Returns the index of the object with the specified identifier *after* the diff.
+     Returns the index of the object with the specified hashValue *after* the diff.
      - Parameters:
-        - identifier: The diff identifier of the object.
+        - hashValue: The hashValue of the object.
      
      - Returns: The optional index of the object after the diff.
-        - See: `ListDiffable.diffIdentifier`.
      */
-    public func newIndexForIdentifier(identifier: AnyListDiffable) -> Int? {
-        return newIndexDict[identifier]
+    public func newIndexFor(hashValue: Int) -> Int? {
+        return newIndexDict[hashValue]
     }
     
     /**
@@ -73,7 +71,7 @@ public class ListIndexSetResult {
         
         // convert all update+move to delete+insert
         let moveCount = moves.count;
-        for i in stride(from: moveCount, through: 0, by: -1) {
+        for i in stride(from: moveCount - 1, through: 0, by: -1) {
             let move = moves[i]
             if filteredUpdates.contains(move.from) {
                 filteredMoves.remove(at: i)
@@ -84,12 +82,12 @@ public class ListIndexSetResult {
         }
         
         // iterate all new identifiers. if its index is updated, delete from the old index and insert the new index
-        for (key, indexPath) in oldIndexDict {
-            if filteredUpdates.contains(indexPath) {
-                deletes.insert(indexPath)
+        for (key, index) in oldIndexDict {
+            if filteredUpdates.contains(index) {
+                deletes.insert(index)
                 // TODO: should add assert here?
-                if let newIndexPath = newIndexDict[key] {
-                    inserts.insert(newIndexPath)
+                if let newIndex = newIndexDict[key] {
+                    inserts.insert(newIndex)
                 }
             }
         }
@@ -108,13 +106,13 @@ public class ListIndexSetResult {
         return inserts.count + deletes.count + updates.count + moves.count
     }
     
-    private var oldIndexDict: [AnyListDiffable: Int]
-    private var newIndexDict: [AnyListDiffable: Int]
+    private var oldIndexDict: [Int: Int]
+    private var newIndexDict: [Int: Int]
     
     init(inserts: IndexSet, deletes: IndexSet, updates: IndexSet,
          moves: [ListMoveIndex],
-         oldIndexDict: [AnyListDiffable: Int],
-         newIndexDict: [AnyListDiffable: Int]) {
+         oldIndexDict: [Int: Int],
+         newIndexDict: [Int: Int]) {
         self.inserts = inserts
         self.deletes = deletes
         self.updates = updates
