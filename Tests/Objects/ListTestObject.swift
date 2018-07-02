@@ -26,3 +26,21 @@ struct ListTestObject: ListDiffable {
         return lhs.key == rhs.key && lhs.value == rhs.value
     }
 }
+
+class ListTestClassObject: ListDiffable {
+    let key: AnyHashable
+    var value: AnyHashable
+    
+    init(key: AnyHashable, value: AnyHashable) {
+        self.key = key
+        self.value = value
+    }
+    
+    var hashValue: Int {
+        return key.hashValue
+    }
+    
+    static func == (lhs: ListTestClassObject, rhs: ListTestClassObject) -> Bool {
+        return lhs.key == rhs.key && lhs.value == rhs.value
+    }
+}

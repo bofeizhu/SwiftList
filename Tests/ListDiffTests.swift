@@ -325,5 +325,22 @@ class ListDiffTests: XCTestCase {
         XCTAssertEqual(result.inserts.sorted(), expectedInserts)
     }
     
-    //TODO: Tests for `ListDiffObjectIdentifier`
+    func testWhenDiffingPointersWithObjectCopyThatResultHasUpdate() {
+        let o = [ListTestClassObject(key: "0", value: 0),
+                 ListTestClassObject(key: "1", value: 1),
+                 ListTestClassObject(key: "2", value: 2)]
+        let n = [o[0], ListTestClassObject(key: "1", value: 1), o[2]]
+        let result = ListDiffPaths(fromSection: 0, toSection: 0, oldArray: o, newArray: n, option: .ListDiffObjectIdentifier)
+        let expected = [IndexPath(item: 1, section: 0)]
+        XCTAssertEqual(result.updates, expected)
+    }
+    
+    func testWhenDiffingPointersWithSameObjectsThatResultHasNoChanges() {
+        let o = [ListTestClassObject(key: "0", value: 0),
+                 ListTestClassObject(key: "1", value: 1),
+                 ListTestClassObject(key: "2", value: 2)]
+        let n = o
+        let result = ListDiffPaths(fromSection: 0, toSection: 0, oldArray: o, newArray: n, option: .ListDiffObjectIdentifier)
+        XCTAssertFalse(result.hasChanges)
+    }
 }
