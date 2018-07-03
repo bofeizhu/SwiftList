@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		820A0C9B20E7EAD80035EC74 /* ListDiffTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820A0C9A20E7EAD80035EC74 /* ListDiffTests.swift */; };
 		820A0C9E20E854710035EC74 /* ListTestObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820A0C9D20E854710035EC74 /* ListTestObject.swift */; };
+		820A0CA020EADC740035EC74 /* ListBatchUpdateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820A0C9F20EADC740035EC74 /* ListBatchUpdateData.swift */; };
+		820A0CA220EB175E0035EC74 /* ListBatchUpdateDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820A0CA120EB175E0035EC74 /* ListBatchUpdateDataTests.swift */; };
 		828DF97B20DC550700C03E36 /* ListKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 828DF97120DC550700C03E36 /* ListKit.framework */; };
 		828DF98220DC550700C03E36 /* ListKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 828DF97420DC550700C03E36 /* ListKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		828DF98E20DC587D00C03E36 /* ListDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828DF98D20DC587D00C03E36 /* ListDiff.swift */; };
@@ -33,6 +35,8 @@
 /* Begin PBXFileReference section */
 		820A0C9A20E7EAD80035EC74 /* ListDiffTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDiffTests.swift; sourceTree = "<group>"; };
 		820A0C9D20E854710035EC74 /* ListTestObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTestObject.swift; sourceTree = "<group>"; };
+		820A0C9F20EADC740035EC74 /* ListBatchUpdateData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListBatchUpdateData.swift; sourceTree = "<group>"; };
+		820A0CA120EB175E0035EC74 /* ListBatchUpdateDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListBatchUpdateDataTests.swift; sourceTree = "<group>"; };
 		828DF97120DC550700C03E36 /* ListKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ListKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		828DF97420DC550700C03E36 /* ListKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListKit.h; sourceTree = "<group>"; };
 		828DF97520DC550700C03E36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -105,9 +109,10 @@
 		828DF97E20DC550700C03E36 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				820A0C9C20E854270035EC74 /* Objects */,
-				820A0C9A20E7EAD80035EC74 /* ListDiffTests.swift */,
 				828DF98120DC550700C03E36 /* Info.plist */,
+				820A0CA120EB175E0035EC74 /* ListBatchUpdateDataTests.swift */,
+				820A0C9A20E7EAD80035EC74 /* ListDiffTests.swift */,
+				820A0C9C20E854270035EC74 /* Objects */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -115,13 +120,14 @@
 		828DF98C20DC563200C03E36 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				820A0C9F20EADC740035EC74 /* ListBatchUpdateData.swift */,
 				828DF98D20DC587D00C03E36 /* ListDiff.swift */,
 				82F9733420E4017C00F7D50E /* ListDiffable.swift */,
+				82F9733220E1853800F7D50E /* ListExperiments.swift */,
 				82C6B9FE20E00BFE0085B85A /* ListIndexPathResult.swift */,
 				82F9733020E12F8000F7D50E /* ListIndexSetResult.swift */,
-				82C6BA0020E010CA0085B85A /* ListMoveIndexPath.swift */,
 				82F9732E20E0552D00F7D50E /* ListMoveIndex.swift */,
-				82F9733220E1853800F7D50E /* ListExperiments.swift */,
+				82C6BA0020E010CA0085B85A /* ListMoveIndexPath.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -242,6 +248,7 @@
 				82F9733120E12F8000F7D50E /* ListIndexSetResult.swift in Sources */,
 				82F9733520E4017C00F7D50E /* ListDiffable.swift in Sources */,
 				82F9732F20E0552D00F7D50E /* ListMoveIndex.swift in Sources */,
+				820A0CA020EADC740035EC74 /* ListBatchUpdateData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,6 +258,7 @@
 			files = (
 				820A0C9E20E854710035EC74 /* ListTestObject.swift in Sources */,
 				820A0C9B20E7EAD80035EC74 /* ListDiffTests.swift in Sources */,
+				820A0CA220EB175E0035EC74 /* ListBatchUpdateDataTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

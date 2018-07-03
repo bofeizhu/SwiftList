@@ -98,10 +98,6 @@ public class ListIndexSetResult {
                                    newIndexDict: newIndexDict)
     }
     
-    var description: String {
-        return "<\(type(of: self)); \(inserts.count) inserts; \(deletes.count) deletes; \(updates.count) updates; \(moves.count) moves>"
-    }
-    
     var changeCount: Int {
         return inserts.count + deletes.count + updates.count + moves.count
     }
@@ -121,4 +117,10 @@ public class ListIndexSetResult {
         self.newIndexDict = newIndexDict
     }
     
+}
+
+extension ListIndexSetResult: CustomStringConvertible {
+    public var description: String {
+        return "<\(type(of: self)); \(inserts.count) inserts; \(deletes.count) deletes; \(updates.count) updates; \(moves.count) moves>"
+    }
 }

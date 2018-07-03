@@ -98,10 +98,6 @@ public class ListIndexPathResult {
                                    newIndexPathDict: newIndexPathDict)
     }
     
-    var description: String {
-        return "<\(type(of: self)); \(inserts.count) inserts; \(deletes.count) deletes; \(updates.count) updates; \(moves.count) moves>"
-    }
-    
     var changeCount: Int {
         return inserts.count + deletes.count + updates.count + moves.count
     }
@@ -119,5 +115,11 @@ public class ListIndexPathResult {
         self.moves = moves
         self.oldIndexPathDict = oldIndexPathDict
         self.newIndexPathDict = newIndexPathDict
+    }
+}
+
+extension ListIndexPathResult: CustomStringConvertible {
+    public var description: String {
+        return "<\(type(of: self)); \(inserts.count) inserts; \(deletes.count) deletes; \(updates.count) updates; \(moves.count) moves>"
     }
 }

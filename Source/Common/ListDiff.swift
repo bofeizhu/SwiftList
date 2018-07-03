@@ -21,7 +21,7 @@ public enum ListDiffOption {
 }
 
 /// Used to track data stats while diffing.
-fileprivate class ListEntry {
+fileprivate final class ListEntry {
     /// The number of times the data occurs in the old array
     var oldCounter = 0
     /// The number of times the data occurs in the new array
@@ -39,24 +39,24 @@ fileprivate struct ListRecord {
 }
 
 fileprivate extension Dictionary where Key == Int, Value == IndexPath {
-    mutating func addIndexPath(section: Int, index: Int, object: AnyListDiffable) {
+    mutating func addIndexPath(section: Int, index: Int, toObject object: AnyListDiffable) {
         let indexPath = IndexPath(item: index, section: section)
         self[object.hashValue] = indexPath
     }
     
-    mutating func indexPathsAndPopulateMap(array: [AnyListDiffable], section: Int) -> [IndexPath] {
-        var paths: [IndexPath] = []
+    mutating func addIndexPathsAndPopulateMap(_ array: [AnyListDiffable], section: Int) -> [IndexPath] {
+        var indexPaths: [IndexPath] = []
         for (idx, obj) in array.enumerated() {
-            let path = IndexPath(item: idx, section: section)
-            paths.append(path)
-            self[obj.hashValue] = path
+            let indexPath = IndexPath(item: idx, section: section)
+            indexPaths.append(indexPath)
+            self[obj.hashValue] = indexPath
         }
-        return paths
+        return indexPaths
     }
 }
 
 fileprivate extension Dictionary where Key == Int, Value == Int {
-    mutating func addIndex(index: Int, object: AnyListDiffable) {
+    mutating func add(index: Int, toObject object: AnyListDiffable) {
         self[object.hashValue] = index
     }
 }
@@ -80,7 +80,7 @@ fileprivate func ListDiffing(returnIndexPaths: Bool, fromSection: Int, toSection
     // take a shortcut and just build a delete-everything result
     if newCount == 0 {
         if returnIndexPaths {
-            let deletes = oldIndexPathDict.indexPathsAndPopulateMap(array: oldArray, section: fromSection)
+            let deletes = oldIndexPathDict.addIndexPathsAndPopulateMap(oldArray, section: fromSection)
             return ListIndexPathResult(inserts: [],
                                        deletes: deletes,
                                        updates: [], moves: [],
@@ -88,7 +88,7 @@ fileprivate func ListDiffing(returnIndexPaths: Bool, fromSection: Int, toSection
                                        newIndexPathDict: newIndexPathDict)
         } else {
             for (idx, obj) in oldArray.enumerated() {
-                oldIndexDict.addIndex(index: idx, object: obj)
+                oldIndexDict.add(index: idx, toObject: obj)
             }
             return ListIndexSetResult(inserts: IndexSet(), deletes: IndexSet(0..<oldCount),
                                       updates: IndexSet(), moves: [],
@@ -101,14 +101,14 @@ fileprivate func ListDiffing(returnIndexPaths: Bool, fromSection: Int, toSection
     // take a shortcut and just build an insert-everything result
     if oldCount == 0 {
         if returnIndexPaths {
-            let inserts = newIndexPathDict.indexPathsAndPopulateMap(array: newArray, section: toSection)
+            let inserts = newIndexPathDict.addIndexPathsAndPopulateMap(newArray, section: toSection)
             return ListIndexPathResult(inserts: inserts, deletes: [],
                                        updates: [], moves: [],
                                        oldIndexPathDict: oldIndexPathDict,
                                        newIndexPathDict: newIndexPathDict)
         } else {
             for (idx, obj) in newArray.enumerated() {
-                newIndexDict.addIndex(index: idx, object: obj)
+                newIndexDict.add(index: idx, toObject: obj)
             }
             return ListIndexSetResult(inserts: IndexSet(0..<newCount), deletes: IndexSet(),
                                       updates: IndexSet(), moves: [],
@@ -228,9 +228,9 @@ fileprivate func ListDiffing(returnIndexPaths: Bool, fromSection: Int, toSection
         }
         
         if returnIndexPaths {
-            oldIndexPathDict.addIndexPath(section: fromSection, index: i, object: oldArray[i])
+            oldIndexPathDict.addIndexPath(section: fromSection, index: i, toObject: oldArray[i])
         } else {
-            oldIndexDict.addIndex(index: i, object: oldArray[i])
+            oldIndexDict.add(index: i, toObject: oldArray[i])
         }
     }
     
@@ -278,9 +278,9 @@ fileprivate func ListDiffing(returnIndexPaths: Bool, fromSection: Int, toSection
         }
         
         if returnIndexPaths {
-            newIndexPathDict.addIndexPath(section: toSection, index: i, object: newArray[i])
+            newIndexPathDict.addIndexPath(section: toSection, index: i, toObject: newArray[i])
         } else {
-            newIndexDict.addIndex(index: i, object: newArray[i])
+            newIndexDict.add(index: i, toObject: newArray[i])
         }
     }
     
