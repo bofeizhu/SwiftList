@@ -138,6 +138,7 @@ fileprivate extension Array where Element == IndexPath {
                                       deletes: inout IndexSet, inserts: inout IndexSet) {
         for i in stride(from: self.count - 1, through: 0, by: -1) {
             let indexPath = self[i]
+            print(indexPath.section)
             if let move = dictionary[indexPath.section] {
                 self.remove(at: i)
                 convert(move: move, fromMoves: &moves, toDeletes: &deletes, andInserts: &inserts)
