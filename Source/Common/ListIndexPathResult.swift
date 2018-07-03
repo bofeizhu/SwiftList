@@ -98,12 +98,10 @@ public class ListIndexPathResult {
                                    newIndexPathDict: newIndexPathDict)
     }
     
+    //MARK: Internal API
     var changeCount: Int {
         return inserts.count + deletes.count + updates.count + moves.count
     }
-    
-    private var oldIndexPathDict: [Int: IndexPath]
-    private var newIndexPathDict: [Int: IndexPath]
     
     init(inserts: [IndexPath], deletes: [IndexPath], updates: [IndexPath],
          moves: [ListMoveIndexPath],
@@ -116,6 +114,10 @@ public class ListIndexPathResult {
         self.oldIndexPathDict = oldIndexPathDict
         self.newIndexPathDict = newIndexPathDict
     }
+    
+    //MARK: Private
+    private var oldIndexPathDict: [Int: IndexPath]
+    private var newIndexPathDict: [Int: IndexPath]
 }
 
 extension ListIndexPathResult: CustomStringConvertible {

@@ -98,12 +98,10 @@ public class ListIndexSetResult {
                                    newIndexDict: newIndexDict)
     }
     
+    //MARK: Internal API
     var changeCount: Int {
         return inserts.count + deletes.count + updates.count + moves.count
     }
-    
-    private var oldIndexDict: [Int: Int]
-    private var newIndexDict: [Int: Int]
     
     init(inserts: IndexSet, deletes: IndexSet, updates: IndexSet,
          moves: [ListMoveIndex],
@@ -117,6 +115,9 @@ public class ListIndexSetResult {
         self.newIndexDict = newIndexDict
     }
     
+    //MARK: Private
+    private var oldIndexDict: [Int: Int]
+    private var newIndexDict: [Int: Int]
 }
 
 extension ListIndexSetResult: CustomStringConvertible {

@@ -11,6 +11,9 @@
 		820A0C9E20E854710035EC74 /* ListTestObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820A0C9D20E854710035EC74 /* ListTestObject.swift */; };
 		820A0CA020EADC740035EC74 /* ListBatchUpdateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820A0C9F20EADC740035EC74 /* ListBatchUpdateData.swift */; };
 		820A0CA220EB175E0035EC74 /* ListBatchUpdateDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820A0CA120EB175E0035EC74 /* ListBatchUpdateDataTests.swift */; };
+		820A0CA520EBC07D0035EC74 /* UICollectionView+ListBatchUpdateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820A0CA420EBC07D0035EC74 /* UICollectionView+ListBatchUpdateData.swift */; };
+		820A0CA720EBC3EE0035EC74 /* ListAdapterUpdaterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820A0CA620EBC3EE0035EC74 /* ListAdapterUpdaterDelegate.swift */; };
+		820A0CA920EBC6AD0035EC74 /* ListAdapterUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820A0CA820EBC6AD0035EC74 /* ListAdapterUpdater.swift */; };
 		828DF97B20DC550700C03E36 /* ListKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 828DF97120DC550700C03E36 /* ListKit.framework */; };
 		828DF98220DC550700C03E36 /* ListKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 828DF97420DC550700C03E36 /* ListKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		828DF98E20DC587D00C03E36 /* ListDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828DF98D20DC587D00C03E36 /* ListDiff.swift */; };
@@ -37,6 +40,9 @@
 		820A0C9D20E854710035EC74 /* ListTestObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTestObject.swift; sourceTree = "<group>"; };
 		820A0C9F20EADC740035EC74 /* ListBatchUpdateData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListBatchUpdateData.swift; sourceTree = "<group>"; };
 		820A0CA120EB175E0035EC74 /* ListBatchUpdateDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListBatchUpdateDataTests.swift; sourceTree = "<group>"; };
+		820A0CA420EBC07D0035EC74 /* UICollectionView+ListBatchUpdateData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+ListBatchUpdateData.swift"; sourceTree = "<group>"; };
+		820A0CA620EBC3EE0035EC74 /* ListAdapterUpdaterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAdapterUpdaterDelegate.swift; sourceTree = "<group>"; };
+		820A0CA820EBC6AD0035EC74 /* ListAdapterUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAdapterUpdater.swift; sourceTree = "<group>"; };
 		828DF97120DC550700C03E36 /* ListKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ListKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		828DF97420DC550700C03E36 /* ListKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListKit.h; sourceTree = "<group>"; };
 		828DF97520DC550700C03E36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -78,6 +84,14 @@
 			path = Objects;
 			sourceTree = "<group>";
 		};
+		820A0CA320EBC0580035EC74 /* Internal */ = {
+			isa = PBXGroup;
+			children = (
+				820A0CA420EBC07D0035EC74 /* UICollectionView+ListBatchUpdateData.swift */,
+			);
+			path = Internal;
+			sourceTree = "<group>";
+		};
 		828DF96720DC550700C03E36 = {
 			isa = PBXGroup;
 			children = (
@@ -100,8 +114,11 @@
 			isa = PBXGroup;
 			children = (
 				828DF98C20DC563200C03E36 /* Common */,
-				828DF97420DC550700C03E36 /* ListKit.h */,
 				828DF97520DC550700C03E36 /* Info.plist */,
+				820A0CA320EBC0580035EC74 /* Internal */,
+				820A0CA820EBC6AD0035EC74 /* ListAdapterUpdater.swift */,
+				820A0CA620EBC3EE0035EC74 /* ListAdapterUpdaterDelegate.swift */,
+				828DF97420DC550700C03E36 /* ListKit.h */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -242,9 +259,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				828DF98E20DC587D00C03E36 /* ListDiff.swift in Sources */,
+				820A0CA920EBC6AD0035EC74 /* ListAdapterUpdater.swift in Sources */,
 				82C6BA0120E010CA0085B85A /* ListMoveIndexPath.swift in Sources */,
+				820A0CA720EBC3EE0035EC74 /* ListAdapterUpdaterDelegate.swift in Sources */,
 				82F9733320E1853800F7D50E /* ListExperiments.swift in Sources */,
 				82C6B9FF20E00BFE0085B85A /* ListIndexPathResult.swift in Sources */,
+				820A0CA520EBC07D0035EC74 /* UICollectionView+ListBatchUpdateData.swift in Sources */,
 				82F9733120E12F8000F7D50E /* ListIndexSetResult.swift in Sources */,
 				82F9733520E4017C00F7D50E /* ListDiffable.swift in Sources */,
 				82F9732F20E0552D00F7D50E /* ListMoveIndex.swift in Sources */,
