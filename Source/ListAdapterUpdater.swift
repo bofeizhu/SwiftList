@@ -24,7 +24,7 @@ public final class ListAdapterUpdater {
     /**
      A flag indicating if a move should be treated as a "delete, then insert" operation.
      */
-    public var movesAsDeletesInserts: Bool
+    public var movesAsDeletesInserts: Bool = false
 
     /**
      A flag indicating whether this updater should skip diffing and simply call
@@ -33,17 +33,17 @@ public final class ListAdapterUpdater {
      - Note: This will result in better performance, but will not generate the same delegate
      callbacks. If using a custom layout, it will not receive `prepareForCollectionViewUpdates(_:)`.
      */
-    public var allowsBackgroundReloading: Bool
+    public var allowsBackgroundReloading: Bool = true
 
     /**
      Time, in seconds, to wait and coalesce batch updates. Default is 0.
      */
-    public var coalescanceTime: TimeInterval
+    public var coalescanceTime: TimeInterval = 0
 
     /**
      A bitmask of experiments to conduct on the updater.
      */
-    public var experiments: ListExperiment
+    public var experiments: ListExperiment = ListExperiment(rawValue: 0)
 
     //MARK: Internal API
     var fromObjects: [AnyListDiffable]?
