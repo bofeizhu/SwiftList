@@ -94,7 +94,7 @@ public class ListIndexPathResult {
                                    newIndexPathDict: newIndexPathDict)
     }
     
-    //MARK: Internal API
+    //MARK: Private API
     var changeCount: Int {
         return inserts.count + deletes.count + updates.count + moves.count
     }

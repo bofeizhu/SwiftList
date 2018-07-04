@@ -43,14 +43,48 @@ public final class ListAdapterUpdater {
     /**
      A bitmask of experiments to conduct on the updater.
      */
-    public var experiments: ListExperiment = ListExperiment(rawValue: 0)
+    public var experiments: ListExperiment = .listExperimentNone
 
-    //MARK: Internal API
+    //MARK: Private API
     var fromObjects: [AnyListDiffable]?
+    var toObjectsClosure: ListToObjectClosure?
+    var pendingTransitionToObjects: [AnyListDiffable]?
+    var completionClosures: [ListUpdatingCompletion] = []
     
+    // the default is to use animations unless NO is passed
+    var queuedUpdateIsAnimated: Bool = true
+    
+    var batchUpdates: ListBatchUpdates = ListBatchUpdates()
+    var objectTransitionClosure: ListObjectTransitionClosure?
+    var reloadUpdates: ListReloadUpdateClosure?
+    private(set) var hasQueuedReloadData: Bool = false
+    var state: ListBatchUpdateState = .ListBatchUpdateStateIdle
+    var applyingUpdateData: ListBatchUpdateData?
+    
+    var hasChanges: Bool {
+        return hasQueuedReloadData || batchUpdates.hasChanges
+        || fromObjects != nil || toObjectsClosure != nil
+    }
 
     init() {
         assert(Thread.isMainThread, "Must be on the main thread")
+    }
+    
+    func performReloadDataWith(collectionViewClosure: ListCollectionViewClosure) {
+        assert(Thread.isMainThread, "Must be on the main thread")
         
+        cleanStateAfterUpdates()
+        
+        var completionClosures = self.completionClosures
+    }
+//    - (void)performBatchUpdatesWithCollectionViewClosure:(IGListCollectionViewClosure)collectionViewClosure;
+//    - (void)cleanStateBeforeUpdates;
+    
+    
+}
+
+private extension ListAdapterUpdater {
+    func cleanStateAfterUpdates() {
+        batchUpdates = ListBatchUpdates()
     }
 }

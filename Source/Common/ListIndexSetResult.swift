@@ -94,7 +94,7 @@ public class ListIndexSetResult {
                                    newIndexDict: newIndexDict)
     }
     
-    //MARK: Internal API
+    //MARK: Private API
     var changeCount: Int {
         return inserts.count + deletes.count + updates.count + moves.count
     }
@@ -111,7 +111,6 @@ public class ListIndexSetResult {
         self.newIndexDict = newIndexDict
     }
     
-    //MARK: Private
     private var oldIndexDict: [Int: Int]
     private var newIndexDict: [Int: Int]
 }

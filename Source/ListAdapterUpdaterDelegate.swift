@@ -27,7 +27,7 @@ public protocol ListAdapterUpdaterDelegate: AnyObject {
         - updates: The batch updates that were applied to the collection view.
         - collectionView: The collection view that performed the batch updates.
      
-     - Note: This event is called in the completion block of the batch update.
+     - Note: This event is called in the completion closure of the batch update.
      */
     func listAdapterUpdater(_ listAdapterUpdater: ListAdapterUpdater,
                             didPerformBatchUpdates updates: ListBatchUpdateData,

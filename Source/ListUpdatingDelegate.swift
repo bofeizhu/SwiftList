@@ -7,28 +7,28 @@
 //
 
 /**
- A completion block to execute when updates are finished.
- - Parameters finished: Specifies whether or not the update finished.
+ A completion closure to execute when updates are finished.
+ - Parameter finished: Specifies whether or not the update finished.
  */
 public typealias ListUpdatingCompletion = (_ finished: Bool) -> Void
 
 /**
- A block to be called when the adapter applies changes to the collection view.
+ A closure to be called when the adapter applies changes to the collection view.
  - Parameter toObjects: The new objects in the collection.
  */
-public typealias ListObjectTransitionBlock = (_ toObjects: [AnyListDiffable]) -> Void
+public typealias ListObjectTransitionClosure = (_ toObjects: [AnyListDiffable]) -> Void
 
-/// A block that contains all of the updates.
-public typealias ListItemUpdateBlock = () -> Void
+/// A closure that contains all of the updates.
+public typealias ListItemUpdateClosure = () -> Void
 
-/// A block to be called when an adapter reloads the collection view.
-public typealias ListReloadUpdateBlock = () -> Void
+/// A closure to be called when an adapter reloads the collection view.
+public typealias ListReloadUpdateClosure = () -> Void
 
-/// A block that returns an array of objects to transition to.
-public typealias ListToObjectBlock = () -> [AnyListDiffable]?
+/// A closure that returns an array of objects to transition to.
+public typealias ListToObjectClosure = () -> [AnyListDiffable]?
 
-/// A block that returns a collection view to perform updates on.
-public typealias ListCollectionViewBlock = () -> UICollectionView?
+/// A closure that returns a collection view to perform updates on.
+public typealias ListCollectionViewClosure = () -> UICollectionView?
 
 /**
  Implement this protocol in order to handle both section and row based update events. Implementation should forward or
@@ -38,23 +38,23 @@ public protocol ListUpdatingDelegate: AnyObject {
     /**
      Tells the delegate to perform a section transition from an old array of objects to a new one.
      - Parameters:
-        - collectionViewBlock: A block returning the collecion view to perform updates on.
+        - collectionViewClosure: A closure returning the collecion view to perform updates on.
         - fromObjects: The previous objects in the collection view. Objects must conform to `ListDiffable`.
-        - toObjectsBlock: A block returning the new objects in the collection view. Objects must conform to `ListDiffable`.
+        - toObjectsClosure: A closure returning the new objects in the collection view. Objects must conform to `ListDiffable`.
         - animated: A flag indicating if the transition should be animated.
-        - objectTransitionBlock: A block that must be called when the adapter applies changes to the collection view.
-        - completion: A completion block to execute when the update is finished.
+        - objectTransitionClosure: A closure that must be called when the adapter applies changes to the collection view.
+        - completion: A completion closure to execute when the update is finished.
      
      - Note: Implementations determine how to transition between objects. You can perform a diff on the objects, reload
      each section, or simply call `reloadData()` on the collection view. In the end, the collection view must be setup with a
      section for each object in the `toObjects` array.
      
-     The `objectTransitionBlock` block should be called prior to making any `UICollectionView` updates, passing in the `toObjects`
+     The `objectTransitionClosure` closure should be called prior to making any `UICollectionView` updates, passing in the `toObjects`
      that the updater is applying.
      */
-    func performUpdateWith(collectionViewBlock: ListCollectionViewBlock,
-                           fromObjects: [AnyListDiffable]?, toObjectsBlock: ListToObjectBlock,
-                           animated: Bool, objectTransitionBlock: ListObjectTransitionBlock,
+    func performUpdateWith(collectionViewClosure: ListCollectionViewClosure,
+                           fromObjects: [AnyListDiffable]?, toObjectsClosure: ListToObjectClosure,
+                           animated: Bool, objectTransitionClosure: ListObjectTransitionClosure,
                            completion: ListUpdatingCompletion?)
     
     /**
@@ -110,12 +110,12 @@ public protocol ListUpdatingDelegate: AnyObject {
     /**
      Completely reload data in the collection.
      - Parameters:
-        - collectionViewBlock: A block returning the collecion view to reload.
-        - reloadUpdateBlock: A block that must be called when the adapter reloads the collection view.
-        - completion: A completion block to execute when the reload is finished.
+        - collectionViewClosure: A closure returning the collecion view to reload.
+        - reloadUpdateClosure: A closure that must be called when the adapter reloads the collection view.
+        - completion: A completion closure to execute when the reload is finished.
      */
-    func reloadDataWith(collectionViewBlock: ListCollectionViewBlock,
-                        reloadUpdateBlock: ListReloadUpdateBlock,
+    func reloadDataWith(collectionViewClosure: ListCollectionViewClosure,
+                        reloadUpdateClosure: ListReloadUpdateClosure,
                         completion: ListUpdatingCompletion?)
     
     /**
@@ -128,13 +128,13 @@ public protocol ListUpdatingDelegate: AnyObject {
     func collectionView(_ collectionView: UICollectionView, reloadSections sections: IndexSet)
     
     /**
-     Perform an item update block in the collection view.
+     Perform an item update closure in the collection view.
      - Parameters:
-        - collectionViewBlock: A block returning the collecion view to perform updates on.
+        - collectionViewClosure: A closure returning the collecion view to perform updates on.
         - animated: A flag indicating if the transition should be animated.
-        - itemUpdates: A block containing all of the updates.
-        - completion: A completion block to execute when the update is finished.
+        - itemUpdates: A closure containing all of the updates.
+        - completion: A completion closure to execute when the update is finished.
      */
-    func performUpdateWith(CollectionViewBlock: ListCollectionViewBlock, animated: Bool,
-                           itemUpdates: ListItemUpdateBlock, completion: ListUpdatingCompletion?)
+    func performUpdateWith(CollectionViewClosure: ListCollectionViewClosure, animated: Bool,
+                           itemUpdates: ListItemUpdateClosure, completion: ListUpdatingCompletion?)
 }

@@ -20,7 +20,7 @@ public struct ListMoveIndexPath: Hashable {
      */
     public let to: IndexPath
     
-    //MARK: Internal API
+    //MARK: Private API
     init(from: IndexPath, to: IndexPath) {
         self.from = from
         self.to = to
