@@ -40,9 +40,7 @@ public class ListIndexSetResult {
     
     /**
      Returns the index of the object with the specified hashValue *before* the diff.
-     - Parameters:
-        - hashValue: The hashValue of the object.
-     
+     - Parameters hashValue: The hashValue of the object.
      - Returns: The optional index of the object before the diff.
      */
     public func oldIndexFor(hashValue: Int) -> Int? {
@@ -51,9 +49,7 @@ public class ListIndexSetResult {
     
     /**
      Returns the index of the object with the specified hashValue *after* the diff.
-     - Parameters:
-        - hashValue: The hashValue of the object.
-     
+     - Parameters hashValue: The hashValue of the object.
      - Returns: The optional index of the object after the diff.
      */
     public func newIndexFor(hashValue: Int) -> Int? {

@@ -45,7 +45,6 @@ public final class ListBatchUpdateData {
     
     /**
      Creates a new batch update object with section and item operations.
-     
      - Parameters:
         - insertSections: Section indexes to insert.
         - deleteSections: Section indexes to delete.

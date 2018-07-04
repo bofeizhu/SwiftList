@@ -130,7 +130,7 @@ public protocol ListAdapterUpdaterDelegate: AnyObject {
     func listAdapterUpdater(_ listAdapterUpdater: ListAdapterUpdater,
                             forCollectionView: UICollectionView,
                             willCrashWith error: Error,
-                            fromObjects: [AnyListDiffable],
-                            toObjects: [AnyListDiffable],
+                            fromObjects: [AnyListDiffable]?,
+                            toObjects: [AnyListDiffable]?,
                             updates: ListBatchUpdateData)
 }
