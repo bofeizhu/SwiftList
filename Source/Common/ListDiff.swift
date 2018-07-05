@@ -13,11 +13,11 @@ public enum ListDiffOption {
     /**
      Compare objects using `ObjectIdentifier`.
      */
-    case ListDiffObjectIdentifier
+    case objectIdentifier
     /**
      Compare objects using `hashValue`.
      */
-    case ListDiffEquality
+    case equality
 }
 
 /**
@@ -217,7 +217,7 @@ fileprivate func ListDiffing(returnIndexPaths: Bool,
                     let n = newArray[i]
                     let o = oldArray[originalIndex]
                     switch option {
-                    case .ListDiffObjectIdentifier:
+                    case .objectIdentifier:
                         assert(type(of: n.base) is AnyClass && type(of: o.base) is AnyClass,
                                "Objects should have class-type when using `ListDiffObjectIdentifier`")
                         let nobj = n.base as AnyObject
@@ -226,7 +226,7 @@ fileprivate func ListDiffing(returnIndexPaths: Bool,
                             entry.updated = true
                         }
                         
-                    case .ListDiffEquality:
+                    case .equality:
                         if n != o {
                             entry.updated = true
                         }

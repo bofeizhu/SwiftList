@@ -7,8 +7,8 @@
 //
 
 enum ListBatchUpdateState {
-    case ListBatchUpdateStateIdle
-    case ListBatchUpdateStateQueuedBatchUpdate
-    case ListBatchUpdateStateExecutingBatchUpdateClosure
-    case ListBatchUpdateStateExecutedBatchUpdateClosure
+    case idle
+    case queuedBatchUpdate
+    case executingBatchUpdateClosure
+    case executedBatchUpdateClosure
 }
