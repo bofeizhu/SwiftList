@@ -28,10 +28,10 @@ public enum ListDiffOption {
     - option: An option on how to compare objects.
  - Returns: A result object containing affected indexes.
  */
-public func ListDiff(oldArray: [AnyListDiffable], newArray: [AnyListDiffable],
+public func ListDiff(oldArray: [AnyListDiffable]?, newArray: [AnyListDiffable]?,
                      option: ListDiffOption) -> ListIndexSetResult {
     let result = ListDiffing(returnIndexPaths: false, fromSection: 0, toSection: 0,
-                             oldArray: oldArray, newArray: newArray,
+                             oldArray: oldArray ?? [], newArray: newArray ?? [],
                              option: option, experiments: .listExperimentNone)
     guard let indexSetResult = result as? ListIndexSetResult else {
         preconditionFailure("Cannot cast diff result to `ListIndexSetResult`")
@@ -50,11 +50,11 @@ public func ListDiff(oldArray: [AnyListDiffable], newArray: [AnyListDiffable],
  - Returns: A result object containing affected indexes.
  */
 public func ListDiffPaths(fromSection section: Int, toSection newSection: Int,
-                          oldArray: [AnyListDiffable], newArray: [AnyListDiffable],
+                          oldArray: [AnyListDiffable]?, newArray: [AnyListDiffable]?,
                           option: ListDiffOption) -> ListIndexPathResult {
     let result = ListDiffing(returnIndexPaths: true,
                              fromSection: section, toSection: newSection,
-                             oldArray: oldArray, newArray: newArray,
+                             oldArray: oldArray ?? [], newArray: newArray ?? [],
                              option: option, experiments: .listExperimentNone)
     guard let indexPathResult = result as? ListIndexPathResult else {
         preconditionFailure("Cannot cast diff result to `ListIndexPathResult`")

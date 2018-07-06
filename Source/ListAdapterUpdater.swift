@@ -67,14 +67,13 @@ public final class ListAdapterUpdater {
     }
 
     init() {
-        assert(Thread.isMainThread, "Must be on the main thread")
+        assertMainThread()
     }
     
     func performReloadDataWith(collectionViewClosure: ListCollectionViewClosure) {
-        assert(Thread.isMainThread, "Must be on the main thread")
+        assertMainThread()
         
         var completionClosures = self.completionClosures
-        
         cleanStateBeforeUpdates()
         
         func executeCompletionClosures(finished: Bool) {
@@ -123,13 +122,100 @@ public final class ListAdapterUpdater {
         executeCompletionClosures(finished: true)
     }
     
-//    - (void)performBatchUpdatesWithCollectionViewClosure:(IGListCollectionViewClosure)collectionViewClosure;
-//    - (void)cleanStateBeforeUpdates;
+    func performBatchUpdatesWith(collectionViewClosure: ListCollectionViewClosure) {
+        assertMainThread()
+        assert(state == .idle, "Should not call batch updates when state isn't idle")
+        
+        // create local variables so we can immediately clean our state but pass these items into the batch update block
+        let fromObjects = self.fromObjects
+        let toObjectClosure = self.toObjectsClosure
+        var completionClosures = self.completionClosures
+        let objectTransitionClosure = self.objectTransitionClosure
+        let animated = queuedUpdateIsAnimated
+        let batchUpdates = self.batchUpdates
+        
+        // clean up all state so that new updates can be coalesced while the current update is in flight
+        cleanStateBeforeUpdates()
+        
+        func executeCompletionClosures(finished: Bool) {
+            applyingUpdateData = nil
+            state = .idle
+            
+            for closure in completionClosures {
+                closure(finished)
+            }
+        }
+        
+         // bail early if the collection view has been deallocated in the time since the update was queued
+        guard let collectionView = collectionViewClosure() else {
+            cleanStateAfterUpdates()
+            executeCompletionClosures(finished: false)
+            return
+        }
+        
+        let toObjects = toObjectsClosure?()
+        
+        #if DEBUG
+        toObjects?.hasDuplicateHashValue()
+        #endif
+        
+        func executeUpdateClosures() {
+            state = .executingBatchUpdateClosure
+            
+            // run the update block so that the adapter can set its items. this makes sure that just before the update is
+            // committed that the data source is updated to the /latest/ "toObjects". this makes the data source in sync
+            // with the items that the updater is transitioning to
+            if let toObjects = toObjects {
+                objectTransitionClosure?(toObjects)
+            }
+            
+            // execute each item update block which should make calls like insert, delete, and reload for index paths
+            // we collect all mutations in corresponding sets on self, then filter based on UICollectionView shortcomings
+            // call after the objectTransitionBlock so section level mutations happen before any items
+            for itemUpdateClosure in batchUpdates.itemUpdateClosures {
+                itemUpdateClosure()
+            }
+            
+            // add any completion blocks from item updates. added after item blocks are executed in order to capture any
+            // re-entrant updates
+            completionClosures.append(contentsOf: batchUpdates.itemCompletionClosures)
+            
+            state = .executedBatchUpdateClosure
+        }
+        
+        func reloadDataFallback() {
+            executeUpdateClosures()
+            cleanStateAfterUpdates()
+            performBatchUpdatesItemClosureApplied()
+            collectionView.reloadData()
+            collectionView.layoutIfNeeded()
+            executeCompletionClosures(finished: true)
+        }
+        
+        // if the collection view isn't in a visible window, skip diffing and batch updating. execute all transition blocks,
+        // reload data, execute completion blocks, and get outta here
+        if allowsBackgroundReloading,
+            collectionView.window == nil {
+            beginPerformBatchUpdatesTo(objects: toObjects)
+            reloadDataFallback()
+            return
+        }
+        
+        // disables multiple `performBatchUpdates(_ :)` from happening at the same time
+        beginPerformBatchUpdatesTo(objects: toObjects)
+        
+        //TODO: Add experiments
+        func performDiff() -> ListIndexSetResult {
+            return ListDiff(oldArray: fromObjects, newArray: toObjects, option: .equality)
+        }
+        
+        // closure executed in the first param closure of `UICollectionView.performBatchUpdates(_:completion:)`
+        let batchUpdatesClosure = {(result: ListIndexSetResult) -> Void in
+            executeUpdateClosures()
+            
+        }
+    }
     
-    
-}
-
-private extension ListAdapterUpdater {
     func cleanStateBeforeUpdates() {
         queuedUpdateIsAnimated = true
         
@@ -148,8 +234,42 @@ private extension ListAdapterUpdater {
         // or re-entrant object updates
         completionClosures.removeAll()
     }
-    
+}
+
+private extension ListAdapterUpdater {
     func cleanStateAfterUpdates() {
         batchUpdates = ListBatchUpdates()
+    }
+    
+    func performBatchUpdatesItemClosureApplied() {
+        pendingTransitionToObjects = nil
+    }
+    
+    func flush(collectionView: UICollectionView, withDiffResult diffResult: ListIndexSetResult,
+               batchUpdates: ListBatchUpdates, fromObjects: [AnyListDiffable]) -> ListBatchUpdateData {
+        var moves = Set(diffResult.moves)
+        
+        // combine section reloads from the diff and manual reloads via `reloadItems(_ :)`
+        var reloads = diffResult.updates
+        reloads.formUnion(batchUpdates.sectionReloads)
+        
+        var inserts = diffResult.inserts
+        var deletes = diffResult.deletes
+        
+        if movesAsDeletesInserts {
+            for move in moves {
+                deletes.insert(move.from)
+                inserts.insert(move.to)
+            }
+            // clear out all moves
+            moves = []
+        }
+        
+        
+    }
+    
+    func beginPerformBatchUpdatesTo(objects: [AnyListDiffable]?) {
+        pendingTransitionToObjects = objects
+        state = .queuedBatchUpdate
     }
 }
