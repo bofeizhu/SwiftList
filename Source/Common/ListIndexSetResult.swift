@@ -43,8 +43,12 @@ public class ListIndexSetResult {
      - Parameters hashValue: The hashValue of the object.
      - Returns: The optional index of the object before the diff.
      */
-    public func oldIndexFor(hashValue: Int) -> Int? {
-        return oldIndexDict[hashValue]
+    public func oldIndexFor(hashValue: Int?) -> Int? {
+        guard let h = hashValue else {
+            return nil
+        }
+        
+        return oldIndexDict[h]
     }
     
     /**
@@ -52,8 +56,12 @@ public class ListIndexSetResult {
      - Parameters hashValue: The hashValue of the object.
      - Returns: The optional index of the object after the diff.
      */
-    public func newIndexFor(hashValue: Int) -> Int? {
-        return newIndexDict[hashValue]
+    public func newIndexFor(hashValue: Int?) -> Int? {
+        guard let h = hashValue else {
+            return nil
+        }
+        
+        return newIndexDict[h]
     }
     
     /**

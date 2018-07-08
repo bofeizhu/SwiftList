@@ -21,4 +21,12 @@ final class ListBatchUpdates {
         || itemInserts.count > 0 || itemMoves.count > 0
         || itemReloads.count > 0 || itemDeletes.count > 0
     }
+    
+    func delete(_ array: [IndexPath]) {
+        itemDeletes.append(contentsOf: array)
+    }
+    
+    func insert(_ array: [IndexPath]) {
+        itemInserts.append(contentsOf: array)
+    }
 }

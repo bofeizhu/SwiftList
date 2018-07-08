@@ -32,7 +32,7 @@ public func ListDiff(oldArray: [AnyListDiffable]?, newArray: [AnyListDiffable]?,
                      option: ListDiffOption) -> ListIndexSetResult {
     let result = ListDiffing(returnIndexPaths: false, fromSection: 0, toSection: 0,
                              oldArray: oldArray ?? [], newArray: newArray ?? [],
-                             option: option, experiments: .listExperimentNone)
+                             option: option, experiments: .none)
     guard let indexSetResult = result as? ListIndexSetResult else {
         preconditionFailure("Cannot cast diff result to `ListIndexSetResult`")
     }
@@ -55,7 +55,7 @@ public func ListDiffPaths(fromSection section: Int, toSection newSection: Int,
     let result = ListDiffing(returnIndexPaths: true,
                              fromSection: section, toSection: newSection,
                              oldArray: oldArray ?? [], newArray: newArray ?? [],
-                             option: option, experiments: .listExperimentNone)
+                             option: option, experiments: .none)
     guard let indexPathResult = result as? ListIndexPathResult else {
         preconditionFailure("Cannot cast diff result to `ListIndexPathResult`")
     }

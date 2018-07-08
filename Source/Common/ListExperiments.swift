@@ -17,18 +17,18 @@ public struct ListExperiment: OptionSet {
     }
     
     /// Specifies no experiments.
-    public static let listExperimentNone = ListExperiment(rawValue: 1 << 1)
+    public static let none = ListExperiment(rawValue: 1 << 1)
     /// Test updater diffing performed on a background queue.
-    public static let listExperimentBackgroundDiffing = ListExperiment(rawValue: 1 << 2)
+    public static let backgroundDiffing = ListExperiment(rawValue: 1 << 2)
     /// Test fallback to reloadData when "too many" update operations.
-    public static let listExperimentReloadDataFallback = ListExperiment(rawValue: 1 << 3)
+    public static let reloadDataFallback = ListExperiment(rawValue: 1 << 3)
     /// Test a faster way to return visible section controllers.
-    public static let listExperimentFasterVisibleSectionController = ListExperiment(rawValue: 1 << 4)
+    public static let fasterVisibleSectionController = ListExperiment(rawValue: 1 << 4)
     /// Test deduping item-level updates.
-    public static let listExperimentDedupeItemUpdates = ListExperiment(rawValue: 1 << 5)
+    public static let dedupeItemUpdates = ListExperiment(rawValue: 1 << 5)
     /// Test deferring object creation until just before diffing.
-    public static let listExperimentDeferredToObjectCreation = ListExperiment(rawValue: 1 << 6)
+    public static let deferredToObjectCreation = ListExperiment(rawValue: 1 << 6)
     /// Test getting collection view at update time.
-    public static let listExperimentGetCollectionViewAtUpdate = ListExperiment(rawValue: 1 << 7)
+    public static let getCollectionViewAtUpdate = ListExperiment(rawValue: 1 << 7)
 }
 

@@ -43,7 +43,7 @@ public final class ListAdapterUpdater {
     /**
      A bitmask of experiments to conduct on the updater.
      */
-    public var experiments: ListExperiment = .listExperimentNone
+    public var experiments: ListExperiment = .none
 
     //MARK: Private API
     var fromObjects: [AnyListDiffable]?
@@ -76,17 +76,17 @@ public final class ListAdapterUpdater {
         var completionClosures = self.completionClosures
         cleanStateBeforeUpdates()
         
-        func executeCompletionClosures(finished: Bool) {
+        let executeCompletionClosures = {[unowned self] (finished: Bool) in
             for closure in completionClosures {
                 closure(finished)
             }
-            state = .idle
+            self.state = .idle
         }
         
         // bail early if the collection view has been deallocated in the time since the update was queued
         guard let collectionView = collectionViewClosure() else {
             cleanStateAfterUpdates()
-            executeCompletionClosures(finished: false)
+            executeCompletionClosures(false)
             return
         }
         
@@ -119,7 +119,7 @@ public final class ListAdapterUpdater {
         
         delegate?.listAdapterUpdater(self, didReloadDataForCollectionView: collectionView)
         
-        executeCompletionClosures(finished: true)
+        executeCompletionClosures(true)
     }
     
     func performBatchUpdatesWith(collectionViewClosure: ListCollectionViewClosure) {
@@ -137,9 +137,12 @@ public final class ListAdapterUpdater {
         // clean up all state so that new updates can be coalesced while the current update is in flight
         cleanStateBeforeUpdates()
         
-        func executeCompletionClosures(finished: Bool) {
-            applyingUpdateData = nil
-            state = .idle
+        let executeCompletionClosures = { [weak self] (finished: Bool) in
+            guard let strongSelf = self else {
+                return
+            }
+            strongSelf.applyingUpdateData = nil
+            strongSelf.state = .idle
             
             for closure in completionClosures {
                 closure(finished)
@@ -149,7 +152,7 @@ public final class ListAdapterUpdater {
          // bail early if the collection view has been deallocated in the time since the update was queued
         guard let collectionView = collectionViewClosure() else {
             cleanStateAfterUpdates()
-            executeCompletionClosures(finished: false)
+            executeCompletionClosures(false)
             return
         }
         
@@ -159,8 +162,11 @@ public final class ListAdapterUpdater {
         toObjects?.hasDuplicateHashValue()
         #endif
         
-        func executeUpdateClosures() {
-            state = .executingBatchUpdateClosure
+        let executeUpdateClosures = { [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+            strongSelf.state = .executingBatchUpdateClosure
             
             // run the update block so that the adapter can set its items. this makes sure that just before the update is
             // committed that the data source is updated to the /latest/ "toObjects". this makes the data source in sync
@@ -180,16 +186,19 @@ public final class ListAdapterUpdater {
             // re-entrant updates
             completionClosures.append(contentsOf: batchUpdates.itemCompletionClosures)
             
-            state = .executedBatchUpdateClosure
+            strongSelf.state = .executedBatchUpdateClosure
         }
         
-        func reloadDataFallback() {
+        let reloadDataFallback = { [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
             executeUpdateClosures()
-            cleanStateAfterUpdates()
-            performBatchUpdatesItemClosureApplied()
+            strongSelf.cleanStateAfterUpdates()
+            strongSelf.performBatchUpdatesItemClosureApplied()
             collectionView.reloadData()
             collectionView.layoutIfNeeded()
-            executeCompletionClosures(finished: true)
+            executeCompletionClosures(true)
         }
         
         // if the collection view isn't in a visible window, skip diffing and batch updating. execute all transition blocks,
@@ -205,13 +214,30 @@ public final class ListAdapterUpdater {
         beginPerformBatchUpdatesTo(objects: toObjects)
         
         //TODO: Add experiments
-        func performDiff() -> ListIndexSetResult {
+        let performDiff = {
             return ListDiff(oldArray: fromObjects, newArray: toObjects, option: .equality)
         }
         
         // closure executed in the first param closure of `UICollectionView.performBatchUpdates(_:completion:)`
-        let batchUpdatesClosure = {(result: ListIndexSetResult) -> Void in
+        let batchUpdatesClosure = {[weak self] (result: ListIndexSetResult) in
+            guard let strongSelf = self else {
+                return
+            }
             executeUpdateClosures()
+            strongSelf.applyingUpdateData = strongSelf.flush(collectionView: collectionView,
+                                       withDiffResult: result, batchUpdates: batchUpdates,
+                                       fromObjects: fromObjects)
+            strongSelf.cleanStateAfterUpdates()
+            strongSelf.performBatchUpdatesItemClosureApplied()
+        }
+        
+        // closure used as the second param of `UICollectionView.performBatchUpdates(_:completion:)`
+        let batchUpdatesCompletionBlock = { [weak self] (finished: Bool) in
+            
+        }
+        
+        // closure that executes the batch update and exception handling
+        let performUpdate = { [weak self] (result: ListIndexSetResult) in
             
         }
     }
@@ -246,7 +272,7 @@ private extension ListAdapterUpdater {
     }
     
     func flush(collectionView: UICollectionView, withDiffResult diffResult: ListIndexSetResult,
-               batchUpdates: ListBatchUpdates, fromObjects: [AnyListDiffable]) -> ListBatchUpdateData {
+               batchUpdates: ListBatchUpdates, fromObjects: [AnyListDiffable]?) -> ListBatchUpdateData {
         var moves = Set(diffResult.moves)
         
         // combine section reloads from the diff and manual reloads via `reloadItems(_ :)`
@@ -265,7 +291,33 @@ private extension ListAdapterUpdater {
             moves = []
         }
         
+        // `reloadSections()` is unsafe to use within `performBatchUpdates()`, so instead convert all reloads into deletes+inserts
+        convert(reloads: &reloads, toDeletes: &deletes, andInserts: &inserts,
+                withResult: diffResult, fromObjects: fromObjects)
         
+        let uniqueDeletes = Set(batchUpdates.itemDeletes)
+        var reloadDeletePaths: Set<IndexPath> = []
+        var reloadInsertPaths: Set<IndexPath> = []
+        for reload in batchUpdates.itemReloads {
+            if !uniqueDeletes.contains(reload.from) {
+                reloadDeletePaths.insert(reload.from)
+                reloadInsertPaths.insert(reload.to)
+            }
+        }
+        
+        batchUpdates.delete(Array(reloadDeletePaths))
+        batchUpdates.insert(Array(reloadInsertPaths))
+        
+        //TODO: Add experiment
+        
+        let data = ListBatchUpdateData(insertSections: inserts,
+                                       deleteSections: deletes,
+                                       moveSections: moves,
+                                       insertIndexPaths: batchUpdates.itemInserts,
+                                       deleteIndexPaths: batchUpdates.itemDeletes,
+                                       moveIndexPaths: batchUpdates.itemMoves)
+        collectionView.apply(batchUpdateData: data)
+        return data
     }
     
     func beginPerformBatchUpdatesTo(objects: [AnyListDiffable]?) {
@@ -273,3 +325,32 @@ private extension ListAdapterUpdater {
         state = .queuedBatchUpdate
     }
 }
+
+func convert(reloads: inout IndexSet, toDeletes deletes: inout IndexSet, andInserts inserts: inout IndexSet,
+             withResult result: ListIndexSetResult, fromObjects: [AnyListDiffable]?) {
+    for index in reloads {
+        // if a diff was not performed, there are no changes. instead use the same index that was originally queued
+        var hashValue: Int? = nil
+        var from: Int? = index
+        var to: Int? = index
+        
+        if let fromObjects = fromObjects,
+            fromObjects.count > 0 {
+            hashValue = fromObjects[index].hashValue
+            from = result.oldIndexFor(hashValue: hashValue)
+            to = result.newIndexFor(hashValue: hashValue)
+        }
+        
+        // if a reload is queued outside the diff and the object was inserted or deleted it cannot be
+        if let from = from, let to = to {
+            reloads.remove(from)
+            deletes.insert(from)
+            inserts.insert(to)
+        } else {
+            assert(result.deletes.contains(index),
+                   "Reloaded section \(index) was not found in deletes with from: \(String(describing: from)), to: \(String(describing: to)), deletes: \(deletes)")
+        }
+    }
+}
+
+

@@ -43,8 +43,12 @@ public class ListIndexPathResult {
      - Parameter hashValue: The hashValue of the object.
      - Returns: The optional index path of the object before the diff.
      */
-    public func oldIndexPathFor(hashValue: Int) -> IndexPath? {
-        return oldIndexPathDict[hashValue]
+    public func oldIndexPathFor(hashValue: Int?) -> IndexPath? {
+        guard let h = hashValue else {
+            return nil
+        }
+        
+        return oldIndexPathDict[h]
     }
     
     /**
@@ -52,8 +56,12 @@ public class ListIndexPathResult {
      - Parameter hashValue: The hashValue of the object.
      - Returns: The optional index path of the object after the diff.
      */
-    public func newIndexPathFor(hashValue: Int) -> IndexPath? {
-        return newIndexPathDict[hashValue]
+    public func newIndexPathFor(hashValue: Int?) -> IndexPath? {
+        guard let h = hashValue else {
+            return nil
+        }
+        
+        return newIndexPathDict[h]
     }
     
     /**

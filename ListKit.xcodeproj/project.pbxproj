@@ -29,6 +29,7 @@
 		82F9733120E12F8000F7D50E /* ListIndexSetResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F9733020E12F8000F7D50E /* ListIndexSetResult.swift */; };
 		82F9733320E1853800F7D50E /* ListExperiments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F9733220E1853800F7D50E /* ListExperiments.swift */; };
 		82F9733520E4017C00F7D50E /* ListDiffable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F9733420E4017C00F7D50E /* ListDiffable.swift */; };
+		82FA791E20F1A4F90010D58C /* ListDiffResultTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FA791D20F1A4F90010D58C /* ListDiffResultTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		82F9733020E12F8000F7D50E /* ListIndexSetResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListIndexSetResult.swift; sourceTree = "<group>"; };
 		82F9733220E1853800F7D50E /* ListExperiments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListExperiments.swift; sourceTree = "<group>"; };
 		82F9733420E4017C00F7D50E /* ListDiffable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDiffable.swift; sourceTree = "<group>"; };
+		82FA791D20F1A4F90010D58C /* ListDiffResultTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDiffResultTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +154,7 @@
 			children = (
 				828DF98120DC550700C03E36 /* Info.plist */,
 				820A0CA120EB175E0035EC74 /* ListBatchUpdateDataTests.swift */,
+				82FA791D20F1A4F90010D58C /* ListDiffResultTests.swift */,
 				820A0C9A20E7EAD80035EC74 /* ListDiffTests.swift */,
 				820A0C9C20E854270035EC74 /* Objects */,
 			);
@@ -311,6 +314,7 @@
 				820A0C9E20E854710035EC74 /* ListTestObject.swift in Sources */,
 				820A0C9B20E7EAD80035EC74 /* ListDiffTests.swift in Sources */,
 				820A0CA220EB175E0035EC74 /* ListBatchUpdateDataTests.swift in Sources */,
+				82FA791E20F1A4F90010D58C /* ListDiffResultTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
