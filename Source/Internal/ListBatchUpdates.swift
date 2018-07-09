@@ -8,11 +8,12 @@
 
 final class ListBatchUpdates {
     private(set) var sectionReloads: IndexSet = IndexSet()
+    
     private(set) var itemInserts: [IndexPath] = []
     private(set) var itemDeletes: [IndexPath] = []
+    
     private(set) var itemReloads: [ListReloadIndexPath] = []
     private(set) var itemMoves: [ListMoveIndexPath] = []
-    
     private(set) var itemUpdateClosures: [ListItemUpdateClosure] = []
     private(set) var itemCompletionClosures: [ListUpdatingCompletion] = []
     
@@ -22,11 +23,27 @@ final class ListBatchUpdates {
         || itemReloads.count > 0 || itemDeletes.count > 0
     }
     
-    func delete(_ array: [IndexPath]) {
-        itemDeletes.append(contentsOf: array)
+    func delete(items: [IndexPath]) {
+        itemDeletes.append(contentsOf: items)
     }
     
-    func insert(_ array: [IndexPath]) {
-        itemInserts.append(contentsOf: array)
+    func insert(items: [IndexPath]) {
+        itemInserts.append(contentsOf: items)
+    }
+    
+    func append(reload: ListReloadIndexPath) {
+        itemReloads.append(reload)
+    }
+    
+    func append(move: ListMoveIndexPath) {
+        itemMoves.append(move)
+    }
+    
+    func append(completionClosure: @escaping ListUpdatingCompletion) {
+        itemCompletionClosures.append(completionClosure)
+    }
+    
+    func append(updateClosure: @escaping ListItemUpdateClosure) {
+        itemUpdateClosures.append(updateClosure)
     }
 }

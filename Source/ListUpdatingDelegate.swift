@@ -52,9 +52,24 @@ public protocol ListUpdatingDelegate: AnyObject {
      The `objectTransitionClosure` closure should be called prior to making any `UICollectionView` updates, passing in the `toObjects`
      that the updater is applying.
      */
-    func performUpdateWith(collectionViewClosure: ListCollectionViewClosure,
-                           fromObjects: [AnyListDiffable]?, toObjectsClosure: ListToObjectClosure,
-                           animated: Bool, objectTransitionClosure: ListObjectTransitionClosure,
+    func performUpdateWith(collectionViewClosure: @escaping ListCollectionViewClosure,
+                           fromObjects: [AnyListDiffable]?,
+                           toObjectsClosure: @escaping ListToObjectClosure,
+                           animated: Bool,
+                           objectTransitionClosure: @escaping ListObjectTransitionClosure,
+                           completion: ListUpdatingCompletion?)
+    
+    /**
+     Perform an item update closure in the collection view.
+     - Parameters:
+     - collectionViewClosure: A closure returning the collecion view to perform updates on.
+     - animated: A flag indicating if the transition should be animated.
+     - itemUpdates: A closure containing all of the updates.
+     - completion: A completion closure to execute when the update is finished.
+     */
+    func performUpdateWith(collectionViewClosure: @escaping ListCollectionViewClosure,
+                           animated: Bool,
+                           itemUpdates: @escaping ListItemUpdateClosure,
                            completion: ListUpdatingCompletion?)
     
     /**
@@ -126,15 +141,4 @@ public protocol ListUpdatingDelegate: AnyObject {
      */
     
     func collectionView(_ collectionView: UICollectionView, reloadSections sections: IndexSet)
-    
-    /**
-     Perform an item update closure in the collection view.
-     - Parameters:
-        - collectionViewClosure: A closure returning the collecion view to perform updates on.
-        - animated: A flag indicating if the transition should be animated.
-        - itemUpdates: A closure containing all of the updates.
-        - completion: A completion closure to execute when the update is finished.
-     */
-    func performUpdateWith(CollectionViewClosure: ListCollectionViewClosure, animated: Bool,
-                           itemUpdates: ListItemUpdateClosure, completion: ListUpdatingCompletion?)
 }

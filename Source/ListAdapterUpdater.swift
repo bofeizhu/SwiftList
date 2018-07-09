@@ -38,7 +38,7 @@ public final class ListAdapterUpdater {
     /**
      Time, in seconds, to wait and coalesce batch updates. Default is 0.
      */
-    public var coalescanceTime: TimeInterval = 0
+    public var coalescanceTime: Int = 0
 
     /**
      A bitmask of experiments to conduct on the updater.
@@ -122,13 +122,14 @@ public final class ListAdapterUpdater {
         executeCompletionClosures(true)
     }
     
-    func performBatchUpdatesWith(collectionViewClosure: ListCollectionViewClosure) {
+    func performBatchUpdatesWith(collectionViewClosure: @escaping ListCollectionViewClosure) {
         assertMainThread()
         assert(state == .idle, "Should not call batch updates when state isn't idle")
         
         // create local variables so we can immediately clean our state but pass these items into the batch update block
+        let delegate = self.delegate
         let fromObjects = self.fromObjects
-        let toObjectClosure = self.toObjectsClosure
+        let toObjectsClosure = self.toObjectsClosure
         var completionClosures = self.completionClosures
         let objectTransitionClosure = self.objectTransitionClosure
         let animated = queuedUpdateIsAnimated
@@ -213,7 +214,8 @@ public final class ListAdapterUpdater {
         // disables multiple `performBatchUpdates(_ :)` from happening at the same time
         beginPerformBatchUpdatesTo(objects: toObjects)
         
-        //TODO: Add experiments
+        let experiments = self.experiments
+        
         let performDiff = {
             return ListDiff(oldArray: fromObjects, newArray: toObjects, option: .equality)
         }
@@ -225,20 +227,65 @@ public final class ListAdapterUpdater {
             }
             executeUpdateClosures()
             strongSelf.applyingUpdateData = strongSelf.flush(collectionView: collectionView,
-                                       withDiffResult: result, batchUpdates: batchUpdates,
-                                       fromObjects: fromObjects)
+                                                             withDiffResult: result,
+                                                             batchUpdates: strongSelf.batchUpdates,
+                                                             fromObjects: fromObjects)
             strongSelf.cleanStateAfterUpdates()
             strongSelf.performBatchUpdatesItemClosureApplied()
         }
         
         // closure used as the second param of `UICollectionView.performBatchUpdates(_:completion:)`
         let batchUpdatesCompletionBlock = { [weak self] (finished: Bool) in
+            guard let strongSelf = self else {
+                return
+            }
+            let oldApplyingUpdateData = strongSelf.applyingUpdateData
             
+            executeCompletionClosures(finished)
+            
+            
+            if let oldApplyingUpdateData = oldApplyingUpdateData {
+                delegate?.listAdapterUpdater(strongSelf,
+                                             didPerformBatchUpdates: oldApplyingUpdateData,
+                                             forCollectionView: collectionView)
+            }
+            // queue another update in case something changed during batch updates. this method will bail next runloop if
+            // there are no changes
+            strongSelf.performBatchUpdatesWith(collectionViewClosure: collectionViewClosure)
         }
         
-        // closure that executes the batch update and exception handling
+        // closure that executes the batch update
         let performUpdate = { [weak self] (result: ListIndexSetResult) in
-            
+            guard let strongSelf = self else {
+                return
+            }
+            collectionView.layoutIfNeeded()
+            delegate?.listAdapterUpdater(strongSelf, willPerformBatchUpdatesForCollectionView: collectionView)
+            if result.changeCount > 100,
+                experiments.contains(.reloadDataFallback){
+                reloadDataFallback()
+            } else if animated {
+                collectionView.performBatchUpdates({
+                    batchUpdatesClosure(result)
+                }, completion: batchUpdatesCompletionBlock)
+            } else {
+                CATransaction.begin()
+                CATransaction.setDisableActions(true)
+                collectionView.performBatchUpdates({
+                    batchUpdatesClosure(result)
+                }, completion: { (finished) in
+                    CATransaction.commit()
+                    batchUpdatesCompletionBlock(finished)
+                })
+            }
+        }
+        
+        // temporary test to try out background diffing
+        if experiments.contains(.backgroundDiffing) {
+            //TODO: experiments
+        } else {
+            let result = performDiff()
+            performUpdate(result)
         }
     }
     
@@ -305,8 +352,8 @@ private extension ListAdapterUpdater {
             }
         }
         
-        batchUpdates.delete(Array(reloadDeletePaths))
-        batchUpdates.insert(Array(reloadInsertPaths))
+        batchUpdates.delete(items: Array(reloadDeletePaths))
+        batchUpdates.insert(items: Array(reloadInsertPaths))
         
         //TODO: Add experiment
         
@@ -324,6 +371,134 @@ private extension ListAdapterUpdater {
         pendingTransitionToObjects = objects
         state = .queuedBatchUpdate
     }
+    
+    func queueUpdateWith(collectionViewClosure: @escaping ListCollectionViewClosure) {
+        assertMainThread()
+        // dispatch after a given amount of time to coalesce other updates and execute as one
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(coalescanceTime)) { [weak self] in
+            guard let strongSelf = self,
+                strongSelf.state == .idle,
+                strongSelf.hasChanges else {
+                return
+            }
+            
+            if strongSelf.hasQueuedReloadData {
+                strongSelf.performReloadDataWith(collectionViewClosure: collectionViewClosure)
+            } else {
+                strongSelf.performBatchUpdatesWith(collectionViewClosure: collectionViewClosure)
+            }
+        }
+    }
+}
+
+extension ListAdapterUpdater: ListUpdatingDelegate {
+    public func performUpdateWith(collectionViewClosure: @escaping ListCollectionViewClosure,
+                                  fromObjects: [AnyListDiffable]?,
+                                  toObjectsClosure: @escaping ListToObjectClosure,
+                                  animated: Bool,
+                                  objectTransitionClosure: @escaping ListObjectTransitionClosure,
+                                  completion: ListUpdatingCompletion?) {
+        assertMainThread()
+        
+        // only update the items that we are coming from if it has not been set
+        // this allows multiple updates to be called while an update is already in progress, and the transition from -> to
+        // will be done on the first `fromObjects` received and the last `toObjects`
+        // if `performBatchUpdates()` hasn't applied the update block, then data source hasn't transitioned its state. if an
+        // update is queued in between then we must use the pending `toObjects`
+        self.fromObjects = self.fromObjects ?? self.pendingTransitionToObjects ?? fromObjects
+        self.toObjectsClosure = toObjectsClosure
+        
+        // disabled animations will always take priority
+        // reset to true in clean state
+        queuedUpdateIsAnimated = queuedUpdateIsAnimated && animated
+        
+        // always use the last update closure, even though this should always do the exact same thing
+        self.objectTransitionClosure = objectTransitionClosure
+        
+        if let completion = completion {
+            completionClosures.append(completion)
+        }
+        
+        queueUpdateWith(collectionViewClosure: collectionViewClosure)
+    }
+
+    public func performUpdateWith(collectionViewClosure: @escaping ListCollectionViewClosure,
+                                  animated: Bool,
+                                  itemUpdates: @escaping ListItemUpdateClosure,
+                                  completion: ListUpdatingCompletion?) {
+        assertMainThread()
+        
+        if let completion = completion {
+            batchUpdates.append(completionClosure: completion)
+        }
+        
+        // if already inside the execution of the update closure, immediately unload the itemUpdates closure.
+        // the completion closures are executed later in the lifecycle, so that still needs to be added to the batch
+        if state == .executingBatchUpdateClosure {
+            itemUpdates()
+        } else {
+            batchUpdates.append(updateClosure: itemUpdates)
+            
+            // disabled animations will always take priority
+            // reset to true in clean state
+            queuedUpdateIsAnimated = queuedUpdateIsAnimated && animated
+            queueUpdateWith(collectionViewClosure: collectionViewClosure)
+        }
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView,
+                               insertItemsAt indexPaths: [IndexPath]) {
+        assertMainThread()
+        
+        if state == .executingBatchUpdateClosure {
+            batchUpdates.insert(items: indexPaths)
+        } else {
+            delegate?.listAdapterUpdater(self, willInsertItemsAt: indexPaths,
+                                         forCollectionView: collectionView)
+            collectionView.insertItems(at: indexPaths)
+        }
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView,
+                               deleteItemsAt indexPaths: [IndexPath]) {
+        assertMainThread()
+        
+        if state == .executingBatchUpdateClosure {
+            batchUpdates.delete(items: indexPaths)
+        } else {
+            delegate?.listAdapterUpdater(self, willDeleteItemsAt: indexPaths,
+                                         forCollectionView: collectionView)
+            collectionView.deleteItems(at: indexPaths)
+        }
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView,
+                               moveItemAt indexPath: IndexPath, to newIndexPath: IndexPath) {
+        if state == .executingBatchUpdateClosure {
+            let move = ListMoveIndexPath(from: indexPath, to: newIndexPath)
+            batchUpdates.append(move: move)
+        } else {
+            delegate?.listAdapterUpdater(self,
+                                         willMoveAt: indexPath, to: newIndexPath,
+                                         forCollectionView: collectionView)
+            collectionView.moveItem(at: indexPath, to: newIndexPath)
+        }
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView,
+                               reloadItemAt indexPath: IndexPath, to newIndexPath: IndexPath) {
+        if state == .executingBatchUpdateClosure {
+            let reload = ListReloadIndexPath(from: indexPath, to: newIndexPath)
+            batchUpdates.append(reload: reload)
+        } else {
+            delegate?.listAdapterUpdater(self,
+                                         willReloadItemsAt: [indexPath],
+                                         forCollectionView: collectionView)
+            collectionView.reloadItems(at: [indexPath])
+        }
+    }
+    
+    
 }
 
 func convert(reloads: inout IndexSet, toDeletes deletes: inout IndexSet, andInserts inserts: inout IndexSet,

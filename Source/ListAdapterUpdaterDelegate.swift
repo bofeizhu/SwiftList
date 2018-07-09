@@ -116,21 +116,4 @@ public protocol ListAdapterUpdaterDelegate: AnyObject {
      */
     func listAdapterUpdater(_ listAdapterUpdater: ListAdapterUpdater,
                             didReloadDataForCollectionView collectionView: UICollectionView)
-    
-    /**
-     Notifies the delegate that the collection view threw an exception in `UICollectionView.performBatchUpdates(_:completion:)`.
-     - Parameters:
-        - listAdapterUpdater: The adapter updater owning the transition.
-        - collectionView: The collection view being updated.
-        - error: The error thrown by the collection view.
-        - fromObjects: The items transitioned from in the diff, if any.
-        - toObjects: The items transitioned to in the diff, if any.
-        - updates: The batch updates that were applied to the collection view.
-     */
-    func listAdapterUpdater(_ listAdapterUpdater: ListAdapterUpdater,
-                            forCollectionView: UICollectionView,
-                            willCrashWith error: Error,
-                            fromObjects: [AnyListDiffable]?,
-                            toObjects: [AnyListDiffable]?,
-                            updates: ListBatchUpdateData)
 }
