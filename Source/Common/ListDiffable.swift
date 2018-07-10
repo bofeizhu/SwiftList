@@ -32,15 +32,11 @@ public protocol ListDiffable: Equatable {
 public struct AnyListDiffable {
     var _box: _AnyListDiffableBox
     
-    init(_box box: _AnyListDiffableBox) {
-        self._box = box
-    }
-    
     /**
      Creates a type-erased diffable value that wraps the given instance.
      - Parameter base: A diffable value to wrap.
      */
-    public init<D: ListDiffable>(_ base: D) {
+    public init<T: ListDiffable>(_ base: T) {
         _box = _ConcreteListDiffableBox(base)
     }
     
@@ -76,8 +72,9 @@ protocol _AnyListDiffableBox {
      - Returns: `nil` to indicate that the boxes store different types, so
      no comparison is possible. Otherwise, contains the result of `==`.
      */
-    var _diffIdentifier: AnyHashable { get }
     func _isEqual(to box: _AnyListDiffableBox) -> Bool?
+    
+    var _diffIdentifier: AnyHashable { get }
     
     var _base: Any { get }
     func _unbox<T: ListDiffable>() -> T?

@@ -27,7 +27,7 @@ struct ListTestObject: ListDiffable {
     }
 }
 
-class ListTestClassObject: ListDiffable {
+final class ListTestClassObject: ListDiffable {
     let key: AnyHashable
     var value: AnyHashable
     

@@ -394,7 +394,7 @@ private extension ListAdapterUpdater {
 extension ListAdapterUpdater: ListUpdatingDelegate {
     public func performUpdateWith(collectionViewClosure: @escaping ListCollectionViewClosure,
                                   fromObjects: [AnyListDiffable]?,
-                                  toObjectsClosure: @escaping ListToObjectClosure,
+                                  toObjectsClosure: ListToObjectClosure?,
                                   animated: Bool,
                                   objectTransitionClosure: @escaping ListObjectTransitionClosure,
                                   completion: ListUpdatingCompletion?) {

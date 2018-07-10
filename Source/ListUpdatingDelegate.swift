@@ -54,7 +54,7 @@ public protocol ListUpdatingDelegate: AnyObject {
      */
     func performUpdateWith(collectionViewClosure: @escaping ListCollectionViewClosure,
                            fromObjects: [AnyListDiffable]?,
-                           toObjectsClosure: @escaping ListToObjectClosure,
+                           toObjectsClosure: ListToObjectClosure?,
                            animated: Bool,
                            objectTransitionClosure: @escaping ListObjectTransitionClosure,
                            completion: ListUpdatingCompletion?)
