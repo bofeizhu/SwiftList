@@ -47,10 +47,8 @@ We use the open source version `master` branch in the Instagram app.
 ## Requirements
 
 - Xcode 9.0+
-- iOS 8.0+
-- tvOS 9.0+
-- macOS 10.11+ *(diffing algorithm components only)*
-- Interoperability with Swift 3.0+
+- iOS 10.0+
+- Swift 4.1+
 
 ## Installation
 
