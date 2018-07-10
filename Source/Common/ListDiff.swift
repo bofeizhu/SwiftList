@@ -80,10 +80,10 @@ fileprivate struct ListRecord {
     var index: Int?
 }
 
-fileprivate extension Dictionary where Key == Int, Value == IndexPath {
+fileprivate extension Dictionary where Key == AnyHashable, Value == IndexPath {
     mutating func addIndexPath(section: Int, index: Int, toObject object: AnyListDiffable) {
         let indexPath = IndexPath(item: index, section: section)
-        self[object.hashValue] = indexPath
+        self[object.diffIdentifier] = indexPath
     }
     
     mutating func addIndexPathsAndPopulateMap(_ array: [AnyListDiffable], section: Int) -> [IndexPath] {
@@ -91,20 +91,20 @@ fileprivate extension Dictionary where Key == Int, Value == IndexPath {
         for (idx, obj) in array.enumerated() {
             let indexPath = IndexPath(item: idx, section: section)
             indexPaths.append(indexPath)
-            self[obj.hashValue] = indexPath
+            self[obj.diffIdentifier] = indexPath
         }
         return indexPaths
     }
 }
 
-fileprivate extension Dictionary where Key == Int, Value == Int {
+fileprivate extension Dictionary where Key == AnyHashable, Value == Int {
     mutating func add(index: Int, toObject object: AnyListDiffable) {
-        self[object.hashValue] = index
+        self[object.diffIdentifier] = index
     }
 }
 
-fileprivate func ListTableKey(object: AnyListDiffable) -> Int {
-    return object.hashValue
+fileprivate func ListTableKey(object: AnyListDiffable) -> AnyHashable {
+    return object.diffIdentifier
 }
 
 fileprivate func ListDiffing(returnIndexPaths: Bool,
@@ -114,10 +114,10 @@ fileprivate func ListDiffing(returnIndexPaths: Bool,
     let newCount = newArray.count
     let oldCount = oldArray.count
     
-    var oldIndexPathDict: [Int: IndexPath] = [:]
-    var newIndexPathDict: [Int: IndexPath] = [:]
-    var oldIndexDict: [Int: Int] = [:]
-    var newIndexDict: [Int: Int] = [:]
+    var oldIndexPathDict: [AnyHashable: IndexPath] = [:]
+    var newIndexPathDict: [AnyHashable: IndexPath] = [:]
+    var oldIndexDict: [AnyHashable: Int] = [:]
+    var newIndexDict: [AnyHashable: Int] = [:]
     
     // if no new objects, everything from the oldArray is deleted
     // take a shortcut and just build a delete-everything result
@@ -161,7 +161,7 @@ fileprivate func ListDiffing(returnIndexPaths: Bool,
     }
     
     // symbol table uses the old/new array diffIdentifier as the key and IGListEntry as the value
-    var table: [Int: ListEntry] = [:]
+    var table: [AnyHashable: ListEntry] = [:]
     
     // pass 1
     // create an entry for every item in the new array

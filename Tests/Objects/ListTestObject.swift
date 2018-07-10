@@ -18,8 +18,8 @@ struct ListTestObject: ListDiffable {
         self.value = value
     }
     
-    var hashValue: Int {
-        return key.hashValue
+    var diffIdentifier: AnyHashable {
+        return key
     }
     
     static func == (lhs: ListTestObject, rhs: ListTestObject) -> Bool {
@@ -36,8 +36,8 @@ class ListTestClassObject: ListDiffable {
         self.value = value
     }
     
-    var hashValue: Int {
-        return key.hashValue
+    var diffIdentifier: AnyHashable {
+        return key
     }
     
     static func == (lhs: ListTestClassObject, rhs: ListTestClassObject) -> Bool {
