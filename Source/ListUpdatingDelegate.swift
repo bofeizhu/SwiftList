@@ -62,10 +62,10 @@ public protocol ListUpdatingDelegate: AnyObject {
     /**
      Perform an item update closure in the collection view.
      - Parameters:
-     - collectionViewClosure: A closure returning the collecion view to perform updates on.
-     - animated: A flag indicating if the transition should be animated.
-     - itemUpdates: A closure containing all of the updates.
-     - completion: A completion closure to execute when the update is finished.
+        - collectionViewClosure: A closure returning the collecion view to perform updates on.
+        - animated: A flag indicating if the transition should be animated.
+        - itemUpdates: A closure containing all of the updates.
+        - completion: A completion closure to execute when the update is finished.
      */
     func performUpdateWith(collectionViewClosure: @escaping ListCollectionViewClosure,
                            animated: Bool,
@@ -123,6 +123,15 @@ public protocol ListUpdatingDelegate: AnyObject {
                         moveSection section: Int, toSection newSection: Int)
     
     /**
+     Completely reload each section in the collection view.
+     - Parameters:
+        - collectionView: The collection view to reload.
+        - sections: The sections to reload.
+     */
+    
+    func collectionView(_ collectionView: UICollectionView, reloadSections sections: IndexSet)
+    
+    /**
      Completely reload data in the collection.
      - Parameters:
         - collectionViewClosure: A closure returning the collecion view to reload.
@@ -132,13 +141,4 @@ public protocol ListUpdatingDelegate: AnyObject {
     func reloadDataWith(collectionViewClosure: ListCollectionViewClosure,
                         reloadUpdateClosure: ListReloadUpdateClosure,
                         completion: ListUpdatingCompletion?)
-    
-    /**
-     Completely reload each section in the collection view.
-     - Parameters:
-        - collectionView: The collection view to reload.
-        - sections: The sections to reload.
-     */
-    
-    func collectionView(_ collectionView: UICollectionView, reloadSections sections: IndexSet)
 }
