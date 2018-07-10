@@ -43,12 +43,12 @@ public class ListIndexSetResult {
      - Parameters hashValue: The hashValue of the object.
      - Returns: The optional index of the object before the diff.
      */
-    public func oldIndexFor(hashValue: Int?) -> Int? {
-        guard let h = hashValue else {
+    public func oldIndexFor(diffIdentifier: AnyHashable?) -> Int? {
+        guard let d = diffIdentifier else {
             return nil
         }
         
-        return oldIndexDict[h]
+        return oldIndexDict[d]
     }
     
     /**
@@ -56,12 +56,12 @@ public class ListIndexSetResult {
      - Parameters hashValue: The hashValue of the object.
      - Returns: The optional index of the object after the diff.
      */
-    public func newIndexFor(hashValue: Int?) -> Int? {
-        guard let h = hashValue else {
+    public func newIndexFor(diffIdentifier: AnyHashable?) -> Int? {
+        guard let d = diffIdentifier else {
             return nil
         }
         
-        return newIndexDict[h]
+        return newIndexDict[d]
     }
     
     /**
@@ -109,8 +109,8 @@ public class ListIndexSetResult {
     
     init(inserts: IndexSet, deletes: IndexSet, updates: IndexSet,
          moves: [ListMoveIndex],
-         oldIndexDict: [Int: Int],
-         newIndexDict: [Int: Int]) {
+         oldIndexDict: [AnyHashable: Int],
+         newIndexDict: [AnyHashable: Int]) {
         self.inserts = inserts
         self.deletes = deletes
         self.updates = updates
@@ -119,8 +119,8 @@ public class ListIndexSetResult {
         self.newIndexDict = newIndexDict
     }
     
-    private var oldIndexDict: [Int: Int]
-    private var newIndexDict: [Int: Int]
+    private var oldIndexDict: [AnyHashable: Int]
+    private var newIndexDict: [AnyHashable: Int]
 }
 
 extension ListIndexSetResult: CustomStringConvertible {

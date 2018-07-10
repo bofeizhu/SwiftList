@@ -562,15 +562,15 @@ func convert(reloads: inout IndexSet, toDeletes deletes: inout IndexSet, andInse
              withResult result: ListIndexSetResult, fromObjects: [AnyListDiffable]?) {
     for index in reloads {
         // if a diff was not performed, there are no changes. instead use the same index that was originally queued
-        var hashValue: Int? = nil
+        var diffIdentifier: AnyHashable? = nil
         var from: Int? = index
         var to: Int? = index
         
         if let fromObjects = fromObjects,
             fromObjects.count > 0 {
-            hashValue = fromObjects[index].hashValue
-            from = result.oldIndexFor(hashValue: hashValue)
-            to = result.newIndexFor(hashValue: hashValue)
+            diffIdentifier = fromObjects[index].diffIdentifier
+            from = result.oldIndexFor(diffIdentifier: diffIdentifier)
+            to = result.newIndexFor(diffIdentifier: diffIdentifier)
         }
         
         // if a reload is queued outside the diff and the object was inserted or deleted it cannot be

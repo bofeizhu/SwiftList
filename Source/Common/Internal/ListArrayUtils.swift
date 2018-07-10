@@ -8,13 +8,13 @@
 
 extension Array where Element == AnyListDiffable {
     func hasDuplicateHashValue() {
-        var table: [Int: Element] = [:]
+        var table: [AnyHashable: Element] = [:]
         for object in self {
-            let hashValue = object.hashValue
-            if let previousObject = table[hashValue] {
-                preconditionFailure("Duplicate identifier \(hashValue) for object \(object) with object \(previousObject)")
+            let diffIdentifier = object.diffIdentifier
+            if let previousObject = table[diffIdentifier] {
+                preconditionFailure("Duplicate identifier \(diffIdentifier) for object \(object) with object \(previousObject)")
             } else {
-                table[hashValue] = object
+                table[diffIdentifier] = object
             }
         }
     }

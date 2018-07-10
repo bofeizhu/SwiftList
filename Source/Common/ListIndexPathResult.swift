@@ -43,12 +43,12 @@ public class ListIndexPathResult {
      - Parameter hashValue: The hashValue of the object.
      - Returns: The optional index path of the object before the diff.
      */
-    public func oldIndexPathFor(hashValue: Int?) -> IndexPath? {
-        guard let h = hashValue else {
+    public func oldIndexPathFor(diffIdentifier: AnyHashable?) -> IndexPath? {
+        guard let d = diffIdentifier else {
             return nil
         }
         
-        return oldIndexPathDict[h]
+        return oldIndexPathDict[d]
     }
     
     /**
@@ -56,12 +56,12 @@ public class ListIndexPathResult {
      - Parameter hashValue: The hashValue of the object.
      - Returns: The optional index path of the object after the diff.
      */
-    public func newIndexPathFor(hashValue: Int?) -> IndexPath? {
-        guard let h = hashValue else {
+    public func newIndexPathFor(diffIdentifier: AnyHashable?) -> IndexPath? {
+        guard let d = diffIdentifier else {
             return nil
         }
         
-        return newIndexPathDict[h]
+        return newIndexPathDict[d]
     }
     
     /**
@@ -109,8 +109,8 @@ public class ListIndexPathResult {
     
     init(inserts: [IndexPath], deletes: [IndexPath], updates: [IndexPath],
          moves: [ListMoveIndexPath],
-         oldIndexPathDict: [Int: IndexPath],
-         newIndexPathDict: [Int: IndexPath]) {
+         oldIndexPathDict: [AnyHashable: IndexPath],
+         newIndexPathDict: [AnyHashable: IndexPath]) {
         self.inserts = inserts
         self.deletes = deletes
         self.updates = updates
@@ -120,8 +120,8 @@ public class ListIndexPathResult {
     }
     
     //MARK: Private
-    private var oldIndexPathDict: [Int: IndexPath]
-    private var newIndexPathDict: [Int: IndexPath]
+    private var oldIndexPathDict: [AnyHashable: IndexPath]
+    private var newIndexPathDict: [AnyHashable: IndexPath]
 }
 
 extension ListIndexPathResult: CustomStringConvertible {
