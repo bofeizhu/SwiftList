@@ -7,7 +7,7 @@
 //
 
 final class ListBatchUpdates {
-    private(set) var sectionReloads: IndexSet = IndexSet()
+    private(set) var sectionReloads: IndexSet = []
     
     private(set) var itemInserts: [IndexPath] = []
     private(set) var itemDeletes: [IndexPath] = []
@@ -29,6 +29,10 @@ final class ListBatchUpdates {
     
     func insert(items: [IndexPath]) {
         itemInserts.append(contentsOf: items)
+    }
+    
+    func reload(sections: IndexSet) {
+        sectionReloads.formUnion(sections)
     }
     
     func append(reload: ListReloadIndexPath) {

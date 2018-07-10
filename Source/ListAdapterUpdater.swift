@@ -498,7 +498,56 @@ extension ListAdapterUpdater: ListUpdatingDelegate {
         }
     }
     
+    public func collectionView(_ collectionView: UICollectionView,
+                               moveSection section: Int, toSection newSection: Int) {
+        assertMainThread()
+        
+        // iOS expects interactive reordering to be movement of items not sections
+        // after moving a single-item section controller,
+        // you end up with two items in the section for the drop location,
+        // and zero items in the section originating at the drag location
+        // so, we have to reload data rather than doing a section move
+        
+        collectionView.reloadData()
+        
+        // It seems that reloadData called during UICollectionView's moveItemAtIndexPath
+        // delegate call does not reload all cells as intended
+        // So, we further reload all visible sections to make sure none of our cells
+        // are left with data that's out of sync with our dataSource
+        var visibleSections = IndexSet()
+        let visibleIndexPaths = collectionView.indexPathsForVisibleItems
+        for indexPath in visibleIndexPaths {
+            visibleSections.insert(indexPath.section)
+        }
+        
+        delegate?.listAdapterUpdater(self, willReloadSections: visibleSections, forCollectionView: collectionView)
+        
+        // prevent double-animation from reloadData + reloadSections
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        collectionView.performBatchUpdates({
+            collectionView.reloadSections(visibleSections)
+        }) { (finished) in
+            CATransaction.commit()
+        }
+    }
     
+    public func collectionView(_ collectionView: UICollectionView,
+                               reloadSections sections: IndexSet) {
+        assertMainThread()
+        if state == .executingBatchUpdateClosure {
+            batchUpdates.reload(sections: sections)
+        } else {
+            delegate?.listAdapterUpdater(self, willReloadSections: sections, forCollectionView: collectionView)
+            collectionView.reloadSections(sections)
+        }
+    }
+    
+    public func reloadDataWith(collectionViewClosure: ListCollectionViewClosure,
+                               reloadUpdateClosure: ListReloadUpdateClosure,
+                               completion: ListUpdatingCompletion?) {
+        
+    }
 }
 
 func convert(reloads: inout IndexSet, toDeletes deletes: inout IndexSet, andInserts inserts: inout IndexSet,

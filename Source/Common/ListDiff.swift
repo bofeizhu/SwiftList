@@ -69,7 +69,7 @@ fileprivate final class ListEntry {
     /// The number of times the data occurs in the new array
     var newCounter = 0
     /// The indexes of the data in the old array
-    var oldIndexes = [Int?]()
+    var oldIndexes: [Int?] = []
     /// Flag marking if the data has been updated between arrays by checking the isEqual: method
     var updated = false
 }
@@ -133,8 +133,8 @@ fileprivate func ListDiffing(returnIndexPaths: Bool,
             for (idx, obj) in oldArray.enumerated() {
                 oldIndexDict.add(index: idx, toObject: obj)
             }
-            return ListIndexSetResult(inserts: IndexSet(), deletes: IndexSet(0..<oldCount),
-                                      updates: IndexSet(), moves: [],
+            return ListIndexSetResult(inserts: [], deletes: IndexSet(0..<oldCount),
+                                      updates: [], moves: [],
                                       oldIndexDict: oldIndexDict,
                                       newIndexDict: newIndexDict)
         }
@@ -153,8 +153,8 @@ fileprivate func ListDiffing(returnIndexPaths: Bool,
             for (idx, obj) in newArray.enumerated() {
                 newIndexDict.add(index: idx, toObject: obj)
             }
-            return ListIndexSetResult(inserts: IndexSet(0..<newCount), deletes: IndexSet(),
-                                      updates: IndexSet(), moves: [],
+            return ListIndexSetResult(inserts: IndexSet(0..<newCount), deletes: [],
+                                      updates: [], moves: [],
                                       oldIndexDict: oldIndexDict,
                                       newIndexDict: newIndexDict)
         }
@@ -242,12 +242,16 @@ fileprivate func ListDiffing(returnIndexPaths: Bool,
     }
     
     // storage for final IndexPaths
-    var indexPathInserts = [IndexPath](), indexPathUpdates = [IndexPath](), indexPathDeletes = [IndexPath]()
-    var indexPathMoves = [ListMoveIndexPath]()
+    var indexPathInserts: [IndexPath] = []
+    var indexPathUpdates: [IndexPath] = []
+    var indexPathDeletes: [IndexPath] = []
+    var indexPathMoves: [ListMoveIndexPath] = []
     
     // storage for final indexes
-    var indexInserts = IndexSet(), indexUpdates = IndexSet(), indexDeletes = IndexSet()
-    var indexMoves = [ListMoveIndex]()
+    var indexInserts: IndexSet = []
+    var indexUpdates: IndexSet = []
+    var indexDeletes: IndexSet = []
+    var indexMoves: [ListMoveIndex] = []
     
     // track offsets from deleted items to calculate where items have moved
     var deleteOffsets = Array(repeating: 0, count: oldCount)
