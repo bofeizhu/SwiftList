@@ -543,10 +543,18 @@ extension ListAdapterUpdater: ListUpdatingDelegate {
         }
     }
     
-    public func reloadDataWith(collectionViewClosure: ListCollectionViewClosure,
-                               reloadUpdateClosure: ListReloadUpdateClosure,
+    public func reloadDataWith(collectionViewClosure: @escaping ListCollectionViewClosure,
+                               reloadUpdateClosure: @escaping ListReloadUpdateClosure,
                                completion: ListUpdatingCompletion?) {
+        assertMainThread()
         
+        if let completion = completion {
+            completionClosures.append(completion)
+        }
+        
+        reloadUpdates = reloadUpdateClosure
+        hasQueuedReloadData = true
+        queueUpdateWith(collectionViewClosure: collectionViewClosure)
     }
 }
 

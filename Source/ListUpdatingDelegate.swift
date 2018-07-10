@@ -138,7 +138,7 @@ public protocol ListUpdatingDelegate: AnyObject {
         - reloadUpdateClosure: A closure that must be called when the adapter reloads the collection view.
         - completion: A completion closure to execute when the reload is finished.
      */
-    func reloadDataWith(collectionViewClosure: ListCollectionViewClosure,
-                        reloadUpdateClosure: ListReloadUpdateClosure,
+    func reloadDataWith(collectionViewClosure: @escaping ListCollectionViewClosure,
+                        reloadUpdateClosure: @escaping ListReloadUpdateClosure,
                         completion: ListUpdatingCompletion?)
 }
