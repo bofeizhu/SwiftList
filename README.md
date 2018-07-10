@@ -2,7 +2,7 @@
   <img src="https://raw.githubusercontent.com/Instagram/IGListKit/master/Resources/logo-animation.gif" width=400 />
 </p>
 
-<p align="center">
+<!-- <p align="center">
     <a href="https://travis-ci.org/Instagram/IGListKit">
         <img src="https://travis-ci.org/Instagram/IGListKit.svg?branch=master&style=flat"
              alt="Build Status">
@@ -23,7 +23,7 @@
         <img src="https://img.shields.io/badge/Carthage-compatible-brightgreen.svg?style=flat"
              alt="Carthage Compatible">
     </a>
-</p>
+</p> -->
 
 ----------------
 
