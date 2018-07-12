@@ -215,5 +215,32 @@ class ListAdapterUpdaterTests: XCTestCase {
         XCTAssertEqual(collectionView.numberOfItems(inSection: 1), 2)
     }
     
+    func testWhenCollectionViewNeedsLayoutThatPerformBatchUpdateWorks() {
+        let from = [ListTestSectionObject(objects: []),
+                    ListTestSectionObject(objects: [])]
+        let to = {
+            [ListTestSectionObject(objects: [])].typeErased()
+        }
+        
+        dataSource.sections = from
+        updater.performReloadDataWith(collectionViewClosure: collectionViewClosure)
+        
+        // the collection view has been setup with 1 section and now needs layout
+        // calling performBatchUpdates: on a collection view needing layout will force layout
+        // we need to ensure that our data source is not changed until the update block is executed
+        collectionView.setNeedsLayout()
+        
+        let expectation = XCTestExpectation(description: "Layout Section")
+        updater.performUpdateWith(collectionViewClosure: collectionViewClosure,
+                                  fromObjects: from.typeErased(),
+                                  toObjectsClosure: to,
+                                  animated: false,
+                                  objectTransitionClosure: updateClosure) { [unowned self] (finished) in
+                                    XCTAssertEqual(self.collectionView.numberOfSections, 1)
+                                    expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 10.0)
+    }
+    
     
 }

@@ -584,5 +584,3 @@ func convert(reloads: inout IndexSet, toDeletes deletes: inout IndexSet, andInse
         }
     }
 }
-
-
