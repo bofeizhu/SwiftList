@@ -11,6 +11,10 @@ import XCTest
 
 final class ListTestSectionObject {
     var objects: [AnyListDiffable] = []
+    
+    init(objects: [AnyListDiffable]) {
+        self.objects = objects
+    }
 }
 
 extension ListTestSectionObject: ListDiffable {
