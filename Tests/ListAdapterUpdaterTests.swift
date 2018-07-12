@@ -242,5 +242,13 @@ class ListAdapterUpdaterTests: XCTestCase {
         wait(for: [expectation], timeout: 10.0)
     }
     
+    func testWhenUpdatesAreReentrantThatUpdatesExecuteSerially() {
+        
+    }
     
+    func testWhenQueuingItemUpdatesThatUpdaterHasChanges() {
+        updater.performUpdateWith(collectionViewClosure: collectionViewClosure,
+                                  animated: false, itemUpdates: {}, completion: nil)
+        XCTAssertTrue(updater.hasChanges)
+    }
 }

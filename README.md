@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/Instagram/IGListKit/master/Resources/logo-animation.gif" width=400 />
-</p>
+# ListKit
 
 <!-- <p align="center">
     <a href="https://travis-ci.org/Instagram/IGListKit">
