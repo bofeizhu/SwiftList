@@ -54,7 +54,7 @@
 		820A0C9A20E7EAD80035EC74 /* ListDiffTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDiffTests.swift; sourceTree = "<group>"; };
 		820A0C9D20E854710035EC74 /* ListTestObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTestObject.swift; sourceTree = "<group>"; };
 		820A0C9F20EADC740035EC74 /* ListBatchUpdateData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListBatchUpdateData.swift; sourceTree = "<group>"; };
-		820A0CA120EB175E0035EC74 /* ListBatchUpdateDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListBatchUpdateDataTests.swift; sourceTree = "<group>"; };
+		820A0CA120EB175E0035EC74 /* ListBatchUpdateDataTests.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = ListBatchUpdateDataTests.swift; sourceTree = "<group>"; tabWidth = 4; };
 		820A0CA420EBC07D0035EC74 /* UICollectionView+ListBatchUpdateData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+ListBatchUpdateData.swift"; sourceTree = "<group>"; };
 		820A0CA620EBC3EE0035EC74 /* ListAdapterUpdaterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAdapterUpdaterDelegate.swift; sourceTree = "<group>"; };
 		820A0CA820EBC6AD0035EC74 /* ListAdapterUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAdapterUpdater.swift; sourceTree = "<group>"; };
