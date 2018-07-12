@@ -276,4 +276,6 @@ class ListAdapterUpdaterTests: XCTestCase {
             animated: false, itemUpdates: {}, completion: nil)
         XCTAssertTrue(updater.hasChanges)
     }
+    
+    
 }
