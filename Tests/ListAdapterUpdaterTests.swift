@@ -315,5 +315,36 @@ class ListAdapterUpdaterTests: XCTestCase {
         wait(for: [expectation], timeout: 10)
     }
     
+    func testWhenItemsMoveAndUpdateThatCollectionViewWorks() {
+        var from =  [ListTestSectionObject(objects: []),
+                     ListTestSectionObject(objects: []),
+                     ListTestSectionObject(objects: [])]
+        // change the number of items in the section, which a move would be unable to handle and would throw
+        // keep the same pointers so that the objects are equal
+        from[2].objects = [1].typeErased()
+        from[0].objects = [1, 1].typeErased()
+        from[1].objects = [1, 1, 1].typeErased()
+        
+        let to = { [from[2], from[0], from[1]].typeErased() }
+        
+        dataSource.sections = from
+        updater.performReloadDataWith(collectionViewClosure: collectionViewClosure)
+        
+        // without moves as inserts, we would assert b/c the # of items in each section changes
+        updater.movesAsDeletesInserts = true
+        
+        let expectation = XCTestExpectation()
+        updater.performUpdateWith(collectionViewClosure: collectionViewClosure,
+            fromObjects: from.typeErased(), toObjectsClosure: to, animated: true,
+            objectTransitionClosure: updateClosure) { [unowned self] (finished) in
+                XCTAssertEqual(self.collectionView.numberOfSections, 3)
+                XCTAssertEqual(self.collectionView.numberOfItems(inSection: 0), 1)
+                XCTAssertEqual(self.collectionView.numberOfItems(inSection: 1), 2)
+                XCTAssertEqual(self.collectionView.numberOfItems(inSection: 2), 3)
+                expectation.fulfill()
+            }
+        wait(for: [expectation], timeout: 10)
+    }
+    
     
 }

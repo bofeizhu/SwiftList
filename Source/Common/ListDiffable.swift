@@ -23,6 +23,9 @@ public protocol ListDiffable: Equatable {
     var diffIdentifier: AnyHashable { get }
 }
 
+// TODO: wait for general Generalized existentials
+// https://github.com/apple/swift/blob/master/docs/GenericsManifesto.md#generalized-existentials
+
 /**
  A type-erased diffable value.
  

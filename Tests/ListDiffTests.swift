@@ -57,19 +57,25 @@ class ListDiffTests: XCTestCase {
         let o = [1, 2, 3, 4].typeErased()
         let n = [2, 4, 5, 3].typeErased()
         let result = ListDiffPaths(fromSection: 0, toSection: 0, oldArray: o, newArray: n, option: .equality)
-        let expected = [ListMoveIndexPath(from: IndexPath(item: 2, section: 0), to: IndexPath(item: 3, section: 0)),
-                        ListMoveIndexPath(from: IndexPath(item: 3, section: 0), to: IndexPath(item: 1, section: 0))]
+        let expected = [
+            ListMoveIndexPath(from: IndexPath(item: 2, section: 0), to: IndexPath(item: 3, section: 0)),
+            ListMoveIndexPath(from: IndexPath(item: 3, section: 0), to: IndexPath(item: 1, section: 0)),
+        ]
         let sortedMoves = result.moves.sorted()
         XCTAssertEqual(sortedMoves, expected)
     }
     
     func testWhenObjectEqualityChangesThatResultHasUpdates() {
-        let o = [ListTestObject(key: "0", value: 0),
-                 ListTestObject(key: "1", value: 1),
-                 ListTestObject(key: "2", value: 2)].typeErased()
-        let n = [ListTestObject(key: "0", value: 0),
-                 ListTestObject(key: "1", value: 3),
-                 ListTestObject(key: "2", value: 2)].typeErased()
+        let o = [
+            ListTestObject(key: "0", value: 0),
+            ListTestObject(key: "1", value: 1),
+            ListTestObject(key: "2", value: 2),
+        ].typeErased()
+        let n = [
+            ListTestObject(key: "0", value: 0),
+            ListTestObject(key: "1", value: 3),
+            ListTestObject(key: "2", value: 2),
+        ].typeErased()
         let result = ListDiffPaths(fromSection: 0, toSection: 0, oldArray: o, newArray: n, option: .equality)
         let expected = [IndexPath(item: 1, section: 0)]
         XCTAssertEqual(result.updates, expected)
@@ -104,9 +110,11 @@ class ListDiffTests: XCTestCase {
         let o = oString.split(separator: " ").typeErased()
         let n = nString.split(separator: " ").typeErased()
         let result = ListDiffPaths(fromSection: 0, toSection: 0, oldArray: o, newArray: n, option: .equality)
-        let expected = [IndexPath(item: 0, section: 0), IndexPath(item: 1, section: 0),
-                        IndexPath(item: 2, section: 0), IndexPath(item: 9, section: 0),
-                        IndexPath(item: 11, section: 0), IndexPath(item: 12, section: 0)]
+        let expected = [
+            IndexPath(item: 0, section: 0), IndexPath(item: 1, section: 0),
+            IndexPath(item: 2, section: 0), IndexPath(item: 9, section: 0),
+            IndexPath(item: 11, section: 0), IndexPath(item: 12, section: 0),
+        ]
         XCTAssertEqual(result.deletes, expected)
     }
     
@@ -127,8 +135,10 @@ class ListDiffTests: XCTestCase {
         let result = ListDiff(oldArray: o, newArray: n, option: .equality)
         let expectedDeletes = IndexSet([1, 8])
         let expectedInserts = IndexSet([6, 8])
-        let expectedMoves = [ListMoveIndex(from: 5, to: 7),
-                             ListMoveIndex(from: 7, to: 4)]
+        let expectedMoves = [
+            ListMoveIndex(from: 5, to: 7),
+            ListMoveIndex(from: 7, to: 4),
+        ]
         let sortedMoves = result.moves.sorted()
         XCTAssertEqual(result.deletes, expectedDeletes)
         XCTAssertEqual(result.inserts, expectedInserts)
@@ -136,16 +146,22 @@ class ListDiffTests: XCTestCase {
     }
     
     func testWhenMovingItemsWithEqualityChangesThatResultsHasMovesAndUpdates() {
-        let o = [ListTestObject(key: "0", value: 0),
-                 ListTestObject(key: "1", value: 1),
-                 ListTestObject(key: "2", value: 2)].typeErased()
-        let n = [ListTestObject(key: "2", value: 3),
-                 ListTestObject(key: "1", value: 1),
-                 ListTestObject(key: "0", value: 0)].typeErased()
+        let o = [
+            ListTestObject(key: "0", value: 0),
+            ListTestObject(key: "1", value: 1),
+            ListTestObject(key: "2", value: 2),
+        ].typeErased()
+        let n = [
+            ListTestObject(key: "2", value: 3),
+            ListTestObject(key: "1", value: 1),
+            ListTestObject(key: "0", value: 0),
+        ].typeErased()
         let result = ListDiff(oldArray: o, newArray: n, option: .equality)
         let expectedUpdates = IndexSet([2])
-        let expectedMoves = [ListMoveIndex(from: 0, to: 2),
-                             ListMoveIndex(from: 2, to: 0)]
+        let expectedMoves = [
+            ListMoveIndex(from: 0, to: 2),
+            ListMoveIndex(from: 2, to: 0),
+        ]
         let sortedMoves = result.moves.sorted()
         XCTAssertEqual(result.updates, expectedUpdates)
         XCTAssertEqual(sortedMoves, expectedMoves)
@@ -170,71 +186,85 @@ class ListDiffTests: XCTestCase {
     }
     
     func testWhenInsertingObjectWithOldArrayHavingMultiplesThatChangeCountMatches() {
-        let o = [AnyListDiffable(49),
-                 AnyListDiffable(33),
-                 AnyListDiffable("cat"),
-                 AnyListDiffable("cat"),
-                 AnyListDiffable(0),
-                 AnyListDiffable(14)]
-        let n = [AnyListDiffable(49),
-                 AnyListDiffable(33),
-                 AnyListDiffable("cat"),
-                 AnyListDiffable("cat"),
-                 AnyListDiffable("cat"),
-                 AnyListDiffable(0),
-                 AnyListDiffable(14)]
+        let o = [
+            AnyListDiffable(49),
+            AnyListDiffable(33),
+            AnyListDiffable("cat"),
+            AnyListDiffable("cat"),
+            AnyListDiffable(0),
+            AnyListDiffable(14),
+        ]
+        let n = [
+            AnyListDiffable(49),
+            AnyListDiffable(33),
+            AnyListDiffable("cat"),
+            AnyListDiffable("cat"),
+            AnyListDiffable("cat"),
+            AnyListDiffable(0),
+            AnyListDiffable(14),
+        ]
         let result = ListDiff(oldArray: o, newArray: n, option: .equality)
         XCTAssertEqual(o.count + result.inserts.count - result.deletes.count, 7)
     }
     
     func testWhenMovingDuplicateObjectsThatChangeCountMatches() {
-        let o = [AnyListDiffable(1),
-                 AnyListDiffable(20),
-                 AnyListDiffable(14),
-                 AnyListDiffable("cat"),
-                 AnyListDiffable(4),
-                 AnyListDiffable("dog"),
-                 AnyListDiffable("cat"),
-                 AnyListDiffable("cat"),
-                 AnyListDiffable("fish"),
-                 AnyListDiffable("fish")]
-        let n = [AnyListDiffable(1),
-                 AnyListDiffable(28),
-                 AnyListDiffable(14),
-                 AnyListDiffable("cat"),
-                 AnyListDiffable("cat"),
-                 AnyListDiffable(4),
-                 AnyListDiffable("dog"),
-                 AnyListDiffable("fish"),
-                 AnyListDiffable("fish")]
+        let o = [
+            AnyListDiffable(1),
+            AnyListDiffable(20),
+            AnyListDiffable(14),
+            AnyListDiffable("cat"),
+            AnyListDiffable(4),
+            AnyListDiffable("dog"),
+            AnyListDiffable("cat"),
+            AnyListDiffable("cat"),
+            AnyListDiffable("fish"),
+            AnyListDiffable("fish"),
+        ]
+        let n = [
+            AnyListDiffable(1),
+            AnyListDiffable(28),
+            AnyListDiffable(14),
+            AnyListDiffable("cat"),
+            AnyListDiffable("cat"),
+            AnyListDiffable(4),
+            AnyListDiffable("dog"),
+            AnyListDiffable("fish"),
+            AnyListDiffable("fish"),
+        ]
         let result = ListDiff(oldArray: o, newArray: n, option: .equality)
         XCTAssertEqual(o.count + result.inserts.count - result.deletes.count, n.count)
     }
     
     func testWhenDiffingDuplicatesAtTailWithDuplicateAtHeadThatResultHasNoChanges() {
-        let o = [AnyListDiffable("cat"),
-                 AnyListDiffable(1),
-                 AnyListDiffable(2),
-                 AnyListDiffable(3),
-                 AnyListDiffable("cat")]
+        let o = [
+            AnyListDiffable("cat"),
+            AnyListDiffable(1),
+            AnyListDiffable(2),
+            AnyListDiffable(3),
+            AnyListDiffable("cat"),
+        ]
         let n = o
         let result = ListDiff(oldArray: o, newArray: n, option: .equality)
         XCTAssertFalse(result.hasChanges)
     }
     
     func testWhenDuplicateObjectsThatMovesAreUnique() {
-        let o = [AnyListDiffable("cat"),
-                 AnyListDiffable("dog"),
-                 AnyListDiffable("dog"),
-                 AnyListDiffable("cat"),
-                 AnyListDiffable(65)]
-        let n = [AnyListDiffable("cat"),
-                 AnyListDiffable("dog"),
-                 AnyListDiffable("dog"),
-                 AnyListDiffable("cat"),
-                 AnyListDiffable("cat"),
-                 AnyListDiffable("fish"),
-                 AnyListDiffable(65)]
+        let o = [
+            AnyListDiffable("cat"),
+            AnyListDiffable("dog"),
+            AnyListDiffable("dog"),
+            AnyListDiffable("cat"),
+            AnyListDiffable(65),
+        ]
+        let n = [
+            AnyListDiffable("cat"),
+            AnyListDiffable("dog"),
+            AnyListDiffable("dog"),
+            AnyListDiffable("cat"),
+            AnyListDiffable("cat"),
+            AnyListDiffable("fish"),
+            AnyListDiffable(65),
+        ]
         let result = ListDiff(oldArray: o, newArray: n, option: .equality)
         XCTAssertEqual(Set(result.moves).count, result.moves.count)
     }
@@ -308,18 +338,22 @@ class ListDiffTests: XCTestCase {
     }
     
     func testWhenDiffingWithBatchUpdateResultThatIndexesMatch() {
-        let o = [ListTestObject(key: 1, value: 1),
-                 ListTestObject(key: 2, value: 1),
-                 ListTestObject(key: 3, value: 1),
-                 ListTestObject(key: 4, value: 1),
-                 ListTestObject(key: 5, value: 1),
-                 ListTestObject(key: 6, value: 1)].typeErased()
-        let n = [ListTestObject(key: 2, value: 2), // deleted & updated
-                 ListTestObject(key: 5, value: 1), // moved
-                 ListTestObject(key: 4, value: 1),
-                 ListTestObject(key: 7, value: 1), // inserted
-                 ListTestObject(key: 6, value: 2), // updated
-                 ListTestObject(key: 3, value: 2)].typeErased() // moved + updated
+        let o = [
+            ListTestObject(key: 1, value: 1),
+            ListTestObject(key: 2, value: 1),
+            ListTestObject(key: 3, value: 1),
+            ListTestObject(key: 4, value: 1),
+            ListTestObject(key: 5, value: 1),
+            ListTestObject(key: 6, value: 1),
+        ].typeErased()
+        let n = [
+            ListTestObject(key: 2, value: 2), // deleted & updated
+            ListTestObject(key: 5, value: 1), // moved
+            ListTestObject(key: 4, value: 1),
+            ListTestObject(key: 7, value: 1), // inserted
+            ListTestObject(key: 6, value: 2), // updated
+            ListTestObject(key: 3, value: 2),
+        ].typeErased() // moved + updated
         let result = ListDiff(oldArray: o, newArray: n, option: .equality).resultForBatchUpdates()
         XCTAssertEqual(result.updates.count, 0)
         let expectedMoves = [ListMoveIndex(from: 4, to: 1)]
@@ -331,36 +365,47 @@ class ListDiffTests: XCTestCase {
     }
     
     func testwhenDiffingWithBatchUpdateResultThatIndexPathsMatch() {
-        let o = [ListTestObject(key: 1, value: 1),
-                 ListTestObject(key: 2, value: 1),
-                 ListTestObject(key: 3, value: 1),
-                 ListTestObject(key: 4, value: 1),
-                 ListTestObject(key: 5, value: 1),
-                 ListTestObject(key: 6, value: 1)].typeErased()
-        let n = [ListTestObject(key: 2, value: 2), // deleted & updated
-                 ListTestObject(key: 5, value: 1),
-                 ListTestObject(key: 4, value: 1), // moved
-                 ListTestObject(key: 7, value: 1), // inserted
-                 ListTestObject(key: 6, value: 2), // updated
-                 ListTestObject(key: 3, value: 2)].typeErased() // moved + updated
+        let o = [
+            ListTestObject(key: 1, value: 1),
+            ListTestObject(key: 2, value: 1),
+            ListTestObject(key: 3, value: 1),
+            ListTestObject(key: 4, value: 1),
+            ListTestObject(key: 5, value: 1),
+            ListTestObject(key: 6, value: 1),
+        ].typeErased()
+        let n = [
+            ListTestObject(key: 2, value: 2), // deleted & updated
+            ListTestObject(key: 5, value: 1),
+            ListTestObject(key: 4, value: 1), // moved
+            ListTestObject(key: 7, value: 1), // inserted
+            ListTestObject(key: 6, value: 2), // updated
+            ListTestObject(key: 3, value: 2),
+        ].typeErased() // moved + updated
         let result = ListDiffPaths(fromSection: 0, toSection: 1,
-                                   oldArray: o, newArray: n,
-                                   option: .equality).resultForBatchUpdates()
+            oldArray: o, newArray: n, option: .equality).resultForBatchUpdates()
         XCTAssertEqual(result.updates.count, 0)
-        let expectedMoves = [ListMoveIndexPath(from: IndexPath(item: 4, section: 0), to: IndexPath(item: 1, section: 1))]
+        let expectedMoves = [
+            ListMoveIndexPath(from: IndexPath(item: 4, section: 0), to: IndexPath(item: 1, section: 1)),
+        ]
         XCTAssertEqual(result.moves, expectedMoves)
-        let expectedDeletes = [IndexPath(item: 0, section: 0), IndexPath(item: 1, section: 0),
-                               IndexPath(item: 2, section: 0), IndexPath(item: 5, section: 0)]
+        let expectedDeletes = [
+            IndexPath(item: 0, section: 0), IndexPath(item: 1, section: 0),
+            IndexPath(item: 2, section: 0), IndexPath(item: 5, section: 0),
+        ]
         XCTAssertEqual(result.deletes.sorted(), expectedDeletes)
-        let expectedInserts = [IndexPath(item: 0, section: 1), IndexPath(item: 3, section: 1),
-                               IndexPath(item: 4, section: 1), IndexPath(item: 5, section: 1)]
+        let expectedInserts = [
+            IndexPath(item: 0, section: 1), IndexPath(item: 3, section: 1),
+            IndexPath(item: 4, section: 1), IndexPath(item: 5, section: 1),
+        ]
         XCTAssertEqual(result.inserts.sorted(), expectedInserts)
     }
     
     func testWhenDiffingPointersWithObjectCopyThatResultHasUpdate() {
-        let o = [ListTestClassObject(key: "0", value: 0),
-                 ListTestClassObject(key: "1", value: 1),
-                 ListTestClassObject(key: "2", value: 2)].typeErased()
+        let o = [
+            ListTestClassObject(key: "0", value: 0),
+            ListTestClassObject(key: "1", value: 1),
+            ListTestClassObject(key: "2", value: 2),
+        ].typeErased()
         let n = [o[0], AnyListDiffable(ListTestClassObject(key: "1", value: 1)), o[2]]
         let result = ListDiffPaths(fromSection: 0, toSection: 0, oldArray: o, newArray: n, option: .objectIdentifier)
         let expected = [IndexPath(item: 1, section: 0)]
@@ -368,9 +413,11 @@ class ListDiffTests: XCTestCase {
     }
     
     func testWhenDiffingPointersWithSameObjectsThatResultHasNoChanges() {
-        let o:[AnyListDiffable] = [AnyListDiffable(ListTestClassObject(key: "0", value: 0)),
-                                   AnyListDiffable(ListTestClassObject(key: "1", value: 1)),
-                                   AnyListDiffable(ListTestClassObject(key: "2", value: 2))]
+        let o:[AnyListDiffable] = [
+            AnyListDiffable(ListTestClassObject(key: "0", value: 0)),
+            AnyListDiffable(ListTestClassObject(key: "1", value: 1)),
+            AnyListDiffable(ListTestClassObject(key: "2", value: 2)),
+        ]
         let n = o
         let result = ListDiffPaths(fromSection: 0, toSection: 0, oldArray: o, newArray: n, option: .objectIdentifier)
         XCTAssertFalse(result.hasChanges)
