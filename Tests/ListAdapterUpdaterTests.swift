@@ -416,5 +416,26 @@ class ListAdapterUpdaterTests: XCTestCase {
         wait(for: [expectation], timeout: 10)
     }
     
+    func testWhenConvertingReloadsWithoutChangesThatOriginalIndexUsed() {
+        let from: [AnyListDiffable] = []
+        let to: [AnyListDiffable] = []
+        let result = ListDiff(oldArray: from, newArray: to, option: .equality)
+        var reloads = result.updates
+        reloads.insert(2)
+        var deletes = result.deletes
+        var inserts = result.inserts
+        convert(
+            reloads: &reloads,
+            toDeletes: &deletes,
+            andInserts: &inserts,
+            withResult: result,
+            fromObjects: from)
+        XCTAssertEqual(reloads.count, 0);
+        XCTAssertEqual(deletes.count, 1);
+        XCTAssertEqual(inserts.count, 1);
+        XCTAssertTrue(deletes.contains(2));
+        XCTAssertTrue(inserts.contains(2));
+    }
+    
     
 }
