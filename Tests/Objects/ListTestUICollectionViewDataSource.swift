@@ -22,10 +22,7 @@ extension ListTestSectionObject: ListDiffable {
         return ObjectIdentifier(self)
     }
     
-    static func == (
-        lhs: ListTestSectionObject,
-        rhs: ListTestSectionObject
-    ) -> Bool {
+    static func == (lhs: ListTestSectionObject, rhs: ListTestSectionObject) -> Bool {
         if lhs === rhs {
             return true
         } else {
