@@ -650,16 +650,18 @@ func convert(
         
         // if a reload is queued outside the diff and the object was inserted
         // or deleted it cannot be
-        if let from = from, let to = to {
+        if let from = from {
             reloads.remove(from)
-            deletes.insert(from)
-            inserts.insert(to)
-        } else {
-            assert(
-                result.deletes.contains(index),
-                "Reloaded section \(index) was not found in deletes with" +
-                    " from: \(String(describing: from))," +
-                    " to: \(String(describing: to)), deletes: \(deletes)")
+            if let to = to {
+                deletes.insert(from)
+                inserts.insert(to)
+            } else {
+                assert(
+                    result.deletes.contains(index),
+                    "Reloaded section \(index) was not found in deletes with" +
+                        " from: \(String(describing: from))," +
+                        " to: \(String(describing: to)), deletes: \(deletes)")
+            }
         }
     }
 }
