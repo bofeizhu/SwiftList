@@ -90,4 +90,80 @@ protocol ListCollectionContext: AnyObject {
         selectItemAt index: Int,
         animated: Bool,
         scrollPosition: UICollectionViewScrollPosition)
+    
+    /// Dequeues a cell from the collection view reuse pool.
+    ///
+    /// - Parameters:
+    ///     - sectionController: The section controller requesting this information.
+    ///     - cellClass: The class of the cell you want to dequeue.
+    ///     - identifier: A reuse identifier for the specified cell. This parameter may be `nil`.
+    ///     - index: The index of the cell.
+    /// - Returns: A cell dequeued from the reuse pool or a newly created one.
+    /// - Note: This method uses a string representation of the cell class as the identifier.
+    func sectionController(
+        _ sectionController: ListSectionController,
+        dequeueReusableCellOfClass cellClass: AnyClass,
+        withReuseIdentifier identifier: String,
+        at index: Int
+    ) -> UICollectionViewCell
+    
+    /// Dequeues a cell from the collection view reuse pool.
+    ///
+    /// - Parameters:
+    ///     - sectionController: The section controller requesting this information.
+    ///     - cellClass: The class of the cell you want to dequeue.
+    ///     - index: The index of the cell.
+    /// - Returns: A cell dequeued from the reuse pool or a newly created one.
+    /// - Note: This method uses a string representation of the cell class as the identifier.
+    func sectionController(
+        _ sectionController: ListSectionController,
+        dequeueReusableCellOfClass cellClass: AnyClass,
+        at index: Int
+    ) -> UICollectionViewCell
+    
+    /// Dequeues a cell from the collection view reuse pool.
+    ///
+    /// - Parameters:
+    ///     - sectionController: The section controller requesting this information.
+    ///     - nib: The nib object containing the cell object. The nib file must contain only one
+    ///         top-level object and that object must be of the type `UICollectionViewCell`.
+    ///     - index: The index of the cell.
+    /// - Returns: A cell dequeued from the reuse pool or a newly created one.
+    /// - Note: This method uses a string representation of the cell class as the identifier.
+    func sectionController(
+        _ sectionController: ListSectionController,
+        dequeueReusableCellWithNib nib: UINib,
+        at index: Int
+    ) -> UICollectionViewCell
+    
+    /// Dequeues a storyboard prototype cell from the collection view reuse pool.
+    ///
+    /// - Parameters:
+    ///     - sectionController: The section controller requesting this information.
+    ///     - identifier: The identifier of the cell prototype in storyboard.
+    ///     - index: The index of the cell.
+    /// - Returns: A cell dequeued from the reuse pool or a newly created one.
+    func sectionController(
+        _ sectionController: ListSectionController,
+        dequeueReusableCellFromStoryboardWithIdentifier identifier: UINib,
+        at index: Int
+    ) -> UICollectionViewCell
+    
+    /// Dequeues a supplementary view from the collection view reuse pool.
+    ///
+    /// - Parameters:
+    ///     - sectionController: The section controller requesting this information.
+    ///     - elementKind: The kind of supplementary view.
+    ///     - viewClass: The class of the supplementary view.
+    ///     - index: The index of the cell.
+    /// - Returns: A supplementary view dequeued from the reuse pool or a newly created one.
+    /// - Note: This method uses a string representation of the view class as the identifier.
+    func sectionController(
+        _ sectionController: ListSectionController,
+        dequeueReusableSupplementaryViewOfKind elementKind: String,
+        class viewClass: AnyClass,
+        at index: Int
+    ) -> UICollectionReusableView
+    
+    
 }
