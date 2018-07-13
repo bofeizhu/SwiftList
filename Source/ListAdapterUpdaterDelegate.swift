@@ -12,16 +12,19 @@
 
 public protocol ListAdapterUpdaterDelegate: AnyObject {
     /**
-     Notifies the delegate that the updater will call `UICollectionView.performBatchUpdates(_:completion:)`.
+     Notifies the delegate that the updater will call
+     `UICollectionView.performBatchUpdates(_:completion:)`.
      - Parameters:
         - listAdapterUpdater: The adapter updater owning the transition.
         - collectionView: The collection view that will perform the batch updates.
      */
-    func listAdapterUpdater(_ listAdapterUpdater: ListAdapterUpdater,
-                            willPerformBatchUpdatesForCollectionView collectView: UICollectionView)
+    func listAdapterUpdater(
+        _ listAdapterUpdater: ListAdapterUpdater,
+        willPerformBatchUpdatesForCollectionView collectView: UICollectionView)
     
     /**
-     Notifies the delegate that the updater successfully finished `UICollectionView.performBatchUpdates(_:completion:)`.
+     Notifies the delegate that the updater successfully finished
+     `UICollectionView.performBatchUpdates(_:completion:)`.
      - Parameters:
         - listAdapterUpdater: The adapter updater owning the transition.
         - updates: The batch updates that were applied to the collection view.
@@ -29,9 +32,10 @@ public protocol ListAdapterUpdaterDelegate: AnyObject {
      
      - Note: This event is called in the completion closure of the batch update.
      */
-    func listAdapterUpdater(_ listAdapterUpdater: ListAdapterUpdater,
-                            didPerformBatchUpdates updates: ListBatchUpdateData,
-                            forCollectionView collectionView: UICollectionView)
+    func listAdapterUpdater(
+        _ listAdapterUpdater: ListAdapterUpdater,
+        didPerformBatchUpdates updates: ListBatchUpdateData,
+        forCollectionView collectionView: UICollectionView)
     
     /**
      Notifies the delegate that the updater will call `UICollectionView.insertItems(at:)`.
@@ -40,11 +44,13 @@ public protocol ListAdapterUpdaterDelegate: AnyObject {
         - indexPaths: An array of index paths that will be inserted.
         - collectionView: The collection view that will perform the insert.
      
-     - Note: This event is only sent when outside of `UICollectionView.performBatchUpdates(_:completion:)`.
+     - Note: This event is only sent when outside of
+     `UICollectionView.performBatchUpdates(_:completion:)`.
      */
-    func listAdapterUpdater(_ listAdapterUpdater: ListAdapterUpdater,
-                            willInsertItemsAt indexPaths: [IndexPath],
-                            forCollectionView collectionView: UICollectionView)
+    func listAdapterUpdater(
+        _ listAdapterUpdater: ListAdapterUpdater,
+        willInsertItemsAt indexPaths: [IndexPath],
+        forCollectionView collectionView: UICollectionView)
     
     /**
      Notifies the delegate that the updater will call `UICollectionView.deleteItems(at:)`.
@@ -53,11 +59,13 @@ public protocol ListAdapterUpdaterDelegate: AnyObject {
         - indexPaths: An array of index paths that will be deleted.
         - collectionView: The collection view that will perform the delete.
      
-     - Note: This event is only sent when outside of `UICollectionView.performBatchUpdates(_:completion:)`.
+     - Note: This event is only sent when outside of
+     `UICollectionView.performBatchUpdates(_:completion:)`.
      */
-    func listAdapterUpdater(_ listAdapterUpdater: ListAdapterUpdater,
-                            willDeleteItemsAt indexPaths: [IndexPath],
-                            forCollectionView collectionView: UICollectionView)
+    func listAdapterUpdater(
+        _ listAdapterUpdater: ListAdapterUpdater,
+        willDeleteItemsAt indexPaths: [IndexPath],
+        forCollectionView collectionView: UICollectionView)
     
     /**
      Notifies the delegate that the updater will call `UICollectionView.moveItem(at:to:)`
@@ -67,11 +75,14 @@ public protocol ListAdapterUpdaterDelegate: AnyObject {
         - newIndexPath: The index path to move the item to.
         - collectionView: The collection view that will perform the move.
      
-     - Note: This event is only sent when outside of `UICollectionView.performBatchUpdates(_:completion:)`.
+     - Note: This event is only sent when outside of
+     `UICollectionView.performBatchUpdates(_:completion:)`.
      */
-    func listAdapterUpdater(_ listAdapterUpdater: ListAdapterUpdater,
-                            willMoveAt indexPath: IndexPath, to newIndexPath: IndexPath,
-                            forCollectionView collectionView: UICollectionView)
+    func listAdapterUpdater(
+        _ listAdapterUpdater: ListAdapterUpdater,
+        willMoveAt indexPath: IndexPath,
+        to newIndexPath: IndexPath,
+        forCollectionView collectionView: UICollectionView)
     
     /**
      Notifies the delegate that the updater will call `UICollectionView.reloadItems(at:)`.
@@ -80,11 +91,13 @@ public protocol ListAdapterUpdaterDelegate: AnyObject {
         - indexPaths: An array of index paths that will be reloaded.
         - collectionView: The collection view that will perform the reload.
      
-     - Note: This event is only sent when outside of `UICollectionView.performBatchUpdates(_:completion:)`.
+     - Note: This event is only sent when outside of
+     `UICollectionView.performBatchUpdates(_:completion:)`.
      */
-    func listAdapterUpdater(_ listAdapterUpdater: ListAdapterUpdater,
-                            willReloadItemsAt indexPaths: [IndexPath],
-                            forCollectionView collectionView: UICollectionView)
+    func listAdapterUpdater(
+        _ listAdapterUpdater: ListAdapterUpdater,
+        willReloadItemsAt indexPaths: [IndexPath],
+        forCollectionView collectionView: UICollectionView)
     
     /**
      Notifies the delegate that the updater will call `UICollectionView.reloadSections(_:)`.
@@ -93,11 +106,13 @@ public protocol ListAdapterUpdaterDelegate: AnyObject {
         - sections: The sections that will be reloaded
         - collectionView: The collection view that will perform the reload.
      
-     - Note: This event is only sent when outside of `UICollectionView.performBatchUpdates(_:completion:)`.
+     - Note: This event is only sent when outside of
+     `UICollectionView.performBatchUpdates(_:completion:)`.
      */
-    func listAdapterUpdater(_ listAdapterUpdater: ListAdapterUpdater,
-                            willReloadSections sections: IndexSet,
-                            forCollectionView collectionView: UICollectionView)
+    func listAdapterUpdater(
+        _ listAdapterUpdater: ListAdapterUpdater,
+        willReloadSections sections: IndexSet,
+        forCollectionView collectionView: UICollectionView)
     
     /**
      Notifies the delegate that the updater will call `UICollectionView.reloadData()`.
@@ -105,8 +120,9 @@ public protocol ListAdapterUpdaterDelegate: AnyObject {
         - listAdapterUpdater: The adapter updater owning the transition.
         - collectionView: The collection view that will be reloaded.
      */
-    func listAdapterUpdater(_ listAdapterUpdater: ListAdapterUpdater,
-                            willReloadDataForCollectionView collectionView: UICollectionView)
+    func listAdapterUpdater(
+        _ listAdapterUpdater: ListAdapterUpdater,
+        willReloadDataForCollectionView collectionView: UICollectionView)
     
     /**
      Notifies the delegate that the updater successfully called `UICollectionView.reloadData()`.
@@ -114,6 +130,7 @@ public protocol ListAdapterUpdaterDelegate: AnyObject {
         - listAdapterUpdater: The adapter updater owning the transition.
         - collectionView: The collection view that reloaded.
      */
-    func listAdapterUpdater(_ listAdapterUpdater: ListAdapterUpdater,
-                            didReloadDataForCollectionView collectionView: UICollectionView)
+    func listAdapterUpdater(
+        _ listAdapterUpdater: ListAdapterUpdater,
+        didReloadDataForCollectionView collectionView: UICollectionView)
 }

@@ -65,7 +65,8 @@ public class ListIndexPathResult {
     }
     
     /**
-     Creates a new result object with operations safe for use in `UITableView` and `UICollectionView` batch updates.
+     Creates a new result object with operations safe for use in `UITableView`
+     and `UICollectionView` batch updates.
      */
     public func resultForBatchUpdates() -> ListIndexPathResult {
         var deletes = Set(self.deletes)
@@ -85,7 +86,8 @@ public class ListIndexPathResult {
             }
         }
         
-        // iterate all new identifiers. if its index is updated, delete from the old index and insert the new index
+        // iterate all new identifiers. if its index is updated,
+        // delete from the old index and insert the new index
         for (key, indexPath) in oldIndexPathDict {
             if filteredUpdates.contains(indexPath) {
                 deletes.insert(indexPath)
@@ -96,10 +98,13 @@ public class ListIndexPathResult {
             }
         }
         
-        return ListIndexPathResult(inserts: Array(inserts), deletes: Array(deletes),
-                                   updates: [], moves: filteredMoves,
-                                   oldIndexPathDict: oldIndexPathDict,
-                                   newIndexPathDict: newIndexPathDict)
+        return ListIndexPathResult(
+            inserts: Array(inserts),
+            deletes: Array(deletes),
+            updates: [],
+            moves: filteredMoves,
+            oldIndexPathDict: oldIndexPathDict,
+            newIndexPathDict: newIndexPathDict)
     }
     
     //MARK: Private API
@@ -107,10 +112,14 @@ public class ListIndexPathResult {
         return inserts.count + deletes.count + updates.count + moves.count
     }
     
-    init(inserts: [IndexPath], deletes: [IndexPath], updates: [IndexPath],
-         moves: [ListMoveIndexPath],
-         oldIndexPathDict: [AnyHashable: IndexPath],
-         newIndexPathDict: [AnyHashable: IndexPath]) {
+    init(
+        inserts: [IndexPath],
+        deletes: [IndexPath],
+        updates: [IndexPath],
+        moves: [ListMoveIndexPath],
+        oldIndexPathDict: [AnyHashable: IndexPath],
+        newIndexPathDict: [AnyHashable: IndexPath]
+    ) {
         self.inserts = inserts
         self.deletes = deletes
         self.updates = updates
@@ -126,6 +135,7 @@ public class ListIndexPathResult {
 
 extension ListIndexPathResult: CustomStringConvertible {
     public var description: String {
-        return "<\(type(of: self)); \(inserts.count) inserts; \(deletes.count) deletes; \(updates.count) updates; \(moves.count) moves>"
+        return "<\(type(of: self)); \(inserts.count) inserts; \(deletes.count) deletes;" +
+            " \(updates.count) updates; \(moves.count) moves>"
     }
 }

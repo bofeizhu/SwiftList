@@ -48,37 +48,57 @@ class ListAdapterUpdaterTests: XCTestCase {
     }
     
     func testWhenUpdatingWithNilThatUpdaterHasNoChanges() {
-        updater.performUpdateWith(collectionViewClosure: collectionViewClosure,
-            fromObjects: nil, toObjectsClosure: nil, animated: true,
-            objectTransitionClosure: updateClosure, completion: nil)
+        updater.performUpdateWith(
+            collectionViewClosure: collectionViewClosure,
+            fromObjects: nil,
+            toObjectsClosure: nil,
+            animated: true,
+            objectTransitionClosure: updateClosure,
+            completion: nil)
         XCTAssertFalse(updater.hasChanges)
     }
     
     func testWhenUpdatingtoObjectsThatUpdaterHasChanges() {
-        updater.performUpdateWith(collectionViewClosure: collectionViewClosure,
-            fromObjects: nil, toObjectsClosure: { [0].typeErased() },
-            animated: true, objectTransitionClosure: updateClosure, completion: nil)
+        updater.performUpdateWith(
+            collectionViewClosure: collectionViewClosure,
+            fromObjects: nil,
+            toObjectsClosure: { [0].typeErased() },
+            animated: true,
+            objectTransitionClosure: updateClosure,
+            completion: nil)
         XCTAssertTrue(updater.hasChanges)
     }
     
     func testWhenUpdatingfromObjectsThatUpdaterHasChanges() {
-        updater.performUpdateWith(collectionViewClosure: collectionViewClosure,
-            fromObjects: [0].typeErased(), toObjectsClosure: nil, animated: true,
-            objectTransitionClosure: updateClosure, completion: nil)
+        updater.performUpdateWith(
+            collectionViewClosure: collectionViewClosure,
+            fromObjects: [0].typeErased(),
+            toObjectsClosure: nil,
+            animated: true,
+            objectTransitionClosure: updateClosure,
+            completion: nil)
         XCTAssertTrue(updater.hasChanges)
     }
     
     func testWhenUpdatingtoObjectsWithfromObjectsThatUpdaterHasChanges() {
-        updater.performUpdateWith(collectionViewClosure: collectionViewClosure,
-            fromObjects: [0].typeErased(), toObjectsClosure: { [1].typeErased() },
-            animated: true, objectTransitionClosure: updateClosure, completion: nil)
+        updater.performUpdateWith(
+            collectionViewClosure: collectionViewClosure,
+            fromObjects: [0].typeErased(),
+            toObjectsClosure: { [1].typeErased() },
+            animated: true,
+            objectTransitionClosure: updateClosure,
+            completion: nil)
         XCTAssertTrue(updater.hasChanges)
     }
     
     func testWhenCleaningUpStateWithChangesThatUpdaterHasNoChanges() {
-        updater.performUpdateWith(collectionViewClosure: collectionViewClosure,
-            fromObjects: nil, toObjectsClosure: { [0].typeErased() }, animated: true,
-            objectTransitionClosure: updateClosure, completion: nil)
+        updater.performUpdateWith(
+            collectionViewClosure: collectionViewClosure,
+            fromObjects: nil,
+            toObjectsClosure: { [0].typeErased() },
+            animated: true,
+            objectTransitionClosure: updateClosure,
+            completion: nil)
         XCTAssertTrue(updater.hasChanges)
         updater.cleanStateBeforeUpdates()
         XCTAssertFalse(updater.hasChanges)
@@ -96,16 +116,18 @@ class ListAdapterUpdaterTests: XCTestCase {
     func testWhenInsertingSectionThatCollectionViewUpdates() {
         let from = [ListTestSectionObject(objects: [])]
         let to = {
-            [ListTestSectionObject(objects: []),
-             ListTestSectionObject(objects: [])].typeErased()
+            [ListTestSectionObject(objects: []), ListTestSectionObject(objects: [])].typeErased()
         }
         dataSource.sections = from
         updater.performReloadDataWith(collectionViewClosure: collectionViewClosure)
         XCTAssertEqual(collectionView.numberOfSections, 1)
         
         let expectation = XCTestExpectation()
-        updater.performUpdateWith(collectionViewClosure: collectionViewClosure,
-            fromObjects: from.typeErased(), toObjectsClosure: to, animated: true,
+        updater.performUpdateWith(
+            collectionViewClosure: collectionViewClosure,
+            fromObjects: from.typeErased(),
+            toObjectsClosure: to,
+            animated: true,
             objectTransitionClosure: updateClosure) { [unowned self] (finished) in
                 XCTAssertEqual(self.collectionView.numberOfSections, 2)
                 expectation.fulfill()
@@ -114,8 +136,10 @@ class ListAdapterUpdaterTests: XCTestCase {
     }
     
     func testWhenDeletingSectionThatCollectionViewUpdates() {
-        let from = [ListTestSectionObject(objects: []),
-                    ListTestSectionObject(objects: [])]
+        let from = [
+            ListTestSectionObject(objects: []),
+            ListTestSectionObject(objects: []),
+        ]
         let to = {
             [ListTestSectionObject(objects: [])].typeErased()
         }
@@ -124,8 +148,11 @@ class ListAdapterUpdaterTests: XCTestCase {
         XCTAssertEqual(collectionView.numberOfSections, 2)
         
         let expectation = XCTestExpectation()
-        updater.performUpdateWith(collectionViewClosure: collectionViewClosure,
-            fromObjects: from.typeErased(), toObjectsClosure: to, animated: true,
+        updater.performUpdateWith(
+            collectionViewClosure: collectionViewClosure,
+            fromObjects: from.typeErased(),
+            toObjectsClosure: to,
+            animated: true,
             objectTransitionClosure: updateClosure) { [unowned self] (finished) in
                 XCTAssertEqual(self.collectionView.numberOfSections, 1)
                 expectation.fulfill()
@@ -146,8 +173,11 @@ class ListAdapterUpdaterTests: XCTestCase {
         XCTAssertEqual(collectionView.numberOfItems(inSection: 0), 1)
         
         let expectation = XCTestExpectation()
-        updater.performUpdateWith(collectionViewClosure: collectionViewClosure,
-            fromObjects: from.typeErased(), toObjectsClosure: to, animated: true,
+        updater.performUpdateWith(
+            collectionViewClosure: collectionViewClosure,
+            fromObjects: from.typeErased(),
+            toObjectsClosure: to,
+            animated: true,
             objectTransitionClosure: updateClosure) { [unowned self] (finished) in
                 XCTAssertEqual(self.collectionView.numberOfSections, 2)
                 XCTAssertEqual(self.collectionView.numberOfItems(inSection: 0), 2)
@@ -158,8 +188,10 @@ class ListAdapterUpdaterTests: XCTestCase {
     }
     
     func testWhenInsertingSectionWithDeletedSectionThatCollectionViewUpdates() {
-        let from = [ListTestSectionObject(objects: [0, 1, 2].typeErased()),
-                    ListTestSectionObject(objects: [])]
+        let from = [
+            ListTestSectionObject(objects: [0, 1, 2].typeErased()),
+            ListTestSectionObject(objects: []),
+        ]
         let to = {
             [ListTestSectionObject(objects: [1, 1].typeErased()),
              ListTestSectionObject(objects: [0].typeErased()),
@@ -172,8 +204,11 @@ class ListAdapterUpdaterTests: XCTestCase {
         XCTAssertEqual(collectionView.numberOfItems(inSection: 0), 3)
         
         let expectation = XCTestExpectation()
-        updater.performUpdateWith(collectionViewClosure: collectionViewClosure,
-            fromObjects: from.typeErased(), toObjectsClosure: to, animated: true,
+        updater.performUpdateWith(
+            collectionViewClosure: collectionViewClosure,
+            fromObjects: from.typeErased(),
+            toObjectsClosure: to,
+            animated: true,
             objectTransitionClosure: updateClosure) { [unowned self] (finished) in
                 XCTAssertEqual(self.collectionView.numberOfSections, 3)
                 XCTAssertEqual(self.collectionView.numberOfItems(inSection: 0), 2)
@@ -185,15 +220,19 @@ class ListAdapterUpdaterTests: XCTestCase {
     }
     
     func testWhenReloadingSectionsThatCollectionViewUpdates() {
-        dataSource.sections = [ListTestSectionObject(objects: [0, 1].typeErased()),
-                               ListTestSectionObject(objects: [0, 1].typeErased())]
+        dataSource.sections = [
+            ListTestSectionObject(objects: [0, 1].typeErased()),
+            ListTestSectionObject(objects: [0, 1].typeErased()),
+        ]
         updater.performReloadDataWith(collectionViewClosure: collectionViewClosure)
         XCTAssertEqual(collectionView.numberOfSections, 2)
         XCTAssertEqual(collectionView.numberOfItems(inSection: 0), 2)
         XCTAssertEqual(collectionView.numberOfItems(inSection: 1), 2)
         
-        dataSource.sections = [ListTestSectionObject(objects: [0, 1, 2].typeErased()),
-                               ListTestSectionObject(objects: [0, 1].typeErased())]
+        dataSource.sections = [
+            ListTestSectionObject(objects: [0, 1, 2].typeErased()),
+            ListTestSectionObject(objects: [0, 1].typeErased()),
+        ]
         updater.collectionView(collectionView, reloadSections: IndexSet(integer: 0))
         XCTAssertEqual(collectionView.numberOfSections, 2)
         XCTAssertEqual(collectionView.numberOfItems(inSection: 0), 3)
@@ -201,8 +240,10 @@ class ListAdapterUpdaterTests: XCTestCase {
     }
     
     func testWhenCollectionViewNeedsLayoutThatPerformBatchUpdateWorks() {
-        let from = [ListTestSectionObject(objects: []),
-                    ListTestSectionObject(objects: [])]
+        let from = [
+            ListTestSectionObject(objects: []),
+            ListTestSectionObject(objects: []),
+        ]
         let to = {
             [ListTestSectionObject(objects: [])].typeErased()
         }
@@ -216,8 +257,11 @@ class ListAdapterUpdaterTests: XCTestCase {
         collectionView.setNeedsLayout()
         
         let expectation = XCTestExpectation()
-        updater.performUpdateWith(collectionViewClosure: collectionViewClosure,
-            fromObjects: from.typeErased(), toObjectsClosure: to, animated: false,
+        updater.performUpdateWith(
+            collectionViewClosure: collectionViewClosure,
+            fromObjects: from.typeErased(),
+            toObjectsClosure: to,
+            animated: false,
             objectTransitionClosure: updateClosure) { [unowned self] (finished) in
                 XCTAssertEqual(self.collectionView.numberOfSections, 1)
                 expectation.fulfill()
@@ -243,23 +287,30 @@ class ListAdapterUpdaterTests: XCTestCase {
                  ListTestSectionObject(objects: []),
                  ListTestSectionObject(objects: [])].typeErased()
             }
-            self.updater.performUpdateWith(collectionViewClosure: self.collectionViewClosure,
-                fromObjects: from.typeErased(), toObjectsClosure: anotherTo, animated: true,
-                objectTransitionClosure: self.updateClosure, completion: { (finished) in
+            self.updater.performUpdateWith(
+                collectionViewClosure: self.collectionViewClosure,
+                fromObjects: from.typeErased(),
+                toObjectsClosure: anotherTo,
+                animated: true,
+                objectTransitionClosure: self.updateClosure) { (finished) in
                     completionCounter += 1
                     XCTAssertEqual(self.collectionView.numberOfSections, 3)
                     XCTAssertEqual(completionCounter, 2)
                     expectation1.fulfill()
-                })
+                }
         }
         
         let expectation2 = XCTestExpectation()
-        updater.performUpdateWith(collectionViewClosure: collectionViewClosure,
-            fromObjects: from.typeErased(), toObjectsClosure: to, animated: true,
+        updater.performUpdateWith(
+            collectionViewClosure: collectionViewClosure,
+            fromObjects: from.typeErased(),
+            toObjectsClosure: to,
+            animated: true,
             objectTransitionClosure: { [unowned self] (toObjects) in
-                // executing this closure within the updater is just before `performBatchUpdates` are applied
-                // should be able to queue another update here, similar to an update being queued between
-                // it beginning and executing the performBatchUpdates: block
+                // executing this closure within the updater is just before
+                // `performBatchUpdates` are applied should be able to queue another update here,
+                // similar to an update being queued between it beginning
+                // and executing the `performBatchUpdates`
                 preUpdateClosure()
                 self.dataSource.sections = toObjects.map { $0.base as! ListTestSectionObject }
             },
@@ -273,18 +324,24 @@ class ListAdapterUpdaterTests: XCTestCase {
     }
     
     func testWhenQueuingItemUpdatesThatUpdaterHasChanges() {
-        updater.performUpdateWith(collectionViewClosure: collectionViewClosure,
-            animated: false, itemUpdates: {}, completion: nil)
+        updater.performUpdateWith(
+            collectionViewClosure: collectionViewClosure,
+            animated: false,
+            itemUpdates: {},
+            completion: nil)
         XCTAssertTrue(updater.hasChanges)
     }
     
     func testWhenOnlyQueueingItemUpdatesThatUpdateBlockExecutes() {
         let expectation = XCTestExpectation()
-        updater.performUpdateWith(collectionViewClosure: collectionViewClosure,
-            animated: true, itemUpdates: {
+        updater.performUpdateWith(
+            collectionViewClosure: collectionViewClosure,
+            animated: true,
+            itemUpdates: {
                 // expectation should be triggered. test failure is a timeout
                 expectation.fulfill()
-            }, completion: nil)
+            },
+            completion: nil)
         wait(for: [expectation], timeout: 10)
     }
     
@@ -292,19 +349,27 @@ class ListAdapterUpdaterTests: XCTestCase {
         var itemUpdateClosureExecuted = false
         var sectionUpdateClosureExecuted = false
         
-        updater.performUpdateWith(collectionViewClosure: collectionViewClosure,
-            fromObjects: nil, toObjectsClosure: {
+        updater.performUpdateWith(
+            collectionViewClosure: collectionViewClosure,
+            fromObjects: nil,
+            toObjectsClosure: {
                 [ListTestSectionObject(objects: [1].typeErased())].typeErased()
-            }, animated: true, objectTransitionClosure: { [unowned self] (toObjects) in
+            },
+            animated: true,
+            objectTransitionClosure: { [unowned self] (toObjects) in
                 self.dataSource.sections = toObjects.map { $0.base as! ListTestSectionObject }
                 sectionUpdateClosureExecuted = true
-            }, completion: nil)
+            },
+            completion: nil)
         
         let expectation = XCTestExpectation()
-        updater.performUpdateWith(collectionViewClosure: collectionViewClosure,
-            animated: true, itemUpdates: {
+        updater.performUpdateWith(
+            collectionViewClosure: collectionViewClosure,
+            animated: true,
+            itemUpdates: {
                 itemUpdateClosureExecuted = true
-            }, completion: { [unowned self] (finished) in
+            },
+            completion: { [unowned self] (finished) in
                 // test in the item completion block that the SECTION operations have been performed
                 XCTAssertEqual(self.collectionView.numberOfSections, 1)
                 XCTAssertEqual(self.collectionView.numberOfItems(inSection: 0), 1)
@@ -316,11 +381,13 @@ class ListAdapterUpdaterTests: XCTestCase {
     }
     
     func testWhenItemsMoveAndUpdateThatCollectionViewWorks() {
-        var from =  [ListTestSectionObject(objects: []),
-                     ListTestSectionObject(objects: []),
-                     ListTestSectionObject(objects: [])]
-        // change the number of items in the section, which a move would be unable to handle and would throw
-        // keep the same pointers so that the objects are equal
+        var from =  [
+            ListTestSectionObject(objects: []),
+            ListTestSectionObject(objects: []),
+            ListTestSectionObject(objects: []),
+        ]
+        // change the number of items in the section, which a move would be unable to handle and
+        // would throw keep the same pointers so that the objects are equal
         from[2].objects = [1].typeErased()
         from[0].objects = [1, 1].typeErased()
         from[1].objects = [1, 1, 1].typeErased()
@@ -334,8 +401,11 @@ class ListAdapterUpdaterTests: XCTestCase {
         updater.movesAsDeletesInserts = true
         
         let expectation = XCTestExpectation()
-        updater.performUpdateWith(collectionViewClosure: collectionViewClosure,
-            fromObjects: from.typeErased(), toObjectsClosure: to, animated: true,
+        updater.performUpdateWith(
+            collectionViewClosure: collectionViewClosure,
+            fromObjects: from.typeErased(),
+            toObjectsClosure: to,
+            animated: true,
             objectTransitionClosure: updateClosure) { [unowned self] (finished) in
                 XCTAssertEqual(self.collectionView.numberOfSections, 3)
                 XCTAssertEqual(self.collectionView.numberOfItems(inSection: 0), 1)

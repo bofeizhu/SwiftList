@@ -10,14 +10,14 @@
 //public typealias AnyListDiffable = AnyHashable
 
 /**
- The `ListDiffable` protocol provides methods needed to compare the identity and equality of two objects.
+ The `ListDiffable` protocol provides methods needed to compare
+ the identity and equality of two objects.
  */
 public protocol ListDiffable: Equatable {
     /**
      A key that uniquely identifies the object.
      
      - Note: Two objects may share the same identifier, but are not equal.
-     
      - Warning: This value should never be mutated.
      */
     var diffIdentifier: AnyHashable { get }

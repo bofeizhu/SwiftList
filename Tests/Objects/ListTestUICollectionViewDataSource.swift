@@ -22,7 +22,10 @@ extension ListTestSectionObject: ListDiffable {
         return ObjectIdentifier(self)
     }
     
-    static func == (lhs: ListTestSectionObject, rhs: ListTestSectionObject) -> Bool {
+    static func == (
+        lhs: ListTestSectionObject,
+        rhs: ListTestSectionObject
+    ) -> Bool {
         if lhs === rhs {
             return true
         } else {
@@ -37,18 +40,26 @@ final class ListTestUICollectionViewDataSource: NSObject, UICollectionViewDataSo
     init(collectionView: UICollectionView) {
         super.init()
         collectionView.dataSource = self
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        collectionView.register(
+            UICollectionViewCell.self,
+            forCellWithReuseIdentifier: "cell")
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return sections.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
         return sections[section].objects.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
         return cell
     }

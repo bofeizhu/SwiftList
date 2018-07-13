@@ -12,7 +12,10 @@ extension Array where Element == AnyListDiffable {
         for object in self {
             let diffIdentifier = object.diffIdentifier
             if let previousObject = table[diffIdentifier] {
-                preconditionFailure("Duplicate identifier \(diffIdentifier) for object \(object) with object \(previousObject)")
+                preconditionFailure(
+                    "Duplicate identifier \(diffIdentifier)" +
+                        "for object \(object) with object \(previousObject)"
+                )
             } else {
                 table[diffIdentifier] = object
             }

@@ -65,7 +65,8 @@ public class ListIndexSetResult {
     }
     
     /**
-     Creates a new result object with operations safe for use in `UITableView` and `UICollectionView` batch updates.
+     Creates a new result object with operations safe for use in `UITableView`
+     and `UICollectionView` batch updates.
      */
     public func resultForBatchUpdates() -> ListIndexSetResult {
         var deletes = self.deletes
@@ -85,7 +86,8 @@ public class ListIndexSetResult {
             }
         }
         
-        // iterate all new identifiers. if its index is updated, delete from the old index and insert the new index
+        // iterate all new identifiers. if its index is updated,
+        // delete from the old index and insert the new index
         for (key, index) in oldIndexDict {
             if filteredUpdates.contains(index) {
                 deletes.insert(index)
@@ -96,10 +98,13 @@ public class ListIndexSetResult {
             }
         }
         
-        return ListIndexSetResult(inserts: inserts, deletes: deletes, updates: IndexSet(),
-                                   moves: filteredMoves,
-                                   oldIndexDict: oldIndexDict,
-                                   newIndexDict: newIndexDict)
+        return ListIndexSetResult(
+            inserts: inserts,
+            deletes: deletes,
+            updates: IndexSet(),
+            moves: filteredMoves,
+            oldIndexDict: oldIndexDict,
+            newIndexDict: newIndexDict)
     }
     
     //MARK: Private API
@@ -107,10 +112,14 @@ public class ListIndexSetResult {
         return inserts.count + deletes.count + updates.count + moves.count
     }
     
-    init(inserts: IndexSet, deletes: IndexSet, updates: IndexSet,
-         moves: [ListMoveIndex],
-         oldIndexDict: [AnyHashable: Int],
-         newIndexDict: [AnyHashable: Int]) {
+    init(
+        inserts: IndexSet,
+        deletes: IndexSet,
+        updates: IndexSet,
+        moves: [ListMoveIndex],
+        oldIndexDict: [AnyHashable: Int],
+        newIndexDict: [AnyHashable: Int]
+    ) {
         self.inserts = inserts
         self.deletes = deletes
         self.updates = updates
@@ -125,6 +134,7 @@ public class ListIndexSetResult {
 
 extension ListIndexSetResult: CustomStringConvertible {
     public var description: String {
-        return "<\(type(of: self)); \(inserts.count) inserts; \(deletes.count) deletes; \(updates.count) updates; \(moves.count) moves>"
+        return "<\(type(of: self)); \(inserts.count) inserts; \(deletes.count) deletes;" +
+            " \(updates.count) updates; \(moves.count) moves>"
     }
 }
