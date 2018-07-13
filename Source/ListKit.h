@@ -8,9 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-//! Project version number for ListKit.
 FOUNDATION_EXPORT double ListKitVersionNumber;
-
-//! Project version string for ListKit.
 FOUNDATION_EXPORT const unsigned char ListKitVersionString[];
 

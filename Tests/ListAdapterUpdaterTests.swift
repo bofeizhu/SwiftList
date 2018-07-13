@@ -132,7 +132,7 @@ class ListAdapterUpdaterTests: XCTestCase {
                 XCTAssertEqual(self.collectionView.numberOfSections, 2)
                 expectation.fulfill()
             }
-        wait(for: [expectation], timeout: 10.0)
+        wait(for: [expectation], timeout: 5)
     }
     
     func testWhenDeletingSectionThatCollectionViewUpdates() {
@@ -157,7 +157,7 @@ class ListAdapterUpdaterTests: XCTestCase {
                 XCTAssertEqual(self.collectionView.numberOfSections, 1)
                 expectation.fulfill()
             }
-        wait(for: [expectation], timeout: 10.0)
+        wait(for: [expectation], timeout: 5)
     }
     
     func testWhenInsertingSectionWithItemChangesThatCollectionViewUpdates() {
@@ -184,7 +184,7 @@ class ListAdapterUpdaterTests: XCTestCase {
                 XCTAssertEqual(self.collectionView.numberOfItems(inSection: 1), 2)
                 expectation.fulfill()
             }
-        wait(for: [expectation], timeout: 10.0)
+        wait(for: [expectation], timeout: 5)
     }
     
     func testWhenInsertingSectionWithDeletedSectionThatCollectionViewUpdates() {
@@ -216,7 +216,7 @@ class ListAdapterUpdaterTests: XCTestCase {
                 XCTAssertEqual(self.collectionView.numberOfItems(inSection: 2), 3)
                 expectation.fulfill()
             }
-        wait(for: [expectation], timeout: 10.0)
+        wait(for: [expectation], timeout: 5)
     }
     
     func testWhenReloadingSectionsThatCollectionViewUpdates() {
@@ -253,7 +253,8 @@ class ListAdapterUpdaterTests: XCTestCase {
         
         // the collection view has been setup with 1 section and now needs layout
         // calling performBatchUpdates: on a collection view needing layout will force layout
-        // we need to ensure that our data source is not changed until the update block is executed
+        // we need to ensure that our data source is not changed
+        // until the update closure is executed
         collectionView.setNeedsLayout()
         
         let expectation = XCTestExpectation()
@@ -266,7 +267,7 @@ class ListAdapterUpdaterTests: XCTestCase {
                 XCTAssertEqual(self.collectionView.numberOfSections, 1)
                 expectation.fulfill()
             }
-        wait(for: [expectation], timeout: 10.0)
+        wait(for: [expectation], timeout: 5)
     }
     
     func testWhenUpdatesAreReentrantThatUpdatesExecuteSerially() {
@@ -320,7 +321,7 @@ class ListAdapterUpdaterTests: XCTestCase {
                 XCTAssertEqual(completionCounter, 1)
                 expectation2.fulfill()
             })
-        wait(for: [expectation2, expectation1], timeout: 10.0)
+        wait(for: [expectation2, expectation1], timeout: 5, enforceOrder: true)
     }
     
     func testWhenQueuingItemUpdatesThatUpdaterHasChanges() {
@@ -332,7 +333,7 @@ class ListAdapterUpdaterTests: XCTestCase {
         XCTAssertTrue(updater.hasChanges)
     }
     
-    func testWhenOnlyQueueingItemUpdatesThatUpdateBlockExecutes() {
+    func testWhenOnlyQueueingItemUpdatesThatUpdateClosureExecutes() {
         let expectation = XCTestExpectation()
         updater.performUpdateWith(
             collectionViewClosure: collectionViewClosure,
@@ -342,10 +343,10 @@ class ListAdapterUpdaterTests: XCTestCase {
                 expectation.fulfill()
             },
             completion: nil)
-        wait(for: [expectation], timeout: 10)
+        wait(for: [expectation], timeout: 5)
     }
     
-    func testWhenQueueingItemUpdatesWithBatchUpdateThatItemUpdateBlockExecutes() {
+    func testWhenQueueingItemUpdatesWithBatchUpdateThatItemUpdateClosureExecutes() {
         var itemUpdateClosureExecuted = false
         var sectionUpdateClosureExecuted = false
         
@@ -370,14 +371,14 @@ class ListAdapterUpdaterTests: XCTestCase {
                 itemUpdateClosureExecuted = true
             },
             completion: { [unowned self] (finished) in
-                // test in the item completion block that the SECTION operations have been performed
+                // test in the item completion closure that the SECTION operations have been performed
                 XCTAssertEqual(self.collectionView.numberOfSections, 1)
                 XCTAssertEqual(self.collectionView.numberOfItems(inSection: 0), 1)
                 XCTAssertTrue(itemUpdateClosureExecuted)
                 XCTAssertTrue(sectionUpdateClosureExecuted)
                 expectation.fulfill()
             })
-        wait(for: [expectation], timeout: 10)
+        wait(for: [expectation], timeout: 5)
     }
     
     func testWhenItemsMoveAndUpdateThatCollectionViewWorks() {
@@ -413,8 +414,246 @@ class ListAdapterUpdaterTests: XCTestCase {
                 XCTAssertEqual(self.collectionView.numberOfItems(inSection: 2), 3)
                 expectation.fulfill()
             }
-        wait(for: [expectation], timeout: 10)
+        wait(for: [expectation], timeout: 5)
     }
     
+    func testWhenConvertingReloadsWithoutChangesThatOriginalIndexUsed() {
+        let from: [AnyListDiffable] = []
+        let to: [AnyListDiffable] = []
+        let result = ListDiff(oldArray: from, newArray: to, option: .equality)
+        var reloads = result.updates
+        reloads.insert(2)
+        var deletes = result.deletes
+        var inserts = result.inserts
+        convert(
+            reloads: &reloads,
+            toDeletes: &deletes,
+            andInserts: &inserts,
+            withResult: result,
+            fromObjects: from)
+        XCTAssertEqual(reloads.count, 0)
+        XCTAssertEqual(deletes.count, 1)
+        XCTAssertEqual(inserts.count, 1)
+        XCTAssertTrue(deletes.contains(2))
+        XCTAssertTrue(inserts.contains(2))
+    }
     
+    func testWhenConvertingReloadsWithChangesThatIndexMoves() {
+        let from = [1, 2, 3].typeErased()
+        let to = [3, 2, 1].typeErased()
+        let result = ListDiff(oldArray: from, newArray: to, option: .equality)
+        var reloads = result.updates
+        reloads.insert(2)
+        var deletes = result.deletes
+        var inserts = result.inserts
+        convert(
+            reloads: &reloads,
+            toDeletes: &deletes,
+            andInserts: &inserts,
+            withResult: result,
+            fromObjects: from)
+        XCTAssertEqual(reloads.count, 0)
+        XCTAssertEqual(deletes.count, 1)
+        XCTAssertEqual(inserts.count, 1)
+        XCTAssertTrue(deletes.contains(2))
+        XCTAssertTrue(inserts.contains(0))
+    }
+    
+    func testWhenReloadingSectionWhenSectionRemovedThatConvertMethodCorrects() {
+        let from = ["a", "b", "c"].typeErased()
+        let to = ["a", "c"].typeErased()
+        let result = ListDiff(oldArray: from, newArray: to, option: .equality)
+        var reloads = IndexSet(integer: 1)
+        var deletes = IndexSet()
+        var inserts = IndexSet()
+        convert(
+            reloads: &reloads,
+            toDeletes: &deletes,
+            andInserts: &inserts,
+            withResult: result,
+            fromObjects: from)
+        XCTAssertEqual(reloads.count, 0)
+        XCTAssertEqual(deletes.count, 0)
+        XCTAssertEqual(inserts.count, 0)
+    }
+    
+    func testWhenCallingReloadDataWithFlowLayoutWithEstimatedSizeThatSectionItemCountsCorrect() {
+        let layout = UICollectionViewFlowLayout()
+        // setting the estimated size of a layout causes UICollectionView to requery layout attributes during reloadData
+        // this becomes out of sync with the data source if the section/item count changes
+        layout.estimatedItemSize = CGSize(width: 100, height: 10)
+        
+        let collectionView = UICollectionView(
+            frame: CGRect(x: 0, y: 0, width: 100, height: 100),
+            collectionViewLayout: layout)
+        let dataSource = ListTestUICollectionViewDataSource(collectionView: collectionView)
+        
+        // 2 sections, 1 item in 1st, 4 items in 2nd
+        dataSource.sections = [
+            ListTestSectionObject(objects: [1].typeErased()),
+            ListTestSectionObject(objects: [1, 2, 3, 4].typeErased()),
+        ]
+        XCTAssertEqual(collectionView.numberOfSections, 2)
+        XCTAssertEqual(collectionView.numberOfItems(inSection: 0), 1)
+        XCTAssertEqual(collectionView.numberOfItems(inSection: 1), 4)
+        
+        dataSource.sections = [
+            ListTestSectionObject(objects: [1].typeErased()),
+        ]
+        let updater = ListAdapterUpdater()
+        updater.performReloadDataWith { collectionView }
+        
+        XCTAssertEqual(collectionView.numberOfSections, 1)
+        XCTAssertEqual(collectionView.numberOfItems(inSection: 0), 1)
+        
+        dataSource.sections = [
+            ListTestSectionObject(objects: [1].typeErased()),
+            ListTestSectionObject(objects: [1, 2, 3, 4].typeErased()),
+        ]
+        updater.performReloadDataWith { collectionView }
+        
+        XCTAssertEqual(collectionView.numberOfSections, 2)
+        XCTAssertEqual(collectionView.numberOfItems(inSection: 0), 1)
+        XCTAssertEqual(collectionView.numberOfItems(inSection: 1), 4)
+    }
+    
+    func testWhenCollectionViewNotInWindowAndBackgroundReloadFlagisFalseDiffHappens() {
+        updater.allowsBackgroundReloading = false
+        collectionView.removeFromSuperview()
+        
+        let delegate = ListTestAdapterUpdaterDelegate()
+        updater.delegate = delegate
+        
+        delegate.willPerformBatchUpdatesExpectation = XCTestExpectation()
+        delegate.didPerformBatchUpdatesExpectation = XCTestExpectation()
+        
+        let expectation = XCTestExpectation()
+        let to = { [ListTestSectionObject(objects: [])].typeErased() }
+        
+        updater.performUpdateWith(
+            collectionViewClosure: collectionViewClosure,
+            fromObjects: dataSource.sections.typeErased(),
+            toObjectsClosure: to,
+            animated: false,
+            objectTransitionClosure: updateClosure) { (finished) in
+                expectation.fulfill()
+            }
+        let expectations = [
+            delegate.willPerformBatchUpdatesExpectation!,
+            expectation,
+            delegate.didPerformBatchUpdatesExpectation!,
+        ]
+        wait(for: expectations, timeout: 5, enforceOrder: true)
+    }
+    
+    func testWhenCollectionViewNotInWindowAndBackgroundReloadFlagIsDefaultDiffDoesNotHappen() {
+        collectionView.removeFromSuperview()
+        
+        let delegate = ListTestAdapterUpdaterDelegate()
+        updater.delegate = delegate
+        
+        let willPerformBatchUpdatesExpectation = XCTestExpectation()
+        willPerformBatchUpdatesExpectation.isInverted = true
+        let didPerformBatchUpdatesExpectation = XCTestExpectation()
+        didPerformBatchUpdatesExpectation.isInverted = true
+        delegate.willPerformBatchUpdatesExpectation = willPerformBatchUpdatesExpectation
+        delegate.didPerformBatchUpdatesExpectation = didPerformBatchUpdatesExpectation
+        
+        let expectation = XCTestExpectation()
+        let to = { [ListTestSectionObject(objects: [])].typeErased() }
+        
+        updater.performUpdateWith(
+            collectionViewClosure: collectionViewClosure,
+            fromObjects: dataSource.sections.typeErased(),
+            toObjectsClosure: to,
+            animated: false,
+            objectTransitionClosure: updateClosure) { (finished) in
+                expectation.fulfill()
+        }
+        let expectations = [
+            delegate.willPerformBatchUpdatesExpectation!,
+            expectation,
+            delegate.didPerformBatchUpdatesExpectation!,
+            ]
+        wait(for: expectations, timeout: 5)
+    }
+    
+    func testWhenReloadBatchedWithUpdateThatCompletionClosureStillExecuted() {
+        let object = ListTestSectionObject(objects: [0, 1, 2].typeErased())
+        dataSource.sections = [object]
+        var reloadDataCompletionExecuted = false
+        updater.reloadDataWith(
+            collectionViewClosure: collectionViewClosure,
+            reloadUpdateClosure: {},
+            completion: { (finished) in
+                reloadDataCompletionExecuted = true
+            })
+        
+        let expectation = XCTestExpectation()
+        updater.performUpdateWith(
+            collectionViewClosure: collectionViewClosure,
+            animated: true,
+            itemUpdates: { [unowned self] in
+                object.objects = [2, 1, 4, 5].typeErased()
+                self.updater.collectionView(
+                    self.collectionView,
+                    insertItemsAt: [IndexPath(item: 2, section: 0), IndexPath(item: 3, section: 0)])
+                self.updater.collectionView(
+                    self.collectionView,
+                    deleteItemsAt: [IndexPath(item: 0, section: 0)])
+                self.updater.collectionView(
+                    self.collectionView,
+                    moveItemAt: IndexPath(item: 2, section: 0),
+                    to: IndexPath(item: 0, section: 0))
+            }, completion: { (finished) in
+                XCTAssertTrue(reloadDataCompletionExecuted)
+                expectation.fulfill()
+            })
+        wait(for: [expectation], timeout: 5)
+    }
+    
+    func testWhenNotInViewHierarchyThatUpdatesStillExecuteClosures() {
+        collectionView.removeFromSuperview()
+        
+        let object = ListTestSectionObject(objects: [0, 1, 2].typeErased())
+        dataSource.sections = [object]
+        
+        var objectTransitionClosureExecuted = false
+        var completionClosureExecuted = false
+        
+        updater.performUpdateWith(
+            collectionViewClosure: collectionViewClosure,
+            fromObjects: dataSource.sections.typeErased(),
+            toObjectsClosure: { [unowned self] in
+                self.dataSource.sections.typeErased()
+            },
+            animated: true,
+            objectTransitionClosure: { (toObjects) in
+                objectTransitionClosureExecuted = true
+            }, completion: { (finished) in
+                completionClosureExecuted = true
+            })
+        let expectation = XCTestExpectation()
+        updater.performUpdateWith(
+            collectionViewClosure: collectionViewClosure,
+            animated: true,
+            itemUpdates: { [unowned self] in
+                object.objects = [2, 1, 4, 5].typeErased()
+                self.updater.collectionView(
+                    self.collectionView,
+                    insertItemsAt: [IndexPath(item: 2, section: 0), IndexPath(item: 3, section: 0)])
+                self.updater.collectionView(
+                    self.collectionView,
+                    deleteItemsAt: [IndexPath(item: 0, section: 0)])
+                self.updater.collectionView(
+                    self.collectionView,
+                    moveItemAt: IndexPath(item: 2, section: 0),
+                    to: IndexPath(item: 0, section: 0))
+            }, completion: { (finished) in
+                XCTAssertTrue(objectTransitionClosureExecuted)
+                XCTAssertTrue(completionClosureExecuted)
+                expectation.fulfill()
+        })
+        wait(for: [expectation], timeout: 5)
+    }
 }
