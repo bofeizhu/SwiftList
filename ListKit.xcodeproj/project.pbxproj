@@ -30,6 +30,7 @@
 		82C6B9FF20E00BFE0085B85A /* ListIndexPathResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C6B9FE20E00BFE0085B85A /* ListIndexPathResult.swift */; };
 		82C6BA0120E010CA0085B85A /* ListMoveIndexPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C6BA0020E010CA0085B85A /* ListMoveIndexPath.swift */; };
 		82C93D1720F838AB0050B78F /* ListTestAdapterUpdaterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C93D1620F838AB0050B78F /* ListTestAdapterUpdaterDelegate.swift */; };
+		82C93D1920F84EAF0050B78F /* ListCollectionContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C93D1820F84EAF0050B78F /* ListCollectionContext.swift */; };
 		82F9732F20E0552D00F7D50E /* ListMoveIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F9732E20E0552D00F7D50E /* ListMoveIndex.swift */; };
 		82F9733120E12F8000F7D50E /* ListIndexSetResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F9733020E12F8000F7D50E /* ListIndexSetResult.swift */; };
 		82F9733320E1853800F7D50E /* ListExperiments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F9733220E1853800F7D50E /* ListExperiments.swift */; };
@@ -78,6 +79,7 @@
 		82C6B9FE20E00BFE0085B85A /* ListIndexPathResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListIndexPathResult.swift; sourceTree = "<group>"; };
 		82C6BA0020E010CA0085B85A /* ListMoveIndexPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListMoveIndexPath.swift; sourceTree = "<group>"; };
 		82C93D1620F838AB0050B78F /* ListTestAdapterUpdaterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTestAdapterUpdaterDelegate.swift; sourceTree = "<group>"; };
+		82C93D1820F84EAF0050B78F /* ListCollectionContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCollectionContext.swift; sourceTree = "<group>"; };
 		82F9732E20E0552D00F7D50E /* ListMoveIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListMoveIndex.swift; sourceTree = "<group>"; };
 		82F9733020E12F8000F7D50E /* ListIndexSetResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListIndexSetResult.swift; sourceTree = "<group>"; };
 		82F9733220E1853800F7D50E /* ListExperiments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListExperiments.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				820A0CA320EBC0580035EC74 /* Internal */,
 				820A0CA820EBC6AD0035EC74 /* ListAdapterUpdater.swift */,
 				820A0CA620EBC3EE0035EC74 /* ListAdapterUpdaterDelegate.swift */,
+				82C93D1820F84EAF0050B78F /* ListCollectionContext.swift */,
 				828DF97420DC550700C03E36 /* ListKit.h */,
 				820A0CAA20EC359A0035EC74 /* ListUpdatingDelegate.swift */,
 			);
@@ -394,6 +397,7 @@
 				82F9732F20E0552D00F7D50E /* ListMoveIndex.swift in Sources */,
 				829216B320F4AB930038C596 /* String+ListDiffable.swift in Sources */,
 				820A0CA020EADC740035EC74 /* ListBatchUpdateData.swift in Sources */,
+				82C93D1920F84EAF0050B78F /* ListCollectionContext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
