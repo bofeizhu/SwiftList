@@ -103,7 +103,7 @@ protocol ListCollectionContext: AnyObject {
     func sectionController(
         _ sectionController: ListSectionController,
         dequeueReusableCellOfClass cellClass: AnyClass,
-        withReuseIdentifier identifier: String,
+        reuseIdentifier identifier: String,
         at index: Int
     ) -> UICollectionViewCell
     
@@ -155,13 +155,45 @@ protocol ListCollectionContext: AnyObject {
     ///     - sectionController: The section controller requesting this information.
     ///     - elementKind: The kind of supplementary view.
     ///     - viewClass: The class of the supplementary view.
-    ///     - index: The index of the cell.
+    ///     - index: The index of the supplementary view.
     /// - Returns: A supplementary view dequeued from the reuse pool or a newly created one.
     /// - Note: This method uses a string representation of the view class as the identifier.
     func sectionController(
         _ sectionController: ListSectionController,
         dequeueReusableSupplementaryViewOfKind elementKind: String,
         class viewClass: AnyClass,
+        at index: Int
+    ) -> UICollectionReusableView
+    
+    /// Dequeues a supplementary view from the collection view reuse pool.
+    ///
+    /// - Parameters:
+    ///     - sectionController: The section controller requesting this information.
+    ///     - elementKind: The kind of supplementary view.
+    ///     - nib: The nib object containing the cell object. The nib file must contain only one
+    ///         top-level object and that object must be of the type `UICollectionReusableView`.
+    ///     - index: The index of the supplementary view.
+    /// - Returns: A supplementary view dequeued from the reuse pool or a newly created one.
+    /// - Note: This method uses a string representation of the view class as the identifier.
+    func sectionController(
+        _ sectionController: ListSectionController,
+        nib: UINib,
+        at index: Int
+    ) -> UICollectionReusableView
+    
+    /// Dequeues a supplementary view from the collection view reuse pool.
+    ///
+    /// - Parameters:
+    ///     - sectionController: The section controller requesting this information.
+    ///     - elementKind: The kind of supplementary view.
+    ///     - identifier: The identifier of the supplementary view in storyboard.
+    ///     - index: The index of the supplementary view.
+    /// - Returns: A supplementary view dequeued from the reuse pool or a newly created one.
+    /// - Note: This method uses a string representation of the view class as the identifier.
+    func sectionController(
+        _ sectionController: ListSectionController,
+        dequeueReusableSupplementaryViewFromStoryboardOfKind elementKind: String,
+        identifier: String,
         at index: Int
     ) -> UICollectionReusableView
     
