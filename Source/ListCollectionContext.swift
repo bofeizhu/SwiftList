@@ -103,7 +103,7 @@ protocol ListCollectionContext: AnyObject {
     func sectionController(
         _ sectionController: ListSectionController,
         dequeueReusableCellOfClass cellClass: AnyClass,
-        reuseIdentifier identifier: String,
+        withReuseIdentifier identifier: String,
         at index: Int
     ) -> UICollectionViewCell
     
@@ -194,7 +194,7 @@ protocol ListCollectionContext: AnyObject {
     func sectionController(
         _ sectionController: ListSectionController,
         dequeueReusableSupplementaryViewFromStoryboardOfKind elementKind: String,
-        identifier: String,
+        withIdentifier identifier: String,
         at index: Int
     ) -> UICollectionReusableView
     
