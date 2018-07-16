@@ -177,6 +177,7 @@ protocol ListCollectionContext: AnyObject {
     /// - Note: This method uses a string representation of the view class as the identifier.
     func sectionController(
         _ sectionController: ListSectionController,
+        dequeueReusableSupplementaryViewOfKind elementKind: String,
         nib: UINib,
         at index: Int
     ) -> UICollectionReusableView
