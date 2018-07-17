@@ -6,28 +6,22 @@
 //  Copyright © 2018 Bofei Zhu. All rights reserved.
 //
 
-/**
- An option for how to do comparisons between similar objects.
- */
+/// An option for how to do comparisons between similar objects.
+///
+/// - objectIdentifier: Compare objects using `ObjectIdentifier`.
+/// - equality: Compare objects using `hashValue`.
 public enum ListDiffOption {
-    /**
-     Compare objects using `ObjectIdentifier`.
-     */
     case objectIdentifier
-    /**
-     Compare objects using `hashValue`.
-     */
     case equality
 }
 
-/**
- Creates a diff using indexes between two collections.
- - Parameters:
-    - oldArray: The old objects to diff against.
-    - newArray: The new objects.
-    - option: An option on how to compare objects.
- - Returns: A result object containing affected indexes.
- */
+/// Creates a diff using indexes between two collections.
+///
+/// - Parameters:
+///   - oldArray: The old objects to diff against.
+///   - newArray: The new objects.
+///   - option: An option on how to compare objects.
+/// - Returns: A result object containing affected indexes.
 public func ListDiff(
     oldArray: [AnyListDiffable]?,
     newArray: [AnyListDiffable]?,
@@ -47,16 +41,15 @@ public func ListDiff(
     return indexSetResult
 }
 
-/**
- Creates a diff using index paths between two collections.
- - Parameters:
-    - section: The old section.
-    - newSection: The new section.
-    - oldArray: The old objects to diff against.
-    - newArray: The new objects.
-    - option: An option on how to compare objects.
- - Returns: A result object containing affected indexes.
- */
+/// Creates a diff using index paths between two collections.
+///
+/// - Parameters:
+///   - section: The old section.
+///   - newSection: The new section.
+///   - oldArray: The old objects to diff against.
+///   - newArray: The new objects.
+///   - option: An option on how to compare objects.
+/// - Returns: A result object containing affected indexes.
 public func ListDiffPaths(
     fromSection section: Int,
     toSection newSection: Int,

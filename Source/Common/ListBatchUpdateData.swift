@@ -6,53 +6,38 @@
 //  Copyright © 2018 Bofei Zhu. All rights reserved.
 //
 
-/**
- An instance of `ListBatchUpdateData` takes section indexes and item index paths
- and performs cleanup on init in order to perform a crash-free
- update via `UICollectionView.performBatchUpdates(_:completion:)`.
- */
+/// An instance of `ListBatchUpdateData` takes section indexes and item index paths
+/// and performs cleanup on init in order to perform a crash-free
+/// update via `UICollectionView.performBatchUpdates(_:completion:)`.
 public final class ListBatchUpdateData {
     
-    /**
-     Section insert indexes.
-     */
+    /// Section insert indexes.
     public let insertSections: IndexSet
     
-    /**
-     Section delete indexes.
-     */
+    /// Section delete indexes.
     public let deleteSections: IndexSet
     
-    /**
-     Section moves.
-     */
+    /// Section moves.
     public let moveSections: Set<ListMoveIndex>
     
-    /**
-     Item insert index paths.
-     */
+    /// Item insert index paths.
     public let insertIndexPaths: [IndexPath]
     
-    /**
-     Item delete index paths.
-     */
+    /// Item delete index paths.
     public let deleteIndexPaths: [IndexPath]
     
-    /**
-     Item moves.
-     */
+    /// Item moves.
     public let moveIndexPaths: [ListMoveIndexPath]
-    
-    /**
-     Creates a new batch update object with section and item operations.
-     - Parameters:
-        - insertSections: Section indexes to insert.
-        - deleteSections: Section indexes to delete.
-        - moveSections: Section moves.
-        - insertIndexPaths: Item index paths to insert.
-        - deleteIndexPaths: Item index paths to delete.
-        - moveIndexPaths: Item index paths to move.
-     */
+
+    /// Creates a new batch update object with section and item operations.
+    ///
+    /// - Parameters:
+    ///   - insertSections: Section indexes to insert.
+    ///   - deleteSections: Section indexes to delete.
+    ///   - moveSections: Section moves.
+    ///   - insertIndexPaths: Item index paths to insert.
+    ///   - deleteIndexPaths: Item index paths to delete.
+    ///   - moveIndexPaths: Item index paths to move.
     public init(
         insertSections: IndexSet,
         deleteSections: IndexSet,

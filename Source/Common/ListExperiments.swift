@@ -6,9 +6,7 @@
 //  Copyright © 2018 Bofei Zhu. All rights reserved.
 //
 
-/**
- Bitmask-able options used for pre-release feature testing.
- */
+/// Bitmask-able options used for pre-release feature testing.
 public struct ListExperiment: OptionSet {
     public let rawValue: Int
     

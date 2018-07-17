@@ -6,43 +6,31 @@
 //  Copyright © 2018 Bofei Zhu. All rights reserved.
 //
 
-/**
- A result object returned when diffing with sections.
- */
+/// A result object returned when diffing with sections.
 public class ListIndexPathResult {
-    /**
-     The index paths inserted into the new collection.
-     */
+    
+    /// The index paths inserted into the new collection.
     public let inserts: [IndexPath]
-    
-    /**
-     The index paths deleted from the old collection.
-     */
+
+    /// The index paths deleted from the old collection.
     public let deletes: [IndexPath]
-    
-    /**
-     The index paths in the old collection that need updated.
-     */
+
+    /// The index paths in the old collection that need updated.
     public let updates: [IndexPath]
-    
-    /**
-     The moves from an index path in the old collection to an index path in the new collection.
-     */
+
+    /// The moves from an index path in the old collection to an index path in the new collection.
     public let moves: [ListMoveIndexPath]
     
-    /**
-     A Read-only boolean that indicates whether the result has any changes or not.
-     true if the result has changes, false otherwise.
-     */
+    /// A Read-only boolean that indicates whether the result has any changes or not.
+    /// `true` if the result has changes, `false` otherwise.
     public var hasChanges: Bool {
         return changeCount > 0
     }
 
-    /**
-     Returns the index path of the object with the specified hashValue *before* the diff.
-     - Parameter hashValue: The hashValue of the object.
-     - Returns: The optional index path of the object before the diff.
-     */
+    ///  Returns the index path of the object with the specified diffIdentifier *before* the diff.
+    ///
+    /// - Parameter diffIdentifier: The diffIdentifier of the object.
+    /// - Returns: The optional index path of the object before the diff.
     public func oldIndexPathFor(diffIdentifier: AnyHashable?) -> IndexPath? {
         guard let d = diffIdentifier else {
             return nil
@@ -51,11 +39,10 @@ public class ListIndexPathResult {
         return oldIndexPathDict[d]
     }
     
-    /**
-     Returns the index path of the object with the specified hashValue *after* the diff.
-     - Parameter hashValue: The hashValue of the object.
-     - Returns: The optional index path of the object after the diff.
-     */
+    /// Returns the index path of the object with the specified diffIdentifier *after* the diff.
+    ///
+    /// - Parameter diffIdentifier: The diffIdentifier of the object.
+    /// - Returns: The optional index path of the object after the diff.
     public func newIndexPathFor(diffIdentifier: AnyHashable?) -> IndexPath? {
         guard let d = diffIdentifier else {
             return nil
@@ -64,10 +51,10 @@ public class ListIndexPathResult {
         return newIndexPathDict[d]
     }
     
-    /**
-     Creates a new result object with operations safe for use in `UITableView`
-     and `UICollectionView` batch updates.
-     */
+    /// Creates a new result object with operations safe for use in `UITableView` and
+    /// `UICollectionView` batch updates.
+    ///
+    /// - Returns: A new result object for batch updates.
     public func resultForBatchUpdates() -> ListIndexPathResult {
         var deletes = Set(self.deletes)
         var inserts = Set(self.inserts)
@@ -107,7 +94,7 @@ public class ListIndexPathResult {
             newIndexPathDict: newIndexPathDict)
     }
     
-    //MARK: Private API
+    // MARK: Private API
     var changeCount: Int {
         return inserts.count + deletes.count + updates.count + moves.count
     }
@@ -128,7 +115,7 @@ public class ListIndexPathResult {
         self.newIndexPathDict = newIndexPathDict
     }
     
-    //MARK: Private
+    // MARK: Private
     private var oldIndexPathDict: [AnyHashable: IndexPath]
     private var newIndexPathDict: [AnyHashable: IndexPath]
 }
