@@ -198,5 +198,52 @@ protocol ListCollectionContext: AnyObject {
         at index: Int
     ) -> UICollectionReusableView
     
+    /// Invalidate the backing `UICollectionViewLayout` for all items in the section controller.
+    ///
+    /// - Parameters:
+    ///   - sectionController: The section controller that needs invalidating.
+    ///   - completion: An optional completion closure to execute when the updates are finished.
+    /// - Note: This method can be wrapped in `UIView` animation APIs to control the duration
+    ///     or perform without animations. This will end up calling
+    ///     `performBatchUpdates(_:completion:)` internally, so invalidated changes may not be
+    ///     reflected in the cells immediately.
+    func invalidateLayoutFor(
+        sectionController: ListSectionController,
+        completion: ((Bool) -> Void)?)
     
+    /// Batches and performs many cell-level updates in a single transaction.
+    ///
+    /// - Parameters:
+    ///   - updates: A closure with a context parameter to make mutations.
+    ///   - animated: A flag indicating if the transition should be animated.
+    ///   - completion: An optional completion closure to execute when the updates are finished.
+    /// - Note: You should make state changes that impact the number of items in your section
+    ///     controller within the updates closure alongside changes on the context object.
+    ///
+    ///     Inside your section controllers, you may want to delete *and* insert into
+    ///     the data source that backs your section controller.
+    ///     For example:
+    ///     ```
+    ///     ```
+    /// - Warning: You **must** perform data modifications **inside** the update closure. Updates
+    ///     will not be performed synchronously, so you should make sure that your data source
+    ///     changes only when necessary.
+    func performBatchUpdates(
+        _ updates: (ListBatchContext) -> Void,
+        animated: Bool,
+        completion: ((Bool) -> Void)?)
+    
+    /// Scrolls to the specified section controller in the list.
+    ///
+    /// - Parameters:
+    ///   - sectionController: The section controller.
+    ///   - index: The index of the item in the section controller to which to scroll.
+    ///   - scrollPosition: An option that specifies where the item should be positioned when
+    ///         scrolling finishes.
+    ///   - animated: A flag indicating if the scrolling should be animated.
+    func scroll(
+        to sectionController: ListSectionController,
+        at index: Int,
+        scrollPosition: UICollectionViewScrollPosition,
+        animated: Bool)
 }
