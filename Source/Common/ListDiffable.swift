@@ -6,39 +6,29 @@
 //  Copyright © 2018 Bofei Zhu. All rights reserved.
 //
 
-//public typealias ListDiffable = Hashable
-//public typealias AnyListDiffable = AnyHashable
-
-/**
- The `ListDiffable` protocol provides methods needed to compare
- the identity and equality of two objects.
- */
+/// The `ListDiffable` protocol provides methods needed to compare the identity and equality of
+/// two objects.
 public protocol ListDiffable: Equatable {
-    /**
-     A key that uniquely identifies the object.
-     
-     - Note: Two objects may share the same identifier, but are not equal.
-     - Warning: This value should never be mutated.
-     */
+    
+    /// A key that uniquely identifies the object.
+    /// - Note: Two objects may share the same identifier, but are not equal.
+    /// - Warning: This value should never be mutated.
     var diffIdentifier: AnyHashable { get }
 }
 
 // TODO: wait for general Generalized existentials
 // https://github.com/apple/swift/blob/master/docs/GenericsManifesto.md#generalized-existentials
 
-/**
- A type-erased diffable value.
- 
- The `AnyListDiffable` type forwards identity and equality comparisons
- to an underlying diffable value, hiding its specific underlying type.
- */
+/// A type-erased diffable value.
+///
+/// The `AnyListDiffable` type forwards identity and equality comparisons to an underlying diffable
+/// value, hiding its specific underlying type.
 public struct AnyListDiffable {
     var _box: _AnyListDiffableBox
     
-    /**
-     Creates a type-erased diffable value that wraps the given instance.
-     - Parameter base: A diffable value to wrap.
-     */
+    /// Creates a type-erased diffable value that wraps the given instance.
+    ///
+    /// - Parameter base: A diffable value to wrap.
     public init<T: ListDiffable>(_ base: T) {
         _box = _ConcreteListDiffableBox(base)
     }
@@ -69,12 +59,12 @@ extension AnyListDiffable: ListDiffable {
 protocol _AnyListDiffableBox {
     var _canonicalBox: _AnyListDiffableBox { get }
     
-    /**
-     Determine whether values in the boxes are equivalent.
-     - Precondition: `self` and `box` are in canonical form.
-     - Returns: `nil` to indicate that the boxes store different types, so
-     no comparison is possible. Otherwise, contains the result of `==`.
-     */
+    /// Determine whether values in the boxes are equivalent.
+    ///
+    /// - Precondition: `self` and `box` are in canonical form.
+    /// - Parameter box: The box for the value.
+    /// - Returns: `nil` to indicate that the boxes store different types, so
+    ///     no comparison is possible. Otherwise, contains the result of `==`.
     func _isEqual(to box: _AnyListDiffableBox) -> Bool?
     
     var _diffIdentifier: AnyHashable { get }

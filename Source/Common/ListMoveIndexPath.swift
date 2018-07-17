@@ -6,21 +6,16 @@
 //  Copyright © 2018 Bofei Zhu. All rights reserved.
 //
 
-/**
- An object representing a move between indexes.
- */
+/// An object representing a move between indexes.
 public struct ListMoveIndexPath: Hashable {
-    /**
-     An index path in the old collection.
-     */
+
+    /// An index path in the old collection.
     public let from: IndexPath
-    
-    /**
-     An index path in the new collection.
-     */
+
+    /// An index path in the new collection.
     public let to: IndexPath
     
-    //MARK: Private API
+    // MARK: Private API
     init(from: IndexPath, to: IndexPath) {
         self.from = from
         self.to = to
