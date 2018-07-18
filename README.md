@@ -4,7 +4,7 @@ A data-driven `UICollectionView` framework for building fast and flexible lists.
 
 |         | Main Features  |
 ----------|-----------------
-&#128581; | Never call `performBatchUpdates(_:, completion:)` or `reloadData()` again
+&#128581; | Never call `performBatchUpdates(_:completion:)` or `reloadData()` again
 &#127968; | Better architecture with reusable cells and components
 &#128288; | Create collections with multiple data types
 &#128273; | Decoupled diffing algorithm
