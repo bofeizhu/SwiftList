@@ -21,6 +21,7 @@
 		820A0CB320EDAAB30035EC74 /* ListAssert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820A0CB220EDAAB30035EC74 /* ListAssert.swift */; };
 		820A0CB620EDEC0E0035EC74 /* ListArrayUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820A0CB520EDEC0E0035EC74 /* ListArrayUtils.swift */; };
 		8258A46F20FDB2080070EDA1 /* ListBatchContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8258A46E20FDB2080070EDA1 /* ListBatchContext.swift */; };
+		8258A47120FEF2240070EDA1 /* ListAdapterUpdateListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8258A47020FEF2240070EDA1 /* ListAdapterUpdateListener.swift */; };
 		828DF97B20DC550700C03E36 /* ListKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 828DF97120DC550700C03E36 /* ListKit.framework */; };
 		828DF98220DC550700C03E36 /* ListKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 828DF97420DC550700C03E36 /* ListKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		828DF98E20DC587D00C03E36 /* ListDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828DF98D20DC587D00C03E36 /* ListDiff.swift */; };
@@ -70,6 +71,7 @@
 		820A0CB220EDAAB30035EC74 /* ListAssert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAssert.swift; sourceTree = "<group>"; };
 		820A0CB520EDEC0E0035EC74 /* ListArrayUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListArrayUtils.swift; sourceTree = "<group>"; };
 		8258A46E20FDB2080070EDA1 /* ListBatchContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListBatchContext.swift; sourceTree = "<group>"; };
+		8258A47020FEF2240070EDA1 /* ListAdapterUpdateListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAdapterUpdateListener.swift; sourceTree = "<group>"; };
 		828DF97120DC550700C03E36 /* ListKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ListKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		828DF97420DC550700C03E36 /* ListKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListKit.h; sourceTree = "<group>"; };
 		828DF97520DC550700C03E36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 				828DF98C20DC563200C03E36 /* Common */,
 				828DF97520DC550700C03E36 /* Info.plist */,
 				820A0CA320EBC0580035EC74 /* Internal */,
+				8258A47020FEF2240070EDA1 /* ListAdapterUpdateListener.swift */,
 				820A0CA820EBC6AD0035EC74 /* ListAdapterUpdater.swift */,
 				820A0CA620EBC3EE0035EC74 /* ListAdapterUpdaterDelegate.swift */,
 				8258A46E20FDB2080070EDA1 /* ListBatchContext.swift */,
@@ -387,6 +390,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8258A47120FEF2240070EDA1 /* ListAdapterUpdateListener.swift in Sources */,
 				829216B120F4AA900038C596 /* Int+ListDiffable.swift in Sources */,
 				820A0CAB20EC359A0035EC74 /* ListUpdatingDelegate.swift in Sources */,
 				828DF98E20DC587D00C03E36 /* ListDiff.swift in Sources */,
