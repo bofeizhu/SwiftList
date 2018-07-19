@@ -54,11 +54,11 @@ public final class ListAdapterUpdater {
     }
 
     init() {
-        assertMainThread()
+        dispatchPrecondition(condition: .onQueue(.main))
     }
     
     func performReloadDataWith(collectionViewClosure: ListCollectionViewClosure) {
-        assertMainThread()
+        dispatchPrecondition(condition: .onQueue(.main))
         
         var completionClosures = self.completionClosures
         cleanStateBeforeUpdates()
@@ -112,7 +112,7 @@ public final class ListAdapterUpdater {
     }
     
     func performBatchUpdatesWith(collectionViewClosure: @escaping ListCollectionViewClosure) {
-        assertMainThread()
+        dispatchPrecondition(condition: .onQueue(.main))
         assert(state == .idle, "Should not call batch updates when state isn't idle")
         
         // create local variables so we can immediately clean our state
@@ -390,7 +390,7 @@ private extension ListAdapterUpdater {
     }
     
     func queueUpdateWith(collectionViewClosure: @escaping ListCollectionViewClosure) {
-        assertMainThread()
+        dispatchPrecondition(condition: .onQueue(.main))
         // dispatch after a given amount of time to coalesce other updates and execute as one
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(coalescanceTime)) { [weak self] in
             guard let strongSelf = self,
@@ -415,9 +415,8 @@ extension ListAdapterUpdater: ListUpdatingDelegate {
         toObjectsClosure: ListToObjectClosure?,
         animated: Bool,
         objectTransitionClosure: @escaping ListObjectTransitionClosure,
-        completion: ListUpdatingCompletion?
-    ) {
-        assertMainThread()
+        completion: ListUpdatingCompletion?) {
+        dispatchPrecondition(condition: .onQueue(.main))
         
         // only update the items that we are coming from if it has not been set
         // this allows multiple updates to be called while an update is already in progress,
@@ -448,9 +447,8 @@ extension ListAdapterUpdater: ListUpdatingDelegate {
         collectionViewClosure: @escaping ListCollectionViewClosure,
         animated: Bool,
         itemUpdates: @escaping ListItemUpdateClosure,
-        completion: ListUpdatingCompletion?
-    ) {
-        assertMainThread()
+        completion: ListUpdatingCompletion?) {
+        dispatchPrecondition(condition: .onQueue(.main))
         
         if let completion = completion {
             batchUpdates.append(completionClosure: completion)
@@ -474,9 +472,8 @@ extension ListAdapterUpdater: ListUpdatingDelegate {
     
     public func collectionView(
         _ collectionView: UICollectionView,
-        insertItemsAt indexPaths: [IndexPath]
-    ) {
-        assertMainThread()
+        insertItemsAt indexPaths: [IndexPath]) {
+        dispatchPrecondition(condition: .onQueue(.main))
         
         if state == .executingBatchUpdateClosure {
             batchUpdates.insert(items: indexPaths)
@@ -491,9 +488,8 @@ extension ListAdapterUpdater: ListUpdatingDelegate {
     
     public func collectionView(
         _ collectionView: UICollectionView,
-        deleteItemsAt indexPaths: [IndexPath]
-    ) {
-        assertMainThread()
+        deleteItemsAt indexPaths: [IndexPath]) {
+        dispatchPrecondition(condition: .onQueue(.main))
         
         if state == .executingBatchUpdateClosure {
             batchUpdates.delete(items: indexPaths)
@@ -509,8 +505,7 @@ extension ListAdapterUpdater: ListUpdatingDelegate {
     public func collectionView(
         _ collectionView: UICollectionView,
         moveItemAt indexPath: IndexPath,
-        to newIndexPath: IndexPath
-    ) {
+        to newIndexPath: IndexPath) {
         if state == .executingBatchUpdateClosure {
             let move = ListMoveIndexPath(from: indexPath, to: newIndexPath)
             batchUpdates.append(move: move)
@@ -527,8 +522,7 @@ extension ListAdapterUpdater: ListUpdatingDelegate {
     public func collectionView(
         _ collectionView: UICollectionView,
         reloadItemAt indexPath: IndexPath,
-        to newIndexPath: IndexPath
-    ) {
+        to newIndexPath: IndexPath) {
         if state == .executingBatchUpdateClosure {
             let reload = ListReloadIndexPath(from: indexPath, to: newIndexPath)
             batchUpdates.append(reload: reload)
@@ -544,9 +538,8 @@ extension ListAdapterUpdater: ListUpdatingDelegate {
     public func collectionView(
         _ collectionView: UICollectionView,
         moveSection section: Int,
-        toSection newSection: Int
-    ) {
-        assertMainThread()
+        toSection newSection: Int) {
+        dispatchPrecondition(condition: .onQueue(.main))
         
         // iOS expects interactive reordering to be movement of items not sections
         // after moving a single-item section controller,
@@ -583,9 +576,8 @@ extension ListAdapterUpdater: ListUpdatingDelegate {
     
     public func collectionView(
         _ collectionView: UICollectionView,
-        reloadSections sections: IndexSet
-    ) {
-        assertMainThread()
+        reloadSections sections: IndexSet) {
+        dispatchPrecondition(condition: .onQueue(.main))
         if state == .executingBatchUpdateClosure {
             batchUpdates.reload(sections: sections)
         } else {
@@ -600,9 +592,8 @@ extension ListAdapterUpdater: ListUpdatingDelegate {
     public func reloadDataWith(
         collectionViewClosure: @escaping ListCollectionViewClosure,
         reloadUpdateClosure: @escaping ListReloadUpdateClosure,
-        completion: ListUpdatingCompletion?
-    ) {
-        assertMainThread()
+        completion: ListUpdatingCompletion?) {
+        dispatchPrecondition(condition: .onQueue(.main))
         
         if let completion = completion {
             completionClosures.append(completion)
@@ -619,8 +610,7 @@ func convert(
     toDeletes deletes: inout IndexSet,
     andInserts inserts: inout IndexSet,
     withResult result: ListIndexSetResult,
-    fromObjects: [AnyListDiffable]?
-) {
+    fromObjects: [AnyListDiffable]?) {
     for index in reloads {
         // if a diff was not performed, there are no changes.
         // instead use the same index that was originally queued

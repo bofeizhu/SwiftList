@@ -28,5 +28,43 @@ open class ListSectionController {
     /// collection size, dequeuing cells, reloading, inserting, deleting, etc.
     public weak var collectionContext: ListCollectionContext?
     
-    
+}
+
+// MARK: Section Controller DispatchQueue Context
+class ListSectionControllerDispatchQueueContext {
+    weak var viewController: UIViewController?
+    weak var collectionContext: ListCollectionContext?
+}
+
+let ListSectionControllerDispatchQueueKey =
+    DispatchSpecificKey<[ListSectionControllerDispatchQueueContext]>()
+
+func dispatchQueueContextStack() -> [ListSectionControllerDispatchQueueContext] {
+    dispatchPrecondition(condition: .onQueue(.main))
+    if let stack = DispatchQueue.main.getSpecific(key: ListSectionControllerDispatchQueueKey) {
+        return stack
+    }
+    let stack: [ListSectionControllerDispatchQueueContext] = []
+    DispatchQueue.main.setSpecific(key: ListSectionControllerDispatchQueueKey, value: stack)
+    return stack
+}
+
+func ListSectionControllerPushDispatchQueueContext(
+    viewController: UIViewController,
+    collectionContext: ListCollectionContext) {
+    let context = ListSectionControllerDispatchQueueContext()
+    context.viewController = viewController
+    context.collectionContext = collectionContext
+    var stack = dispatchQueueContextStack()
+    stack.append(context)
+    DispatchQueue.main.setSpecific(key: ListSectionControllerDispatchQueueKey, value: stack)
+}
+
+func ListSectionControllerPopDispatchQueueContext() {
+    var stack = dispatchQueueContextStack()
+    guard stack.popLast() != nil else {
+        assertionFailure("ListSectionController DispatchQueue stack is empty")
+        return
+    }
+    DispatchQueue.main.setSpecific(key: ListSectionControllerDispatchQueueKey, value: stack)
 }

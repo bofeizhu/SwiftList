@@ -44,8 +44,7 @@ public final class ListBatchUpdateData {
         moveSections: Set<ListMoveIndex>,
         insertIndexPaths: [IndexPath],
         deleteIndexPaths: [IndexPath],
-        moveIndexPaths: [ListMoveIndexPath]
-    ) {
+        moveIndexPaths: [ListMoveIndexPath]) {
         var mMoveSections = moveSections
         var mDeleteSections = deleteSections
         var mInsertSections = insertSections
@@ -140,8 +139,7 @@ fileprivate extension Array where Element == IndexPath {
     mutating func cleanIndexPathsWith(
         dictionary: [Int: ListMoveIndex],
         moves: inout Set<ListMoveIndex>,
-        deletes: inout IndexSet, inserts: inout IndexSet
-    ) {
+        deletes: inout IndexSet, inserts: inout IndexSet) {
         for i in stride(from: self.count - 1, through: 0, by: -1) {
             let indexPath = self[i]
             print(indexPath.section)
@@ -156,8 +154,7 @@ fileprivate extension Array where Element == IndexPath {
         move: ListMoveIndex,
         fromMoves moves: inout Set<ListMoveIndex>,
         toDeletes deletes: inout IndexSet,
-        andInserts inserts: inout IndexSet
-    ) {
+        andInserts inserts: inout IndexSet) {
         moves.remove(move)
         
         // add a delete and insert respecting the move's from and to sections
