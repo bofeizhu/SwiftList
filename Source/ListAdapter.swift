@@ -13,7 +13,7 @@
 ///
 /// Feed implementations must act as the data source for an `ListAdapter` in order to drive the
 /// objects and section controllers in a collection view.
-public class ListAdapter {
+public final class ListAdapter {
     
 }
 
