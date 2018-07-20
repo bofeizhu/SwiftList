@@ -15,6 +15,8 @@
 /// objects and section controllers in a collection view.
 public final class ListAdapter {
     
+    /// The view controller that houses the adapter.
+    public weak var viewController: UIViewController?
 }
 
 /// A completion closure to execute when the list updates are completed.
