@@ -6,6 +6,9 @@
 //  Copyright © 2018 Bofei Zhu. All rights reserved.
 //
 
-func assertMainThread() {
-    assert(Thread.isMainThread, "Must be on the main thread")
+import os.log
+
+func listLogDebug(_ message: String) {
+    // TODO: replace `OSLog.default`
+    os_log("%@", log: OSLog.default, type: .debug, message)
 }

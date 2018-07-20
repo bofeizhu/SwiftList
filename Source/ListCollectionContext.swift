@@ -9,7 +9,7 @@
 /// The collection context provides limited access to the collection-related information
 /// that section controllers need for operations like sizing, dequeuing cells,
 /// inserting, deleting, reloading, etc.
-protocol ListCollectionContext: AnyObject {
+public protocol ListCollectionContext: AnyObject {
     
     /// The size of the collection view. You can use this for sizing cells.
     var containerSize: CGSize { get }

@@ -105,8 +105,7 @@ public class ListIndexPathResult {
         updates: [IndexPath],
         moves: [ListMoveIndexPath],
         oldIndexPathDict: [AnyHashable: IndexPath],
-        newIndexPathDict: [AnyHashable: IndexPath]
-    ) {
+        newIndexPathDict: [AnyHashable: IndexPath]) {
         self.inserts = inserts
         self.deletes = deletes
         self.updates = updates
