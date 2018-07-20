@@ -57,6 +57,21 @@ open class ListSectionController {
     /// - SeeAlso: `UICollectionViewFlowLayout.minimumInteritemSpacing`
     public var minimumInteritemSpacing: CGFloat = 0.0
     
+    /// The supplementary view source for the section controller.
+    public weak var supplementaryViewSource: ListSupplementaryViewSource?
+    
+    /// An object that handles display events for the section controller.
+    public weak var  displayDelegate: ListDisplayDelegate?
+    
+    /// An object that handles working range events for the section controller.
+    public weak var workingRangeDelegate: ListWorkingRangeDelegate?
+    
+    /// An object that handles scroll events for the section controller.
+    public weak var scrollDelegate: ListScrollDelegate?
+    
+    /// An object that handles transition events for the section controller.
+    public weak var transitionDelegate: ListTransitionDelegate?
+    
     public init() {
         if let context = dispatchQueueContextStack().last {
             viewController =  context.viewController
