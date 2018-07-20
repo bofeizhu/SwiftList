@@ -14,18 +14,18 @@ open class ListSectionController {
     /// - Note: Use this view controller to push, pop, present, or do other custom transitions.
     /// - Warning: It is considered very bad practice to cast this to a known view controller and
     ///     call methods on it other than for navigations and transitions.
-    public weak var viewController: UIViewController?
+    public internal(set) weak var viewController: UIViewController?
     
     /// A context object for interacting with the collection. Use this property for accessing the
     /// collection size, dequeuing cells, reloading, inserting, deleting, etc.
-    public weak var collectionContext: ListCollectionContext?
+    public internal(set) weak var collectionContext: ListCollectionContext?
     
     /// Returns the section within the list for this section controller.
     ///
     /// - Note: This value also relates to the section within a `UICollectionView` that this
     ///     section controller's cells belong. It also relates to the `IndexPath.section` value for
     ///     individual cells within the collection view.
-    public var section: Int?
+    public internal(set) var section: Int?
     
     /// Returns the number of items in the section.
     ///
@@ -37,10 +37,10 @@ open class ListSectionController {
     
     /// Returns `true` if the section controller is the first section in the list, `false`
     /// otherwise.
-    public var isFirstSection: Bool = false
+    public internal(set) var isFirstSection: Bool = false
     
     /// Returns `true` if the section controller is the last section in the list, `false` otherwise.
-    public var isLastSection: Bool = false
+    public internal(set) var isLastSection: Bool = false
     
     
     /// The margins used to lay out content in the section controller.
