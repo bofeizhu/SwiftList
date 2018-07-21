@@ -18,7 +18,7 @@ public enum ListAdapterUpdateType {
 }
 
 /// Conform to this protocol to receive events about `ListAdapter` updates.
-public protocol ListAdapterUpdateListener: AnyObject {
+public protocol ListAdapterUpdateListener: AnyObject, Hashable {
     
     /// Notifies a listener that the listAdapter was updated.
     ///
@@ -31,4 +31,14 @@ public protocol ListAdapterUpdateListener: AnyObject {
         _ listAdapter: ListAdapter,
         didFinishUpdate update: ListAdapterUpdateType,
         animated: Bool)
+}
+
+extension Hashable where Self: ListAdapterUpdateListener {
+    public var hashValue: Int {
+        return ObjectIdentifier(self).hashValue
+    }
+
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs === rhs
+    }
 }

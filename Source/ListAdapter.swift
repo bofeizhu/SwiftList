@@ -59,7 +59,7 @@ public final class ListAdapter {
         dispatchPrecondition(condition: .onQueue(.main))
         
         self.updater = updater
-        
+        self.viewController = viewController
         workingRangeHandler = ListWorkingRangeHandler(workingRangeSize: workingRangeSize)
     }
     
@@ -78,6 +78,7 @@ public final class ListAdapter {
     /// - Returns: A section controller.
     public func sectionController(for object: AnyListDiffable) -> ListSectionController? {
         dispatchPrecondition(condition: .onQueue(.main))
+        
         return sectionMap.sectionController(for: object)
     }
     
@@ -86,11 +87,23 @@ public final class ListAdapter {
     var displayHandler = ListDisplayHandler()
     var workingRangeHandler: ListWorkingRangeHandler
     
-    // MARK: Private
+    deinit {
+        sectionMap.reset()
+    }
     
+    // MARK: Private
+    var viewSectionControllerDict: [UICollectionReusableView: ListSectionController] = [:]
+    var queuedCompletionClosures: [ListQueuedCompletion] = []
+    
+    /// A set of `ListAdapterUpdateListener`
+    ///
+    /// - Warning: **Only insert ListAdapterUpdateListener.** Since this is a private property, we
+    ///     skip building a type erasure for it, and use `AnyHashable` instead.
+    var updateListeners: Set<AnyHashable> = []
 }
 
 /// A completion closure to execute when the list updates are completed.
 ///
 /// - Parameter finished: Specifies whether or not the update animations completed successfully.
 public typealias ListUpdaterCompletion = (_ finished: Bool) -> Void
+public typealias ListQueuedCompletion = () -> Void
