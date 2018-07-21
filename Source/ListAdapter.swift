@@ -47,7 +47,7 @@ public final class ListAdapter {
     public private(set) var updater: ListUpdatingDelegate
     
     /// An option set of experiments to conduct on the adapter.
-    public var experiments: ListExperiment
+    public var experiments: ListExperiment = .none
     
     /// All the objects currently driving the adapter.
     public var objects: [AnyListDiffable] {
@@ -60,17 +60,22 @@ public final class ListAdapter {
         
         self.updater = updater
         
+        workingRangeHandler = ListWorkingRangeHandler(workingRangeSize: workingRangeSize)
     }
     
-    /// <#Description#>
+    /// Returns the object corresponding to a section in the list.
     ///
-    /// - Parameter section: <#section description#>
-    /// - Returns: <#return value description#>
+    /// - Parameter section: A section in the list.
+    /// - Returns: The object for the specified section.
     public func object(for section: Int) -> AnyListDiffable? {
         dispatchPrecondition(condition: .onQueue(.main))
         return sectionMap.object(for: section)
     }
     
+    /// Returns the section controller for the specified object.
+    ///
+    /// - Parameter object: An object from the data source.
+    /// - Returns: A section controller.
     public func sectionController(for object: AnyListDiffable) -> ListSectionController? {
         dispatchPrecondition(condition: .onQueue(.main))
         return sectionMap.sectionController(for: object)
@@ -80,6 +85,9 @@ public final class ListAdapter {
     var sectionMap = ListSectionMap()
     var displayHandler = ListDisplayHandler()
     var workingRangeHandler: ListWorkingRangeHandler
+    
+    // MARK: Private
+    
 }
 
 /// A completion closure to execute when the list updates are completed.
