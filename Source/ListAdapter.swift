@@ -13,16 +13,22 @@
 ///
 /// Feed implementations must act as the data source for an `ListAdapter` in order to drive the
 /// objects and section controllers in a collection view.
-public final class ListAdapter {
+public final class ListAdapter: NSObject {
     
     /// The view controller that houses the adapter.
-    public weak var viewController: UIViewController?
+    public private(set) weak var viewController: UIViewController?
     
     /// The collection view used with the adapter.
     ///
     /// - Note: Setting this property will automatically set isPrefetchingEnabled to `false`
     ///     for performance reasons.
-    public weak var collectionView: UICollectionView?
+    public weak var collectionView: UICollectionView? {
+        willSet (newCollectionView) {
+            dispatchPrecondition(condition: .onQueue(.main))
+            
+            
+        }
+    }
     
     /// The object that acts as the data source for the adapter.
     public weak var dataSource: ListAdapterDataSource?
@@ -61,6 +67,12 @@ public final class ListAdapter {
         self.updater = updater
         self.viewController = viewController
         workingRangeHandler = ListWorkingRangeHandler(workingRangeSize: workingRangeSize)
+        
+        ListDebugger.track(adapter: self)
+    }
+    
+    convenience init(updater: ListUpdatingDelegate, viewController: UIViewController?) {
+        self.init(updater: updater, viewController: viewController, workingRangeSize: 0)
     }
     
     /// Returns the object corresponding to a section in the list.
@@ -82,24 +94,35 @@ public final class ListAdapter {
         return sectionMap.sectionController(for: object)
     }
     
+    /// Query the section controller at a given section index.
+    ///
+    /// - Parameter section: A section in the list.
+    /// - Returns: A section controller.
+    public func sectionController(for section: Int) -> ListSectionController? {
+        dispatchPrecondition(condition: .onQueue(.main))
+        
+        return sectionMap.sectionController(for: section)
+    }
+    
     // MARK: Private APIs
     var sectionMap = ListSectionMap()
     var displayHandler = ListDisplayHandler()
-    var workingRangeHandler: ListWorkingRangeHandler
+    private(set) var workingRangeHandler: ListWorkingRangeHandler
+    var isLastInteractiveMoveToLastSectionIndex: Bool = false
     
     deinit {
         sectionMap.reset()
     }
     
     // MARK: Private
-    var viewSectionControllerDict: [UICollectionReusableView: ListSectionController] = [:]
-    var queuedCompletionClosures: [ListQueuedCompletion] = []
+    private var viewSectionControllerDict: [UICollectionReusableView: ListSectionController] = [:]
+    private var queuedCompletionClosures: [ListQueuedCompletion] = []
     
     /// A set of `ListAdapterUpdateListener`
     ///
     /// - Warning: **Only insert ListAdapterUpdateListener.** Since this is a private property, we
     ///     skip building a type erasure for it, and use `AnyHashable` instead.
-    var updateListeners: Set<AnyHashable> = []
+    private var updateListeners: Set<AnyHashable> = []
 }
 
 /// A completion closure to execute when the list updates are completed.
@@ -107,3 +130,4 @@ public final class ListAdapter {
 /// - Parameter finished: Specifies whether or not the update animations completed successfully.
 public typealias ListUpdaterCompletion = (_ finished: Bool) -> Void
 public typealias ListQueuedCompletion = () -> Void
+

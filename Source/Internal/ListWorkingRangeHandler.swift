@@ -6,7 +6,7 @@
 //  Copyright © 2018 Bofei Zhu. All rights reserved.
 //
 
-class ListWorkingRangeHandler {
+final class ListWorkingRangeHandler {
     
     /// Initializes the working range handler.
     ///

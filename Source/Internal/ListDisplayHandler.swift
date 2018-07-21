@@ -6,7 +6,7 @@
 //  Copyright © 2018 Bofei Zhu. All rights reserved.
 //
 
-class ListDisplayHandler {
+final class ListDisplayHandler {
     
     /// Act as a counted set of the currently visible section controllers.
     private(set) var visibleSections: [ListSectionController: Int] = [:]
