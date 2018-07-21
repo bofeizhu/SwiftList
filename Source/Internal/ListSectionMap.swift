@@ -9,10 +9,12 @@
 typealias ListSectionMapClosure = (AnyListDiffable, ListSectionController, Int) -> Void
 
 struct ListSectionMap {
+    
+    /// The objects stored in the map.
     private(set) var objects: [AnyListDiffable]
     
-    init(objectIdToSectionControllerDict: [AnyHashable: ListSectionController]) {
-        self.objectIdToSectionControllerDict = objectIdToSectionControllerDict
+    init() {
+        objectIdToSectionControllerDict = [:]
         sectionControllerToSectionDict = [:]
         objects = []
     }
@@ -111,11 +113,11 @@ struct ListSectionMap {
     
     ///  Applies a given closure to the entries of the section controller map.
     ///
-    /// - Parameter closure: A closure to operate on entries in the section controller map.
-    func map(_ closure: ListSectionMapClosure) {
+    /// - Parameter transform: A closure to operate on entries in the section controller map.
+    func map(_ transform: ListSectionMapClosure) {
         for (section, object) in objects.enumerated() {
             if let sectionController = sectionController(for: object) {
-                closure(object, sectionController, section)
+                transform(object, sectionController, section)
             }
         }
     }

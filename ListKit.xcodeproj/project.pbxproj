@@ -30,6 +30,7 @@
 		829216B320F4AB930038C596 /* String+ListDiffable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829216B220F4AB930038C596 /* String+ListDiffable.swift */; };
 		829216B720F502CA0038C596 /* ListAdapterUpdaterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829216B620F502CA0038C596 /* ListAdapterUpdaterTests.swift */; };
 		829216B920F5147B0038C596 /* ListTestUICollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829216B820F5147B0038C596 /* ListTestUICollectionViewDataSource.swift */; };
+		829EF3CC2102AFDB00AFB99F /* ListWorkingRangeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829EF3CB2102AFDB00AFB99F /* ListWorkingRangeHandler.swift */; };
 		82C6B9FF20E00BFE0085B85A /* ListIndexPathResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C6B9FE20E00BFE0085B85A /* ListIndexPathResult.swift */; };
 		82C6BA0120E010CA0085B85A /* ListMoveIndexPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C6BA0020E010CA0085B85A /* ListMoveIndexPath.swift */; };
 		82C93D1720F838AB0050B78F /* ListTestAdapterUpdaterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C93D1620F838AB0050B78F /* ListTestAdapterUpdaterDelegate.swift */; };
@@ -42,6 +43,10 @@
 		82D7DF29210174890089D115 /* ListScrollDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D7DF28210174890089D115 /* ListScrollDelegate.swift */; };
 		82D7DF2B210174A50089D115 /* ListTransitionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D7DF2A210174A50089D115 /* ListTransitionDelegate.swift */; };
 		82D7DF2D2101B7120089D115 /* ListSectionMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D7DF2C2101B7120089D115 /* ListSectionMap.swift */; };
+		82D7DF2F2101E98A0089D115 /* ListAdapterDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D7DF2E2101E98A0089D115 /* ListAdapterDataSource.swift */; };
+		82D7DF312101EA940089D115 /* ListAdapterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D7DF302101EA940089D115 /* ListAdapterDelegate.swift */; };
+		82D7DF332101EAE20089D115 /* ListAdapterMoveDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D7DF322101EAE20089D115 /* ListAdapterMoveDelegate.swift */; };
+		82D7DF3521021CC40089D115 /* ListDisplayHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D7DF3421021CC40089D115 /* ListDisplayHandler.swift */; };
 		82F9732F20E0552D00F7D50E /* ListMoveIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F9732E20E0552D00F7D50E /* ListMoveIndex.swift */; };
 		82F9733120E12F8000F7D50E /* ListIndexSetResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F9733020E12F8000F7D50E /* ListIndexSetResult.swift */; };
 		82F9733320E1853800F7D50E /* ListExperiments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F9733220E1853800F7D50E /* ListExperiments.swift */; };
@@ -90,6 +95,7 @@
 		829216B220F4AB930038C596 /* String+ListDiffable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ListDiffable.swift"; sourceTree = "<group>"; };
 		829216B620F502CA0038C596 /* ListAdapterUpdaterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAdapterUpdaterTests.swift; sourceTree = "<group>"; };
 		829216B820F5147B0038C596 /* ListTestUICollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTestUICollectionViewDataSource.swift; sourceTree = "<group>"; };
+		829EF3CB2102AFDB00AFB99F /* ListWorkingRangeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListWorkingRangeHandler.swift; sourceTree = "<group>"; };
 		82C6B9FE20E00BFE0085B85A /* ListIndexPathResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListIndexPathResult.swift; sourceTree = "<group>"; };
 		82C6BA0020E010CA0085B85A /* ListMoveIndexPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListMoveIndexPath.swift; sourceTree = "<group>"; };
 		82C93D1620F838AB0050B78F /* ListTestAdapterUpdaterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTestAdapterUpdaterDelegate.swift; sourceTree = "<group>"; };
@@ -102,6 +108,10 @@
 		82D7DF28210174890089D115 /* ListScrollDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListScrollDelegate.swift; sourceTree = "<group>"; };
 		82D7DF2A210174A50089D115 /* ListTransitionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTransitionDelegate.swift; sourceTree = "<group>"; };
 		82D7DF2C2101B7120089D115 /* ListSectionMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSectionMap.swift; sourceTree = "<group>"; };
+		82D7DF2E2101E98A0089D115 /* ListAdapterDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAdapterDataSource.swift; sourceTree = "<group>"; };
+		82D7DF302101EA940089D115 /* ListAdapterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAdapterDelegate.swift; sourceTree = "<group>"; };
+		82D7DF322101EAE20089D115 /* ListAdapterMoveDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAdapterMoveDelegate.swift; sourceTree = "<group>"; };
+		82D7DF3421021CC40089D115 /* ListDisplayHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDisplayHandler.swift; sourceTree = "<group>"; };
 		82F9732E20E0552D00F7D50E /* ListMoveIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListMoveIndex.swift; sourceTree = "<group>"; };
 		82F9733020E12F8000F7D50E /* ListIndexSetResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListIndexSetResult.swift; sourceTree = "<group>"; };
 		82F9733220E1853800F7D50E /* ListExperiments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListExperiments.swift; sourceTree = "<group>"; };
@@ -158,9 +168,11 @@
 			children = (
 				820A0CAC20ED24880035EC74 /* ListBatchUpdates.swift */,
 				820A0CAE20ED37490035EC74 /* ListBatchUpdateState.swift */,
+				82D7DF3421021CC40089D115 /* ListDisplayHandler.swift */,
 				820A0CB020EDA4C00035EC74 /* ListReloadIndexPath.swift */,
-				820A0CA420EBC07D0035EC74 /* UICollectionView+ListBatchUpdateData.swift */,
 				82D7DF2C2101B7120089D115 /* ListSectionMap.swift */,
+				829EF3CB2102AFDB00AFB99F /* ListWorkingRangeHandler.swift */,
+				820A0CA420EBC07D0035EC74 /* UICollectionView+ListBatchUpdateData.swift */,
 			);
 			path = Internal;
 			sourceTree = "<group>";
@@ -200,6 +212,9 @@
 				828DF97520DC550700C03E36 /* Info.plist */,
 				820A0CA320EBC0580035EC74 /* Internal */,
 				8258A47220FEF43A0070EDA1 /* ListAdapter.swift */,
+				82D7DF2E2101E98A0089D115 /* ListAdapterDataSource.swift */,
+				82D7DF302101EA940089D115 /* ListAdapterDelegate.swift */,
+				82D7DF322101EAE20089D115 /* ListAdapterMoveDelegate.swift */,
 				8258A47020FEF2240070EDA1 /* ListAdapterUpdateListener.swift */,
 				820A0CA820EBC6AD0035EC74 /* ListAdapterUpdater.swift */,
 				820A0CA620EBC3EE0035EC74 /* ListAdapterUpdaterDelegate.swift */,
@@ -236,13 +251,13 @@
 			children = (
 				829216B020F4AA900038C596 /* Int+ListDiffable.swift */,
 				820A0CB420EDEBD60035EC74 /* Internal */,
-				820A0CB220EDAAB30035EC74 /* ListLog.swift */,
 				820A0C9F20EADC740035EC74 /* ListBatchUpdateData.swift */,
 				828DF98D20DC587D00C03E36 /* ListDiff.swift */,
 				82F9733420E4017C00F7D50E /* ListDiffable.swift */,
 				82F9733220E1853800F7D50E /* ListExperiments.swift */,
 				82C6B9FE20E00BFE0085B85A /* ListIndexPathResult.swift */,
 				82F9733020E12F8000F7D50E /* ListIndexSetResult.swift */,
+				820A0CB220EDAAB30035EC74 /* ListLog.swift */,
 				82F9732E20E0552D00F7D50E /* ListMoveIndex.swift */,
 				82C6BA0020E010CA0085B85A /* ListMoveIndexPath.swift */,
 				829216B220F4AB930038C596 /* String+ListDiffable.swift */,
@@ -412,6 +427,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8258A47120FEF2240070EDA1 /* ListAdapterUpdateListener.swift in Sources */,
+				82D7DF332101EAE20089D115 /* ListAdapterMoveDelegate.swift in Sources */,
+				82D7DF312101EA940089D115 /* ListAdapterDelegate.swift in Sources */,
 				829216B120F4AA900038C596 /* Int+ListDiffable.swift in Sources */,
 				820A0CAB20EC359A0035EC74 /* ListUpdatingDelegate.swift in Sources */,
 				828DF98E20DC587D00C03E36 /* ListDiff.swift in Sources */,
@@ -420,6 +437,7 @@
 				820A0CB620EDEC0E0035EC74 /* ListArrayUtils.swift in Sources */,
 				820A0CA720EBC3EE0035EC74 /* ListAdapterUpdaterDelegate.swift in Sources */,
 				820A0CAD20ED24880035EC74 /* ListBatchUpdates.swift in Sources */,
+				82D7DF3521021CC40089D115 /* ListDisplayHandler.swift in Sources */,
 				82F9733320E1853800F7D50E /* ListExperiments.swift in Sources */,
 				820A0CB120EDA4C00035EC74 /* ListReloadIndexPath.swift in Sources */,
 				82C6B9FF20E00BFE0085B85A /* ListIndexPathResult.swift in Sources */,
@@ -440,7 +458,9 @@
 				82D7DF2D2101B7120089D115 /* ListSectionMap.swift in Sources */,
 				82D7DF29210174890089D115 /* ListScrollDelegate.swift in Sources */,
 				820A0CA020EADC740035EC74 /* ListBatchUpdateData.swift in Sources */,
+				829EF3CC2102AFDB00AFB99F /* ListWorkingRangeHandler.swift in Sources */,
 				82D7DF27210174340089D115 /* ListWorkingRangeDelegate.swift in Sources */,
+				82D7DF2F2101E98A0089D115 /* ListAdapterDataSource.swift in Sources */,
 				82C93D1920F84EAF0050B78F /* ListCollectionContext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
