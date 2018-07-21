@@ -18,7 +18,7 @@ A data-driven `UICollectionView` framework for building fast and flexible lists.
 
 ## Requirements
 
-- Xcode 9.0+
+- Xcode 9.4+
 - iOS 10.0+
 - Swift 4.1+
 
