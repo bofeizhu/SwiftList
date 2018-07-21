@@ -14,7 +14,7 @@ A data-driven `UICollectionView` framework for building fast and flexible lists.
 &#128640; | Extendable API
 &#128038; | Written in Swift
 
-`ListKit` is forked from `IGListKit` by [Instagram engineering](https://engineering.instagram.com/).
+`ListKit` is forked from [`IGListKit`](https://github.com/Instagram/IGListKit) by [Instagram engineering](https://engineering.instagram.com/).
 
 ## Requirements
 
