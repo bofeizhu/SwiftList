@@ -1,5 +1,5 @@
 //
-//  ListCollectionViewBaseLayout.swift
+//  ListCollectionViewInteractiveReorderingLayout.swift
 //  ListKit
 //
 //  Created by Bofei Zhu on 7/21/18.
@@ -9,7 +9,10 @@
 /// A `UICollectionView` subclass with interactive reordering implemented.
 /// - Note: All the layouts used with `ListAdapter` should be subclassed from
 ///     `ListCollectionViewBaseLayout`
-open class ListCollectionViewBaseLayout: UICollectionViewLayout, ListInteractiveReordering {
+open class ListCollectionViewInteractiveReorderingLayout:
+    UICollectionViewLayout,
+    ListInteractiveReordering
+{
     public var listAdapter: ListAdapter?
     
     open override func targetIndexPath(
@@ -49,7 +52,10 @@ open class ListCollectionViewBaseLayout: UICollectionViewLayout, ListInteractive
     }
 }
 
-open class ListCollectionViewFlowLayout: UICollectionViewFlowLayout, ListInteractiveReordering {
+open class ListCollectionViewInteractiveReorderingFlowLayout:
+    UICollectionViewFlowLayout,
+    ListInteractiveReordering
+{
     public var listAdapter: ListAdapter?
     
     open override func targetIndexPath(
@@ -176,13 +182,10 @@ extension ListInteractiveReordering where Self: UICollectionViewLayout {
                     return false
             }) else { return originalContext }
         
-        guard var modifiedContext = Self.invalidationContextClass.init()
-            as? UICollectionViewLayoutInvalidationContext else {
-            assertionFailure("Can't create invalidationContext")
-            return originalContext
-        }
-        
         invalidatedItemIndexPaths.remove(at: indexToRemove)
+        
+        // FIXME: https://bugs.swift.org/browse/SR-7045
+        var modifiedContext = UICollectionViewLayoutInvalidationContext()
         
         if let originalContext = originalContext
             as? UICollectionViewFlowLayoutInvalidationContext {
@@ -209,6 +212,7 @@ extension ListInteractiveReordering where Self: UICollectionViewLayout {
         }
         modifiedContext.contentOffsetAdjustment = originalContext.contentOffsetAdjustment
         modifiedContext.contentSizeAdjustment = originalContext.contentSizeAdjustment
+        return modifiedContext
     }
 }
 

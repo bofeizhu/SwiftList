@@ -26,7 +26,10 @@ public final class ListAdapter: NSObject {
         willSet (newCollectionView) {
             dispatchPrecondition(condition: .onQueue(.main))
             
-            
+            // if collection view has been used by a different list adapter, treat it as if we were
+            // using a new collection view this happens when embedding a UICollectionView inside a
+            // UICollectionViewCell that is reused
+            if 
         }
     }
     
@@ -68,6 +71,7 @@ public final class ListAdapter: NSObject {
         self.viewController = viewController
         workingRangeHandler = ListWorkingRangeHandler(workingRangeSize: workingRangeSize)
         
+        super.init()
         ListDebugger.track(adapter: self)
     }
     
@@ -90,7 +94,6 @@ public final class ListAdapter: NSObject {
     /// - Returns: A section controller.
     public func sectionController(for object: AnyListDiffable) -> ListSectionController? {
         dispatchPrecondition(condition: .onQueue(.main))
-        
         return sectionMap.sectionController(for: object)
     }
     
@@ -100,21 +103,16 @@ public final class ListAdapter: NSObject {
     /// - Returns: A section controller.
     public func sectionController(for section: Int) -> ListSectionController? {
         dispatchPrecondition(condition: .onQueue(.main))
-        
         return sectionMap.sectionController(for: section)
     }
     
-    // MARK: Private APIs
+    // MARK: Internal properties
     var sectionMap = ListSectionMap()
     var displayHandler = ListDisplayHandler()
     private(set) var workingRangeHandler: ListWorkingRangeHandler
     var isLastInteractiveMoveToLastSectionIndex: Bool = false
     
-    deinit {
-        sectionMap.reset()
-    }
-    
-    // MARK: Private
+    // MARK: Private properties
     private var viewSectionControllerDict: [UICollectionReusableView: ListSectionController] = [:]
     private var queuedCompletionClosures: [ListQueuedCompletion] = []
     
@@ -123,6 +121,63 @@ public final class ListAdapter: NSObject {
     /// - Warning: **Only insert ListAdapterUpdateListener.** Since this is a private property, we
     ///     skip building a type erasure for it, and use `AnyHashable` instead.
     private var updateListeners: Set<AnyHashable> = []
+    private var isDequeuingCell: Bool = false
+    private var isSendingWorkingRangeDisplayUpdates: Bool = false
+    
+    // MARK: Deinit
+    deinit {
+        sectionMap.reset()
+    }
+}
+
+// MARK: Private APIs
+extension ListAdapter {
+    func map(view: UICollectionReusableView, to sectionController: ListSectionController) {
+        dispatchPrecondition(condition: .onQueue(.main))
+        viewSectionControllerDict[view] = sectionController
+    }
+}
+
+extension ListAdapter: UICollectionViewDataSource {
+    public func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return sectionMap.objects.count
+    }
+    
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int) -> Int {
+        guard let sectionController = sectionController(for: section) else {
+            preconditionFailure("nil section controller for section \(section)." +
+                " Check your diffIdentifier and == implementations.")
+        }
+        let numberOfItems = sectionController.numberOfItems
+        guard numberOfItems >= 0 else {
+            preconditionFailure("Cannot return negative number of items \(numberOfItems) for" +
+                " section controller \(sectionController)" )
+        }
+        return numberOfItems
+    }
+    
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let sectionController = sectionController(for: indexPath.section) else {
+            preconditionFailure("nil section controller for section \(indexPath.section)." +
+                " Check your diffIdentifier and == implementations.")
+        }
+        // flag that a cell is being dequeued in case it tries to access a cell in the process
+        isDequeuingCell = true
+        guard let cell = sectionController.cellForItem(at: indexPath.item) else {
+            preconditionFailure("Returned a nil cell at indexPath \(indexPath) from" +
+                " section controller: \(sectionController)")
+        }
+        isDequeuingCell = false
+        
+        // associate the section controller with the cell so that we know which section controller
+        // is using it
+        map(view: cell, to: sectionController)
+        return cell
+    }
 }
 
 /// A completion closure to execute when the list updates are completed.
