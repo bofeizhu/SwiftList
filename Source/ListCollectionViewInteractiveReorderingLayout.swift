@@ -6,14 +6,14 @@
 //  Copyright © 2018 Bofei Zhu. All rights reserved.
 //
 
-/// A `UICollectionView` subclass with interactive reordering implemented.
-/// - Note: All the layouts used with `ListAdapter` should be subclassed from
-///     `ListCollectionViewBaseLayout`
+/// A `UICollectionViewLayout` subclass with interactive reordering implemented.
+/// - Warning: All the layouts using interactive reordering should be subclassed from
+///     `ListCollectionViewInteractiveReorderingLayout`
 open class ListCollectionViewInteractiveReorderingLayout:
     UICollectionViewLayout,
     ListInteractiveReordering
 {
-    public var listAdapter: ListAdapter?
+    public weak var listAdapter: ListAdapter?
     
     open override func targetIndexPath(
         forInteractivelyMovingItem previousIndexPath: IndexPath,
@@ -52,11 +52,14 @@ open class ListCollectionViewInteractiveReorderingLayout:
     }
 }
 
+/// A `UICollectionViewFlowLayout` subclass with interactive reordering implemented.
+/// - Warning: All the `UICollectionViewFlowLayout` using interactive reordering should be
+///     subclassed from `ListCollectionViewInteractiveReorderingLayout`
 open class ListCollectionViewInteractiveReorderingFlowLayout:
     UICollectionViewFlowLayout,
     ListInteractiveReordering
 {
-    public var listAdapter: ListAdapter?
+    public weak var listAdapter: ListAdapter?
     
     open override func targetIndexPath(
         forInteractivelyMovingItem previousIndexPath: IndexPath,

@@ -9,7 +9,7 @@
 final class ListDebugger {
     
     static func track(adapter: ListAdapter) {
-        livingAdapters.insert(adapter)
+        livingAdapters.insert(ListAdapterWeakBox(adapter))
     }
     
     static func clear() {
@@ -17,5 +17,5 @@ final class ListDebugger {
     }
     
     // MARK: Private
-    private static var livingAdapters: Set<ListAdapter> = []
+    private static var livingAdapters: Set<ListAdapterWeakBox> = []
 }

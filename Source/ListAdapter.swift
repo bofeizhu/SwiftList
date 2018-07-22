@@ -26,10 +26,23 @@ public final class ListAdapter: NSObject {
         willSet (newCollectionView) {
             dispatchPrecondition(condition: .onQueue(.main))
             
+            guard let newCollectionView = newCollectionView,
+                  collectionView !== newCollectionView || newCollectionView.dataSource !== self
+            else { return }
+            
             // if collection view has been used by a different list adapter, treat it as if we were
-            // using a new collection view this happens when embedding a UICollectionView inside a
-            // UICollectionViewCell that is reused
-            if 
+            // using a new collection view this happens when embedding a `UICollectionView` inside a
+            // `UICollectionViewCell` that is reused
+            let newCollectionViewID = ObjectIdentifier(newCollectionView)
+            if let weakBox = ListAdapter.globalCollectionViewAdapterDict[newCollectionViewID],
+               let oldAdapter = weakBox.listAdapter {
+                oldAdapter.collectionView = nil
+            }
+            ListAdapter.globalCollectionViewAdapterDict.removeValue(forKey: newCollectionViewID)
+        }
+        
+        didSet {
+            
         }
     }
     
@@ -64,6 +77,21 @@ public final class ListAdapter: NSObject {
         return sectionMap.objects
     }
     
+    /// Initializes a new `IGListAdapter` object.
+    ///
+    /// - Parameters:
+    ///   - updater: An object that manages updates to the collection view.
+    ///   - viewController: The view controller that will house the adapter.
+    ///   - workingRangeSize: The number of objects before and after the viewport to consider within
+    ///         the working range.
+    /// - Note: The working range is the number of objects beyond the visible objects (plus and
+    ///     minus) that should be notified when they are close to being visible. For instance, if
+    ///     you have 3 objects on screen and a working range of 2, the previous and succeeding 2
+    ///     objects will be notified that they are within the working range. As you scroll the list
+    ///     the range is updated as objects enter and exit the working range.
+    ///
+    ///     To opt out of using the working range, use `init(updater:viewController:)` or provide a
+    ///     working range of `0`.
     init(updater: ListUpdatingDelegate, viewController: UIViewController?, workingRangeSize: Int) {
         dispatchPrecondition(condition: .onQueue(.main))
         
@@ -75,6 +103,11 @@ public final class ListAdapter: NSObject {
         ListDebugger.track(adapter: self)
     }
     
+    /// Initializes a new `IGListAdapter` object with a working range of `0`.
+    ///
+    /// - Parameters:
+    ///   - updater: An object that manages updates to the collection view.
+    ///   - viewController: The view controller that will house the adapter.
     convenience init(updater: ListUpdatingDelegate, viewController: UIViewController?) {
         self.init(updater: updater, viewController: viewController, workingRangeSize: 0)
     }
@@ -110,7 +143,27 @@ public final class ListAdapter: NSObject {
     var sectionMap = ListSectionMap()
     var displayHandler = ListDisplayHandler()
     private(set) var workingRangeHandler: ListWorkingRangeHandler
+    var emptyBackgroundView: UIView?
+    
+    // we need to special case interactive section moves that are moved to the last position
     var isLastInteractiveMoveToLastSectionIndex: Bool = false
+    
+    
+    // When making object updates inside a batch update block, delete operations must use the section /before/ any moves take
+    // place. This includes when other objects are deleted or inserted ahead of the section controller making the mutations.
+    // In order to account for this we must track when the adapter is in the middle of an update block as well as the section
+    // controller mapping prior to the transition.
+    //
+    // Note that the previous section controller map is destroyed as soon as a transition is finished so there is no dangling
+    // objects or section controllers.
+    var isInUpdateBlock: Bool = false
+    var previousSectionMap: ListSectionMap?
+    
+    // Since we only save the cell classes for debug. We will save them as `String`.
+    var registeredCellClasses: Set<String> = []
+    var registeredNibNames: Set<String> = []
+    var registeredSupplementaryViewIdentifiers: Set<String> = []
+    var registeredSupplementaryViewNibNames: Set<String> = []
     
     // MARK: Private properties
     private var viewSectionControllerDict: [UICollectionReusableView: ListSectionController] = [:]
@@ -123,6 +176,9 @@ public final class ListAdapter: NSObject {
     private var updateListeners: Set<AnyHashable> = []
     private var isDequeuingCell: Bool = false
     private var isSendingWorkingRangeDisplayUpdates: Bool = false
+    
+    // A map from collectionView's ObjectIdentifier to a weak reference of listAdapter.
+    private static var globalCollectionViewAdapterDict: [ObjectIdentifier: ListAdapterWeakBox] = [:]
     
     // MARK: Deinit
     deinit {
@@ -177,6 +233,23 @@ extension ListAdapter: UICollectionViewDataSource {
         // is using it
         map(view: cell, to: sectionController)
         return cell
+    }
+}
+
+private extension ListAdapter {
+    func updateAfterPublicSettingsChange() {
+        guard let collectionView = collectionView,
+              let dataSource = dataSource else { return }
+        
+    }
+    
+    func update(objects: [AnyListDiffable], dataSource: ListAdapterDataSource) {
+        // TODO: Add if DEBUG check
+        
+        // collect items that have changed since the last update
+        var updatedObjects: Set<AnyListDiffable> = []
+        
+        
     }
 }
 
