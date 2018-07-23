@@ -18,7 +18,6 @@
 		820A0CAD20ED24880035EC74 /* ListBatchUpdates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820A0CAC20ED24880035EC74 /* ListBatchUpdates.swift */; };
 		820A0CAF20ED37490035EC74 /* ListBatchUpdateState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820A0CAE20ED37490035EC74 /* ListBatchUpdateState.swift */; };
 		820A0CB120EDA4C00035EC74 /* ListReloadIndexPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820A0CB020EDA4C00035EC74 /* ListReloadIndexPath.swift */; };
-		820A0CB320EDAAB30035EC74 /* ListLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820A0CB220EDAAB30035EC74 /* ListLog.swift */; };
 		820A0CB620EDEC0E0035EC74 /* ListArrayUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820A0CB520EDEC0E0035EC74 /* ListArrayUtils.swift */; };
 		8258A46F20FDB2080070EDA1 /* ListBatchContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8258A46E20FDB2080070EDA1 /* ListBatchContext.swift */; };
 		8258A47120FEF2240070EDA1 /* ListAdapterUpdateListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8258A47020FEF2240070EDA1 /* ListAdapterUpdateListener.swift */; };
@@ -35,6 +34,7 @@
 		829EF3D22103BFDE00AFB99F /* ListCollectionViewInteractiveReorderingLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829EF3D12103BFDE00AFB99F /* ListCollectionViewInteractiveReorderingLayout.swift */; };
 		829EF3D72105101E00AFB99F /* ListAdapterWeakBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829EF3D62105101E00AFB99F /* ListAdapterWeakBox.swift */; };
 		829EF3DB2105494C00AFB99F /* UIScrollView+ListKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829EF3DA2105494C00AFB99F /* UIScrollView+ListKit.swift */; };
+		829EF3DD2106451D00AFB99F /* ListLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829EF3DC2106451D00AFB99F /* ListLog.swift */; };
 		82C6B9FF20E00BFE0085B85A /* ListIndexPathResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C6B9FE20E00BFE0085B85A /* ListIndexPathResult.swift */; };
 		82C6BA0120E010CA0085B85A /* ListMoveIndexPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C6BA0020E010CA0085B85A /* ListMoveIndexPath.swift */; };
 		82C93D1720F838AB0050B78F /* ListTestAdapterUpdaterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C93D1620F838AB0050B78F /* ListTestAdapterUpdaterDelegate.swift */; };
@@ -84,8 +84,6 @@
 		820A0CAC20ED24880035EC74 /* ListBatchUpdates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListBatchUpdates.swift; sourceTree = "<group>"; };
 		820A0CAE20ED37490035EC74 /* ListBatchUpdateState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListBatchUpdateState.swift; sourceTree = "<group>"; };
 		820A0CB020EDA4C00035EC74 /* ListReloadIndexPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListReloadIndexPath.swift; sourceTree = "<group>"; };
-		820A0CB220EDAAB30035EC74 /* ListLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListLog.swift; sourceTree = "<group>"; };
-		820A0CB220EDAAB30035EC74 /* ListAssert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAssert.swift; sourceTree = "<group>"; };
 		820A0CB520EDEC0E0035EC74 /* ListArrayUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListArrayUtils.swift; sourceTree = "<group>"; };
 		8258A46E20FDB2080070EDA1 /* ListBatchContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListBatchContext.swift; sourceTree = "<group>"; };
 		8258A47020FEF2240070EDA1 /* ListAdapterUpdateListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAdapterUpdateListener.swift; sourceTree = "<group>"; };
@@ -105,6 +103,7 @@
 		829EF3D12103BFDE00AFB99F /* ListCollectionViewInteractiveReorderingLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCollectionViewInteractiveReorderingLayout.swift; sourceTree = "<group>"; };
 		829EF3D62105101E00AFB99F /* ListAdapterWeakBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAdapterWeakBox.swift; sourceTree = "<group>"; };
 		829EF3DA2105494C00AFB99F /* UIScrollView+ListKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+ListKit.swift"; sourceTree = "<group>"; };
+		829EF3DC2106451D00AFB99F /* ListLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListLog.swift; sourceTree = "<group>"; };
 		82C6B9FE20E00BFE0085B85A /* ListIndexPathResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListIndexPathResult.swift; sourceTree = "<group>"; };
 		82C6BA0020E010CA0085B85A /* ListMoveIndexPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListMoveIndexPath.swift; sourceTree = "<group>"; };
 		82C93D1620F838AB0050B78F /* ListTestAdapterUpdaterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTestAdapterUpdaterDelegate.swift; sourceTree = "<group>"; };
@@ -264,14 +263,13 @@
 			children = (
 				829216B020F4AA900038C596 /* Int+ListDiffable.swift */,
 				820A0CB420EDEBD60035EC74 /* Internal */,
-				820A0CB220EDAAB30035EC74 /* ListAssert.swift */,
 				820A0C9F20EADC740035EC74 /* ListBatchUpdateData.swift */,
 				828DF98D20DC587D00C03E36 /* ListDiff.swift */,
 				82F9733420E4017C00F7D50E /* ListDiffable.swift */,
 				82F9733220E1853800F7D50E /* ListExperiments.swift */,
 				82C6B9FE20E00BFE0085B85A /* ListIndexPathResult.swift */,
 				82F9733020E12F8000F7D50E /* ListIndexSetResult.swift */,
-				820A0CB220EDAAB30035EC74 /* ListLog.swift */,
+				829EF3DC2106451D00AFB99F /* ListLog.swift */,
 				82F9732E20E0552D00F7D50E /* ListMoveIndex.swift */,
 				82C6BA0020E010CA0085B85A /* ListMoveIndexPath.swift */,
 				829216B220F4AB930038C596 /* String+ListDiffable.swift */,
@@ -454,10 +452,10 @@
 				820A0CA720EBC3EE0035EC74 /* ListAdapterUpdaterDelegate.swift in Sources */,
 				820A0CAD20ED24880035EC74 /* ListBatchUpdates.swift in Sources */,
 				82D7DF3521021CC40089D115 /* ListDisplayHandler.swift in Sources */,
+				829EF3DD2106451D00AFB99F /* ListLog.swift in Sources */,
 				82F9733320E1853800F7D50E /* ListExperiments.swift in Sources */,
 				820A0CB120EDA4C00035EC74 /* ListReloadIndexPath.swift in Sources */,
 				82C6B9FF20E00BFE0085B85A /* ListIndexPathResult.swift in Sources */,
-				820A0CB320EDAAB30035EC74 /* ListLog.swift in Sources */,
 				82C93D1B20F8E0FA0050B78F /* ListSectionController.swift in Sources */,
 				82D7DF25210173EC0089D115 /* ListDisplayDelegate.swift in Sources */,
 				829EF3DB2105494C00AFB99F /* UIScrollView+ListKit.swift in Sources */,
