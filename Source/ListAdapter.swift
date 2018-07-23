@@ -458,6 +458,16 @@ extension ListAdapter {
         }
         return nil
     }
+    
+    func sectionController(for view: UICollectionReusableView) -> ListSectionController? {
+        dispatchPrecondition(condition: .onQueue(.main))
+        return viewSectionControllerDict[view]
+    }
+    
+    func removeSectionController(for view: UICollectionReusableView) {
+        dispatchPrecondition(condition: .onQueue(.main))
+        viewSectionControllerDict.removeValue(forKey: view)
+    }
 }
 
 // MARK: - Private Helpers
