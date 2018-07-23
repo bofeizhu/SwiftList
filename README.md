@@ -1,6 +1,6 @@
-# 👷‍♀️WIP👷‍♂️ ListKit
+# ListKit
 
-A data-driven `UICollectionView` framework for building fast and flexible lists. `ListKit` is forked from [`IGListKit`](https://github.com/Instagram/IGListKit) by [Instagram engineering](https://engineering.instagram.com/).
+‼️👷‍♀️WIP👷‍♂️‼️ A data-driven `UICollectionView` framework for building fast and flexible lists. `ListKit` is forked from [`IGListKit`](https://github.com/Instagram/IGListKit) by [Instagram engineering](https://engineering.instagram.com/).
 
 ## Requirements
 
