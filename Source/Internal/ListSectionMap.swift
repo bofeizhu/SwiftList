@@ -122,6 +122,17 @@ struct ListSectionMap {
         }
     }
     
+    var isItemCountZero: Bool {
+        for object in objects {
+            if let sectionController = sectionController(for: object) {
+                if sectionController.numberOfItems > 0 {
+                    return false
+                }
+            }
+        }
+        return true
+    }
+    
     // MARK: Private
     // both of these dictionaries allow fast lookups of objects, list objects, and indexes
     private var objectIdToSectionControllerDict: [AnyHashable: ListSectionController]

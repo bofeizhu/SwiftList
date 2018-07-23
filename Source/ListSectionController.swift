@@ -78,7 +78,7 @@ open class ListSectionController {
             collectionContext = context.collectionContext
         }
         
-        if collectionContext == nil {
+        if viewController == nil || collectionContext == nil {
             listLogDebug("Warning: Creating \(type(of: self)) outside of" +
                 " `ListAdapterDataSource.listAdapter(_:sectionControllerForObject:)`." +
                 " Collection context and view controller will be set later.")
@@ -198,8 +198,8 @@ func dispatchQueueContextStack() -> [ListSectionControllerDispatchQueueContext] 
 }
 
 func ListSectionControllerPushDispatchQueueContext(
-    viewController: UIViewController,
-    collectionContext: ListCollectionContext) {
+    viewController: UIViewController?,
+    collectionContext: ListCollectionContext?) {
     let context = ListSectionControllerDispatchQueueContext()
     context.viewController = viewController
     context.collectionContext = collectionContext

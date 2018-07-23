@@ -122,14 +122,15 @@ public final class ListAdapter: NSObject {
     var isLastInteractiveMoveToLastSectionIndex: Bool = false
     
     
-    // When making object updates inside a batch update block, delete operations must use the section /before/ any moves take
-    // place. This includes when other objects are deleted or inserted ahead of the section controller making the mutations.
-    // In order to account for this we must track when the adapter is in the middle of an update block as well as the section
+    // When making object updates inside a batch update closure, delete operations must use the
+    // section /before/ any moves take place. This includes when other objects are deleted or
+    // inserted ahead of the section controller making the mutations. In order to account for this
+    // we must track when the adapter is in the middle of an update closure as well as the section
     // controller mapping prior to the transition.
     //
-    // Note that the previous section controller map is destroyed as soon as a transition is finished so there is no dangling
-    // objects or section controllers.
-    var isInUpdateBlock: Bool = false
+    // Note that the previous section controller map is destroyed as soon as a transition is
+    // finished so there is no dangling objects or section controllers.
+    var isInUpdateClosure: Bool = false
     var previousSectionMap: ListSectionMap?
     
     // Since we only save the cell classes for debug. We will save them as `String`.
@@ -150,8 +151,12 @@ public final class ListAdapter: NSObject {
     private var isDequeuingCell: Bool = false
     private var isSendingWorkingRangeDisplayUpdates: Bool = false
     
-    // A map from collectionView's ObjectIdentifier to a weak reference of listAdapter.
+    // A dictionary from collectionView's ObjectIdentifier to a weak reference of listAdapter.
     private static var globalCollectionViewAdapterDict: [ObjectIdentifier: ListAdapterWeakBox] = [:]
+    
+    private var isItemCountZero: Bool {
+        return sectionMap.isItemCountZero
+    }
     
     // MARK: Deinit
     deinit {
@@ -404,31 +409,168 @@ extension ListAdapter {
         dispatchPrecondition(condition: .onQueue(.main))
         viewSectionControllerDict[view] = sectionController
     }
+    
+    func indexPaths(
+        from sectionController: ListSectionController,
+        indices: IndexSet,
+        usePreviousIfInUpdateClosure: Bool
+    ) -> [IndexPath] {
+        var indexPaths: [IndexPath] = []
+        let map = sectionMap(usePreviousIfInUpdateClosure: usePreviousIfInUpdateClosure)
+        if let section = map.section(for: sectionController) {
+            for index in indices {
+                indexPaths.append(IndexPath(item: index, section: section))
+            }
+        }
+        return indexPaths
+    }
+    
+    func indexPath(
+        from sectionController: ListSectionController,
+        index: Int,
+        usePreviousIfInUpdateClosure: Bool
+    ) -> IndexPath? {
+        let map = sectionMap(usePreviousIfInUpdateClosure: usePreviousIfInUpdateClosure)
+        if let section = map.section(for: sectionController) {
+            return IndexPath(item: index, section: section)
+        }
+        return nil
+    }
 }
 
 // MARK: Private Helpers
 private extension ListAdapter {
-    func updateAfterPublicSettingsChange() {
-        guard let collectionView = collectionView,
-              let dataSource = dataSource { return }
+    func collectionViewClosure() -> ListCollectionViewClosure {
+        if experiments.contains(.getCollectionViewAtUpdate) {
+            return { [weak self] in self?.collectionView }
+        } else {
+            weak var collectionView = self.collectionView
+            return { collectionView }
+        }
     }
     
+    func updateAfterPublicSettingsChange() {
+        guard collectionView != nil,
+              let dataSource = dataSource else { return }
+        let objects = dataSource.objects(for: self)
+        
+        #if DEBUG
+        objects.hasDuplicateHashValue()
+        #endif
+        
+        update(objects: objects, dataSource: dataSource)
+    }
+    
+    // this method is what updates the "source of truth"
+    // this should only be called just before the collection view is updated
     func update(objects: [AnyListDiffable], dataSource: ListAdapterDataSource) {
-        // TODO: Add if DEBUG check
+        #if DEBUG
+        for object in objects {
+            assert(
+                object == object,
+                "Object instance \(object) not equal to itself. This will break infra map tables.")
+        }
+        #endif
+        
+        var sectionControllers: [ListSectionController] = []
+        var validObjects: [AnyListDiffable] = []
         
         // collect items that have changed since the last update by their diffableIdentifier
         var updatedObjectsDict: [AnyHashable: AnyListDiffable] = [:]
         
         // push the view controller and collection context into a local thread container so they are
         // available on init for `ListSectionController` subclasses after calling super.init()
-        guard let viewController = viewController else {
-            preconditionFailure()
-        }
         ListSectionControllerPushDispatchQueueContext(
             viewController: viewController,
             collectionContext: self)
         
+        for object in objects {
+            // infra checks to see if a controller exists
+            var optionalSectionController = sectionMap.sectionController(for: object)
+            
+            // if not, query the data source for a new one
+            if optionalSectionController == nil {
+                optionalSectionController = dataSource.listAdapter(
+                    self,
+                    sectionControllerFor: object)
+            }
+            
+            guard let sectionController = optionalSectionController else {
+                listLogDebug(
+                    "WARNING: Ignoring nil section controller returned by data source" +
+                        " \(dataSource) for object \(object).")
+                continue
+            }
+            
+            // in case the section controller was created outside of
+            // listAdapter(_:sectionControllerForObject:)
+            sectionController.collectionContext = self
+            sectionController.viewController = viewController
+            
+            // check if the item has changed instances or is new
+            if let oldSection = sectionMap.section(for: object),
+               sectionMap.object(for: oldSection) != object {
+                updatedObjectsDict[object.diffIdentifier] = object
+            }
+            
+            sectionControllers.append(sectionController)
+            validObjects.append(object)
+        }
+        
+        #if DEBUG
+        assert(
+            Set(sectionControllers).count == sectionControllers.count,
+            "Section controllers array is not filled with unique objects; section controllers are" +
+                " being reused")
+        #endif
+        
+        // clear the view controller and collection context
+        ListSectionControllerPopDispatchQueueContext()
+        
+        sectionMap.update(objects: validObjects, withSectionControllers: sectionControllers)
+        
+        // now that the maps have been created and contexts are assigned, we consider the section
+        // controllers "fully loaded"
+        for object in objects {
+            sectionMap.sectionController(for: object)?.didUpdate(to: object)
+        }
+        
+        var itemCount = 0
+        for sectionController in sectionControllers {
+            itemCount += sectionController.numberOfItems
+        }
+        
+        updateBackgroundView(isHidden: itemCount > 0)
     }
+    
+    func updateBackgroundView(isHidden: Bool) {
+        if isInUpdateClosure {
+            // will be called again when update closure completes
+            return
+        }
+        
+        let backgroundView = dataSource?.emptyBackgroundView(for: self)
+        // don't do anything if the client is using the same view
+        if backgroundView != collectionView?.backgroundView {
+            // collection view will just stack the background views underneath each other if we do
+            // not remove the previous one first. also fine if it is nil
+            collectionView?.backgroundView?.removeFromSuperview()
+            collectionView?.backgroundView = backgroundView
+        }
+        collectionView?.backgroundView?.isHidden = isHidden
+    }
+    
+    func sectionMap(usePreviousIfInUpdateClosure: Bool) -> ListSectionMap {
+        if usePreviousIfInUpdateClosure,
+           isInUpdateClosure,
+           let previousSectionMap = self.previousSectionMap {
+            return previousSectionMap
+        } else {
+            return sectionMap
+        }
+    }
+    
+    
 }
 
 /// A completion closure to execute when the list updates are completed.
