@@ -174,7 +174,8 @@ public final class ListAdapter: NSObject {
     var isInUpdateClosure = false
     var previousSectionMap: ListSectionMap?
     
-    // Since we only save the cell classes for debug. We will save them as `String`.
+    // Since we only save the cell classes for debug. We will save them as `String` a.k.a.
+    // `\(Class.self)`
     var registeredCellClasses: Set<String> = []
     var registeredNibNames: Set<String> = []
     var registeredSupplementaryViewIdentifiers: Set<String> = []
@@ -453,6 +454,7 @@ extension ListAdapter: ListCollectionContext {
         withReuseIdentifier identifier: String,
         at index: Int
     ) -> UICollectionViewCell {
+        dispatchPrecondition(condition: .onQueue(.main))
         assert(index >= 0, "Negative index")
         guard let collectionView = collectionView else {
             preconditionFailure(
@@ -460,10 +462,28 @@ extension ListAdapter: ListCollectionContext {
                     " section controller \(sectionController) without a collection view at index" +
                     " \(index)")
         }
-        
+        guard let indexPath = self.indexPath(
+                  for: sectionController,
+                  at: index,
+                  usePreviousIfInUpdateClosure: false) else {
+            preconditionFailure(
+                "No indexPath when dequeueing cell class \(cellClass) with reuseIdentifier" +
+                    " \(identifier) from section controller \(sectionController) at \(index)")
+        }
+        let identifier = ListAdapter.reusableViewIdentifier(
+            viewClass: cellClass, nibName: nil, kind: nil, givenReuseIdentifier: identifier)
+        if !registeredCellClasses.contains("\(cellClass.self)") {
+            registeredCellClasses.insert("\(cellClass.self)")
+            collectionView.register(cellClass, forCellWithReuseIdentifier: identifier)
+        }
+        return collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
     }
     
-    public func sectionController(_ sectionController: ListSectionController, dequeueReusableCellOfClass cellClass: AnyClass, at index: Int) -> UICollectionViewCell {
+    public func sectionController(
+        _ sectionController: ListSectionController,
+        dequeueReusableCellOfClass cellClass: AnyClass,
+        at index: Int
+    ) -> UICollectionViewCell {
         <#code#>
     }
     
@@ -797,7 +817,7 @@ extension ListAdapter {
         kind: String?,
         givenReuseIdentifier: String?
     ) -> String {
-        return kind ?? "" + nibName ?? "" + givenReuseIdentifier ?? "" + \(viewClass.self)
+        return (kind ?? "") + (nibName ?? "") + (givenReuseIdentifier ?? "") + \(viewClass.self)
     }
 }
 
