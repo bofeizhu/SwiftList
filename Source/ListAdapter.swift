@@ -14,7 +14,7 @@
 /// Feed implementations must act as the data source for an `ListAdapter` in order to drive the
 /// objects and section controllers in a collection view.
 public final class ListAdapter: NSObject {
-    // MARK: - Public APIs
+    // MARK: - Public Properties
     
     /// The view controller that houses the adapter.
     public private(set) weak var viewController: UIViewController?
@@ -116,6 +116,8 @@ public final class ListAdapter: NSObject {
         return sectionMap.objects
     }
     
+    // MARK: - Initializers
+    
     /// Initializes a new `IGListAdapter` object.
     ///
     /// - Parameters:
@@ -151,7 +153,7 @@ public final class ListAdapter: NSObject {
         self.init(updater: updater, viewController: viewController, workingRangeSize: 0)
     }
     
-    // MARK: - Internal properties
+    // MARK: - Internal Properties
     var sectionMap = ListSectionMap()
     var displayHandler = ListDisplayHandler()
     private(set) var workingRangeHandler: ListWorkingRangeHandler
@@ -178,9 +180,9 @@ public final class ListAdapter: NSObject {
     var registeredSupplementaryViewIdentifiers: Set<String> = []
     var registeredSupplementaryViewNibNames: Set<String> = []
     
-    // MARK: - Private properties
+    // MARK: - Private Properties
     private var viewSectionControllerDict: [UICollectionReusableView: ListSectionController] = [:]
-    private var queuedCompletionClosures: [ListQueuedCompletion] = []
+    private var queuedCompletionClosures: [ListQueuedCompletion]?
     
     /// A set of `ListAdapterUpdateListener`
     ///
@@ -590,7 +592,50 @@ private extension ListAdapter {
         }
     }
     
+    func layoutAttributesForSupplementaryView(
+        ofKinds elementKinds: [String],
+        at indexPath: IndexPath
+    ) -> [UICollectionViewLayoutAttributes] {
+        var attributes: [UICollectionViewLayoutAttributes] = []
+        guard let layout = collectionView?.collectionViewLayout else {
+            assertionFailure("CollectionView has no layout")
+            return attributes
+        }
+        if let cellAttributes = layout.layoutAttributesForItem(at: indexPath) {
+            attributes.append(cellAttributes)
+        }
+        
+        for kind in elementKinds {
+            if let supplementaryAttributes = layout.layoutAttributesForSupplementaryView(
+                ofKind: kind,
+                at: indexPath) {
+                attributes.append(supplementaryAttributes)
+            }
+        }
+        
+        return attributes
+    }
     
+    func deferClosureBetweenBatchUpdates(_ closure: @escaping ListQueuedCompletion) {
+        dispatchPrecondition(condition: .onQueue(.main))
+        if queuedCompletionClosures == nil {
+            closure()
+        } else {
+            queuedCompletionClosures?.append(closure)
+        }
+    }
+    
+    func enterBatchUpdates() {
+        queuedCompletionClosures = []
+    }
+    
+    func exitBatchUpdates() {
+        guard let closures = queuedCompletionClosures else { return }
+        queuedCompletionClosures = nil
+        for closure in closures {
+            closure()
+        }
+    }
 }
 
 // MARK: - UICollectionViewDataSource
