@@ -31,7 +31,7 @@ public protocol ListCollectionContext: AnyObject {
     ///
     /// - Parameter sectionController: The section controller requesting this information.
     /// - Returns: The size of the collection view minus the given section controller's insets.
-    func containerSizeFor(sectionController: ListSectionController) -> CGSize
+    func containerSize(for sectionController: ListSectionController) -> CGSize
     
     /// Returns the index of the specified cell in the collection relative to
     /// the section controller.
@@ -40,7 +40,7 @@ public protocol ListCollectionContext: AnyObject {
     ///     - cell: An existing cell in the collection.
     ///     - sectionController: The section controller requesting this information.
     /// - Returns: The index of the cell or `nil` if it does not exist in the collection.
-    func sectionControllerindex(for cell: UICollectionViewCell, in : ListSectionController) -> Int?
+    func index(for cell: UICollectionViewCell, in sectionController: ListSectionController) -> Int?
     
     /// Returns the cell in the collection at the specified index for the section controller.
     ///

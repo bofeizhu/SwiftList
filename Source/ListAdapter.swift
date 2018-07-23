@@ -112,33 +112,6 @@ public final class ListAdapter: NSObject {
         self.init(updater: updater, viewController: viewController, workingRangeSize: 0)
     }
     
-    /// Returns the object corresponding to a section in the list.
-    ///
-    /// - Parameter section: A section in the list.
-    /// - Returns: The object for the specified section.
-    public func object(for section: Int) -> AnyListDiffable? {
-        dispatchPrecondition(condition: .onQueue(.main))
-        return sectionMap.object(for: section)
-    }
-    
-    /// Returns the section controller for the specified object.
-    ///
-    /// - Parameter object: An object from the data source.
-    /// - Returns: A section controller.
-    public func sectionController(for object: AnyListDiffable) -> ListSectionController? {
-        dispatchPrecondition(condition: .onQueue(.main))
-        return sectionMap.sectionController(for: object)
-    }
-    
-    /// Query the section controller at a given section index.
-    ///
-    /// - Parameter section: A section in the list.
-    /// - Returns: A section controller.
-    public func sectionController(for section: Int) -> ListSectionController? {
-        dispatchPrecondition(condition: .onQueue(.main))
-        return sectionMap.sectionController(for: section)
-    }
-    
     // MARK: Internal properties
     var sectionMap = ListSectionMap()
     var displayHandler = ListDisplayHandler()
@@ -186,11 +159,64 @@ public final class ListAdapter: NSObject {
     }
 }
 
-// MARK: Private APIs
+// MARK: List Items & Sections
 extension ListAdapter {
-    func map(view: UICollectionReusableView, to sectionController: ListSectionController) {
+    
+    /// Query the section controller at a given section index.
+    ///
+    /// - Parameter section: A section in the list.
+    /// - Returns: A section controller.
+    public func sectionController(for section: Int) -> ListSectionController? {
         dispatchPrecondition(condition: .onQueue(.main))
-        viewSectionControllerDict[view] = sectionController
+        return sectionMap.sectionController(for: section)
+    }
+    
+    /// Returns the section controller for the specified object.
+    ///
+    /// - Parameter object: An object from the data source.
+    /// - Returns: A section controller.
+    public func sectionController(for object: AnyListDiffable) -> ListSectionController? {
+        dispatchPrecondition(condition: .onQueue(.main))
+        return sectionMap.sectionController(for: object)
+    }
+    
+    /// Returns the object corresponding to a section in the list.
+    ///
+    /// - Parameter section: A section in the list.
+    /// - Returns: The object for the specified section.
+    public func object(for section: Int) -> AnyListDiffable? {
+        dispatchPrecondition(condition: .onQueue(.main))
+        return sectionMap.object(for: section)
+    }
+    
+    /// Returns the object corresponding to the specified section controller in the list.
+    ///
+    /// - Parameter sectionController: A section controller in the list.
+    /// - Returns: The object for the specified section controller
+    public func object(for sectionController: ListSectionController) -> AnyListDiffable? {
+        dispatchPrecondition(condition: .onQueue(.main))
+        if let section = sectionMap.section(for: sectionController) {
+            return sectionMap.object(for: section)
+        }
+        return nil
+    }
+    
+    /// Query the section index of a list.
+    ///
+    /// - Parameter sectionController: A section controller in the list.
+    /// - Returns: The section index of the list if it exists, `nil` otherwise.
+    public func section(for sectionController: ListSectionController) -> Int? {
+        dispatchPrecondition(condition: .onQueue(.main))
+        return sectionMap.section(for: sectionController)
+    }
+    
+    /// Returns the section corresponding to the specified object in the list.
+    ///
+    /// - Parameter object: An object in the list.
+    /// - Returns: The section index of the list if it exists, `nil` otherwise.
+    public func section(for object: AnyListDiffable) -> Int? {
+        dispatchPrecondition(condition: .onQueue(.main))
+        return section(for: object)
     }
 }
 
@@ -236,19 +262,171 @@ extension ListAdapter: UICollectionViewDataSource {
     }
 }
 
+extension ListAdapter: ListCollectionContext {
+    public var containerSize: CGSize {
+        guard let collectionView = collectionView else {
+            preconditionFailure("Collection View is nil")
+        }
+        return collectionView.bounds.size
+    }
+    
+    public var containerInset: UIEdgeInsets {
+        guard let collectionView = collectionView else {
+            preconditionFailure("Collection View is nil")
+        }
+        return collectionView.contentInset
+    }
+    
+    public var adjustedContainerInset: UIEdgeInsets {
+        guard let collectionView = collectionView else {
+            preconditionFailure("Collection View is nil")
+        }
+        return collectionView.listContentInset
+    }
+    
+    public var insetContainerSize: CGSize {
+        guard let collectionView = collectionView else {
+            preconditionFailure("Collection View is nil")
+        }
+        return UIEdgeInsetsInsetRect(
+            collectionView.bounds,
+            collectionView.listContentInset).size
+    }
+    
+    public var scrollingTraits: ListCollectionScrollingTraits {
+        guard let collectionView = collectionView else {
+            preconditionFailure("Collection View is nil")
+        }
+        return ListCollectionScrollingTraits(
+            isTracking: collectionView.isTracking,
+            isDragging: collectionView.isDragging,
+            isDecelerating: collectionView.isDecelerating)
+    }
+    
+    public func containerSize(for sectionController: ListSectionController) -> CGSize {
+        let inset = sectionController.inset
+        return CGSize(
+            width: containerSize.width - inset.left - inset.right,
+            height: containerSize.height - inset.top - inset.bottom)
+    }
+    
+    public func index(
+        for cell: UICollectionViewCell,
+        in sectionController: ListSectionController
+    ) -> Int? {
+        dispatchPrecondition(condition: .onQueue(.main))
+        
+        guard let collectionView = collectionView else {
+            preconditionFailure("Collection View is nil")
+        }
+        let indexPath = collectionView.indexPath(for: cell)
+        assert(
+            indexPath == nil || indexPath?.section == section(for: sectionController),
+            "Requesting a cell from another section controller is not allowed.")
+        return indexPath?.item
+    }
+    
+    public func sectionController(
+        _ sectionController: ListSectionController,
+        cellForItemAt index: Int
+    ) -> UICollectionViewCell? {
+        dispatchPrecondition(condition: .onQueue(.main))
+        
+        // if this is accessed while a cell is being dequeued or displaying working range elements,
+        // just return nil
+        if isDequeuingCell || isSendingWorkingRangeDisplayUpdates {
+            return nil
+        }
+    }
+    
+    public func visibleCells(for sectionController: ListSectionController) -> [UICollectionViewCell] {
+        <#code#>
+    }
+    
+    public func visibleIndexPaths(for sectionController: ListSectionController) -> [IndexPath] {
+        <#code#>
+    }
+    
+    public func sectionController(_ sectionController: ListSectionController, deselectItemAt index: Int, animated: Bool) {
+        <#code#>
+    }
+    
+    public func sectionController(_ sectionController: ListSectionController, selectItemAt index: Int, animated: Bool, scrollPosition: UICollectionViewScrollPosition) {
+        <#code#>
+    }
+    
+    public func sectionController(_ sectionController: ListSectionController, dequeueReusableCellOfClass cellClass: AnyClass, withReuseIdentifier identifier: String, at index: Int) -> UICollectionViewCell {
+        <#code#>
+    }
+    
+    public func sectionController(_ sectionController: ListSectionController, dequeueReusableCellOfClass cellClass: AnyClass, at index: Int) -> UICollectionViewCell {
+        <#code#>
+    }
+    
+    public func sectionController(_ sectionController: ListSectionController, dequeueReusableCellWithNib nib: UINib, at index: Int) -> UICollectionViewCell {
+        <#code#>
+    }
+    
+    public func sectionController(_ sectionController: ListSectionController, dequeueReusableCellFromStoryboardWithIdentifier identifier: UINib, at index: Int) -> UICollectionViewCell {
+        <#code#>
+    }
+    
+    public func sectionController(_ sectionController: ListSectionController, dequeueReusableSupplementaryViewOfKind elementKind: String, class viewClass: AnyClass, at index: Int) -> UICollectionReusableView {
+        <#code#>
+    }
+    
+    public func sectionController(_ sectionController: ListSectionController, dequeueReusableSupplementaryViewOfKind elementKind: String, nib: UINib, at index: Int) -> UICollectionReusableView {
+        <#code#>
+    }
+    
+    public func sectionController(_ sectionController: ListSectionController, dequeueReusableSupplementaryViewFromStoryboardOfKind elementKind: String, withIdentifier identifier: String, at index: Int) -> UICollectionReusableView {
+        <#code#>
+    }
+    
+    public func invalidateLayoutFor(sectionController: ListSectionController, completion: ((Bool) -> Void)?) {
+        <#code#>
+    }
+    
+    public func performBatchUpdates(_ updates: (ListBatchContext) -> Void, animated: Bool, completion: ((Bool) -> Void)?) {
+        <#code#>
+    }
+    
+    public func scroll(to sectionController: ListSectionController, at index: Int, scrollPosition: UICollectionViewScrollPosition, animated: Bool) {
+        <#code#>
+    }
+    
+    
+}
+
+// MARK: Private APIs
+extension ListAdapter {
+    func map(view: UICollectionReusableView, to sectionController: ListSectionController) {
+        dispatchPrecondition(condition: .onQueue(.main))
+        viewSectionControllerDict[view] = sectionController
+    }
+}
+
+// MARK: Private Helpers
 private extension ListAdapter {
     func updateAfterPublicSettingsChange() {
         guard let collectionView = collectionView,
-              let dataSource = dataSource else { return }
-        
+              let dataSource = dataSource { return }
     }
     
     func update(objects: [AnyListDiffable], dataSource: ListAdapterDataSource) {
         // TODO: Add if DEBUG check
         
-        // collect items that have changed since the last update
-        var updatedObjects: Set<AnyListDiffable> = []
+        // collect items that have changed since the last update by their diffableIdentifier
+        var updatedObjectsDict: [AnyHashable: AnyListDiffable] = [:]
         
+        // push the view controller and collection context into a local thread container so they are
+        // available on init for `ListSectionController` subclasses after calling super.init()
+        guard let viewController = viewController else {
+            preconditionFailure()
+        }
+        ListSectionControllerPushDispatchQueueContext(
+            viewController: viewController,
+            collectionContext: self)
         
     }
 }
