@@ -33,7 +33,7 @@ public final class ListAdapter: NSObject {
             // if collection view has been used by a different list adapter, treat it as if we were
             // using a new collection view this happens when embedding a `UICollectionView` inside a
             // `UICollectionViewCell` that is reused
-            if let collectionView = self.collectionView {
+            if let collectionView = collectionView {
                 let collectionViewID = ObjectIdentifier(collectionView)
                 ListAdapter.globalCollectionViewAdapterDict.removeValue(forKey: collectionViewID)
             }
@@ -57,7 +57,7 @@ public final class ListAdapter: NSObject {
         }
         
         didSet {
-            guard let collectionView = self.collectionView else { return }
+            guard let collectionView = collectionView else { return }
             
             let collectionViewID = ObjectIdentifier(collectionView)
             ListAdapter.globalCollectionViewAdapterDict[collectionViewID] = ListAdapterWeakBox(self)
@@ -359,10 +359,34 @@ extension ListAdapter: ListCollectionContext {
         if isDequeuingCell || isSendingWorkingRangeDisplayUpdates {
             return nil
         }
+        
+        guard let indexPath = indexPath(
+                  for: sectionController,
+                  at: index,
+                  usePreviousIfInUpdateClosure: true),
+              let collectionView = collectionView,
+              indexPath.section < collectionView.numberOfSections,
+              let cell = collectionView.cellForItem(at: indexPath),
+              self.sectionController(for: cell) == sectionController else { return nil }
+        // only return a cell if it belongs to the section controller
+        // this association is created in collectionView.cellForItem(at:)
+        return cell
     }
     
-    public func visibleCells(for sectionController: ListSectionController) -> [UICollectionViewCell] {
-        <#code#>
+    public func visibleCells(
+        for sectionController: ListSectionController
+    ) -> [UICollectionViewCell] {
+        var cells: [UICollectionViewCell] = []
+        guard let collectionView = collectionView,
+              let section = self.section(for: sectionController) else { return cells }
+        
+        let visibleCells = collectionView.visibleCells
+        for cell in visibleCells {
+            if collectionView.indexPath(for: cell)?.section == section {
+                cells.append(cell)
+            }
+        }
+        return cells
     }
     
     public func visibleIndexPaths(for sectionController: ListSectionController) -> [IndexPath] {
@@ -434,7 +458,7 @@ extension ListAdapter {
     
     func indexPaths(
         from sectionController: ListSectionController,
-        indices: IndexSet,
+        at indices: IndexSet,
         usePreviousIfInUpdateClosure: Bool
     ) -> [IndexPath] {
         var indexPaths: [IndexPath] = []
@@ -448,8 +472,8 @@ extension ListAdapter {
     }
     
     func indexPath(
-        from sectionController: ListSectionController,
-        index: Int,
+        for sectionController: ListSectionController,
+        at index: Int,
         usePreviousIfInUpdateClosure: Bool
     ) -> IndexPath? {
         let map = sectionMap(usePreviousIfInUpdateClosure: usePreviousIfInUpdateClosure)
@@ -595,7 +619,7 @@ private extension ListAdapter {
     func sectionMap(usePreviousIfInUpdateClosure: Bool) -> ListSectionMap {
         if usePreviousIfInUpdateClosure,
            isInUpdateClosure,
-           let previousSectionMap = self.previousSectionMap {
+           let previousSectionMap = previousSectionMap {
             return previousSectionMap
         } else {
             return sectionMap
