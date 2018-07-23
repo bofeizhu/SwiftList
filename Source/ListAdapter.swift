@@ -826,4 +826,3 @@ extension ListAdapter {
 /// - Parameter finished: Specifies whether or not the update animations completed successfully.
 public typealias ListUpdaterCompletion = (_ finished: Bool) -> Void
 public typealias ListQueuedCompletion = () -> Void
-

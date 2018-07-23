@@ -85,6 +85,7 @@
 		820A0CAE20ED37490035EC74 /* ListBatchUpdateState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListBatchUpdateState.swift; sourceTree = "<group>"; };
 		820A0CB020EDA4C00035EC74 /* ListReloadIndexPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListReloadIndexPath.swift; sourceTree = "<group>"; };
 		820A0CB220EDAAB30035EC74 /* ListLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListLog.swift; sourceTree = "<group>"; };
+		820A0CB220EDAAB30035EC74 /* ListAssert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAssert.swift; sourceTree = "<group>"; };
 		820A0CB520EDEC0E0035EC74 /* ListArrayUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListArrayUtils.swift; sourceTree = "<group>"; };
 		8258A46E20FDB2080070EDA1 /* ListBatchContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListBatchContext.swift; sourceTree = "<group>"; };
 		8258A47020FEF2240070EDA1 /* ListAdapterUpdateListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAdapterUpdateListener.swift; sourceTree = "<group>"; };
@@ -263,6 +264,7 @@
 			children = (
 				829216B020F4AA900038C596 /* Int+ListDiffable.swift */,
 				820A0CB420EDEBD60035EC74 /* Internal */,
+				820A0CB220EDAAB30035EC74 /* ListAssert.swift */,
 				820A0C9F20EADC740035EC74 /* ListBatchUpdateData.swift */,
 				828DF98D20DC587D00C03E36 /* ListDiff.swift */,
 				82F9733420E4017C00F7D50E /* ListDiffable.swift */,
