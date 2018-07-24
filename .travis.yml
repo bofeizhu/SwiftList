@@ -8,27 +8,23 @@ branches:
 
 env:
    global:
+   - LC_CTYPE=en_US.UTF-8
    - LANG=en_US.UTF-8
-
-   - WORKSPACE="ListKit.xcworkspace"
-
-   - IOS_SCHEME="ListKit"
-
-   - IOS_SDK=iphonesimulator11.4
-
-   - IOS_EXAMPLE_WORKSPACE="Examples/Examples-iOS/ListKitExamples.xcworkspace"
+   - WORKSPACE=ListKit.xcworkspace
+   - IOS_FRAMEWORK_SCHEME="ListKit"
 
    matrix:
-   - DESTINATION="OS=10.3.1,name=iPhone 7" SDK="$IOS_SDK" SCHEME="$IOS_SCHEME" RUN_TESTS="YES" RUN_UI_TESTS="NO"  BUILD_EXAMPLE="YES" POD_LINT="NO"
-   - DESTINATION="OS=11.4,name=iPhone X"   SDK="$IOS_SDK" SCHEME="$IOS_SCHEME" RUN_TESTS="YES" RUN_UI_TESTS="NO" BUILD_EXAMPLE="YES" POD_LINT="NO"
+    - DESTINATION="OS=11.4,name=iPhone X"          SCHEME="$IOS_FRAMEWORK_SCHEME"      RUN_TESTS="YES" BUILD_EXAMPLE="YES" POD_LINT="NO"
+    - DESTINATION="OS=10.3.1,name=iPhone 7 Plus"   SCHEME="$IOS_FRAMEWORK_SCHEME"      RUN_TESTS="YES" BUILD_EXAMPLE="YES" POD_LINT="NO"
 
 script:
-- set -o pipefail
-- xcodebuild -version -sdk
+  - set -o pipefail
+  - xcodebuild -version
+  - xcodebuild -showsdks
 
-- if [ $RUN_TESTS == "YES" ]; then
-      xcodebuild build build-for-testing -workspace "$WORKSPACE" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES ONLY_ACTIVE_ARCH=YES | bundle exec xcpretty -c;
-      xcodebuild analyze test-without-building -workspace "$WORKSPACE" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES ONLY_ACTIVE_ARCH=YES | bundle exec xcpretty -c;
-  else
-      xcodebuild build analyze -workspace "$WORKSPACE" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO | bundle exec xcpretty -c;
-  fi
+  # Build Framework in Debug and Run Tests if specified
+  - if [ $RUN_TESTS == "YES" ]; then
+      xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO ENABLE_TESTABILITY=YES test | xcpretty;
+    else
+      xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO build | xcpretty;
+    fi
