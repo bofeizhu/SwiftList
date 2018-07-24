@@ -217,6 +217,14 @@ public final class ListAdapter: NSObject {
     private var viewSectionControllerDict: [UICollectionReusableView: ListSectionController] = [:]
     private var queuedCompletionClosures: [ListQueuedCompletion]?
     private var settingFirstCollectionView = true
+    private var collectionViewClosure: ListCollectionViewClosure {
+        if experiments.contains(.getCollectionViewAtUpdate) {
+            return { [weak self] in self?.collectionView }
+        } else {
+            weak var collectionView = self.collectionView
+            return { collectionView }
+        }
+    }
     
     // A set of `ListAdapterUpdateListenerWeakBox`
     private var updateListeners: Set<ListAdapterUpdateListenerWeakBox> = []
@@ -394,7 +402,51 @@ extension ListAdapter {
     ///   - animated: A flag indicating if the transition should be animated.
     ///   - completion: The block to execute when the updates complete.
     public func performUpdates(animated: Bool, completion: ListUpdaterCompletion?) {
+        dispatchPrecondition(condition: .onQueue(.main))
+        guard collectionView != nil,
+              let dataSource = dataSource
+        else {
+            listLogDebug(
+                "Warning: Your call to performUpdates(animated:completion:) is ignored as" +
+                    " dataSource or collectionView haven't been set.")
+            completion?(false)
+            return
+        }
         
+        let fromObjects = sectionMap.objects
+        var toObjectsClosure: ListToObjectClosure
+        if experiments.contains(.deferredToObjectCreation) {
+            toObjectsClosure = { [weak self] in
+                guard let strongSelf = self else { return nil }
+                return dataSource.objects(for: strongSelf)
+            }
+        } else {
+            let newObjects = dataSource.objects(for: self)
+            toObjectsClosure = { newObjects }
+        }
+        
+        enterBatchUpdates()
+        
+        updater.performUpdateWith(
+            collectionViewClosure: collectionViewClosure,
+            fromObjects: fromObjects,
+            toObjectsClosure: toObjectsClosure,
+            animated: animated,
+            objectTransitionClosure: { [weak self] (toObjects) in
+                guard let strongSelf = self else { return }
+                // temporarily capture the item map that we are transitioning from in case
+                // there are any item deletes at the same
+                strongSelf.previousSectionMap = strongSelf.sectionMap
+                strongSelf.update(objects: toObjects, dataSource: dataSource)
+            },
+            completion: { [weak self] (finished) in
+                // release the previous items
+                guard let strongSelf = self else { return }
+                strongSelf.previousSectionMap = nil
+                strongSelf.didFinishUpdateOfType(.performUpdates, animated: animated)
+                completion?(finished)
+                strongSelf.exitBatchUpdates()
+            })
     }
     
     /// Perform an immediate reload of the data in the data source, discarding the old objects.
@@ -404,14 +456,56 @@ extension ListAdapter {
     ///     to teardown and rebuild all section controllers. Use
     ///     `ListAdapter.performUpdates(animated:completion)` instead.
     public func reloadData(withCompletion completion: ListUpdaterCompletion?) {
+        dispatchPrecondition(condition: .onQueue(.main))
+        guard collectionView != nil,
+            let dataSource = dataSource
+            else {
+                listLogDebug(
+                    "Warning: Your call to reloadData(withCompletion:) is ignored as" +
+                    " dataSource or collectionView haven't been set.")
+                completion?(false)
+                return
+        }
         
+        let objects = dataSource.objects(for: self)
+        
+        #if DEBUG
+        objects.checkDuplicateDiffIdentifier()
+        #endif
+        
+        updater.reloadDataWith(
+            collectionViewClosure: collectionViewClosure,
+            reloadUpdateClosure: { [weak self] in
+                guard let strongSelf = self else { return }
+                strongSelf.sectionMap.reset()
+                strongSelf.update(objects: objects, dataSource: dataSource)
+            },
+            completion: { [weak self] (finished) in
+                guard let strongSelf = self else { return }
+                strongSelf.didFinishUpdateOfType(.reloadData, animated: false)
+                completion?(finished)
+                strongSelf.exitBatchUpdates()
+            })
     }
     
     /// Reload the list for only the specified objects.
     ///
     /// - Parameter objects: The objects to reload.
     public func reload(_ objects: [AnyListDiffable]) {
+        dispatchPrecondition(condition: .onQueue(.main))
+        let shouldUsePrevious = shouldUsePreviousSectionMap(usePreviousIfInUpdateClosure: true)
+        var sections: IndexSet
+        if shouldUsePrevious {
+            sections = reloadSections(with: &previousSectionMap!, objects: objects)
+        } else {
+            sections = reloadSections(with: &sectionMap, objects: objects)
+        }
         
+        guard let collectionView = collectionView else {
+            assertionFailure("Tried to reload the adapter without a collection view")
+            return
+        }
+        updater.collectionView(collectionView, reloadSections: sections)
     }
     
     /// Adds a listener to the list adapter.
@@ -953,7 +1047,7 @@ extension ListAdapter: ListCollectionContext {
         enterBatchUpdates()
         
         updater.performUpdateWith(
-            collectionViewClosure: collectionViewClosure(),
+            collectionViewClosure: collectionViewClosure,
             animated: animated,
             itemUpdates: { [weak self] in
                 guard let strongSelf = self else {
@@ -1053,19 +1147,10 @@ private extension ListAdapter {
         let objects = dataSource.objects(for: self)
         
         #if DEBUG
-        objects.hasDuplicateHashValue()
+        objects.checkDuplicateDiffIdentifier()
         #endif
         
         update(objects: objects, dataSource: dataSource)
-    }
-    
-    func collectionViewClosure() -> ListCollectionViewClosure {
-        if experiments.contains(.getCollectionViewAtUpdate) {
-            return { [weak self] in self?.collectionView }
-        } else {
-            weak var collectionView = self.collectionView
-            return { collectionView }
-        }
     }
     
     // MARK: Editing
@@ -1078,6 +1163,25 @@ private extension ListAdapter {
         }
     }
     
+    func reloadSections(
+        with sectionMap: inout ListSectionMap,
+        objects: [AnyListDiffable]
+    ) -> IndexSet {
+        var sections: IndexSet = []
+        for object in objects {
+            // look up the item using the map's lookup function. might not be the same item
+            guard let section = sectionMap.section(for: object) else { continue }
+            sections.insert(section)
+            
+            // reverse lookup the item using the section. if the pointer has changed the trigger
+            // update events and swap items
+            guard object != sectionMap.object(forSection: section) else { continue }
+            sectionMap.update(object)
+            sectionMap.sectionController(forSection: section)?.didUpdate(to: object)
+        }
+        return sections
+    }
+    
     // MARK: List Items & Sections
     func sectionMap(usePreviousIfInUpdateClosure: Bool) -> ListSectionMap {
         if usePreviousIfInUpdateClosure,
@@ -1086,6 +1190,16 @@ private extension ListAdapter {
             return previousSectionMap
         } else {
             return sectionMap
+        }
+    }
+    
+    func shouldUsePreviousSectionMap(usePreviousIfInUpdateClosure: Bool) -> Bool {
+        if usePreviousIfInUpdateClosure,
+            isInUpdateClosure,
+            previousSectionMap != nil {
+            return true
+        } else {
+            return false
         }
     }
     

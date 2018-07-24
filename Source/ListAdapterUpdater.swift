@@ -152,7 +152,7 @@ public final class ListAdapterUpdater {
         let toObjects = toObjectsClosure?()
         
         #if DEBUG
-        toObjects?.hasDuplicateHashValue()
+        toObjects?.checkDuplicateDiffIdentifier()
         #endif
         
         let executeUpdateClosures = { [weak self] in

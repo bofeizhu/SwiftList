@@ -13,42 +13,21 @@ struct ListSectionMap {
     /// The objects stored in the map.
     private(set) var objects: [AnyListDiffable]
     
+    var isItemCountZero: Bool {
+        for object in objects {
+            if let sectionController = sectionController(for: object) {
+                if sectionController.numberOfItems > 0 {
+                    return false
+                }
+            }
+        }
+        return true
+    }
+    
     init() {
         objectIdToSectionControllerDict = [:]
         sectionControllerToSectionDict = [:]
         objects = []
-    }
-    
-    /// Update the map with objects and the section controller counterparts.
-    ///
-    /// - Parameters:
-    ///   - objects: The objects in the collection.
-    ///   - sectionControllers: The section controllers that map to each object.
-    mutating func update(
-        objects: [AnyListDiffable],
-        withSectionControllers sectionControllers: [ListSectionController]) {
-        assert(
-            objects.count == sectionControllers.count,
-            "Invalid parameter not satisfying objects.count == sectionControllers.count")
-        
-        reset()
-        
-        self.objects = objects
-        
-        let first = objects.first
-        let last = objects.last
-        
-        for (section, object) in objects.enumerated() {
-            let sectionController = sectionControllers[section]
-            
-            // set the index of the list for easy reverse lookup
-            sectionControllerToSectionDict[sectionController] = section
-            objectIdToSectionControllerDict[object.diffIdentifier] = sectionController
-            
-            sectionController.isFirstSection = (object == first)
-            sectionController.isLastSection = (object == last)
-            sectionController.section = section
-        }
     }
     
     /// Fetch a section controller given a section.
@@ -100,17 +79,6 @@ struct ListSectionMap {
         return nil
     }
     
-    /// Remove all saved objects and section controllers.
-    mutating func reset() {
-        map { (_, sectionController, _) in
-            sectionController.section = nil
-            sectionController.isFirstSection = false
-            sectionController.isLastSection = false
-        }
-        sectionControllerToSectionDict = [:]
-        objectIdToSectionControllerDict = [:]
-    }
-    
     ///  Applies a given closure to the entries of the section controller map.
     ///
     /// - Parameter transform: A closure to operate on entries in the section controller map.
@@ -122,15 +90,56 @@ struct ListSectionMap {
         }
     }
     
-    var isItemCountZero: Bool {
-        for object in objects {
-            if let sectionController = sectionController(for: object) {
-                if sectionController.numberOfItems > 0 {
-                    return false
-                }
-            }
+    /// Update the map with objects and the section controller counterparts.
+    ///
+    /// - Parameters:
+    ///   - objects: The objects in the collection.
+    ///   - sectionControllers: The section controllers that map to each object.
+    mutating func update(
+        objects: [AnyListDiffable],
+        withSectionControllers sectionControllers: [ListSectionController]) {
+        assert(
+            objects.count == sectionControllers.count,
+            "Invalid parameter not satisfying objects.count == sectionControllers.count")
+        
+        reset()
+        
+        self.objects = objects
+        
+        let first = objects.first
+        let last = objects.last
+        
+        for (section, object) in objects.enumerated() {
+            let sectionController = sectionControllers[section]
+            
+            // set the index of the list for easy reverse lookup
+            sectionControllerToSectionDict[sectionController] = section
+            objectIdToSectionControllerDict[object.diffIdentifier] = sectionController
+            
+            sectionController.isFirstSection = (object == first)
+            sectionController.isLastSection = (object == last)
+            sectionController.section = section
         }
-        return true
+    }
+    
+    mutating func update(_ object: AnyListDiffable) {
+        guard let section = section(for: object),
+              let sectionController = sectionController(for: object)
+        else { return }
+        objects[section] = object
+        sectionControllerToSectionDict[sectionController] = section
+        objectIdToSectionControllerDict[object.diffIdentifier] = sectionController
+    }
+    
+    /// Remove all saved objects and section controllers.
+    mutating func reset() {
+        map { (_, sectionController, _) in
+            sectionController.section = nil
+            sectionController.isFirstSection = false
+            sectionController.isLastSection = false
+        }
+        sectionControllerToSectionDict = [:]
+        objectIdToSectionControllerDict = [:]
     }
     
     // MARK: Private
