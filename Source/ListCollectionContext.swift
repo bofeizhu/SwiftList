@@ -103,7 +103,7 @@ public protocol ListCollectionContext: AnyObject {
     func sectionController(
         _ sectionController: ListSectionController,
         dequeueReusableCellOfClass cellClass: AnyClass,
-        withReuseIdentifier identifier: String,
+        withReuseIdentifier identifier: String?,
         at index: Int
     ) -> UICollectionViewCell
     
@@ -148,7 +148,7 @@ public protocol ListCollectionContext: AnyObject {
     /// - Returns: A cell dequeued from the reuse pool or a newly created one.
     func sectionController(
         _ sectionController: ListSectionController,
-        dequeueReusableCellFromStoryboardWithIdentifier identifier: UINib,
+        dequeueReusableCellFromStoryboardWithIdentifier identifier: String,
         at index: Int
     ) -> UICollectionViewCell
     
@@ -164,7 +164,7 @@ public protocol ListCollectionContext: AnyObject {
     func sectionController(
         _ sectionController: ListSectionController,
         dequeueReusableSupplementaryViewOfKind elementKind: String,
-        class viewClass: AnyClass,
+        viewClass: AnyClass,
         at index: Int
     ) -> UICollectionReusableView
     
@@ -234,7 +234,7 @@ public protocol ListCollectionContext: AnyObject {
     ///     will not be performed synchronously, so you should make sure that your data source
     ///     changes only when necessary.
     func performBatchUpdates(
-        _ updates: (ListBatchContext) -> Void,
+        _ updates: @escaping (ListBatchContext) -> Void,
         animated: Bool,
         completion: ((Bool) -> Void)?)
     

@@ -185,11 +185,8 @@ public final class ListAdapter: NSObject {
     private var viewSectionControllerDict: [UICollectionReusableView: ListSectionController] = [:]
     private var queuedCompletionClosures: [ListQueuedCompletion]?
     
-    /// A set of `ListAdapterUpdateListener`
-    ///
-    /// - Warning: **Only insert ListAdapterUpdateListener.** Since this is a private property, we
-    ///     skip building a type erasure for it, and use `AnyHashable` instead.
-    private var updateListeners: Set<AnyHashable> = []
+    // A dictionary of `ListAdapterUpdateListener` map to its ObjectIdentifiers
+    private var updateListeners: [ObjectIdentifier: ListAdapterUpdateListener] = [:]
     private var isDequeuingCell = false
     private var isSendingWorkingRangeDisplayUpdates = false
     
@@ -451,27 +448,30 @@ extension ListAdapter: ListCollectionContext {
     public func sectionController(
         _ sectionController: ListSectionController,
         dequeueReusableCellOfClass cellClass: AnyClass,
-        withReuseIdentifier identifier: String,
+        withReuseIdentifier identifier: String?,
         at index: Int
     ) -> UICollectionViewCell {
         dispatchPrecondition(condition: .onQueue(.main))
         assert(index >= 0, "Negative index")
-        guard let collectionView = collectionView else {
+        guard let collectionView = collectionView
+        else {
             preconditionFailure(
-                "Dequeueing cell of class \(cellClass) with reuseIdentifier \(identifier) from" +
-                    " section controller \(sectionController) without a collection view at index" +
-                    " \(index)")
+                "Dequeueing cell of class \(cellClass) with reuseIdentifier" + (identifier ?? "") +
+                    " from section controller \(sectionController) without a collection view at" +
+                    " index \(index)")
         }
         guard let indexPath = self.indexPath(
                   for: sectionController,
                   at: index,
-                  usePreviousIfInUpdateClosure: false) else {
+                  usePreviousIfInUpdateClosure: false)
+        else {
             preconditionFailure(
                 "No indexPath when dequeueing cell class \(cellClass) with reuseIdentifier" +
-                    " \(identifier) from section controller \(sectionController) at \(index)")
+                    (identifier ?? "") + " from section controller \(sectionController) at" +
+                    " \(index)")
         }
         let identifier = ListAdapter.reusableViewIdentifier(
-            viewClass: cellClass, nibName: nil, kind: nil, givenReuseIdentifier: identifier)
+            viewClass: cellClass, kind: nil, givenReuseIdentifier: identifier)
         if !registeredCellClasses.contains("\(cellClass.self)") {
             registeredCellClasses.insert("\(cellClass.self)")
             collectionView.register(cellClass, forCellWithReuseIdentifier: identifier)
@@ -484,42 +484,270 @@ extension ListAdapter: ListCollectionContext {
         dequeueReusableCellOfClass cellClass: AnyClass,
         at index: Int
     ) -> UICollectionViewCell {
-        <#code#>
+        return self.sectionController(
+            sectionController,
+            dequeueReusableCellOfClass: cellClass,
+            withReuseIdentifier: nil,
+            at: index)
     }
     
-    public func sectionController(_ sectionController: ListSectionController, dequeueReusableCellWithNib nibName: String, bundle: Bundle?, at index: Int) -> UICollectionViewCell {
-        <#code#>
+    public func sectionController(
+        _ sectionController: ListSectionController,
+        dequeueReusableCellWithNibName nibName: String,
+        bundle: Bundle?,
+        at index: Int
+    ) -> UICollectionViewCell {
+        dispatchPrecondition(condition: .onQueue(.main))
+        assert(index >= 0, "Negative index")
+        assert(!nibName.isEmpty, "Empty nib name")
+        guard let collectionView = collectionView
+        else {
+            preconditionFailure(
+                "Dequeueing cell with nib name \(nibName) and bundle" +
+                    " \(String(describing: bundle)) from section controller \(sectionController)" +
+                    " without a collection view at index \(index)")
+        }
+        guard let indexPath = self.indexPath(
+            for: sectionController,
+            at: index,
+            usePreviousIfInUpdateClosure: false)
+        else {
+            preconditionFailure(
+                "No indexPath when dequeueing cell with nib name \(nibName) and bundle" +
+                    " \(String(describing: bundle)) from section controller \(sectionController)" +
+                    " at \(index)")
+        }
+        if !registeredNibNames.contains(nibName) {
+            registeredNibNames.insert(nibName)
+            let nib = UINib(nibName: nibName, bundle: bundle)
+            collectionView.register(nib, forCellWithReuseIdentifier: nibName)
+        }
+        return collectionView.dequeueReusableCell(withReuseIdentifier: nibName, for: indexPath)
     }
     
-    public func sectionController(_ sectionController: ListSectionController, dequeueReusableCellFromStoryboardWithIdentifier identifier: UINib, at index: Int) -> UICollectionViewCell {
-        <#code#>
+    public func sectionController(
+        _ sectionController: ListSectionController,
+        dequeueReusableCellFromStoryboardWithIdentifier identifier: String,
+        at index: Int
+    ) -> UICollectionViewCell {
+        dispatchPrecondition(condition: .onQueue(.main))
+        assert(index >= 0, "Negative index")
+        assert(!identifier.isEmpty, "Empty identifier")
+        guard let collectionView = collectionView
+        else {
+            preconditionFailure(
+                "Dequeueing cell with storyboard identifier: " + identifier + " from" +
+                    " section controller \(sectionController) without a collection view at" +
+                    " index \(index)")
+        }
+        guard let indexPath = self.indexPath(
+            for: sectionController,
+            at: index,
+            usePreviousIfInUpdateClosure: false)
+        else {
+            preconditionFailure(
+                "No indexPath when dequeueing cell with storyboard identifier: " + identifier +
+                    " from section controller \(sectionController) without a collection view at" +
+                    " index \(index)")
+        }
+        return collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
     }
     
-    public func sectionController(_ sectionController: ListSectionController, dequeueReusableSupplementaryViewOfKind elementKind: String, class viewClass: AnyClass, at index: Int) -> UICollectionReusableView {
-        <#code#>
+    public func sectionController(
+        _ sectionController: ListSectionController,
+        dequeueReusableSupplementaryViewOfKind elementKind: String,
+        viewClass: AnyClass,
+        at index: Int
+    ) -> UICollectionReusableView {
+        dispatchPrecondition(condition: .onQueue(.main))
+        assert(index >= 0, "Negative index")
+        guard let collectionView = collectionView
+        else {
+            preconditionFailure(
+                "Dequeueing supplementary view of class \(viewClass) with element kind" +
+                    elementKind + " from section controller \(sectionController)" +
+                    " without a collection view at index \(index)")
+        }
+        guard let indexPath = self.indexPath(
+            for: sectionController,
+            at: index,
+            usePreviousIfInUpdateClosure: false)
+            else {
+                preconditionFailure(
+                    "No indexPath when dequeueing supplementary view of class \(viewClass) with" +
+                        " element kind" + elementKind + " from section controller" +
+                        " \(sectionController) at \(index)")
+        }
+        let identifier = ListAdapter.reusableViewIdentifier(
+            viewClass: viewClass, kind: elementKind, givenReuseIdentifier: nil)
+        if !registeredSupplementaryViewIdentifiers.contains(identifier) {
+            registeredSupplementaryViewIdentifiers.insert(identifier)
+            collectionView.register(
+                viewClass,
+                forSupplementaryViewOfKind: elementKind,
+                withReuseIdentifier: identifier)
+        }
+        return collectionView.dequeueReusableSupplementaryView(
+            ofKind: elementKind,
+            withReuseIdentifier: identifier,
+            for: indexPath)
     }
     
-    public func sectionController(_ sectionController: ListSectionController, dequeueReusableSupplementaryViewOfKind elementKind: String, nibName: String, bundle: Bundle?, at index: Int) -> UICollectionReusableView {
-        <#code#>
+    public func sectionController(
+        _ sectionController: ListSectionController,
+        dequeueReusableSupplementaryViewOfKind elementKind: String,
+        nibName: String,
+        bundle: Bundle?,
+        at index: Int
+    ) -> UICollectionReusableView {
+        dispatchPrecondition(condition: .onQueue(.main))
+        assert(index >= 0, "Negative index")
+        assert(!nibName.isEmpty, "Empty nib name")
+        guard let collectionView = collectionView
+        else {
+            preconditionFailure(
+                "Dequeueing supplementary view with nib name \(nibName) and bundle" +
+                    " \(String(describing: bundle)) from section controller \(sectionController)" +
+                    " without a collection view at index \(index)")
+        }
+        guard let indexPath = self.indexPath(
+            for: sectionController,
+            at: index,
+            usePreviousIfInUpdateClosure: false)
+        else {
+            preconditionFailure(
+                "No indexPath when dequeueing supplementary view with nib name \(nibName)" +
+                    " and bundle" + " \(String(describing: bundle)) from section controller" +
+                    " \(sectionController) at \(index)")
+        }
+        if !registeredSupplementaryViewNibNames.contains(nibName) {
+            registeredSupplementaryViewNibNames.insert(nibName)
+            let nib = UINib(nibName: nibName, bundle: bundle)
+            collectionView.register(
+                nib,
+                forSupplementaryViewOfKind: elementKind,
+                withReuseIdentifier: nibName)
+        }
+        return collectionView.dequeueReusableSupplementaryView(
+            ofKind: elementKind,
+            withReuseIdentifier: nibName,
+            for: indexPath)
     }
     
-    public func sectionController(_ sectionController: ListSectionController, dequeueReusableSupplementaryViewFromStoryboardOfKind elementKind: String, withIdentifier identifier: String, at index: Int) -> UICollectionReusableView {
-        <#code#>
+    public func sectionController(
+        _ sectionController: ListSectionController,
+        dequeueReusableSupplementaryViewFromStoryboardOfKind elementKind: String,
+        withIdentifier identifier: String,
+        at index: Int
+    ) -> UICollectionReusableView {
+        dispatchPrecondition(condition: .onQueue(.main))
+        assert(index >= 0, "Negative index")
+        assert(!identifier.isEmpty, "Empty identifier")
+        guard let collectionView = collectionView
+        else {
+            preconditionFailure(
+                "Dequeueing supplementary view with storyboard identifier: " + identifier +
+                    " from section controller \(sectionController) without a collection view at" +
+                    " index \(index)")
+        }
+        guard let indexPath = self.indexPath(
+            for: sectionController,
+            at: index,
+            usePreviousIfInUpdateClosure: false)
+        else {
+            preconditionFailure(
+                "No indexPath when dequeueing supplementary view with storyboard identifier: " +
+                    identifier + " from section controller \(sectionController) without a" +
+                    " collection view at index \(index)")
+        }
+        return collectionView.dequeueReusableSupplementaryView(
+            ofKind: elementKind,
+            withReuseIdentifier: identifier,
+            for: indexPath)
     }
     
-    public func invalidateLayoutFor(sectionController: ListSectionController, completion: ((Bool) -> Void)?) {
-        <#code#>
+    public func invalidateLayoutFor(
+        sectionController: ListSectionController,
+        completion: ((Bool) -> Void)?) {
+        guard let collectionView = collectionView else {
+            assertionFailure("Cannot invalidate Layout when collection view is nil")
+            return
+        }
+        guard let section = self.section(for: sectionController) else {
+            assertionFailure("Cannot find section for section controller: \(sectionController)")
+            return
+        }
+        let itemCount = collectionView.numberOfItems(inSection: section)
+        var indexPaths: [IndexPath] = []
+        for item in 0..<itemCount {
+            indexPaths.append(IndexPath(item: item, section: section))
+        }
+        
+        let layout = collectionView.collectionViewLayout
+        // FIXME: UIKit Bug https://bugs.swift.org/browse/SR-7045
+        let context = UICollectionViewLayoutInvalidationContext()
+        context.invalidateItems(at: indexPaths)
+        
+        // do not call UICollectionView.performBatchUpdates(_:completion:) while already updating.
+        // defer it until completed.
+        deferClosureBetweenBatchUpdates { [weak collectionView = self.collectionView] in
+            collectionView?.performBatchUpdates({
+                layout.invalidateLayout(with: context)
+            }, completion: completion)
+        }
     }
     
-    public func performBatchUpdates(_ updates: (ListBatchContext) -> Void, animated: Bool, completion: ((Bool) -> Void)?) {
-        <#code#>
+    public func performBatchUpdates(
+        _ updates: @escaping (ListBatchContext) -> Void,
+        animated: Bool,
+        completion: ((Bool) -> Void)?) {
+        dispatchPrecondition(condition: .onQueue(.main))
+        guard viewController != nil else {
+            assertionFailure("Performing batch updates without a collection view.")
+            return
+        }
+        enterBatchUpdates()
+        
+        updater.performUpdateWith(
+            collectionViewClosure: collectionViewClosure(),
+            animated: animated,
+            itemUpdates: { [weak self] in
+                guard let strongSelf = self else {
+                    return
+                }
+                strongSelf.isInUpdateClosure = true
+                // the adapter acts as the batch context with its API stripped to just the
+                // `ListBatchContext` protocol
+                updates(strongSelf)
+                strongSelf.isInUpdateClosure = false
+            }, completion: { [weak self] (finished) in
+                guard let strongSelf = self else {
+                    return
+                }
+                strongSelf.updateBackgroundView(isHidden: strongSelf.isItemCountZero)
+                strongSelf.didFinishUpdateOfType(.itemUpdates, animated: animated)
+                completion?(finished)
+                strongSelf.exitBatchUpdates()
+            })
     }
     
-    public func scroll(to sectionController: ListSectionController, at index: Int, scrollPosition: UICollectionViewScrollPosition, animated: Bool) {
-        <#code#>
+    public func scroll(
+        to sectionController: ListSectionController,
+        at index: Int,
+        scrollPosition: UICollectionViewScrollPosition,
+        animated: Bool) {
+        dispatchPrecondition(condition: .onQueue(.main))
+        guard let indexPath = self.indexPath(
+            for: sectionController,
+            at: index,
+            usePreviousIfInUpdateClosure: false)
+        else {
+            assertionFailure(
+                "No indexPath from section controller \(sectionController) at \(index)")
+            return
+        }
+        collectionView?.scrollToItem(at: indexPath, at: scrollPosition, animated: animated)
     }
-    
-    
 }
 
 // MARK: - ListBatchContext
@@ -574,6 +802,12 @@ extension ListAdapter {
 
 // MARK: - Private Helpers
 private extension ListAdapter {
+    func didFinishUpdateOfType(_ updateType: ListAdapterUpdateType, animated: Bool) {
+        for (_, listener) in updateListeners {
+            listener.listAdapter(self, didFinishUpdateOfType: updateType, animated: animated)
+        }
+    }
+    
     func collectionViewClosure() -> ListCollectionViewClosure {
         if experiments.contains(.getCollectionViewAtUpdate) {
             return { [weak self] in self?.collectionView }
@@ -813,11 +1047,10 @@ extension ListAdapter: UICollectionViewDelegateFlowLayout {
 extension ListAdapter {
     static func reusableViewIdentifier(
         viewClass: AnyClass,
-        nibName: String?,
         kind: String?,
         givenReuseIdentifier: String?
     ) -> String {
-        return (kind ?? "") + (nibName ?? "") + (givenReuseIdentifier ?? "") + \(viewClass.self)
+        return (kind ?? "") + (givenReuseIdentifier ?? "") + "\(viewClass.self)"
     }
 }
 
