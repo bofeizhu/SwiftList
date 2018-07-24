@@ -4,11 +4,16 @@
   <a href="https://travis-ci.com/zhubofei/ListKit">
       <img src="https://travis-ci.com/zhubofei/ListKit.svg?branch=master" alt="Build Status">
   </a>
+  <a href="https://codecov.io/gh/zhubofei/ListKit">
+      <img src="https://codecov.io/gh/zhubofei/ListKit/branch/master/graph/badge.svg" alt="Code coverage"/>
+  </a>
 </p>
 
 ‼️👷‍♀️**WIP**👷‍♂️‼️
 
-A data-driven `UICollectionView` framework for building fast and flexible lists. `ListKit` is forked from [`IGListKit`](https://github.com/Instagram/IGListKit) by [Instagram engineering](https://engineering.instagram.com/).
+A data-driven `UICollectionView` framework for building fast and flexible lists.
+
+`ListKit` is forked from [`IGListKit`](https://github.com/Instagram/IGListKit) by [Instagram engineering](https://engineering.instagram.com/).
 
 ## Requirements
 

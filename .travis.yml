@@ -28,3 +28,6 @@ script:
     else
       xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO build | xcpretty;
     fi
+    
+after_success:
+  - bash <(curl -s https://codecov.io/bash) -J 'ListKit'
