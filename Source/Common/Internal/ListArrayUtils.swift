@@ -7,7 +7,8 @@
 //
 
 extension Array where Element == AnyListDiffable {
-    func hasDuplicateHashValue() {
+    /// - Warning: O(n) time complexity
+    func checkDuplicateDiffIdentifier() {
         var table: [AnyHashable: Element] = [:]
         for object in self {
             let diffIdentifier = object.diffIdentifier

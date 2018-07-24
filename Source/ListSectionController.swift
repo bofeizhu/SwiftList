@@ -78,7 +78,7 @@ open class ListSectionController {
             collectionContext = context.collectionContext
         }
         
-        if collectionContext == nil {
+        if viewController == nil || collectionContext == nil {
             listLogDebug("Warning: Creating \(type(of: self)) outside of" +
                 " `ListAdapterDataSource.listAdapter(_:sectionControllerForObject:)`." +
                 " Collection context and view controller will be set later.")
@@ -94,8 +94,8 @@ open class ListSectionController {
     ///     For example, consider a dynamic-text sized list versus a fixed height-and-width grid.
     ///     The former will ask each section for a size, and the latter will likely not. The default
     ///     implementation returns size zero. **Calling super is not required.**
-    open func sizeForItem(at index: Int) -> CGSize {
-        return CGSize.zero
+    open func sizeForItem(at index: Int) -> CGSize? {
+        return nil
     }
     
     /// Return a dequeued cell for a given index.
@@ -168,6 +168,15 @@ open class ListSectionController {
     }
 }
 
+extension ListSectionController: Hashable {
+    public var hashValue: Int {
+        return ObjectIdentifier(self).hashValue
+    }
+    public static func == (lhs: ListSectionController, rhs: ListSectionController) -> Bool {
+        return lhs === rhs
+    }
+}
+
 // MARK: Section Controller DispatchQueue Context
 class ListSectionControllerDispatchQueueContext {
     weak var viewController: UIViewController?
@@ -188,8 +197,8 @@ func dispatchQueueContextStack() -> [ListSectionControllerDispatchQueueContext] 
 }
 
 func ListSectionControllerPushDispatchQueueContext(
-    viewController: UIViewController,
-    collectionContext: ListCollectionContext) {
+    viewController: UIViewController?,
+    collectionContext: ListCollectionContext?) {
     let context = ListSectionControllerDispatchQueueContext()
     context.viewController = viewController
     context.collectionContext = collectionContext

@@ -7,7 +7,7 @@
 //
 
 /// A result object returned when diffing with sections.
-public class ListIndexPathResult {
+public final class ListIndexPathResult {
     
     /// The index paths inserted into the new collection.
     public let inserts: [IndexPath]

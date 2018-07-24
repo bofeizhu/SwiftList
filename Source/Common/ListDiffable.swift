@@ -24,17 +24,17 @@ public protocol ListDiffable: Equatable {
 /// The `AnyListDiffable` type forwards identity and equality comparisons to an underlying diffable
 /// value, hiding its specific underlying type.
 public struct AnyListDiffable {
-    var _box: _AnyListDiffableBox
+    private var box: AnyListDiffableBox
     
     /// Creates a type-erased diffable value that wraps the given instance.
     ///
     /// - Parameter base: A diffable value to wrap.
     public init<T: ListDiffable>(_ base: T) {
-        _box = _ConcreteListDiffableBox(base)
+        box = ConcreteListDiffableBox(base)
     }
     
     public var base: Any {
-        return _box._base
+        return box.base
     }
 }
 
@@ -46,18 +46,18 @@ extension Array where Element: ListDiffable {
 
 extension AnyListDiffable: Equatable {
     public static func == (lhs: AnyListDiffable, rhs: AnyListDiffable) -> Bool {
-        return lhs._box._canonicalBox._isEqual(to: rhs._box._canonicalBox) ?? false
+        return lhs.box.canonicalBox.isEqual(to: rhs.box.canonicalBox) ?? false
     }
 }
 
 extension AnyListDiffable: ListDiffable {
     public var diffIdentifier: AnyHashable {
-        return _box._canonicalBox._diffIdentifier
+        return box.canonicalBox.diffIdentifier
     }
 }
 
-protocol _AnyListDiffableBox {
-    var _canonicalBox: _AnyListDiffableBox { get }
+private protocol AnyListDiffableBox {
+    var canonicalBox: AnyListDiffableBox { get }
     
     /// Determine whether values in the boxes are equivalent.
     ///
@@ -65,43 +65,43 @@ protocol _AnyListDiffableBox {
     /// - Parameter box: The box for the value.
     /// - Returns: `nil` to indicate that the boxes store different types, so
     ///     no comparison is possible. Otherwise, contains the result of `==`.
-    func _isEqual(to box: _AnyListDiffableBox) -> Bool?
+    func isEqual(to box: AnyListDiffableBox) -> Bool?
     
-    var _diffIdentifier: AnyHashable { get }
+    var diffIdentifier: AnyHashable { get }
     
-    var _base: Any { get }
-    func _unbox<T: ListDiffable>() -> T?
+    var base: Any { get }
+    func unbox<T: ListDiffable>() -> T?
 }
 
-extension _AnyListDiffableBox {
-    var _canonicalBox: _AnyListDiffableBox {
+extension AnyListDiffableBox {
+    var canonicalBox: AnyListDiffableBox {
         return self
     }
 }
 
-struct _ConcreteListDiffableBox<Base: ListDiffable> : _AnyListDiffableBox {
-    var _baseListDiffable: Base
+private struct ConcreteListDiffableBox<Base: ListDiffable> : AnyListDiffableBox {
+    var baseListDiffable: Base
     
     init (_ base: Base) {
-        _baseListDiffable = base
+        baseListDiffable = base
     }
     
-    func _unbox<T: ListDiffable>() -> T? {
-        return (self as _AnyListDiffableBox as? _ConcreteListDiffableBox<T>)?._baseListDiffable
+    func unbox<T: ListDiffable>() -> T? {
+        return (self as AnyListDiffableBox as? ConcreteListDiffableBox<T>)?.baseListDiffable
     }
     
-    var _diffIdentifier: AnyHashable {
-        return _baseListDiffable.diffIdentifier
+    var diffIdentifier: AnyHashable {
+        return baseListDiffable.diffIdentifier
     }
     
-    func _isEqual(to rhs: _AnyListDiffableBox) -> Bool? {
-        if let rhs: Base = rhs._unbox() {
-            return _baseListDiffable == rhs
+    func isEqual(to rhs: AnyListDiffableBox) -> Bool? {
+        if let rhs: Base = rhs.unbox() {
+            return baseListDiffable == rhs
         }
         return nil
     }
     
-    var _base: Any {
-        return _baseListDiffable
+    var base: Any {
+        return baseListDiffable
     }
 }
