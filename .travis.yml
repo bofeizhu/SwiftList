@@ -13,6 +13,7 @@ cache:
 env:
    global:
    - LANG=en_US.UTF-8
+   
    - WORKSPACE="ListKit.xcworkspace"
 
    - IOS_SCHEME="ListKit"
