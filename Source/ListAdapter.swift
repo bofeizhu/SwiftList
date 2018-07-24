@@ -218,8 +218,8 @@ public final class ListAdapter: NSObject {
     private var queuedCompletionClosures: [ListQueuedCompletion]?
     private var settingFirstCollectionView = true
     
-    // A dictionary of `ListAdapterUpdateListener` map to its ObjectIdentifiers
-    private var updateListeners: [ObjectIdentifier: ListAdapterUpdateListener] = [:]
+    // A set of `ListAdapterUpdateListenerWeakBox`
+    private var updateListeners: Set<ListAdapterUpdateListenerWeakBox> = []
     private var isDequeuingCell = false
     private var isSendingWorkingRangeDisplayUpdates = false
     
@@ -387,7 +387,50 @@ extension ListAdapter {
 
 // MARK: - Editing
 extension ListAdapter {
+    /// Perform an update from the previous state of the data source. This is analogous to calling
+    /// `UICollectionView.performBatchUpdates(_:completion:)`.
+    ///
+    /// - Parameters:
+    ///   - animated: A flag indicating if the transition should be animated.
+    ///   - completion: The block to execute when the updates complete.
+    public func performUpdates(animated: Bool, completion: ListUpdaterCompletion?) {
+        
+    }
     
+    /// Perform an immediate reload of the data in the data source, discarding the old objects.
+    ///
+    /// - Parameter completion: The block to execute when the reload completes.
+    /// - Warning: Do not use this method to update without animations as it can be very expensive
+    ///     to teardown and rebuild all section controllers. Use
+    ///     `ListAdapter.performUpdates(animated:completion)` instead.
+    public func reloadData(withCompletion completion: ListUpdaterCompletion?) {
+        
+    }
+    
+    /// Reload the list for only the specified objects.
+    ///
+    /// - Parameter objects: The objects to reload.
+    public func reload(_ objects: [AnyListDiffable]) {
+        
+    }
+    
+    /// Adds a listener to the list adapter.
+    ///
+    /// - Parameter updateListener: The object conforming to the `ListAdapterUpdateListener`
+    ///     protocol.
+    public func add(_ updateListener: ListAdapterUpdateListener) {
+        dispatchPrecondition(condition: .onQueue(.main))
+        updateListeners.insert(ListAdapterUpdateListenerWeakBox(updateListener))
+    }
+    
+    /// Removes a listener from the list adapter.
+    ///
+    /// - Parameter updateListener: The object conforming to the `IGListAdapterUpdateListener`
+    ///     protocol.
+    public func remove(_ updateListener: ListAdapterUpdateListener) {
+        dispatchPrecondition(condition: .onQueue(.main))
+        updateListeners.remove(ListAdapterUpdateListenerWeakBox(updateListener))
+    }
 }
 
 // MARK: - List Items & Sections
@@ -1027,8 +1070,11 @@ private extension ListAdapter {
     
     // MARK: Editing
     func didFinishUpdateOfType(_ updateType: ListAdapterUpdateType, animated: Bool) {
-        for (_, listener) in updateListeners {
-            listener.listAdapter(self, didFinishUpdateOfType: updateType, animated: animated)
+        for listener in updateListeners {
+            listener.updateListener?.listAdapter(
+                self,
+                didFinishUpdateOfType: updateType,
+                animated: animated)
         }
     }
     

@@ -35,6 +35,7 @@
 		829EF3D72105101E00AFB99F /* ListAdapterWeakBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829EF3D62105101E00AFB99F /* ListAdapterWeakBox.swift */; };
 		829EF3DB2105494C00AFB99F /* UIScrollView+ListKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829EF3DA2105494C00AFB99F /* UIScrollView+ListKit.swift */; };
 		829EF3DD2106451D00AFB99F /* ListLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829EF3DC2106451D00AFB99F /* ListLog.swift */; };
+		829EF3DF210773E100AFB99F /* ListAdapterUpdateListenerWeakBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829EF3DE210773E100AFB99F /* ListAdapterUpdateListenerWeakBox.swift */; };
 		82C6B9FF20E00BFE0085B85A /* ListIndexPathResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C6B9FE20E00BFE0085B85A /* ListIndexPathResult.swift */; };
 		82C6BA0120E010CA0085B85A /* ListMoveIndexPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C6BA0020E010CA0085B85A /* ListMoveIndexPath.swift */; };
 		82C93D1720F838AB0050B78F /* ListTestAdapterUpdaterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C93D1620F838AB0050B78F /* ListTestAdapterUpdaterDelegate.swift */; };
@@ -104,6 +105,7 @@
 		829EF3D62105101E00AFB99F /* ListAdapterWeakBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAdapterWeakBox.swift; sourceTree = "<group>"; };
 		829EF3DA2105494C00AFB99F /* UIScrollView+ListKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+ListKit.swift"; sourceTree = "<group>"; };
 		829EF3DC2106451D00AFB99F /* ListLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListLog.swift; sourceTree = "<group>"; };
+		829EF3DE210773E100AFB99F /* ListAdapterUpdateListenerWeakBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAdapterUpdateListenerWeakBox.swift; sourceTree = "<group>"; };
 		82C6B9FE20E00BFE0085B85A /* ListIndexPathResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListIndexPathResult.swift; sourceTree = "<group>"; };
 		82C6BA0020E010CA0085B85A /* ListMoveIndexPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListMoveIndexPath.swift; sourceTree = "<group>"; };
 		82C93D1620F838AB0050B78F /* ListTestAdapterUpdaterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTestAdapterUpdaterDelegate.swift; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 		820A0CA320EBC0580035EC74 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
+				829EF3DE210773E100AFB99F /* ListAdapterUpdateListenerWeakBox.swift */,
 				829EF3D62105101E00AFB99F /* ListAdapterWeakBox.swift */,
 				820A0CAC20ED24880035EC74 /* ListBatchUpdates.swift */,
 				820A0CAE20ED37490035EC74 /* ListBatchUpdateState.swift */,
@@ -473,6 +476,7 @@
 				82D7DF2B210174A50089D115 /* ListTransitionDelegate.swift in Sources */,
 				82D7DF2D2101B7120089D115 /* ListSectionMap.swift in Sources */,
 				82D7DF29210174890089D115 /* ListScrollDelegate.swift in Sources */,
+				829EF3DF210773E100AFB99F /* ListAdapterUpdateListenerWeakBox.swift in Sources */,
 				820A0CA020EADC740035EC74 /* ListBatchUpdateData.swift in Sources */,
 				829EF3CC2102AFDB00AFB99F /* ListWorkingRangeHandler.swift in Sources */,
 				82D7DF27210174340089D115 /* ListWorkingRangeDelegate.swift in Sources */,
