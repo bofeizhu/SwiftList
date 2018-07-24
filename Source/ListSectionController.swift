@@ -172,7 +172,6 @@ extension ListSectionController: Hashable {
     public var hashValue: Int {
         return ObjectIdentifier(self).hashValue
     }
-    
     public static func == (lhs: ListSectionController, rhs: ListSectionController) -> Bool {
         return lhs === rhs
     }

@@ -79,7 +79,7 @@ private extension ListWorkingRangeHandler {
             Set<ListSectionController>.init(minimumCapacity: visibleSectionSet.count)
         
         for section in start..<end {
-            if let object = listAdapter.object(for: section),
+            if let object = listAdapter.object(forSection: section),
                 let sectionController = listAdapter.sectionController(for: object) {
                 workingRangeSectionControllers.insert(sectionController)
             }

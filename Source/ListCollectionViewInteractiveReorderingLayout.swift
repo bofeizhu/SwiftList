@@ -139,9 +139,10 @@ extension ListInteractiveReordering where Self: UICollectionViewLayout {
         var destinationSectionIndex = originalTarget.section
         var destinationItemIndex = originalTarget.item
         
-        guard let sourceSectionController = listAdapter.sectionController(for: sourceSectionIndex),
-            let destinationSectionController = listAdapter.sectionController(
-                for: destinationSectionIndex),
+        guard let sourceSectionController = listAdapter.sectionController(
+                  forSection: sourceSectionIndex),
+              let destinationSectionController = listAdapter.sectionController(
+                  forSection: destinationSectionIndex),
             sourceSectionController.numberOfItems == 1,
             destinationSectionController.numberOfItems == 1,
             destinationItemIndex == 1
@@ -179,7 +180,8 @@ extension ListInteractiveReordering where Self: UICollectionViewLayout {
             let indexToRemove = invalidatedItemIndexPaths.index(
                 where: { (indexPath) -> Bool in
                     if indexPath.section == numberOfSections - 1,
-                        let sectionController = listAdapter.sectionController(for: indexPath.section){
+                       let sectionController = listAdapter.sectionController(
+                           forSection: indexPath.section) {
                         return indexPath.item > sectionController.numberOfItems - 1
                     }
                     return false

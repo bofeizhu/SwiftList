@@ -55,8 +55,8 @@ struct ListSectionMap {
     ///
     /// - Parameter section: The section index of the section controller.
     /// - Returns: A section controller.
-    func sectionController(for section: Int) -> ListSectionController? {
-        if let object = object(for: section) {
+    func sectionController(forSection section: Int) -> ListSectionController? {
+        if let object = object(forSection: section) {
             return objectIdToSectionControllerDict[object.diffIdentifier]
         }
         return nil
@@ -74,7 +74,7 @@ struct ListSectionMap {
     ///
     /// - Parameter section: The section index of the object.
     /// - Returns: The object corresponding to the section.
-    func object(for section: Int) -> AnyListDiffable? {
+    func object(forSection section: Int) -> AnyListDiffable? {
         guard section < objects.count else {
             return nil
         }

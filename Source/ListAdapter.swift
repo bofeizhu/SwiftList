@@ -116,6 +116,28 @@ public final class ListAdapter: NSObject {
         return sectionMap.objects
     }
     
+    /// An **unordered** array of the currently visible objects.
+    public var visibleObjects: [AnyListDiffable] {
+        dispatchPrecondition(condition: .onQueue(.main))
+        guard let collectionView = collectionView else { return [] }
+        var visibleObjects: [AnyListDiffable] = []
+        for cell in collectionView.visibleCells {
+            guard let sectionController = sectionController(for: cell)
+            else {
+                assertionFailure("Section controller nil for cell \(cell)")
+                continue
+            }
+            guard let section = section(for: sectionController),
+                  let object = object(forSection: section)
+            else {
+                assertionFailure("Object not found for section controller \(sectionController)")
+                continue
+            }
+            visibleObjects.append(object)
+        }
+        return visibleObjects
+    }
+    
     /// An **unordered** array of the currently visible section controllers.
     public var visibleSectionControllers: [ListSectionController] {
         dispatchPrecondition(condition: .onQueue(.main))
@@ -219,7 +241,8 @@ public final class ListAdapter: NSObject {
         guard let attributesArray = collectionView.collectionViewLayout.layoutAttributesForElements(
                   in: collectionView.bounds) else { return [] }
         for attributes in attributesArray {
-            guard let sectionController = self.sectionController(for: attributes.indexPath.section)
+            guard let sectionController = self.sectionController(
+                      forSection: attributes.indexPath.section)
             else {
                 assertionFailure(
                     "Section controller nil for cell in section \(attributes.indexPath.section)")
@@ -373,9 +396,9 @@ extension ListAdapter {
     ///
     /// - Parameter section: A section in the list.
     /// - Returns: A section controller.
-    public func sectionController(for section: Int) -> ListSectionController? {
+    public func sectionController(forSection section: Int) -> ListSectionController? {
         dispatchPrecondition(condition: .onQueue(.main))
-        return sectionMap.sectionController(for: section)
+        return sectionMap.sectionController(forSection: section)
     }
     
     /// Returns the section controller for the specified object.
@@ -391,9 +414,9 @@ extension ListAdapter {
     ///
     /// - Parameter section: A section in the list.
     /// - Returns: The object for the specified section.
-    public func object(for section: Int) -> AnyListDiffable? {
+    public func object(forSection section: Int) -> AnyListDiffable? {
         dispatchPrecondition(condition: .onQueue(.main))
-        return sectionMap.object(for: section)
+        return sectionMap.object(forSection: section)
     }
     
     /// Returns the object corresponding to the specified section controller in the list.
@@ -403,7 +426,7 @@ extension ListAdapter {
     public func object(for sectionController: ListSectionController) -> AnyListDiffable? {
         dispatchPrecondition(condition: .onQueue(.main))
         if let section = sectionMap.section(for: sectionController) {
-            return sectionMap.object(for: section)
+            return sectionMap.object(forSection: section)
         }
         return nil
     }
@@ -425,6 +448,21 @@ extension ListAdapter {
         dispatchPrecondition(condition: .onQueue(.main))
         return section(for: object)
     }
+    
+    /// An **unordered** array of the currently visible cells for a given object.
+    ///
+    /// - Parameter object: An object in the list
+    /// - Returns: An array of collection view cells.
+    public func visibleCells(for object: AnyListDiffable) -> [UICollectionViewCell] {
+         dispatchPrecondition(condition: .onQueue(.main))
+        guard let section = sectionMap.section(for: object),
+              let collectionView = collectionView
+        else { return [] }
+        return collectionView.visibleCells.filter { cell in
+            guard let indexPath = collectionView.indexPath(for: cell) else { return false }
+            return indexPath.section == section
+        }
+    }
 }
 
 // MARK: - Layout
@@ -435,7 +473,7 @@ extension ListAdapter {
     /// - Returns: The size of the cell.
     public func sizeForItem(at indexPath: IndexPath) -> CGSize? {
         dispatchPrecondition(condition: .onQueue(.main))
-        guard let sectionController = self.sectionController(for: indexPath.section),
+        guard let sectionController = self.sectionController(forSection: indexPath.section),
             let size = sectionController.sizeForItem(at: indexPath.section) else { return nil }
         return CGSize(width: max(size.width, 0.0), height: max(size.height, 0.0))
     }
@@ -537,7 +575,6 @@ extension ListAdapter: ListCollectionContext {
         if isDequeuingCell || isSendingWorkingRangeDisplayUpdates {
             return nil
         }
-        
         guard let indexPath = indexPath(
                   for: sectionController,
                   at: index,
@@ -1007,7 +1044,7 @@ private extension ListAdapter {
     }
     
     func supplementaryViewSource(at indexPath: IndexPath) -> ListSupplementaryViewSource? {
-        guard let sectionController = sectionController(for: indexPath.section) else {
+        guard let sectionController = sectionController(forSection: indexPath.section) else {
             return nil
         }
         return sectionController.supplementaryViewSource
@@ -1088,7 +1125,7 @@ private extension ListAdapter {
             
             // check if the item has changed instances or is new
             if let oldSection = sectionMap.section(for: object),
-                sectionMap.object(for: oldSection) != object {
+                sectionMap.object(forSection: oldSection) != object {
                 updatedObjectsDict[object.diffIdentifier] = object
             }
             
@@ -1170,7 +1207,7 @@ extension ListAdapter: UICollectionViewDataSource {
     public func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int) -> Int {
-        guard let sectionController = sectionController(for: section) else {
+        guard let sectionController = sectionController(forSection: section) else {
             preconditionFailure("nil section controller for section \(section)." +
                 " Check your diffIdentifier and == implementations.")
         }
@@ -1185,7 +1222,7 @@ extension ListAdapter: UICollectionViewDataSource {
     public func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let sectionController = sectionController(for: indexPath.section) else {
+        guard let sectionController = sectionController(forSection: indexPath.section) else {
             preconditionFailure("nil section controller for section \(indexPath.section)." +
                 " Check your diffIdentifier and == implementations.")
         }
