@@ -6,10 +6,6 @@ branches:
     - master
     - stable
 
-cache:
-  - cocoapods
-  - bundler
-
 env:
    global:
    - LANG=en_US.UTF-8
