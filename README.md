@@ -1,10 +1,11 @@
 # ListKit
-<p align="center">
-    <a href="https://travis-ci.com/zhubofei/ListKit">
-        <img src="https://travis-ci.com/zhubofei/ListKit.svg?branch=master"
-             alt="Build Status">
-    </a>
+
+<p>
+  <a href="https://travis-ci.com/zhubofei/ListKit">
+      <img src="https://travis-ci.com/zhubofei/ListKit.svg?branch=master" alt="Build Status">
+  </a>
 </p>
+
 ----------------
 
 ‼️👷‍♀️**WIP**👷‍♂️‼️
