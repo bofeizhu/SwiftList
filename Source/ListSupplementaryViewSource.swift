@@ -34,5 +34,5 @@ public protocol ListSupplementaryViewSource: AnyObject {
     ///   - kind: The kind of supplementary view.
     ///   - index: The index of the requested view.
     /// - Returns: The size for the supplementary view.
-    func sizeForSupplementaryView(ofKind kind: String, at index: Int) -> CGSize
+    func sizeForSupplementaryView(ofKind kind: String, at index: Int) -> CGSize?
 }

@@ -116,6 +116,16 @@ public final class ListAdapter: NSObject {
         return sectionMap.objects
     }
     
+    /// An **unordered** array of the currently visible section controllers.
+    public var visibleSectionControllers: [ListSectionController] {
+        dispatchPrecondition(condition: .onQueue(.main))
+        if experiments.contains(.fasterVisibleSectionController) {
+            return visibleSectionControllersFromDisplayHandler
+        } else {
+            return visibleSectionControllersFromLayoutAttributes
+        }
+    }
+    
     // MARK: - Initializers
     
     /// Initializes a new `IGListAdapter` object.
@@ -184,6 +194,7 @@ public final class ListAdapter: NSObject {
     // MARK: - Private Properties
     private var viewSectionControllerDict: [UICollectionReusableView: ListSectionController] = [:]
     private var queuedCompletionClosures: [ListQueuedCompletion]?
+    private var settingFirstCollectionView = true
     
     // A dictionary of `ListAdapterUpdateListener` map to its ObjectIdentifiers
     private var updateListeners: [ObjectIdentifier: ListAdapterUpdateListener] = [:]
@@ -197,7 +208,27 @@ public final class ListAdapter: NSObject {
         return sectionMap.isItemCountZero
     }
     
-    private var settingFirstCollectionView = true
+    private var visibleSectionControllersFromDisplayHandler: [ListSectionController] {
+        return Array(displayHandler.visibleSections.keys)
+    }
+    private var visibleSectionControllersFromLayoutAttributes: [ListSectionController] {
+        var visibleSectionControllers: Set<ListSectionController> = []
+        guard let collectionView = collectionView else {
+            preconditionFailure("Collection view is nil")
+        }
+        guard let attributesArray = collectionView.collectionViewLayout.layoutAttributesForElements(
+                  in: collectionView.bounds) else { return [] }
+        for attributes in attributesArray {
+            guard let sectionController = self.sectionController(for: attributes.indexPath.section)
+            else {
+                assertionFailure(
+                    "Section controller nil for cell in section \(attributes.indexPath.section)")
+                continue
+            }
+            visibleSectionControllers.insert(sectionController)
+        }
+        return Array(visibleSectionControllers)
+    }
     
     // MARK: - Deinit
     deinit {
@@ -338,7 +369,6 @@ extension ListAdapter {
 
 // MARK: - List Items & Sections
 extension ListAdapter {
-    
     /// Query the section controller at a given section index.
     ///
     /// - Parameter section: A section in the list.
@@ -399,7 +429,36 @@ extension ListAdapter {
 
 // MARK: - Layout
 extension ListAdapter {
+    /// Returns the size of a cell at the specified index path.
+    ///
+    /// - Parameter indexPath: The index path of the cell.
+    /// - Returns: The size of the cell.
+    public func sizeForItem(at indexPath: IndexPath) -> CGSize? {
+        dispatchPrecondition(condition: .onQueue(.main))
+        guard let sectionController = self.sectionController(for: indexPath.section),
+            let size = sectionController.sizeForItem(at: indexPath.section) else { return nil }
+        return CGSize(width: max(size.width, 0.0), height: max(size.height, 0.0))
+    }
     
+    /// Returns the size of a supplementary view in the list at the specified index path.
+    ///
+    /// - Parameters:
+    ///   - elementKind: The kind of supplementary view.
+    ///   - indexPath: The index path of the supplementary view.
+    /// - Returns: The size of the supplementary view.
+    public func sizeForSupplementaryView(
+        ofKind elementKind: String,
+        at indexPath: IndexPath
+    ) -> CGSize? {
+        dispatchPrecondition(condition: .onQueue(.main))
+        guard let supplementaryViewSource = supplementaryViewSource(at: indexPath),
+              supplementaryViewSource.supportedElementKinds.contains(elementKind),
+              let size = supplementaryViewSource.sizeForSupplementaryView(
+                  ofKind: elementKind,
+                  at: indexPath.item)
+        else { return nil }
+        return CGSize(width: max(size.width, 0.0), height: max(size.height, 0.0))
+    }
 }
 
 // MARK: - ListCollectionContext
@@ -907,10 +966,17 @@ extension ListAdapter {
 
 // MARK: - Private Helpers
 private extension ListAdapter {
-    func didFinishUpdateOfType(_ updateType: ListAdapterUpdateType, animated: Bool) {
-        for (_, listener) in updateListeners {
-            listener.listAdapter(self, didFinishUpdateOfType: updateType, animated: animated)
-        }
+    // MARK: Init
+    func updateAfterPublicSettingsChange() {
+        guard collectionView != nil,
+            let dataSource = dataSource else { return }
+        let objects = dataSource.objects(for: self)
+        
+        #if DEBUG
+        objects.hasDuplicateHashValue()
+        #endif
+        
+        update(objects: objects, dataSource: dataSource)
     }
     
     func collectionViewClosure() -> ListCollectionViewClosure {
@@ -922,17 +988,57 @@ private extension ListAdapter {
         }
     }
     
-    func updateAfterPublicSettingsChange() {
-        guard collectionView != nil,
-              let dataSource = dataSource else { return }
-        let objects = dataSource.objects(for: self)
-        
-        #if DEBUG
-        objects.hasDuplicateHashValue()
-        #endif
-        
-        update(objects: objects, dataSource: dataSource)
+    // MARK: Editing
+    func didFinishUpdateOfType(_ updateType: ListAdapterUpdateType, animated: Bool) {
+        for (_, listener) in updateListeners {
+            listener.listAdapter(self, didFinishUpdateOfType: updateType, animated: animated)
+        }
     }
+    
+    // MARK: List Items & Sections
+    func sectionMap(usePreviousIfInUpdateClosure: Bool) -> ListSectionMap {
+        if usePreviousIfInUpdateClosure,
+           isInUpdateClosure,
+           let previousSectionMap = previousSectionMap {
+            return previousSectionMap
+        } else {
+            return sectionMap
+        }
+    }
+    
+    func supplementaryViewSource(at indexPath: IndexPath) -> ListSupplementaryViewSource? {
+        guard let sectionController = sectionController(for: indexPath.section) else {
+            return nil
+        }
+        return sectionController.supplementaryViewSource
+    }
+    
+    // MARK: Layout
+    func layoutAttributesForSupplementaryView(
+        ofKinds elementKinds: [String],
+        at indexPath: IndexPath
+    ) -> [UICollectionViewLayoutAttributes] {
+        var attributes: [UICollectionViewLayoutAttributes] = []
+        guard let layout = collectionView?.collectionViewLayout else {
+            assertionFailure("CollectionView has no layout")
+            return attributes
+        }
+        if let cellAttributes = layout.layoutAttributesForItem(at: indexPath) {
+            attributes.append(cellAttributes)
+        }
+        
+        for kind in elementKinds {
+            if let supplementaryAttributes = layout.layoutAttributesForSupplementaryView(
+                ofKind: kind,
+                at: indexPath) {
+                attributes.append(supplementaryAttributes)
+            }
+        }
+        
+        return attributes
+    }
+    
+    // MARK: Update
     
     // this method is what updates the "source of truth"
     // this should only be called just before the collection view is updated
@@ -971,7 +1077,7 @@ private extension ListAdapter {
             guard let sectionController = optionalSectionController else {
                 listLogDebug(
                     "WARNING: Ignoring nil section controller returned by data source" +
-                        " \(dataSource) for object \(object).")
+                    " \(dataSource) for object \(object).")
                 continue
             }
             
@@ -982,7 +1088,7 @@ private extension ListAdapter {
             
             // check if the item has changed instances or is new
             if let oldSection = sectionMap.section(for: object),
-               sectionMap.object(for: oldSection) != object {
+                sectionMap.object(for: oldSection) != object {
                 updatedObjectsDict[object.diffIdentifier] = object
             }
             
@@ -994,7 +1100,7 @@ private extension ListAdapter {
         assert(
             Set(sectionControllers).count == sectionControllers.count,
             "Section controllers array is not filled with unique objects; section controllers are" +
-                " being reused")
+            " being reused")
         #endif
         
         // clear the view controller and collection context
@@ -1016,57 +1122,6 @@ private extension ListAdapter {
         updateBackgroundView(isHidden: itemCount > 0)
     }
     
-    func updateBackgroundView(isHidden: Bool) {
-        if isInUpdateClosure {
-            // will be called again when update closure completes
-            return
-        }
-        
-        let backgroundView = dataSource?.emptyBackgroundView(for: self)
-        // don't do anything if the client is using the same view
-        if backgroundView != collectionView?.backgroundView {
-            // collection view will just stack the background views underneath each other if we do
-            // not remove the previous one first. also fine if it is nil
-            collectionView?.backgroundView?.removeFromSuperview()
-            collectionView?.backgroundView = backgroundView
-        }
-        collectionView?.backgroundView?.isHidden = isHidden
-    }
-    
-    func sectionMap(usePreviousIfInUpdateClosure: Bool) -> ListSectionMap {
-        if usePreviousIfInUpdateClosure,
-           isInUpdateClosure,
-           let previousSectionMap = previousSectionMap {
-            return previousSectionMap
-        } else {
-            return sectionMap
-        }
-    }
-    
-    func layoutAttributesForSupplementaryView(
-        ofKinds elementKinds: [String],
-        at indexPath: IndexPath
-    ) -> [UICollectionViewLayoutAttributes] {
-        var attributes: [UICollectionViewLayoutAttributes] = []
-        guard let layout = collectionView?.collectionViewLayout else {
-            assertionFailure("CollectionView has no layout")
-            return attributes
-        }
-        if let cellAttributes = layout.layoutAttributesForItem(at: indexPath) {
-            attributes.append(cellAttributes)
-        }
-        
-        for kind in elementKinds {
-            if let supplementaryAttributes = layout.layoutAttributesForSupplementaryView(
-                ofKind: kind,
-                at: indexPath) {
-                attributes.append(supplementaryAttributes)
-            }
-        }
-        
-        return attributes
-    }
-    
     func deferClosureBetweenBatchUpdates(_ closure: @escaping ListQueuedCompletion) {
         dispatchPrecondition(condition: .onQueue(.main))
         if queuedCompletionClosures == nil {
@@ -1086,6 +1141,23 @@ private extension ListAdapter {
         for closure in closures {
             closure()
         }
+    }
+    
+    func updateBackgroundView(isHidden: Bool) {
+        if isInUpdateClosure {
+            // will be called again when update closure completes
+            return
+        }
+        
+        let backgroundView = dataSource?.emptyBackgroundView(for: self)
+        // don't do anything if the client is using the same view
+        if backgroundView != collectionView?.backgroundView {
+            // collection view will just stack the background views underneath each other if we do
+            // not remove the previous one first. also fine if it is nil
+            collectionView?.backgroundView?.removeFromSuperview()
+            collectionView?.backgroundView = backgroundView
+        }
+        collectionView?.backgroundView?.isHidden = isHidden
     }
 }
 
@@ -1146,7 +1218,6 @@ extension ListAdapter: UICollectionViewDelegate {
 extension ListAdapter: UICollectionViewDelegateFlowLayout {
     
 }
-
 
 // MARK: - Class Methods
 extension ListAdapter {

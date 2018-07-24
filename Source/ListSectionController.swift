@@ -94,8 +94,8 @@ open class ListSectionController {
     ///     For example, consider a dynamic-text sized list versus a fixed height-and-width grid.
     ///     The former will ask each section for a size, and the latter will likely not. The default
     ///     implementation returns size zero. **Calling super is not required.**
-    open func sizeForItem(at index: Int) -> CGSize {
-        return CGSize.zero
+    open func sizeForItem(at index: Int) -> CGSize? {
+        return nil
     }
     
     /// Return a dequeued cell for a given index.
