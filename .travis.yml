@@ -15,11 +15,11 @@ env:
    - LANG=en_US.UTF-8
    - WORKSPACE="ListKit.xcworkspace"
 
-   - IOS_SCHEME="IGListKit"
+   - IOS_SCHEME="ListKit"
 
    - IOS_SDK=iphonesimulator11.4
 
-   - IOS_EXAMPLE_WORKSPACE="Examples/Examples-iOS/IGListKitExamples.xcworkspace"
+   - IOS_EXAMPLE_WORKSPACE="Examples/Examples-iOS/ListKitExamples.xcworkspace"
 
    matrix:
    - DESTINATION="OS=10.3.1,name=iPhone 7" SDK="$IOS_SDK" SCHEME="$IOS_SCHEME" RUN_TESTS="YES" RUN_UI_TESTS="NO"  BUILD_EXAMPLE="YES" POD_LINT="NO"
