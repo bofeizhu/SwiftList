@@ -218,11 +218,116 @@ extension ListAdapter {
     ///   - animated: A flag indicating if the scrolling should be animated.
     func scroll(
         to object: AnyListDiffable,
-        withSupplementaryViewOfKinds elementKinds: [String]?,
+        withSupplementaryViewOfKinds elementKinds: [String],
         in scrollDirection: UICollectionViewScrollDirection,
         at scrollPosition: UICollectionViewScrollPosition,
         animated: Bool) {
+        dispatchPrecondition(condition: .onQueue(.main))
         
+        guard let section = self.section(for: object),
+              let collectionView = collectionView else { return }
+        
+        let layout = collectionView.collectionViewLayout
+        
+        // force layout before continuing
+        // this method is typcially called before pushing a view controller
+        // thus, before the layout process has actually happened
+        collectionView.setNeedsLayout()
+        collectionView.layoutIfNeeded()
+        
+        let firstIndexPath = IndexPath(item: 0, section: section)
+        
+        // collect the layout attributes for the cell and supplementary views for the first index
+        // this will break if there are supplementary views beyond item 0
+        var attributesArray: [UICollectionViewLayoutAttributes] = []
+        
+        let itemCount = collectionView.numberOfItems(inSection: section)
+        if itemCount > 0 {
+            attributesArray = layoutAttributesForSupplementaryView(
+                ofKinds: elementKinds,
+                at: firstIndexPath)
+            if itemCount > 1 {
+                let lastIndexPath = IndexPath(item: itemCount - 1, section: section)
+                if let lastAttributes = layoutAttributesForSupplementaryView(
+                       ofKinds: elementKinds,
+                       at: lastIndexPath).first {
+                    attributesArray.append(lastAttributes)
+                }
+            }
+        } else {
+            for kind in elementKinds {
+                if let supplementaryAttributes = layout.layoutAttributesForDecorationView(
+                       ofKind: kind,
+                       at: firstIndexPath) {
+                    attributesArray.append(supplementaryAttributes)
+                }
+            }
+        }
+        
+        var minOffset: CGFloat = 0.0
+        var maxOffset: CGFloat = 0.0
+        for attributes in attributesArray {
+            let frame = attributes.frame
+            var originMin: CGFloat = 0.0
+            var endMax: CGFloat = 0.0
+            switch scrollDirection {
+            case .horizontal:
+                originMin = frame.minX
+                endMax = frame.maxX
+            case .vertical:
+                originMin = frame.minY
+                endMax = frame.maxY
+            }
+            
+            // find the minimum origin value of all the layout attributes
+            if attributes == attributesArray.first || originMin < minOffset {
+                minOffset = originMin
+            }
+            
+            // find the maximum end value of all the layout attributes
+            if attributes == attributesArray.first || endMax > maxOffset {
+                maxOffset = endMax
+            }
+        }
+        
+        let midOffset = (minOffset + maxOffset) / 2.0
+        let width = collectionView.bounds.size.width
+        let height = collectionView.bounds.size.height
+        let contentInset = collectionView.listContentInset
+        var contentOffset = collectionView.contentOffset
+        switch scrollDirection {
+        case .horizontal:
+            switch scrollPosition {
+            case .right:
+                contentOffset.x = maxOffset - width - contentInset.left
+            case .centeredHorizontally:
+                let inset = (contentInset.left - contentInset.right) / 2.0
+                contentOffset.x = midOffset - width / 2.0 - inset
+            default:
+                contentOffset.x = minOffset - contentInset.left
+            }
+            let maxOffsetX = collectionView.contentSize.width - collectionView.frame.size.width +
+                contentInset.right
+            let minOffsetX = -contentInset.left
+            contentOffset.x = min(contentOffset.x, maxOffsetX)
+            contentOffset.x = max(contentOffset.x, minOffsetX)
+        case .vertical:
+            switch scrollPosition {
+            case .bottom:
+                contentOffset.y = maxOffset - height
+            case .centeredVertically:
+                let inset = (contentInset.top - contentInset.bottom) / 2.0
+                contentOffset.y = midOffset - height / 2.0 - inset
+            default:
+                contentOffset.y = minOffset - contentInset.top
+            }
+            let maxOffsetY = collectionView.contentSize.height - collectionView.frame.size.height +
+                contentInset.bottom
+            let minOffsetY = -contentInset.top
+            contentOffset.y = min(contentOffset.y, maxOffsetY)
+            contentOffset.y = max(contentOffset.y, minOffsetY)
+        }
+        collectionView.setContentOffset(contentOffset, animated: animated)
     }
 }
 
@@ -1058,4 +1163,5 @@ extension ListAdapter {
 ///
 /// - Parameter finished: Specifies whether or not the update animations completed successfully.
 public typealias ListUpdaterCompletion = (_ finished: Bool) -> Void
+
 public typealias ListQueuedCompletion = () -> Void
