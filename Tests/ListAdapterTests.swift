@@ -123,5 +123,76 @@ class ListAdapterTests: ListTestCase {
         XCTAssertNotEqual(old!, new!)
     }
     
+    func testWhenSettingCollectionViewThenSettingDataSourceThatViewControllerIsSet() {
+        dataSource.objects = [0, 1, 2].typeErased()
+        let controller = UIViewController()
+        let adapter = ListAdapter(updater: ListReloadDataUpdater(), viewController: controller)
+        adapter.collectionView = self.collectionView
+        adapter.dataSource = self.dataSource
+        let sectionController = adapter.sectionController(for: AnyListDiffable(1))
+        XCTAssertEqual(controller, sectionController?.viewController)
+    }
+    
+    func testWhenSettingCollectionViewThenSettingDataSourceThatCellExists() {
+        dataSource.objects = [1].typeErased()
+        let adapter = ListAdapter(updater: ListReloadDataUpdater(), viewController: nil)
+        adapter.collectionView = self.collectionView
+        adapter.dataSource = self.dataSource
+        collectionView.layoutIfNeeded()
+        XCTAssertNotNil(collectionView.cellForItem(at: IndexPath(item: 0, section: 0)))
+    }
+    
+    func testWhenSettingDataSourceThenSettingCollectionViewThatCellExists() {
+        dataSource.objects = [1].typeErased()
+        let adapter = ListAdapter(updater: ListReloadDataUpdater(), viewController: nil)
+        adapter.dataSource = self.dataSource
+        adapter.collectionView = self.collectionView
+        collectionView.layoutIfNeeded()
+        XCTAssertNotNil(collectionView.cellForItem(at: IndexPath(item: 0, section: 0)))
+    }
+    
+    func testWhenChangingCollectionViewsThatCellsExist() {
+        dataSource.objects = [1].typeErased()
+        let updater = ListAdapterUpdater()
+        let adapter = ListAdapter(updater: updater, viewController: nil)
+        adapter.dataSource = self.dataSource
+        adapter.collectionView = self.collectionView
+        collectionView.layoutIfNeeded()
+        XCTAssertNotNil(collectionView.cellForItem(at: IndexPath(item: 0, section: 0)))
+        
+        let otherCollectionView = UICollectionView(
+            frame: collectionView.frame,
+            collectionViewLayout: collectionView.collectionViewLayout)
+        adapter.collectionView = otherCollectionView
+        otherCollectionView.layoutIfNeeded()
+        XCTAssertNotNil(collectionView.cellForItem(at: IndexPath(item: 0, section: 0)))
+    }
+    
+    func testWhenChangingToCollectionViewInUseByOtherAdapterThatCollectionViewDelegateIsUpdated() {
+        let dataSource1 = ListTestAdapterDataSource()
+        dataSource1.objects = [1].typeErased()
+        let updater1 = ListAdapterUpdater()
+        let adapter1 = ListAdapter(updater: updater1, viewController: nil)
+        adapter1.dataSource = dataSource1
+        
+        let dataSource2 = ListTestAdapterDataSource()
+        dataSource2.objects = [1].typeErased()
+        let updater2 = ListAdapterUpdater()
+        let adapter2 = ListAdapter(updater: updater2, viewController: nil)
+        adapter1.dataSource = dataSource2
+        
+        // associate collection view with adapter1
+        adapter1.collectionView = collectionView
+        XCTAssertEqual(collectionView.dataSource as! ListAdapter, adapter1)
+        
+        // associate collection view with adapter2
+        adapter2.collectionView = self.collectionView
+        XCTAssertEqual(collectionView.dataSource as! ListAdapter, adapter2)
+        
+        // associate collection view with adapter1
+        adapter1.collectionView = self.collectionView
+        XCTAssertEqual(collectionView.dataSource as! ListAdapter, adapter1)
+    }
+    
     
 }
