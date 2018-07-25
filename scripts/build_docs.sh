@@ -16,4 +16,4 @@ jazzy \
   --xcodebuild-arguments -workspace,'ListKit.xcworkspace',-scheme,ListKit \
   --module 'ListKit' \
   --output docs/ \
-  --theme fullwidth
+  --theme jazzy/theme
