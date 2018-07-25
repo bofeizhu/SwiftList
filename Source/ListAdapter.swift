@@ -1092,27 +1092,121 @@ extension ListAdapter: ListCollectionContext {
 extension ListAdapter: ListBatchContext {
     public func sectionController(
         _ sectionController: ListSectionController,
-        reloadAt indexes: IndexSet) {
+        reloadItemsAt indexes: IndexSet) {
+        dispatchPrecondition(condition: .onQueue(.main))
         
+        guard let collectionView = collectionView else {
+            assertionFailure(
+                "Tried to reload the adapter from \(sectionController) without a collection view" +
+                    " at indexes \(indexes).")
+            return
+        }
+        guard indexes.count > 0 else { return }
+        
+        // UICollectionView is not designed to support reload(sections:) or reload(itemsAt:) during
+        // batch updates. Internally it appears to convert these operations to a delete+insert.
+        // However the transformation is too simple in that it doesn't account for the item's
+        // section being moved (naturally or explicitly) and can queue animation collisions.
+        //
+        // If you have an object at section 2 with 4 items and attempt to reload item at index 1,
+        // you would create an IndexPath at section: 2, item: 1. Within performBatchUpdates(:),
+        // UICollectionView converts this to a delete and insert at the same IndexPath.
+        //
+        // If a section were inserted at position 2, the original section 2 has naturally shifted to
+        // section 3. However, the insert IndexPath is section: 2, item: 1. Now the UICollectionView
+        // has a section animation at section 2, as well as an item insert animation at section: 2,
+        // item: 1, and it will throw an exception.
+        //
+        // ListAdapter tracks the before/after mapping of section controllers to make precise
+        // IndexPath conversions.
+        for index in indexes {
+            // index paths could be nil if a section controller is prematurely reloading or a reload
+            // was batched with the section controller being deleted
+            guard let indexPath = self.indexPath(
+                      for: sectionController,
+                      at: index,
+                      usePreviousIfInUpdateClosure: true),
+                  let newIndexPath = self.indexPath(
+                      for: sectionController,
+                      at: index,
+                      usePreviousIfInUpdateClosure: false)
+            else { continue }
+            updater.collectionView(collectionView, reloadItemAt: indexPath, to: newIndexPath)
+        }
     }
     
     public func sectionController(
         _ sectionController: ListSectionController,
-        insertAt indexes: IndexSet) {
-        
+        insertItemsAt indexes: IndexSet) {
+        dispatchPrecondition(condition: .onQueue(.main))
+        guard let collectionView = collectionView else {
+            assertionFailure(
+                "Inserting items from \(sectionController) without a collection view" +
+                    " at indexes \(indexes).")
+            return
+        }
+        guard indexes.count > 0 else { return }
+        let indexPaths = self.indexPaths(
+            from: sectionController,
+            at: indexes,
+            usePreviousIfInUpdateClosure: false)
+        updater.collectionView(collectionView, insertItemsAt: indexPaths)
+        updateBackgroundView(isHidden: !isItemCountZero)
     }
     
     public func sectionController(
         _ sectionController: ListSectionController,
-        deleteAt indexes: IndexSet) {
-        
+        deleteItemsAt indexes: IndexSet) {
+        dispatchPrecondition(condition: .onQueue(.main))
+        guard let collectionView = collectionView else {
+            assertionFailure(
+                "Deleting items from \(sectionController) without a collection view" +
+                    " at indexes \(indexes).")
+            return
+        }
+        guard indexes.count > 0 else { return }
+        let indexPaths = self.indexPaths(
+            from: sectionController,
+            at: indexes,
+            usePreviousIfInUpdateClosure: false)
+        updater.collectionView(collectionView, deleteItemsAt: indexPaths)
+        updateBackgroundView(isHidden: !isItemCountZero)
     }
     
     public func sectionController(
         _ sectionController: ListSectionController,
-        from index: Int,
+        moveItemfrom index: Int,
         to newIndex: Int) {
-        
+        dispatchPrecondition(condition: .onQueue(.main))
+        guard let collectionView = collectionView else {
+            assertionFailure(
+                "Moving items from \(sectionController) without a collection view" +
+                    " from \(index) to \(newIndex).")
+            return
+        }
+        guard let indexPath = self.indexPath(
+                  for: sectionController,
+                  at: index,
+                  usePreviousIfInUpdateClosure: true),
+              let newIndexPath = self.indexPath(
+                  for: sectionController,
+                  at: newIndex,
+                  usePreviousIfInUpdateClosure: false)
+        else { return }
+        updater.collectionView(collectionView, moveItemAt: indexPath, to: newIndexPath)
+    }
+    
+    public func reload(_ sectionController: ListSectionController) {
+        dispatchPrecondition(condition: .onQueue(.main))
+        guard let collectionView = collectionView else {
+            assertionFailure("Reloading items from \(sectionController) without a collection view")
+            return
+        }
+        let map = sectionMap(usePreviousIfInUpdateClosure: true)
+        guard let section = map.section(for: sectionController) else { return }
+        let sections = IndexSet([section])
+        updater.collectionView(collectionView, reloadSections: sections)
+        updateBackgroundView(isHidden: isItemCountZero)
     }
 }
 
