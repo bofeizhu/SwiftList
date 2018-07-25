@@ -1090,24 +1090,30 @@ extension ListAdapter: ListCollectionContext {
 
 // MARK: - ListBatchContext
 extension ListAdapter: ListBatchContext {
-//    func sectionController(
-//        _ sectionController: ListSectionController,
-//        reloadAt indexes: IndexSet) {
-//        
-//    }
-//    
-//    func sectionController(
-//        _ sectionController: ListSectionController,
-//        insertAt indexes: IndexSet)
-//    
-//    func sectionController(
-//        _ sectionController: ListSectionController,
-//        deleteAt indexes: IndexSet)
-//    
-//    func sectionController(
-//        _ sectionController: ListSectionController,
-//        from index: Int,
-//        to newIndex: Int)
+    public func sectionController(
+        _ sectionController: ListSectionController,
+        reloadAt indexes: IndexSet) {
+        
+    }
+    
+    public func sectionController(
+        _ sectionController: ListSectionController,
+        insertAt indexes: IndexSet) {
+        
+    }
+    
+    public func sectionController(
+        _ sectionController: ListSectionController,
+        deleteAt indexes: IndexSet) {
+        
+    }
+    
+    public func sectionController(
+        _ sectionController: ListSectionController,
+        from index: Int,
+        to newIndex: Int) {
+        
+    }
 }
 
 // MARK: - Private APIs
