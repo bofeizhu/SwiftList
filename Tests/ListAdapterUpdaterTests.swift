@@ -10,7 +10,6 @@ import XCTest
 @testable import ListKit
 
 class ListAdapterUpdaterTests: XCTestCase {
-    
     var window: UIWindow!
     var collectionView: UICollectionView!
     var dataSource: ListTestUICollectionViewDataSource!

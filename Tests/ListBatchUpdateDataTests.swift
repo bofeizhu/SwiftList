@@ -10,7 +10,6 @@ import XCTest
 @testable import ListKit
 
 class ListBatchUpdateDataTests: XCTestCase {
-
     func testWhenUpdatesAreCleanThatResultMatches() {
         let result = ListBatchUpdateData(
             insertSections: IndexSet([0, 1]),
