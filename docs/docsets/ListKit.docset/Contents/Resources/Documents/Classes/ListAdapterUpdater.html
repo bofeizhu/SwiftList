@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ListAdapterUpdater Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+
+    <a name="//apple_ref/swift/Class/ListAdapterUpdater" class="dashAnchor"></a>
+
+    <a title="ListAdapterUpdater Class Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="../index.html">
+          ListKit Docs
+        </a>
+         (92% documented)
+      </p>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="../search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/zhubofei/ListKit">
+            <img class="header-icon" src="../img/gh.png"/>
+            View on GitHub
+          </a>
+        </p>
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../index.html">ListKit Reference</a>
+      <img class="carat" src="../img/carat.png" />
+      ListAdapterUpdater Class Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ListAdapter.html">ListAdapter</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ListAdapterUpdater.html">ListAdapterUpdater</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ListBatchUpdateData.html">ListBatchUpdateData</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ListCollectionViewInteractiveReorderingFlowLayout.html">ListCollectionViewInteractiveReorderingFlowLayout</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ListCollectionViewInteractiveReorderingLayout.html">ListCollectionViewInteractiveReorderingLayout</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ListIndexPathResult.html">ListIndexPathResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ListIndexSetResult.html">ListIndexSetResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ListSectionController.html">ListSectionController</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/ListAdapterUpdateType.html">ListAdapterUpdateType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/ListDiffOption.html">ListDiffOption</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/Array.html">Array</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/Int.html">Int</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/String.html">String</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/Substring.html">Substring</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Functions.html">Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:7ListKit0A4DiffAA0A14IndexSetResultCSayAA03AnyA8DiffableVGSg8oldArray_AH03newJ0AA0aC6OptionO6optiontF">ListDiff(oldArray:newArray:option:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:7ListKit0A9DiffPathsAA0A15IndexPathResultCSi11fromSection_Si02toI0SayAA03AnyA8DiffableVGSg8oldArrayAJ03newN0AA0aC6OptionO6optiontF">ListDiffPaths(fromSection:toSection:oldArray:newArray:option:)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListAdapterDataSource.html">ListAdapterDataSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListAdapterDelegate.html">ListAdapterDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListAdapterMoveDelegate.html">ListAdapterMoveDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListAdapterUpdateListener.html">ListAdapterUpdateListener</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListAdapterUpdaterDelegate.html">ListAdapterUpdaterDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols.html#/s:7ListKit0A12BatchContextP">ListBatchContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListCollectionContext.html">ListCollectionContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListDiffable.html">ListDiffable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListDisplayDelegate.html">ListDisplayDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListScrollDelegate.html">ListScrollDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListSupplementaryViewSource.html">ListSupplementaryViewSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListTransitionDelegate.html">ListTransitionDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListUpdatingDelegate.html">ListUpdatingDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListWorkingRangeDelegate.html">ListWorkingRangeDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/AnyListDiffable.html">AnyListDiffable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs.html#/s:7ListKit0A25CollectionScrollingTraitsV">ListCollectionScrollingTraits</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/ListExperiment.html">ListExperiment</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/ListMoveIndex.html">ListMoveIndex</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/ListMoveIndexPath.html">ListMoveIndexPath</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:7ListKit0A21CollectionViewClosurea">ListCollectionViewClosure</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:7ListKit0A17ItemUpdateClosurea">ListItemUpdateClosure</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:7ListKit0A23ObjectTransitionClosurea">ListObjectTransitionClosure</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:7ListKit0A16QueuedCompletiona">ListQueuedCompletion</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:7ListKit0A19ReloadUpdateClosurea">ListReloadUpdateClosure</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:7ListKit0A15ToObjectClosurea">ListToObjectClosure</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:7ListKit0A17UpdaterCompletiona">ListUpdaterCompletion</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:7ListKit0A18UpdatingCompletiona">ListUpdatingCompletion</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content">
+            <h1>ListAdapterUpdater</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">ListAdapterUpdater</span></code></pre>
+
+                </div>
+              </div>
+            <p>An <code>ListAdapterUpdater</code> is a concrete type that conforms to <code><a href="../Protocols/ListUpdatingDelegate.html">ListUpdatingDelegate</a></code>.
+It is an out-of-box updater for <code><a href="../Classes/ListAdapter.html">ListAdapter</a></code> objects to use.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    This updater performs re-entrant, coalesced updating for a list.
+It also uses a least-minimal diff for calculating UI updates when <code><a href="../Classes/ListAdapter.html">ListAdapter</a></code> calls
+<code>performUpdateWith(collectionView:fromObjects:toObjects:completion:)</code>.
+
+</div>
+
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A14AdapterUpdaterC8delegateAA0acD8Delegate_pSgXwvp"></a>
+                    <a name="//apple_ref/swift/Property/delegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A14AdapterUpdaterC8delegateAA0acD8Delegate_pSgXwvp">delegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The delegate that receives events with data on the performance of a transition.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ListAdapterUpdaterDelegate.html">ListAdapterUpdaterDelegate</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A14AdapterUpdaterC21movesAsDeletesInsertsSbvp"></a>
+                    <a name="//apple_ref/swift/Property/movesAsDeletesInserts" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A14AdapterUpdaterC21movesAsDeletesInsertsSbvp">movesAsDeletesInserts</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A flag indicating if a move should be treated as a <q>delete, then insert</q> operation.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">movesAsDeletesInserts</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A14AdapterUpdaterC25allowsBackgroundReloadingSbvp"></a>
+                    <a name="//apple_ref/swift/Property/allowsBackgroundReloading" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A14AdapterUpdaterC25allowsBackgroundReloadingSbvp">allowsBackgroundReloading</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A flag indicating whether this updater should skip diffing and simply call <code>reloadData</code>
+for updates when the collection view is not in a window. The default value is <code>true</code>.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    This will result in better performance, but will not generate the same delegate
+callbacks. If using a custom layout, it will not receive
+<code>prepareForCollectionViewUpdates(_:)</code>.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">allowsBackgroundReloading</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A14AdapterUpdaterC15coalescanceTimeSivp"></a>
+                    <a name="//apple_ref/swift/Property/coalescanceTime" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A14AdapterUpdaterC15coalescanceTimeSivp">coalescanceTime</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Time, in seconds, to wait and coalesce batch updates. Default is 0.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">coalescanceTime</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A14AdapterUpdaterC11experimentsAA0A10ExperimentVvp"></a>
+                    <a name="//apple_ref/swift/Property/experiments" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A14AdapterUpdaterC11experimentsAA0A10ExperimentVvp">experiments</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A bitmask of experiments to conduct on the updater.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">experiments</span><span class="p">:</span> <span class="kt"><a href="../Structs/ListExperiment.html">ListExperiment</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A16UpdatingDelegateP17performUpdateWithySo16UICollectionViewCSgyc010collectionI7Closure_SayAA03AnyA8DiffableVGSg11fromObjectsALycSg02tooK0Sb8animatedyAKc016objectTransitionK0ySbcSg10completiontF"></a>
+                    <a name="//apple_ref/swift/Method/performUpdateWith(collectionViewClosure:fromObjects:toObjectsClosure:animated:objectTransitionClosure:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A16UpdatingDelegateP17performUpdateWithySo16UICollectionViewCSgyc010collectionI7Closure_SayAA03AnyA8DiffableVGSg11fromObjectsALycSg02tooK0Sb8animatedyAKc016objectTransitionK0ySbcSg10completiontF">performUpdateWith(collectionViewClosure:fromObjects:toObjectsClosure:animated:objectTransitionClosure:completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">performUpdateWith</span><span class="p">(</span>
+    <span class="nv">collectionViewClosure</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Typealiases.html#/s:7ListKit0A21CollectionViewClosurea">ListCollectionViewClosure</a></span><span class="p">,</span>
+    <span class="nv">fromObjects</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Structs/AnyListDiffable.html">AnyListDiffable</a></span><span class="p">]?,</span>
+    <span class="nv">toObjectsClosure</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:7ListKit0A15ToObjectClosurea">ListToObjectClosure</a></span><span class="p">?,</span>
+    <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span>
+    <span class="nv">objectTransitionClosure</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Typealiases.html#/s:7ListKit0A23ObjectTransitionClosurea">ListObjectTransitionClosure</a></span><span class="p">,</span>
+    <span class="nv">completion</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:7ListKit0A18UpdatingCompletiona">ListUpdatingCompletion</a></span><span class="p">?)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A16UpdatingDelegateP17performUpdateWithySo16UICollectionViewCSgyc010collectionI7Closure_Sb8animatedyyc11itemUpdatesySbcSg10completiontF"></a>
+                    <a name="//apple_ref/swift/Method/performUpdateWith(collectionViewClosure:animated:itemUpdates:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A16UpdatingDelegateP17performUpdateWithySo16UICollectionViewCSgyc010collectionI7Closure_Sb8animatedyyc11itemUpdatesySbcSg10completiontF">performUpdateWith(collectionViewClosure:animated:itemUpdates:completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">performUpdateWith</span><span class="p">(</span>
+    <span class="nv">collectionViewClosure</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Typealiases.html#/s:7ListKit0A21CollectionViewClosurea">ListCollectionViewClosure</a></span><span class="p">,</span>
+    <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span>
+    <span class="nv">itemUpdates</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Typealiases.html#/s:7ListKit0A17ItemUpdateClosurea">ListItemUpdateClosure</a></span><span class="p">,</span>
+    <span class="nv">completion</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:7ListKit0A18UpdatingCompletiona">ListUpdatingCompletion</a></span><span class="p">?)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A16UpdatingDelegateP14collectionViewySo012UICollectionF0C_Say10Foundation9IndexPathVG13insertItemsAttF"></a>
+                    <a name="//apple_ref/swift/Method/collectionView(_:insertItemsAt:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A16UpdatingDelegateP14collectionViewySo012UICollectionF0C_Say10Foundation9IndexPathVG13insertItemsAttF">collectionView(_:insertItemsAt:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">collectionView</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">,</span>
+    <span class="n">insertItemsAt</span> <span class="nv">indexPaths</span><span class="p">:</span> <span class="p">[</span><span class="kt">IndexPath</span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A16UpdatingDelegateP14collectionViewySo012UICollectionF0C_Say10Foundation9IndexPathVG13deleteItemsAttF"></a>
+                    <a name="//apple_ref/swift/Method/collectionView(_:deleteItemsAt:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A16UpdatingDelegateP14collectionViewySo012UICollectionF0C_Say10Foundation9IndexPathVG13deleteItemsAttF">collectionView(_:deleteItemsAt:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">collectionView</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">,</span>
+    <span class="n">deleteItemsAt</span> <span class="nv">indexPaths</span><span class="p">:</span> <span class="p">[</span><span class="kt">IndexPath</span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A16UpdatingDelegateP14collectionViewySo012UICollectionF0C_10Foundation9IndexPathV10moveItemAtAI2totF"></a>
+                    <a name="//apple_ref/swift/Method/collectionView(_:moveItemAt:to:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A16UpdatingDelegateP14collectionViewySo012UICollectionF0C_10Foundation9IndexPathV10moveItemAtAI2totF">collectionView(_:moveItemAt:to:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">collectionView</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">,</span>
+    <span class="n">moveItemAt</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">,</span>
+    <span class="n">to</span> <span class="nv">newIndexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A16UpdatingDelegateP14collectionViewySo012UICollectionF0C_10Foundation9IndexPathV12reloadItemAtAI2totF"></a>
+                    <a name="//apple_ref/swift/Method/collectionView(_:reloadItemAt:to:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A16UpdatingDelegateP14collectionViewySo012UICollectionF0C_10Foundation9IndexPathV12reloadItemAtAI2totF">collectionView(_:reloadItemAt:to:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">collectionView</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">,</span>
+    <span class="n">reloadItemAt</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">,</span>
+    <span class="n">to</span> <span class="nv">newIndexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A16UpdatingDelegateP14collectionViewySo012UICollectionF0C_Si11moveSectionSi02toI0tF"></a>
+                    <a name="//apple_ref/swift/Method/collectionView(_:moveSection:toSection:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A16UpdatingDelegateP14collectionViewySo012UICollectionF0C_Si11moveSectionSi02toI0tF">collectionView(_:moveSection:toSection:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">collectionView</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">,</span>
+    <span class="n">moveSection</span> <span class="nv">section</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span>
+    <span class="n">toSection</span> <span class="nv">newSection</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A16UpdatingDelegateP14collectionViewySo012UICollectionF0C_10Foundation8IndexSetV14reloadSectionstF"></a>
+                    <a name="//apple_ref/swift/Method/collectionView(_:reloadSections:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A16UpdatingDelegateP14collectionViewySo012UICollectionF0C_10Foundation8IndexSetV14reloadSectionstF">collectionView(_:reloadSections:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">collectionView</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">,</span>
+    <span class="n">reloadSections</span> <span class="nv">sections</span><span class="p">:</span> <span class="kt">IndexSet</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A16UpdatingDelegateP14reloadDataWithySo16UICollectionViewCSgyc010collectionI7Closure_yyc0e6UpdateK0ySbcSg10completiontF"></a>
+                    <a name="//apple_ref/swift/Method/reloadDataWith(collectionViewClosure:reloadUpdateClosure:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A16UpdatingDelegateP14reloadDataWithySo16UICollectionViewCSgyc010collectionI7Closure_yyc0e6UpdateK0ySbcSg10completiontF">reloadDataWith(collectionViewClosure:reloadUpdateClosure:completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">reloadDataWith</span><span class="p">(</span>
+    <span class="nv">collectionViewClosure</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Typealiases.html#/s:7ListKit0A21CollectionViewClosurea">ListCollectionViewClosure</a></span><span class="p">,</span>
+    <span class="nv">reloadUpdateClosure</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Typealiases.html#/s:7ListKit0A19ReloadUpdateClosurea">ListReloadUpdateClosure</a></span><span class="p">,</span>
+    <span class="nv">completion</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:7ListKit0A18UpdatingCompletiona">ListUpdatingCompletion</a></span><span class="p">?)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2018 <a class="link" href="https://twitter.com/zhubofei" target="_blank" rel="external">zhubofei</a>. All rights reserved. (Last updated: 2018-07-25)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>

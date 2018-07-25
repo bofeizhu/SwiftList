@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ListSectionController Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+
+    <a name="//apple_ref/swift/Class/ListSectionController" class="dashAnchor"></a>
+
+    <a title="ListSectionController Class Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="../index.html">
+          ListKit Docs
+        </a>
+         (92% documented)
+      </p>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="../search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/zhubofei/ListKit">
+            <img class="header-icon" src="../img/gh.png"/>
+            View on GitHub
+          </a>
+        </p>
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../index.html">ListKit Reference</a>
+      <img class="carat" src="../img/carat.png" />
+      ListSectionController Class Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ListAdapter.html">ListAdapter</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ListAdapterUpdater.html">ListAdapterUpdater</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ListBatchUpdateData.html">ListBatchUpdateData</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ListCollectionViewInteractiveReorderingFlowLayout.html">ListCollectionViewInteractiveReorderingFlowLayout</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ListCollectionViewInteractiveReorderingLayout.html">ListCollectionViewInteractiveReorderingLayout</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ListIndexPathResult.html">ListIndexPathResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ListIndexSetResult.html">ListIndexSetResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ListSectionController.html">ListSectionController</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/ListAdapterUpdateType.html">ListAdapterUpdateType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/ListDiffOption.html">ListDiffOption</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/Array.html">Array</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/Int.html">Int</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/String.html">String</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/Substring.html">Substring</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Functions.html">Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:7ListKit0A4DiffAA0A14IndexSetResultCSayAA03AnyA8DiffableVGSg8oldArray_AH03newJ0AA0aC6OptionO6optiontF">ListDiff(oldArray:newArray:option:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:7ListKit0A9DiffPathsAA0A15IndexPathResultCSi11fromSection_Si02toI0SayAA03AnyA8DiffableVGSg8oldArrayAJ03newN0AA0aC6OptionO6optiontF">ListDiffPaths(fromSection:toSection:oldArray:newArray:option:)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListAdapterDataSource.html">ListAdapterDataSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListAdapterDelegate.html">ListAdapterDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListAdapterMoveDelegate.html">ListAdapterMoveDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListAdapterUpdateListener.html">ListAdapterUpdateListener</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListAdapterUpdaterDelegate.html">ListAdapterUpdaterDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols.html#/s:7ListKit0A12BatchContextP">ListBatchContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListCollectionContext.html">ListCollectionContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListDiffable.html">ListDiffable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListDisplayDelegate.html">ListDisplayDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListScrollDelegate.html">ListScrollDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListSupplementaryViewSource.html">ListSupplementaryViewSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListTransitionDelegate.html">ListTransitionDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListUpdatingDelegate.html">ListUpdatingDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListWorkingRangeDelegate.html">ListWorkingRangeDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/AnyListDiffable.html">AnyListDiffable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs.html#/s:7ListKit0A25CollectionScrollingTraitsV">ListCollectionScrollingTraits</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/ListExperiment.html">ListExperiment</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/ListMoveIndex.html">ListMoveIndex</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/ListMoveIndexPath.html">ListMoveIndexPath</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:7ListKit0A21CollectionViewClosurea">ListCollectionViewClosure</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:7ListKit0A17ItemUpdateClosurea">ListItemUpdateClosure</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:7ListKit0A23ObjectTransitionClosurea">ListObjectTransitionClosure</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:7ListKit0A16QueuedCompletiona">ListQueuedCompletion</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:7ListKit0A19ReloadUpdateClosurea">ListReloadUpdateClosure</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:7ListKit0A15ToObjectClosurea">ListToObjectClosure</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:7ListKit0A17UpdaterCompletiona">ListUpdaterCompletion</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:7ListKit0A18UpdatingCompletiona">ListUpdatingCompletion</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content">
+            <h1>ListSectionController</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">ListSectionController</span></code></pre>
+
+                </div>
+              </div>
+            <p>The base class for section controllers used in a list. This class is intended to be subclassed.</p>
+
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17SectionControllerC04viewD0So06UIViewD0CSgXwvp"></a>
+                    <a name="//apple_ref/swift/Property/viewController" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17SectionControllerC04viewD0So06UIViewD0CSgXwvp">viewController</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The view controller housing the adapter that created this section controller.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    Use this view controller to push, pop, present, or do other custom transitions.
+
+</div>
+<div class="aside aside-warning">
+    <p class="aside-title">Warning</p>
+    It is considered very bad practice to cast this to a known view controller and
+call methods on it other than for navigations and transitions.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">viewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17SectionControllerC17collectionContextAA0a10CollectionF0_pSgXwvp"></a>
+                    <a name="//apple_ref/swift/Property/collectionContext" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17SectionControllerC17collectionContextAA0a10CollectionF0_pSgXwvp">collectionContext</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A context object for interacting with the collection. Use this property for accessing the
+collection size, dequeuing cells, reloading, inserting, deleting, etc.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">collectionContext</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ListCollectionContext.html">ListCollectionContext</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17SectionControllerC7sectionSiSgvp"></a>
+                    <a name="//apple_ref/swift/Property/section" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17SectionControllerC7sectionSiSgvp">section</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the section within the list for this section controller.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    This value also relates to the section within a <code>UICollectionView</code> that this
+section controller&rsquo;s cells belong. It also relates to the <code>IndexPath.section</code> value for
+individual cells within the collection view.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">section</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17SectionControllerC13numberOfItemsSivp"></a>
+                    <a name="//apple_ref/swift/Property/numberOfItems" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17SectionControllerC13numberOfItemsSivp">numberOfItems</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the number of items in the section.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    The count returned is used to drive the number of cells displayed for this section
+controller. The default implementation returns 1.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">numberOfItems</span><span class="p">:</span> <span class="kt">Int</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17SectionControllerC07isFirstC0Sbvp"></a>
+                    <a name="//apple_ref/swift/Property/isFirstSection" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17SectionControllerC07isFirstC0Sbvp">isFirstSection</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns <code>true</code> if the section controller is the first section in the list, <code>false</code>
+otherwise.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">isFirstSection</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17SectionControllerC06isLastC0Sbvp"></a>
+                    <a name="//apple_ref/swift/Property/isLastSection" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17SectionControllerC06isLastC0Sbvp">isLastSection</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns <code>true</code> if the section controller is the last section in the list, <code>false</code> otherwise.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">isLastSection</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17SectionControllerC5insetSC12UIEdgeInsetsVvp"></a>
+                    <a name="//apple_ref/swift/Property/inset" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17SectionControllerC5insetSC12UIEdgeInsetsVvp">inset</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The margins used to lay out content in the section controller.</p>
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <code>UICollectionViewFlowLayout.sectionInset</code>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">inset</span><span class="p">:</span> <span class="kt">UIEdgeInsets</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17SectionControllerC18minimumLineSpacing12CoreGraphics7CGFloatVvp"></a>
+                    <a name="//apple_ref/swift/Property/minimumLineSpacing" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17SectionControllerC18minimumLineSpacing12CoreGraphics7CGFloatVvp">minimumLineSpacing</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The minimum spacing to use between rows of items.</p>
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <code>UICollectionViewFlowLayout.minimumLineSpacing</code>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">minimumLineSpacing</span><span class="p">:</span> <span class="kt">CGFloat</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17SectionControllerC23minimumInteritemSpacing12CoreGraphics7CGFloatVvp"></a>
+                    <a name="//apple_ref/swift/Property/minimumInteritemSpacing" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17SectionControllerC23minimumInteritemSpacing12CoreGraphics7CGFloatVvp">minimumInteritemSpacing</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The minimum spacing to use between items in the same row.</p>
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <code>UICollectionViewFlowLayout.minimumInteritemSpacing</code>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">minimumInteritemSpacing</span><span class="p">:</span> <span class="kt">CGFloat</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17SectionControllerC23supplementaryViewSourceAA0a13SupplementaryfG0_pSgXwvp"></a>
+                    <a name="//apple_ref/swift/Property/supplementaryViewSource" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17SectionControllerC23supplementaryViewSourceAA0a13SupplementaryfG0_pSgXwvp">supplementaryViewSource</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The supplementary view source for the section controller.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">supplementaryViewSource</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ListSupplementaryViewSource.html">ListSupplementaryViewSource</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17SectionControllerC15displayDelegateAA0a7DisplayF0_pSgXwvp"></a>
+                    <a name="//apple_ref/swift/Property/displayDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17SectionControllerC15displayDelegateAA0a7DisplayF0_pSgXwvp">displayDelegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An object that handles display events for the section controller.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">displayDelegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ListDisplayDelegate.html">ListDisplayDelegate</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17SectionControllerC20workingRangeDelegateAA0a7WorkingfG0_pSgXwvp"></a>
+                    <a name="//apple_ref/swift/Property/workingRangeDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17SectionControllerC20workingRangeDelegateAA0a7WorkingfG0_pSgXwvp">workingRangeDelegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An object that handles working range events for the section controller.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">workingRangeDelegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ListWorkingRangeDelegate.html">ListWorkingRangeDelegate</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17SectionControllerC14scrollDelegateAA0a6ScrollF0_pSgXwvp"></a>
+                    <a name="//apple_ref/swift/Property/scrollDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17SectionControllerC14scrollDelegateAA0a6ScrollF0_pSgXwvp">scrollDelegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An object that handles scroll events for the section controller.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">scrollDelegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ListScrollDelegate.html">ListScrollDelegate</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17SectionControllerC18transitionDelegateAA0a10TransitionF0_pSgXwvp"></a>
+                    <a name="//apple_ref/swift/Property/transitionDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17SectionControllerC18transitionDelegateAA0a10TransitionF0_pSgXwvp">transitionDelegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An object that handles transition events for the section controller.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">transitionDelegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ListTransitionDelegate.html">ListTransitionDelegate</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17SectionControllerCACycfc"></a>
+                    <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17SectionControllerCACycfc">init()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17SectionControllerC11sizeForItemSC6CGSizeVSgSi2at_tF"></a>
+                    <a name="//apple_ref/swift/Method/sizeForItem(at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17SectionControllerC11sizeForItemSC6CGSizeVSgSi2at_tF">sizeForItem(at:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The specific size for the item at the specified index.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    The returned size is not guaranteed to be used. The implementation may query
+sections for their layout information at will, or use its own layout metrics.
+For example, consider a dynamic-text sized list versus a fixed height-and-width grid.
+The former will ask each section for a size, and the latter will likely not. The default
+implementation returns size zero. <strong>Calling super is not required.</strong>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">sizeForItem</span><span class="p">(</span><span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CGSize</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The row index of the item.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The size for the item at index.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17SectionControllerC11cellForItemSo20UICollectionViewCellCSgSi2at_tF"></a>
+                    <a name="//apple_ref/swift/Method/cellForItem(at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17SectionControllerC11cellForItemSo20UICollectionViewCellCSgSi2at_tF">cellForItem(at:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Return a dequeued cell for a given index.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    This is your opportunity to do any cell setup and configuration. The infrastructure
+requests a cell when it will be used on screen. You should never allocate new cells in
+this method, instead use the provided adapter to call one of the dequeue methods on the
+<code><a href="../Protocols/ListCollectionContext.html">ListCollectionContext</a></code>. The default implementation will assert. <strong>You must override
+this method without calling super.</strong>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">cellForItem</span><span class="p">(</span><span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UICollectionViewCell</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index of the requested row.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A configured <code>UICollectionViewCell</code> subclass.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17SectionControllerC9didUpdateyAA03AnyA8DiffableV2to_tF"></a>
+                    <a name="//apple_ref/swift/Method/didUpdate(to:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17SectionControllerC9didUpdateyAA03AnyA8DiffableV2to_tF">didUpdate(to:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Updates the section controller to a new object.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    When this method is called, all available contexts and configurations have been set
+for the section controller. This method will only be called when the object instance has
+changed, including from <code>nil</code> or a previous object. <strong>Calling super is not required.</strong>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">didUpdate</span><span class="p">(</span><span class="n">to</span> <span class="nv">object</span><span class="p">:</span> <span class="kt"><a href="../Structs/AnyListDiffable.html">AnyListDiffable</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>object</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The object mapped to this section controller.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17SectionControllerC13didSelectItemySi2at_tF"></a>
+                    <a name="//apple_ref/swift/Method/didSelectItem(at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17SectionControllerC13didSelectItemySi2at_tF">didSelectItem(at:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Tells the section controller that the cell at the specified index path was selected.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    The default implementation does nothing. <strong>Calling super is not required.</strong>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">didSelectItem</span><span class="p">(</span><span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index of the selected cell.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17SectionControllerC15didDeselectItemySi2at_tF"></a>
+                    <a name="//apple_ref/swift/Method/didDeselectItem(at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17SectionControllerC15didDeselectItemySi2at_tF">didDeselectItem(at:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Tells the section controller that the cell at the specified index path was deselected.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    The default implementation does nothing. <strong>Calling super is not required.</strong>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">didDeselectItem</span><span class="p">(</span><span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index of the deselected cell.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17SectionControllerC16didHighlightItemySi2at_tF"></a>
+                    <a name="//apple_ref/swift/Method/didHighlightItem(at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17SectionControllerC16didHighlightItemySi2at_tF">didHighlightItem(at:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Tells the section controller that the cell at the specified index path was highlighted.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    The default implementation does nothing. <strong>Calling super is not required.</strong>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">didHighlightItem</span><span class="p">(</span><span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index of the highlighted cell.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17SectionControllerC18didUnhighlightItemySi2at_tF"></a>
+                    <a name="//apple_ref/swift/Method/didUnhighlightItem(at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17SectionControllerC18didUnhighlightItemySi2at_tF">didUnhighlightItem(at:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Tells the section controller that the cell at the specified index path was unhighlighted.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    The default implementation does nothing. <strong>Calling super is not required.</strong>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">didUnhighlightItem</span><span class="p">(</span><span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index of the unhighlighted cell.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17SectionControllerC11canMoveItemSbSi2at_tF"></a>
+                    <a name="//apple_ref/swift/Method/canMoveItem(at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17SectionControllerC11canMoveItemSbSi2at_tF">canMoveItem(at:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">canMoveItem</span><span class="p">(</span><span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17SectionControllerC10moveObjectySi4from_Si2totF"></a>
+                    <a name="//apple_ref/swift/Method/moveObject(from:to:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17SectionControllerC10moveObjectySi4from_Si2totF">moveObject(from:to:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Notifies the section that a list object should move within a section as the result of
+interactive reordering.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    This method must be implemented if interactive reordering is enabled.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">moveObject</span><span class="p">(</span><span class="n">from</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="n">to</span> <span class="nv">newIndex</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The starting index of the object.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>newIndex</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The ending index of the object.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:s8HashableP9hashValueSivp"></a>
+                    <a name="//apple_ref/swift/Property/hashValue" class="dashAnchor"></a>
+                    <a class="token" href="#/s:s8HashableP9hashValueSivp">hashValue</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">hashValue</span><span class="p">:</span> <span class="kt">Int</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:s9EquatableP2eeoiSbx_xtFZ"></a>
+                    <a name="//apple_ref/swift/Method/==(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:s9EquatableP2eeoiSbx_xtFZ">==(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">ListSectionController</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">ListSectionController</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2018 <a class="link" href="https://twitter.com/zhubofei" target="_blank" rel="external">zhubofei</a>. All rights reserved. (Last updated: 2018-07-25)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>

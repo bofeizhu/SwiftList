@@ -1,0 +1,1683 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ListCollectionContext Protocol Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+
+    <a name="//apple_ref/swift/Protocol/ListCollectionContext" class="dashAnchor"></a>
+
+    <a title="ListCollectionContext Protocol Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="../index.html">
+          ListKit Docs
+        </a>
+         (92% documented)
+      </p>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="../search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/zhubofei/ListKit">
+            <img class="header-icon" src="../img/gh.png"/>
+            View on GitHub
+          </a>
+        </p>
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../index.html">ListKit Reference</a>
+      <img class="carat" src="../img/carat.png" />
+      ListCollectionContext Protocol Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ListAdapter.html">ListAdapter</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ListAdapterUpdater.html">ListAdapterUpdater</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ListBatchUpdateData.html">ListBatchUpdateData</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ListCollectionViewInteractiveReorderingFlowLayout.html">ListCollectionViewInteractiveReorderingFlowLayout</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ListCollectionViewInteractiveReorderingLayout.html">ListCollectionViewInteractiveReorderingLayout</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ListIndexPathResult.html">ListIndexPathResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ListIndexSetResult.html">ListIndexSetResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ListSectionController.html">ListSectionController</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/ListAdapterUpdateType.html">ListAdapterUpdateType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/ListDiffOption.html">ListDiffOption</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/Array.html">Array</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/Int.html">Int</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/String.html">String</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/Substring.html">Substring</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Functions.html">Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:7ListKit0A4DiffAA0A14IndexSetResultCSayAA03AnyA8DiffableVGSg8oldArray_AH03newJ0AA0aC6OptionO6optiontF">ListDiff(oldArray:newArray:option:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:7ListKit0A9DiffPathsAA0A15IndexPathResultCSi11fromSection_Si02toI0SayAA03AnyA8DiffableVGSg8oldArrayAJ03newN0AA0aC6OptionO6optiontF">ListDiffPaths(fromSection:toSection:oldArray:newArray:option:)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListAdapterDataSource.html">ListAdapterDataSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListAdapterDelegate.html">ListAdapterDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListAdapterMoveDelegate.html">ListAdapterMoveDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListAdapterUpdateListener.html">ListAdapterUpdateListener</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListAdapterUpdaterDelegate.html">ListAdapterUpdaterDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols.html#/s:7ListKit0A12BatchContextP">ListBatchContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListCollectionContext.html">ListCollectionContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListDiffable.html">ListDiffable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListDisplayDelegate.html">ListDisplayDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListScrollDelegate.html">ListScrollDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListSupplementaryViewSource.html">ListSupplementaryViewSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListTransitionDelegate.html">ListTransitionDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListUpdatingDelegate.html">ListUpdatingDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListWorkingRangeDelegate.html">ListWorkingRangeDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/AnyListDiffable.html">AnyListDiffable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs.html#/s:7ListKit0A25CollectionScrollingTraitsV">ListCollectionScrollingTraits</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/ListExperiment.html">ListExperiment</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/ListMoveIndex.html">ListMoveIndex</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/ListMoveIndexPath.html">ListMoveIndexPath</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:7ListKit0A21CollectionViewClosurea">ListCollectionViewClosure</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:7ListKit0A17ItemUpdateClosurea">ListItemUpdateClosure</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:7ListKit0A23ObjectTransitionClosurea">ListObjectTransitionClosure</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:7ListKit0A16QueuedCompletiona">ListQueuedCompletion</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:7ListKit0A19ReloadUpdateClosurea">ListReloadUpdateClosure</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:7ListKit0A15ToObjectClosurea">ListToObjectClosure</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:7ListKit0A17UpdaterCompletiona">ListUpdaterCompletion</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:7ListKit0A18UpdatingCompletiona">ListUpdatingCompletion</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content">
+            <h1>ListCollectionContext</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">ListCollectionContext</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+
+                </div>
+              </div>
+            <p>The collection context provides limited access to the collection-related information
+that section controllers need for operations like sizing, dequeuing cells,
+inserting, deleting, reloading, etc.</p>
+
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17CollectionContextP13containerSizeSC6CGSizeVvp"></a>
+                    <a name="//apple_ref/swift/Property/containerSize" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17CollectionContextP13containerSizeSC6CGSizeVvp">containerSize</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The size of the collection view. You can use this for sizing cells.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">containerSize</span><span class="p">:</span> <span class="kt">CGSize</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17CollectionContextP14containerInsetSC12UIEdgeInsetsVvp"></a>
+                    <a name="//apple_ref/swift/Property/containerInset" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17CollectionContextP14containerInsetSC12UIEdgeInsetsVvp">containerInset</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The content insets of the collection view. You can use this for sizing cells.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">containerInset</span><span class="p">:</span> <span class="kt">UIEdgeInsets</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17CollectionContextP22adjustedContainerInsetSC12UIEdgeInsetsVvp"></a>
+                    <a name="//apple_ref/swift/Property/adjustedContainerInset" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17CollectionContextP22adjustedContainerInsetSC12UIEdgeInsetsVvp">adjustedContainerInset</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The adjusted content insets of the collection view.
+Equivalent to containerInset under iOS 11.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">adjustedContainerInset</span><span class="p">:</span> <span class="kt">UIEdgeInsets</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17CollectionContextP18insetContainerSizeSC6CGSizeVvp"></a>
+                    <a name="//apple_ref/swift/Property/insetContainerSize" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17CollectionContextP18insetContainerSizeSC6CGSizeVvp">insetContainerSize</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The size of the collection view with content insets applied.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">insetContainerSize</span><span class="p">:</span> <span class="kt">CGSize</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17CollectionContextP15scrollingTraitsAA0ac9ScrollingF0Vvp"></a>
+                    <a name="//apple_ref/swift/Property/scrollingTraits" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17CollectionContextP15scrollingTraitsAA0ac9ScrollingF0Vvp">scrollingTraits</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The current scrolling traits of the underlying collection view.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">scrollingTraits</span><span class="p">:</span> <span class="kt"><a href="../Structs.html#/s:7ListKit0A25CollectionScrollingTraitsV">ListCollectionScrollingTraits</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17CollectionContextP13containerSizeSC6CGSizeVAA0A17SectionControllerC3for_tF"></a>
+                    <a name="//apple_ref/swift/Method/containerSize(for:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17CollectionContextP13containerSizeSC6CGSizeVAA0A17SectionControllerC3for_tF">containerSize(for:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns size of the collection view relative to the section controller.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">containerSize</span><span class="p">(</span><span class="k">for</span> <span class="nv">sectionController</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListSectionController.html">ListSectionController</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CGSize</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sectionController</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The section controller requesting this information.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The size of the collection view minus the given section controller&rsquo;s insets.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17CollectionContextP5indexSiSgSo20UICollectionViewCellC3for_AA0A17SectionControllerC2intF"></a>
+                    <a name="//apple_ref/swift/Method/index(for:in:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17CollectionContextP5indexSiSgSo20UICollectionViewCellC3for_AA0A17SectionControllerC2intF">index(for:in:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the index of the specified cell in the collection relative to
+the section controller.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">index</span><span class="p">(</span><span class="k">for</span> <span class="nv">cell</span><span class="p">:</span> <span class="kt">UICollectionViewCell</span><span class="p">,</span> <span class="k">in</span> <span class="nv">sectionController</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListSectionController.html">ListSectionController</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>cell</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An existing cell in the collection.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sectionController</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The section controller requesting this information.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The index of the cell or <code>nil</code> if it does not exist in the collection.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17CollectionContextP17sectionControllerSo20UICollectionViewCellCSgAA0a7SectionF0C_Si13cellForItemAttF"></a>
+                    <a name="//apple_ref/swift/Method/sectionController(_:cellForItemAt:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17CollectionContextP17sectionControllerSo20UICollectionViewCellCSgAA0a7SectionF0C_Si13cellForItemAttF">sectionController(_:cellForItemAt:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the cell in the collection at the specified index for the section controller.</p>
+<div class="aside aside-warning">
+    <p class="aside-title">Warning</p>
+    This method may return <code>nil</code> if the cell is offscreen.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">sectionController</span><span class="p">(</span><span class="n">_</span> <span class="nv">sectionController</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListSectionController.html">ListSectionController</a></span><span class="p">,</span> <span class="n">cellForItemAt</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UICollectionViewCell</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sectionController</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The section controller requesting this information.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index of the desired cell.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The collection view cell, or <code>nil</code> if not found.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17CollectionContextP12visibleCellsSaySo20UICollectionViewCellCGAA0A17SectionControllerC3for_tF"></a>
+                    <a name="//apple_ref/swift/Method/visibleCells(for:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17CollectionContextP12visibleCellsSaySo20UICollectionViewCellCGAA0A17SectionControllerC3for_tF">visibleCells(for:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the visible cells for the given section controller.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">visibleCells</span><span class="p">(</span><span class="k">for</span> <span class="nv">sectionController</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListSectionController.html">ListSectionController</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">UICollectionViewCell</span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sectionController</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The section controller requesting this information.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An array of visible cells, or an empty array if none are found.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17CollectionContextP17visibleIndexPathsSay10Foundation0F4PathVGAA0A17SectionControllerC3for_tF"></a>
+                    <a name="//apple_ref/swift/Method/visibleIndexPaths(for:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17CollectionContextP17visibleIndexPathsSay10Foundation0F4PathVGAA0A17SectionControllerC3for_tF">visibleIndexPaths(for:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the visible paths for the given section controller.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">visibleIndexPaths</span><span class="p">(</span><span class="k">for</span> <span class="nv">sectionController</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListSectionController.html">ListSectionController</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">IndexPath</span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sectionController</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The section controller requesting this information.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An array of visible index paths, or an empty array if none are found.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17CollectionContextP17sectionControlleryAA0a7SectionF0C_Si14deselectItemAtSb8animatedtF"></a>
+                    <a name="//apple_ref/swift/Method/sectionController(_:deselectItemAt:animated:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17CollectionContextP17sectionControlleryAA0a7SectionF0C_Si14deselectItemAtSb8animatedtF">sectionController(_:deselectItemAt:animated:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Deselects a cell in the collection.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">sectionController</span><span class="p">(</span><span class="n">_</span> <span class="nv">sectionController</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListSectionController.html">ListSectionController</a></span><span class="p">,</span> <span class="n">deselectItemAt</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sectionController</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The section controller requesting this information.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index of the item to deselect.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>animated</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Pass <code>true</code> to animate the change, <code>false</code> otherwise.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17CollectionContextP17sectionControlleryAA0a7SectionF0C_Si12selectItemAtSb8animatedSC30UICollectionViewScrollPositionV06scrollO0tF"></a>
+                    <a name="//apple_ref/swift/Method/sectionController(_:selectItemAt:animated:scrollPosition:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17CollectionContextP17sectionControlleryAA0a7SectionF0C_Si12selectItemAtSb8animatedSC30UICollectionViewScrollPositionV06scrollO0tF">sectionController(_:selectItemAt:animated:scrollPosition:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Selects a cell in the collection.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">sectionController</span><span class="p">(</span><span class="n">_</span> <span class="nv">sectionController</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListSectionController.html">ListSectionController</a></span><span class="p">,</span> <span class="n">selectItemAt</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">scrollPosition</span><span class="p">:</span> <span class="kt">UICollectionViewScrollPosition</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sectionController</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The section controller requesting this information.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index of the item to select.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>animated</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Pass <code>true</code> to animate the change, <code>false</code> otherwise.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>scrollPosition</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An option that specifies where the item should be positioned when
+scrolling finishes.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17CollectionContextP17sectionControllerSo20UICollectionViewCellCAA0a7SectionF0C_yXlXp015dequeueReusableI7OfClassSSSg19withReuseIdentifierSi2attF"></a>
+                    <a name="//apple_ref/swift/Method/sectionController(_:dequeueReusableCellOfClass:withReuseIdentifier:at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17CollectionContextP17sectionControllerSo20UICollectionViewCellCAA0a7SectionF0C_yXlXp015dequeueReusableI7OfClassSSSg19withReuseIdentifierSi2attF">sectionController(_:dequeueReusableCellOfClass:withReuseIdentifier:at:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Dequeues a cell from the collection view reuse pool.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    This method uses a string representation of the cell class as the identifier.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">sectionController</span><span class="p">(</span><span class="n">_</span> <span class="nv">sectionController</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListSectionController.html">ListSectionController</a></span><span class="p">,</span> <span class="n">dequeueReusableCellOfClass</span> <span class="nv">cellClass</span><span class="p">:</span> <span class="kt">AnyClass</span><span class="p">,</span> <span class="n">withReuseIdentifier</span> <span class="nv">identifier</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UICollectionViewCell</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sectionController</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The section controller requesting this information.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>cellClass</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The class of the cell you want to dequeue.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>identifier</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A reuse identifier for the specified cell. This parameter may be <code>nil</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index of the cell.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A cell dequeued from the reuse pool or a newly created one.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17CollectionContextP17sectionControllerSo20UICollectionViewCellCAA0a7SectionF0C_yXlXp015dequeueReusableI7OfClassSi2attF"></a>
+                    <a name="//apple_ref/swift/Method/sectionController(_:dequeueReusableCellOfClass:at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17CollectionContextP17sectionControllerSo20UICollectionViewCellCAA0a7SectionF0C_yXlXp015dequeueReusableI7OfClassSi2attF">sectionController(_:dequeueReusableCellOfClass:at:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Dequeues a cell from the collection view reuse pool.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    This method uses a string representation of the cell class as the identifier.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">sectionController</span><span class="p">(</span><span class="n">_</span> <span class="nv">sectionController</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListSectionController.html">ListSectionController</a></span><span class="p">,</span> <span class="n">dequeueReusableCellOfClass</span> <span class="nv">cellClass</span><span class="p">:</span> <span class="kt">AnyClass</span><span class="p">,</span> <span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UICollectionViewCell</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sectionController</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The section controller requesting this information.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>cellClass</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The class of the cell you want to dequeue.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index of the cell.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A cell dequeued from the reuse pool or a newly created one.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17CollectionContextP17sectionControllerSo20UICollectionViewCellCAA0a7SectionF0C_SS015dequeueReusableI11WithNibNameSo6BundleCSg6bundleSi2attF"></a>
+                    <a name="//apple_ref/swift/Method/sectionController(_:dequeueReusableCellWithNibName:bundle:at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17CollectionContextP17sectionControllerSo20UICollectionViewCellCAA0a7SectionF0C_SS015dequeueReusableI11WithNibNameSo6BundleCSg6bundleSi2attF">sectionController(_:dequeueReusableCellWithNibName:bundle:at:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Dequeues a cell from the collection view reuse pool.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    This method uses a string representation of the cell class as the identifier.
+Dequeues a cell from the collection view reuse pool.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">sectionController</span><span class="p">(</span><span class="n">_</span> <span class="nv">sectionController</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListSectionController.html">ListSectionController</a></span><span class="p">,</span> <span class="n">dequeueReusableCellWithNibName</span> <span class="nv">nibName</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">bundle</span><span class="p">:</span> <span class="kt">Bundle</span><span class="p">?,</span> <span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UICollectionViewCell</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sectionController</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Thee section controller requesting this information.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>nibName</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The name of the nib file.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>bundle</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The bundle in which to search for the nib file. If <code>nil</code>, this method searches
+the main bundle.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index of the cell.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A cell dequeued from the reuse pool or a newly created one.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17CollectionContextP17sectionControllerSo20UICollectionViewCellCAA0a7SectionF0C_SS015dequeueReusableI28FromStoryboardWithIdentifierSi2attF"></a>
+                    <a name="//apple_ref/swift/Method/sectionController(_:dequeueReusableCellFromStoryboardWithIdentifier:at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17CollectionContextP17sectionControllerSo20UICollectionViewCellCAA0a7SectionF0C_SS015dequeueReusableI28FromStoryboardWithIdentifierSi2attF">sectionController(_:dequeueReusableCellFromStoryboardWithIdentifier:at:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Dequeues a storyboard prototype cell from the collection view reuse pool.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">sectionController</span><span class="p">(</span><span class="n">_</span> <span class="nv">sectionController</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListSectionController.html">ListSectionController</a></span><span class="p">,</span> <span class="n">dequeueReusableCellFromStoryboardWithIdentifier</span> <span class="nv">identifier</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UICollectionViewCell</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sectionController</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The section controller requesting this information.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>identifier</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The identifier of the cell prototype in storyboard.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index of the cell.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A cell dequeued from the reuse pool or a newly created one.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17CollectionContextP17sectionControllerSo24UICollectionReusableViewCAA0a7SectionF0C_SS07dequeueh13SupplementaryI6OfKindyXlXp9viewClassSi2attF"></a>
+                    <a name="//apple_ref/swift/Method/sectionController(_:dequeueReusableSupplementaryViewOfKind:viewClass:at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17CollectionContextP17sectionControllerSo24UICollectionReusableViewCAA0a7SectionF0C_SS07dequeueh13SupplementaryI6OfKindyXlXp9viewClassSi2attF">sectionController(_:dequeueReusableSupplementaryViewOfKind:viewClass:at:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Dequeues a supplementary view from the collection view reuse pool.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    This method uses a string representation of the view class as the identifier.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">sectionController</span><span class="p">(</span><span class="n">_</span> <span class="nv">sectionController</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListSectionController.html">ListSectionController</a></span><span class="p">,</span> <span class="n">dequeueReusableSupplementaryViewOfKind</span> <span class="nv">elementKind</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">viewClass</span><span class="p">:</span> <span class="kt">AnyClass</span><span class="p">,</span> <span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UICollectionReusableView</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sectionController</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The section controller requesting this information.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>elementKind</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The kind of supplementary view.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>viewClass</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The class of the supplementary view.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index of the supplementary view.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A supplementary view dequeued from the reuse pool or a newly created one.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17CollectionContextP17sectionControllerSo24UICollectionReusableViewCAA0a7SectionF0C_SS07dequeueh13SupplementaryI6OfKindSS7nibNameSo6BundleCSg6bundleSi2attF"></a>
+                    <a name="//apple_ref/swift/Method/sectionController(_:dequeueReusableSupplementaryViewOfKind:nibName:bundle:at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17CollectionContextP17sectionControllerSo24UICollectionReusableViewCAA0a7SectionF0C_SS07dequeueh13SupplementaryI6OfKindSS7nibNameSo6BundleCSg6bundleSi2attF">sectionController(_:dequeueReusableSupplementaryViewOfKind:nibName:bundle:at:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Dequeues a supplementary view from the collection view reuse pool.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    This method uses a string representation of the view class as the identifier.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">sectionController</span><span class="p">(</span><span class="n">_</span> <span class="nv">sectionController</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListSectionController.html">ListSectionController</a></span><span class="p">,</span> <span class="n">dequeueReusableSupplementaryViewOfKind</span> <span class="nv">elementKind</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">nibName</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">bundle</span><span class="p">:</span> <span class="kt">Bundle</span><span class="p">?,</span> <span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UICollectionReusableView</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sectionController</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The section controller requesting this information.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>elementKind</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The kind of supplementary view.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>nibName</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The name of the nib file.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>bundle</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The bundle in which to search for the nib file. If <code>nil</code>, this method searches
+the main bundle.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index of the supplementary view.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A supplementary view dequeued from the reuse pool or a newly created one.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17CollectionContextP17sectionControllerSo24UICollectionReusableViewCAA0a7SectionF0C_SS07dequeueh13SupplementaryI20FromStoryboardOfKindSS14withIdentifierSi2attF"></a>
+                    <a name="//apple_ref/swift/Method/sectionController(_:dequeueReusableSupplementaryViewFromStoryboardOfKind:withIdentifier:at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17CollectionContextP17sectionControllerSo24UICollectionReusableViewCAA0a7SectionF0C_SS07dequeueh13SupplementaryI20FromStoryboardOfKindSS14withIdentifierSi2attF">sectionController(_:dequeueReusableSupplementaryViewFromStoryboardOfKind:withIdentifier:at:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Dequeues a supplementary view from the collection view reuse pool.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    This method uses a string representation of the view class as the identifier.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">sectionController</span><span class="p">(</span><span class="n">_</span> <span class="nv">sectionController</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListSectionController.html">ListSectionController</a></span><span class="p">,</span> <span class="n">dequeueReusableSupplementaryViewFromStoryboardOfKind</span> <span class="nv">elementKind</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">withIdentifier</span> <span class="nv">identifier</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UICollectionReusableView</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sectionController</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The section controller requesting this information.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>elementKind</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The kind of supplementary view.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>identifier</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The identifier of the supplementary view in storyboard.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index of the supplementary view.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A supplementary view dequeued from the reuse pool or a newly created one.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17CollectionContextP19invalidateLayoutForyAA0A17SectionControllerC07sectionI0_ySbcSg10completiontF"></a>
+                    <a name="//apple_ref/swift/Method/invalidateLayoutFor(sectionController:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17CollectionContextP19invalidateLayoutForyAA0A17SectionControllerC07sectionI0_ySbcSg10completiontF">invalidateLayoutFor(sectionController:completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Invalidate the backing <code>UICollectionViewLayout</code> for all items in the section controller.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    This method can be wrapped in <code>UIView</code> animation APIs to control the duration
+or perform without animations. This will end up calling
+<code>performBatchUpdates(_:completion:)</code> internally, so invalidated changes may not be
+reflected in the cells immediately.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">invalidateLayoutFor</span><span class="p">(</span><span class="nv">sectionController</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListSectionController.html">ListSectionController</a></span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="p">((</span><span class="kt">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sectionController</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The section controller that needs invalidating.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An optional completion closure to execute when the updates are finished.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17CollectionContextP19performBatchUpdatesyyAA0afD0_pc_Sb8animatedySbcSg10completiontF"></a>
+                    <a name="//apple_ref/swift/Method/performBatchUpdates(_:animated:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17CollectionContextP19performBatchUpdatesyyAA0afD0_pc_Sb8animatedySbcSg10completiontF">performBatchUpdates(_:animated:completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Batches and performs many cell-level updates in a single transaction.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>You should make state changes that impact the number of items in your section
+controller within the updates closure alongside changes on the context object.</p>
+
+<p>Inside your section controllers, you may want to delete <em>and</em> insert into
+the data source that backs your section controller.
+For example:</p>
+<pre class="highlight swift"><code></code></pre>
+
+</div>
+<div class="aside aside-warning">
+    <p class="aside-title">Warning</p>
+    <p>You <strong>must</strong> perform data modifications <strong>inside</strong> the update closure. Updates
+will not be performed synchronously, so you should make sure that your data source
+changes only when necessary.</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">performBatchUpdates</span><span class="p">(</span><span class="n">_</span> <span class="nv">updates</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Protocols.html#/s:7ListKit0A12BatchContextP">ListBatchContext</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="p">((</span><span class="kt">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>updates</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure with a context parameter to make mutations.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>animated</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A flag indicating if the transition should be animated.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An optional completion closure to execute when the updates are finished.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A17CollectionContextP6scrollyAA0A17SectionControllerC2to_Si2atSC30UICollectionViewScrollPositionV0eM0Sb8animatedtF"></a>
+                    <a name="//apple_ref/swift/Method/scroll(to:at:scrollPosition:animated:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A17CollectionContextP6scrollyAA0A17SectionControllerC2to_Si2atSC30UICollectionViewScrollPositionV0eM0Sb8animatedtF">scroll(to:at:scrollPosition:animated:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Scrolls to the specified section controller in the list.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">scroll</span><span class="p">(</span><span class="n">to</span> <span class="nv">sectionController</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListSectionController.html">ListSectionController</a></span><span class="p">,</span> <span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">scrollPosition</span><span class="p">:</span> <span class="kt">UICollectionViewScrollPosition</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sectionController</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The section controller.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index of the item in the section controller to which to scroll.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>scrollPosition</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An option that specifies where the item should be positioned when
+scrolling finishes.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>animated</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A flag indicating if the scrolling should be animated.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2018 <a class="link" href="https://twitter.com/zhubofei" target="_blank" rel="external">zhubofei</a>. All rights reserved. (Last updated: 2018-07-25)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>
