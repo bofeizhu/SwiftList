@@ -1,0 +1,159 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/zhubofei/ListKit/Source/Common/ListDiff.swift",
+      "line": 14,
+      "symbol": "ListDiffOption.objectIdentifier",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/Common/ListDiff.swift",
+      "line": 15,
+      "symbol": "ListDiffOption.equality",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/Common/ListDiffable.swift",
+      "line": 36,
+      "symbol": "AnyListDiffable.base",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/Common/ListDiffable.swift",
+      "line": 42,
+      "symbol": "Array.typeErased()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/Common/ListIndexSetResult.swift",
+      "line": 26,
+      "symbol": "ListIndexSetResult.hasChanges",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListAdapter.swift",
+      "line": 1363,
+      "symbol": "ListAdapter.numberOfSections(in:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListAdapter.swift",
+      "line": 1367,
+      "symbol": "ListAdapter.collectionView(_:numberOfItemsInSection:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListAdapter.swift",
+      "line": 1382,
+      "symbol": "ListAdapter.collectionView(_:cellForItemAt:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListAdapter.swift",
+      "line": 1435,
+      "symbol": "ListQueuedCompletion",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListAdapterUpdateListener.swift",
+      "line": 15,
+      "symbol": "ListAdapterUpdateType.performUpdates",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListAdapterUpdateListener.swift",
+      "line": 16,
+      "symbol": "ListAdapterUpdateType.reloadData",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListAdapterUpdateListener.swift",
+      "line": 17,
+      "symbol": "ListAdapterUpdateType.itemUpdates",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListCollectionViewInteractiveReorderingLayout.swift",
+      "line": 16,
+      "symbol": "ListCollectionViewInteractiveReorderingLayout.listAdapter",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListCollectionViewInteractiveReorderingLayout.swift",
+      "line": 18,
+      "symbol": "ListCollectionViewInteractiveReorderingLayout.targetIndexPath(forInteractivelyMovingItem:withPosition:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListCollectionViewInteractiveReorderingLayout.swift",
+      "line": 30,
+      "symbol": "ListCollectionViewInteractiveReorderingLayout.invalidationContext(forInteractivelyMovingItems:withTargetPosition:previousIndexPaths:previousPosition:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListCollectionViewInteractiveReorderingLayout.swift",
+      "line": 43,
+      "symbol": "ListCollectionViewInteractiveReorderingLayout.invalidationContextForEndingInteractiveMovementOfItems(toFinalIndexPaths:previousIndexPaths:movementCancelled:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListCollectionViewInteractiveReorderingLayout.swift",
+      "line": 62,
+      "symbol": "ListCollectionViewInteractiveReorderingFlowLayout.listAdapter",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListCollectionViewInteractiveReorderingLayout.swift",
+      "line": 64,
+      "symbol": "ListCollectionViewInteractiveReorderingFlowLayout.targetIndexPath(forInteractivelyMovingItem:withPosition:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListCollectionViewInteractiveReorderingLayout.swift",
+      "line": 76,
+      "symbol": "ListCollectionViewInteractiveReorderingFlowLayout.invalidationContext(forInteractivelyMovingItems:withTargetPosition:previousIndexPaths:previousPosition:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListCollectionViewInteractiveReorderingLayout.swift",
+      "line": 89,
+      "symbol": "ListCollectionViewInteractiveReorderingFlowLayout.invalidationContextForEndingInteractiveMovementOfItems(toFinalIndexPaths:previousIndexPaths:movementCancelled:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListSectionController.swift",
+      "line": 75,
+      "symbol": "ListSectionController.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListSectionController.swift",
+      "line": 154,
+      "symbol": "ListSectionController.canMoveItem(at:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/zhubofei/ListKit"
+}
