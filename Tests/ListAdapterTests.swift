@@ -51,5 +51,30 @@ class ListAdapterTests: ListTestCase {
         XCTAssertEqual(adapter.section(for: sectionController!)!, 1)
     }
     
+    func testWhenAdapterUpdatedWithUnknownItemThatSectionControllerHasNoSection() {
+        dataSource.objects = [0, 1, 2].typeErased()
+        adapter.performUpdates(animated: true, completion: nil)
+        let randomSectionController = ListTestSection()
+        XCTAssertNil(adapter.section(for: randomSectionController))
+    }
     
+    func testWhenQueryingAdapterWithUnknownItemThatSectionControllerIsNil() {
+        dataSource.objects = [0, 1, 2].typeErased()
+        adapter.performUpdates(animated: true, completion: nil)
+        XCTAssertNil(adapter.section(for: AnyListDiffable(3)))
+    }
+    
+    func testWhenAdapterUpdatedThatSectionControllerHasCorrectObject() {
+        dataSource.objects = [0, 1, 2].typeErased()
+        adapter.performUpdates(animated: true, completion: nil)
+        let sectionController = adapter.sectionController(for: AnyListDiffable(1))
+        XCTAssertEqual(adapter.object(for: sectionController!)!, AnyListDiffable(1))
+    }
+    
+    func testWhenQueryingAdapterWithUnknownItemThatObjectForSectionControllerIsNil() {
+        dataSource.objects = [0, 1, 2].typeErased()
+        adapter.performUpdates(animated: true, completion: nil)
+        let randomSectionController = ListTestSection()
+        XCTAssertNil(adapter.object(for: randomSectionController))
+    }
 }

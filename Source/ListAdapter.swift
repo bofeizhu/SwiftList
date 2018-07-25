@@ -583,7 +583,7 @@ extension ListAdapter {
     /// - Returns: The section index of the list if it exists, `nil` otherwise.
     public func section(for object: AnyListDiffable) -> Int? {
         dispatchPrecondition(condition: .onQueue(.main))
-        return section(for: object)
+        return sectionMap.section(for: object)
     }
     
     /// An **unordered** array of the currently visible cells for a given object.
