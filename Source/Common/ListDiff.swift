@@ -229,7 +229,7 @@ fileprivate func ListDiffing(
         }
         entry.oldCounter += 1
         
-        // push the original indices where the item occurred onto the index stack
+        // push the original indexes where the item occurred onto the index stack
         entry.oldIndexes.append(i);
         oldResultsArray[i].entry = entry
     }
