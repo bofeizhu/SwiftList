@@ -10,7 +10,6 @@ import XCTest
 @testable import ListKit
 
 class ListDiffTests: XCTestCase {
-    
     func testWhenDiffingEmptyArraysThatResultHasNoChanges() {
         let o: [AnyListDiffable] = []
         let n: [AnyListDiffable] = []

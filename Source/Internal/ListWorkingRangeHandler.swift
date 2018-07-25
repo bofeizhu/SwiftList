@@ -25,7 +25,7 @@ final class ListWorkingRangeHandler {
     func listAdapter(
         _ listAdapter: ListAdapter,
         willDisplayItemAt indexPath: IndexPath) {
-        visibleSectionIndices.insert(indexPath)
+        visibleSectionIndexes.insert(indexPath)
         updateWorkingRanges(with: listAdapter)
     }
     
@@ -37,13 +37,13 @@ final class ListWorkingRangeHandler {
     func listAdapter(
         _ listAdapter: ListAdapter,
         didEndDisplayingItemAt indexPath: IndexPath) {
-        visibleSectionIndices.remove(indexPath)
+        visibleSectionIndexes.remove(indexPath)
         updateWorkingRanges(with: listAdapter)
     }
     
     // MARK: Private
     private var workingRangeSize: Int
-    private var visibleSectionIndices: Set<IndexPath> = []
+    private var visibleSectionIndexes: Set<IndexPath> = []
     private var workingRangeSectionControllers: Set<ListSectionController> = []
 }
 
@@ -56,7 +56,7 @@ private extension ListWorkingRangeHandler {
         // the same O(nlogn) time complexity here.
         
         var visibleSectionSet: Set<Int> = []
-        for indexPath in visibleSectionIndices {
+        for indexPath in visibleSectionIndexes {
             visibleSectionSet.insert(indexPath.section)
         }
         
