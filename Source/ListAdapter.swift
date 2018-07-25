@@ -414,7 +414,7 @@ extension ListAdapter {
         }
         
         let fromObjects = sectionMap.objects
-        var toObjectsClosure: ListToObjectClosure
+        var toObjectsClosure: ListToObjectsClosure
         if experiments.contains(.deferredToObjectCreation) {
             toObjectsClosure = { [weak self] in
                 guard let strongSelf = self else { return nil }
