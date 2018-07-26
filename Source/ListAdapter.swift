@@ -1545,33 +1545,34 @@ extension ListAdapter: UICollectionViewDataSource {
         }
         return sectionController.canMoveItem(at: indexPath.item)
     }
-    
-    public func collectionView(
-        _ collectionView: UICollectionView,
-        moveItemAt sourceIndexPath: IndexPath,
-        to destinationIndexPath: IndexPath) {
-        guard let source = sectionController(forSection: sourceIndexPath.section),
-              let destination = sectionController(forSection: destinationIndexPath.section)
-        else {
-            assertionFailure("Source or destination controller is nil")
-            return
-        }
-        
-        // this is a move within a section
-        if source == destination {
-            
-        }
-    }
 }
 
 // MARK: - UICollectionViewDelegate
 extension ListAdapter: UICollectionViewDelegate {
-    
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath) {
+        if let collectionViewDelegate = collectionViewDelegate,
+            let method = collectionViewDelegate.collectionView(_:didSelectItemAt:) {
+            method(collectionView, indexPath)
+        }
+        let sectionController = self.sectionController(forSection: indexPath.section)
+        sectionController?.didSelectItem(at: indexPath.item)
+    }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
 extension ListAdapter: UICollectionViewDelegateFlowLayout {
-    
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        guard let size = sizeForItem(at: indexPath) else {
+            preconditionFailure("No size for item at index path: \(indexPath)")
+        }
+        return size
+    }
 }
 
 // MARK: - UIScrollViewDelegate
