@@ -108,7 +108,7 @@ public final class ListAdapter: NSObject {
     public private(set) var updater: ListUpdatingDelegate
     
     /// An option set of experiments to conduct on the adapter.
-    public var experiments: ListExperiment = .none
+    public var experiments: ListExperiment = []
     
     /// All the objects currently driving the adapter.
     public var objects: [AnyListDiffable] {
@@ -246,7 +246,8 @@ public final class ListAdapter: NSObject {
         guard let collectionView = collectionView else {
             preconditionFailure("Collection view is nil")
         }
-        guard let attributesArray = collectionView.collectionViewLayout.layoutAttributesForElements(
+        guard let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout,
+              let attributesArray = layout.layoutAttributesForElements(
                   in: collectionView.bounds) else { return [] }
         for attributes in attributesArray {
             guard let sectionController = self.sectionController(

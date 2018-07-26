@@ -193,6 +193,4 @@ class ListAdapterTests: ListTestCase {
         adapter1.collectionView = self.collectionView
         XCTAssertEqual(collectionView.dataSource as! ListAdapter, adapter1)
     }
-    
-    
 }

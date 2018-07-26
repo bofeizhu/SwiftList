@@ -21,7 +21,7 @@ class ListTestCase: XCTestCase {
     
     // Created in setUp() if your subclass has not already created one
     var collectionView: UICollectionView!
-    var frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+    var frame = CGRect(x: 0, y: 0, width: 100, height: 1000)
     var updater: ListUpdatingDelegate!
     
     // Required objects must be set before super.setUp() in your test subclass
