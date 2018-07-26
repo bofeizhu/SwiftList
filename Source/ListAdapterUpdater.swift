@@ -34,7 +34,7 @@ public final class ListAdapterUpdater {
 
     // MARK: Private API
     var fromObjects: [AnyListDiffable]?
-    var toObjectsClosure: ListToObjectClosure?
+    var toObjectsClosure: ListToObjectsClosure?
     var pendingTransitionToObjects: [AnyListDiffable]?
     var completionClosures: [ListUpdatingCompletion] = []
     
@@ -412,7 +412,7 @@ extension ListAdapterUpdater: ListUpdatingDelegate {
     public func performUpdateWith(
         collectionViewClosure: @escaping ListCollectionViewClosure,
         fromObjects: [AnyListDiffable]?,
-        toObjectsClosure: ListToObjectClosure?,
+        toObjectsClosure: ListToObjectsClosure?,
         animated: Bool,
         objectTransitionClosure: @escaping ListObjectTransitionClosure,
         completion: ListUpdatingCompletion?) {

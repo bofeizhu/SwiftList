@@ -108,7 +108,7 @@ public final class ListAdapter: NSObject {
     public private(set) var updater: ListUpdatingDelegate
     
     /// An option set of experiments to conduct on the adapter.
-    public var experiments: ListExperiment = .none
+    public var experiments: ListExperiment = []
     
     /// All the objects currently driving the adapter.
     public var objects: [AnyListDiffable] {
@@ -246,7 +246,8 @@ public final class ListAdapter: NSObject {
         guard let collectionView = collectionView else {
             preconditionFailure("Collection view is nil")
         }
-        guard let attributesArray = collectionView.collectionViewLayout.layoutAttributesForElements(
+        guard let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout,
+              let attributesArray = layout.layoutAttributesForElements(
                   in: collectionView.bounds) else { return [] }
         for attributes in attributesArray {
             guard let sectionController = self.sectionController(
@@ -414,7 +415,7 @@ extension ListAdapter {
         }
         
         let fromObjects = sectionMap.objects
-        var toObjectsClosure: ListToObjectClosure
+        var toObjectsClosure: ListToObjectsClosure
         if experiments.contains(.deferredToObjectCreation) {
             toObjectsClosure = { [weak self] in
                 guard let strongSelf = self else { return nil }
@@ -583,7 +584,7 @@ extension ListAdapter {
     /// - Returns: The section index of the list if it exists, `nil` otherwise.
     public func section(for object: AnyListDiffable) -> Int? {
         dispatchPrecondition(condition: .onQueue(.main))
-        return section(for: object)
+        return sectionMap.section(for: object)
     }
     
     /// An **unordered** array of the currently visible cells for a given object.

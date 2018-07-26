@@ -23,7 +23,7 @@ public typealias ListItemUpdateClosure = () -> Void
 public typealias ListReloadUpdateClosure = () -> Void
 
 /// A closure that returns an array of objects to transition to.
-public typealias ListToObjectClosure = () -> [AnyListDiffable]?
+public typealias ListToObjectsClosure = () -> [AnyListDiffable]?
 
 /// A closure that returns a collection view to perform updates on.
 public typealias ListCollectionViewClosure = () -> UICollectionView?
@@ -55,7 +55,7 @@ public protocol ListUpdatingDelegate: AnyObject {
     func performUpdateWith(
         collectionViewClosure: @escaping ListCollectionViewClosure,
         fromObjects: [AnyListDiffable]?,
-        toObjectsClosure: ListToObjectClosure?,
+        toObjectsClosure: ListToObjectsClosure?,
         animated: Bool,
         objectTransitionClosure: @escaping ListObjectTransitionClosure,
         completion: ListUpdatingCompletion?)
