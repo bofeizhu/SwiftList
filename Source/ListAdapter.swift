@@ -1517,11 +1517,51 @@ extension ListAdapter: UICollectionViewDataSource {
         map(view: cell, to: sectionController)
         return cell
     }
-}
-
-// MARK: - UIScrollViewDelegate
-extension ListAdapter: UIScrollViewDelegate {
     
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        guard let sectionController = sectionController(forSection: indexPath.section),
+              let supplementarySource = sectionController.supplementaryViewSource
+        else {
+            // TODO: Better failure message
+            preconditionFailure("nil supplementarySource for section: \(indexPath.section)")
+        }
+        let view = supplementarySource.viewForSupplementaryElement(
+            ofKind: kind,
+            at: indexPath.item)
+        map(view: view, to: sectionController)
+        return view
+    }
+    
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        canMoveItemAt indexPath: IndexPath
+    ) -> Bool {
+        guard let sectionController = self.sectionController(forSection: indexPath.section) else {
+            preconditionFailure("nil section controller for section \(indexPath.section)")
+        }
+        return sectionController.canMoveItem(at: indexPath.item)
+    }
+    
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        moveItemAt sourceIndexPath: IndexPath,
+        to destinationIndexPath: IndexPath) {
+        guard let source = sectionController(forSection: sourceIndexPath.section),
+              let destination = sectionController(forSection: destinationIndexPath.section)
+        else {
+            assertionFailure("Source or destination controller is nil")
+            return
+        }
+        
+        // this is a move within a section
+        if source == destination {
+            
+        }
+    }
 }
 
 // MARK: - UICollectionViewDelegate
@@ -1531,6 +1571,11 @@ extension ListAdapter: UICollectionViewDelegate {
 
 // MARK: - UICollectionViewDelegateFlowLayout
 extension ListAdapter: UICollectionViewDelegateFlowLayout {
+    
+}
+
+// MARK: - UIScrollViewDelegate
+extension ListAdapter: UIScrollViewDelegate {
     
 }
 
