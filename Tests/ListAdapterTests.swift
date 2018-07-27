@@ -232,5 +232,9 @@ class ListAdapterTests: ListTestCase {
             adapter.sectionController(for: AnyListDiffable(4))!))
     }
     
-    
+    func testWithEmptySectionPlusFooterThatVisibleSectionControllersAreCorrect() {
+        dataSource.objects = [0].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        
+    }
 }

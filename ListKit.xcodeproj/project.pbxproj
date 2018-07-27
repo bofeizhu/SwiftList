@@ -22,6 +22,11 @@
 		821350062108D63B00E3FEC9 /* ListTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821350042108D62400E3FEC9 /* ListTestCase.swift */; };
 		821350082108E3A400E3FEC9 /* ListAdapterDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821350072108E3A400E3FEC9 /* ListAdapterDataSource.swift */; };
 		8213500A2108E51000E3FEC9 /* ListReloadDataUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821350092108E51000E3FEC9 /* ListReloadDataUpdater.swift */; };
+		8213500C210B903200E3FEC9 /* ListTestSupplementarySource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8213500B210B903200E3FEC9 /* ListTestSupplementarySource.swift */; };
+		82135011210B916D00E3FEC9 /* ListTestStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8213500E210B916C00E3FEC9 /* ListTestStoryboard.storyboard */; };
+		82135012210B916D00E3FEC9 /* ListTestNibSupplementaryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8213500F210B916C00E3FEC9 /* ListTestNibSupplementaryView.xib */; };
+		82135013210B916D00E3FEC9 /* ListTestNibCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82135010210B916C00E3FEC9 /* ListTestNibCell.xib */; };
+		82135015210B9AA500E3FEC9 /* ListTestNibSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82135014210B9AA500E3FEC9 /* ListTestNibSupplementaryView.swift */; };
 		823CF4B72107E21700326E4E /* ListAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823CF4B52107E1EA00326E4E /* ListAdapterTests.swift */; };
 		823CF4B92107FC3800326E4E /* ListSectionMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823CF4B82107FC3800326E4E /* ListSectionMapTests.swift */; };
 		823CF4BB2107FCEA00326E4E /* ListTestSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823CF4BA2107FCEA00326E4E /* ListTestSection.swift */; };
@@ -95,6 +100,11 @@
 		821350042108D62400E3FEC9 /* ListTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTestCase.swift; sourceTree = "<group>"; };
 		821350072108E3A400E3FEC9 /* ListAdapterDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAdapterDataSource.swift; sourceTree = "<group>"; };
 		821350092108E51000E3FEC9 /* ListReloadDataUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListReloadDataUpdater.swift; sourceTree = "<group>"; };
+		8213500B210B903200E3FEC9 /* ListTestSupplementarySource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTestSupplementarySource.swift; sourceTree = "<group>"; };
+		8213500E210B916C00E3FEC9 /* ListTestStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ListTestStoryboard.storyboard; sourceTree = "<group>"; };
+		8213500F210B916C00E3FEC9 /* ListTestNibSupplementaryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListTestNibSupplementaryView.xib; sourceTree = "<group>"; };
+		82135010210B916C00E3FEC9 /* ListTestNibCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListTestNibCell.xib; sourceTree = "<group>"; };
+		82135014210B9AA500E3FEC9 /* ListTestNibSupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTestNibSupplementaryView.swift; sourceTree = "<group>"; };
 		823CF4B52107E1EA00326E4E /* ListAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAdapterTests.swift; sourceTree = "<group>"; };
 		823CF4B82107FC3800326E4E /* ListSectionMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSectionMapTests.swift; sourceTree = "<group>"; };
 		823CF4BA2107FCEA00326E4E /* ListTestSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTestSection.swift; sourceTree = "<group>"; };
@@ -178,11 +188,13 @@
 		820A0C9C20E854270035EC74 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				821350072108E3A400E3FEC9 /* ListAdapterDataSource.swift */,
 				82C93D1620F838AB0050B78F /* ListTestAdapterUpdaterDelegate.swift */,
+				82135014210B9AA500E3FEC9 /* ListTestNibSupplementaryView.swift */,
 				820A0C9D20E854710035EC74 /* ListTestObject.swift */,
 				823CF4BA2107FCEA00326E4E /* ListTestSection.swift */,
+				8213500B210B903200E3FEC9 /* ListTestSupplementarySource.swift */,
 				829216B820F5147B0038C596 /* ListTestUICollectionViewDataSource.swift */,
-				821350072108E3A400E3FEC9 /* ListAdapterDataSource.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -211,6 +223,16 @@
 				820A0CB520EDEC0E0035EC74 /* ListArrayUtils.swift */,
 			);
 			path = Internal;
+			sourceTree = "<group>";
+		};
+		8213500D210B913600E3FEC9 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				82135010210B916C00E3FEC9 /* ListTestNibCell.xib */,
+				8213500F210B916C00E3FEC9 /* ListTestNibSupplementaryView.xib */,
+				8213500E210B916C00E3FEC9 /* ListTestStoryboard.storyboard */,
+			);
+			path = Assets;
 			sourceTree = "<group>";
 		};
 		828DF96720DC550700C03E36 = {
@@ -266,6 +288,7 @@
 		828DF97E20DC550700C03E36 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				8213500D210B913600E3FEC9 /* Assets */,
 				828DF98120DC550700C03E36 /* Info.plist */,
 				823CF4B52107E1EA00326E4E /* ListAdapterTests.swift */,
 				829216B620F502CA0038C596 /* ListAdapterUpdaterTests.swift */,
@@ -410,6 +433,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82135012210B916D00E3FEC9 /* ListTestNibSupplementaryView.xib in Resources */,
+				82135013210B916D00E3FEC9 /* ListTestNibCell.xib in Resources */,
+				82135011210B916D00E3FEC9 /* ListTestStoryboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -513,10 +539,12 @@
 				821350082108E3A400E3FEC9 /* ListAdapterDataSource.swift in Sources */,
 				823CF4B72107E21700326E4E /* ListAdapterTests.swift in Sources */,
 				82C93D1720F838AB0050B78F /* ListTestAdapterUpdaterDelegate.swift in Sources */,
+				8213500C210B903200E3FEC9 /* ListTestSupplementarySource.swift in Sources */,
 				823CF4B92107FC3800326E4E /* ListSectionMapTests.swift in Sources */,
 				829216B920F5147B0038C596 /* ListTestUICollectionViewDataSource.swift in Sources */,
 				820A0C9B20E7EAD80035EC74 /* ListDiffTests.swift in Sources */,
 				829216B720F502CA0038C596 /* ListAdapterUpdaterTests.swift in Sources */,
+				82135015210B9AA500E3FEC9 /* ListTestNibSupplementaryView.swift in Sources */,
 				820A0CA220EB175E0035EC74 /* ListBatchUpdateDataTests.swift in Sources */,
 				821350062108D63B00E3FEC9 /* ListTestCase.swift in Sources */,
 				82FA791E20F1A4F90010D58C /* ListDiffResultTests.swift in Sources */,

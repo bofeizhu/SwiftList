@@ -622,17 +622,19 @@ extension ListAdapter {
     ///   - elementKind: The kind of supplementary view.
     ///   - indexPath: The index path of the supplementary view.
     /// - Returns: The size of the supplementary view.
+    /// - Warning: This method returns CGSize.zero when the element kind requested is not
+    ///     registered.
     public func sizeForSupplementaryView(
         ofKind elementKind: String,
         at indexPath: IndexPath
-    ) -> CGSize? {
+    ) -> CGSize {
         dispatchPrecondition(condition: .onQueue(.main))
         guard let supplementaryViewSource = supplementaryViewSource(at: indexPath),
               supplementaryViewSource.supportedElementKinds.contains(elementKind),
               let size = supplementaryViewSource.sizeForSupplementaryView(
                   ofKind: elementKind,
                   at: indexPath.item)
-        else { return nil }
+        else { return CGSize.zero }
         return CGSize(width: max(size.width, 0.0), height: max(size.height, 0.0))
     }
 }
@@ -1633,17 +1635,17 @@ extension ListAdapter: UICollectionViewDelegate {
         // this happens with iOS10 UICollectionView display range changes
         if sectionController == nil {
             guard let newSectionController = self.sectionController(forSection: indexPath.section)
-                else {
-                    assertionFailure("No section controller to display at: \(indexPath)")
-                    return
+            else {
+                assertionFailure("No section controller to display at: \(indexPath)")
+                return
             }
             map(view: view, to: newSectionController)
             sectionController = newSectionController
         }
         guard let object = sectionMap.object(forSection: indexPath.section)
-            else {
-                assertionFailure("No object to display at: \(indexPath)")
-                return
+        else {
+            assertionFailure("No object to display at: \(indexPath)")
+            return
         }
         displayHandler.listAdapter(
             self,
@@ -1704,6 +1706,60 @@ extension ListAdapter: UICollectionViewDelegateFlowLayout {
             preconditionFailure("No size for item at index path: \(indexPath)")
         }
         return size
+    }
+    
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        insetForSectionAt section: Int
+    ) -> UIEdgeInsets {
+        guard let sectionController = sectionController(forSection: section)
+        else {
+            preconditionFailure("No section controller for section: \(section)")
+        }
+        return sectionController.inset
+    }
+    
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumLineSpacingForSectionAt section: Int
+    ) -> CGFloat {
+        guard let sectionController = sectionController(forSection: section)
+        else {
+            preconditionFailure("No section controller for section: \(section)")
+        }
+        return sectionController.minimumLineSpacing
+    }
+    
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumInteritemSpacingForSectionAt section: Int
+    ) -> CGFloat {
+        guard let sectionController = sectionController(forSection: section)
+        else {
+            preconditionFailure("No section controller for section: \(section)")
+        }
+        return sectionController.minimumInteritemSpacing
+    }
+    
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForHeaderInSection section: Int
+    ) -> CGSize {
+        let indexPath = IndexPath(item: 0, section: section)
+        return sizeForSupplementaryView(ofKind: UICollectionElementKindSectionHeader, at: indexPath)
+    }
+    
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForFooterInSection section: Int
+    ) -> CGSize {
+        let indexPath = IndexPath(item: 0, section: section)
+        return sizeForSupplementaryView(ofKind: UICollectionElementKindSectionFooter, at: indexPath)
     }
 }
 
