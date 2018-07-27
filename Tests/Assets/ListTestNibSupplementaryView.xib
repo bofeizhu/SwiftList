@@ -28,6 +28,9 @@
                 <constraint firstItem="vDN-yU-Gld" firstAttribute="centerX" secondItem="cEz-d2-bcf" secondAttribute="centerX" id="tN1-wg-YHK"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="cEz-d2-bcf"/>
+            <connections>
+                <outlet property="label" destination="vDN-yU-Gld" id="bub-Wa-5gG"/>
+            </connections>
         </collectionReusableView>
     </objects>
 </document>

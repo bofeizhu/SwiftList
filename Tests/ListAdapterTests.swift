@@ -244,6 +244,9 @@ class ListAdapterTests: ListTestCase {
         supplementarySource.sectionController = sectionController
         adapter.performUpdates(animated: false, completion: nil)
         let visibleSectionControllers = adapter.visibleSectionControllers
+        
         XCTAssertEqual(visibleSectionControllers.count, 1)
     }
+    
+    
 }
