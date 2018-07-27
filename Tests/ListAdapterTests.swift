@@ -211,4 +211,6 @@ class ListAdapterTests: ListTestCase {
         XCTAssertTrue(visibleSectionControllers.contains(
             adapter.sectionController(for: AnyListDiffable(4))!))
     }
+    
+    
 }

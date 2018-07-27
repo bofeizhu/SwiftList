@@ -1420,7 +1420,6 @@ private extension ListAdapter {
         
         // clear the view controller and collection context
         ListSectionControllerPopDispatchQueueContext()
-        
         sectionMap.update(objects: validObjects, withSectionControllers: sectionControllers)
         
         // now that the maps have been created and contexts are assigned, we consider the section
@@ -1428,12 +1427,10 @@ private extension ListAdapter {
         for object in objects {
             sectionMap.sectionController(for: object)?.didUpdate(to: object)
         }
-        
         var itemCount = 0
         for sectionController in sectionControllers {
             itemCount += sectionController.numberOfItems
         }
-        
         updateBackgroundView(isHidden: itemCount > 0)
     }
     
@@ -1463,7 +1460,6 @@ private extension ListAdapter {
             // will be called again when update closure completes
             return
         }
-        
         let backgroundView = dataSource?.emptyBackgroundView(for: self)
         // don't do anything if the client is using the same view
         if backgroundView != collectionView?.backgroundView {
@@ -1552,12 +1548,148 @@ extension ListAdapter: UICollectionViewDelegate {
     public func collectionView(
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath) {
-        if let collectionViewDelegate = collectionViewDelegate,
-            let method = collectionViewDelegate.collectionView(_:didSelectItemAt:) {
+        if let method = collectionViewDelegate?.collectionView(_:didSelectItemAt:) {
             method(collectionView, indexPath)
         }
-        let sectionController = self.sectionController(forSection: indexPath.section)
-        sectionController?.didSelectItem(at: indexPath.item)
+        sectionController(forSection: indexPath.section)?.didSelectItem(at: indexPath.item)
+    }
+    
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        didDeselectItemAt indexPath: IndexPath) {
+        if let method = collectionViewDelegate?.collectionView(_:didDeselectItemAt:) {
+            method(collectionView, indexPath)
+        }
+        sectionController(forSection: indexPath.section)?.didDeselectItem(at: indexPath.item)
+    }
+    
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        willDisplay cell: UICollectionViewCell,
+        forItemAt indexPath: IndexPath) {
+        if let method = collectionViewDelegate?.collectionView(_:willDisplay:forItemAt:) {
+            method(collectionView, cell, indexPath)
+        }
+        var sectionController = self.sectionController(for: cell)
+        // if the section controller relationship was destroyed, reconnect it
+        // this happens with iOS10 UICollectionView display range changes
+        if sectionController == nil {
+            guard let newSectionController = self.sectionController(forSection: indexPath.section)
+            else {
+                assertionFailure("No section controller to display at: \(indexPath)")
+                return
+            }
+            map(view: cell, to: newSectionController)
+            sectionController = newSectionController
+        }
+        guard let object = sectionMap.object(forSection: indexPath.section)
+        else {
+            assertionFailure("No object to display at: \(indexPath)")
+            return
+        }
+        displayHandler.listAdapter(
+            self,
+            sectionController: sectionController!,
+            willDisplayCell: cell,
+            for: object,
+            at: indexPath)
+        isSendingWorkingRangeDisplayUpdates = true
+        workingRangeHandler.listAdapter(self, willDisplayItemAt: indexPath)
+        isSendingWorkingRangeDisplayUpdates = false
+    }
+    
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        didEndDisplaying cell: UICollectionViewCell,
+        forItemAt indexPath: IndexPath) {
+        if let method = collectionViewDelegate?.collectionView(_:didEndDisplaying:forItemAt:) {
+            method(collectionView, cell, indexPath)
+        }
+        guard let sectionController = self.sectionController(for: cell) else {
+            assertionFailure("nil section controller for cell \(cell)")
+            return
+        }
+        displayHandler.listAdapter(
+            self,
+            sectionController: sectionController,
+            didEndDisplayingCell: cell,
+            at: indexPath)
+        workingRangeHandler.listAdapter(self, didEndDisplayingItemAt: indexPath)
+        // break the association between the cell and the section controller
+        removeSectionController(for: cell)
+    }
+    
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        willDisplaySupplementaryView view: UICollectionReusableView,
+        forElementKind elementKind: String,
+        at indexPath: IndexPath) {
+        if let method = collectionViewDelegate?
+            .collectionView(_:willDisplaySupplementaryView:forElementKind:at:) {
+            method(collectionView, view, elementKind, indexPath)
+        }
+        var sectionController = self.sectionController(for: view)
+        // if the section controller relationship was destroyed, reconnect it
+        // this happens with iOS10 UICollectionView display range changes
+        if sectionController == nil {
+            guard let newSectionController = self.sectionController(forSection: indexPath.section)
+                else {
+                    assertionFailure("No section controller to display at: \(indexPath)")
+                    return
+            }
+            map(view: view, to: newSectionController)
+            sectionController = newSectionController
+        }
+        guard let object = sectionMap.object(forSection: indexPath.section)
+            else {
+                assertionFailure("No object to display at: \(indexPath)")
+                return
+        }
+        displayHandler.listAdapter(
+            self,
+            sectionController: sectionController!,
+            willDisplaySupplementaryView: view,
+            for: object,
+            at: indexPath)
+    }
+    
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        didEndDisplayingSupplementaryView view: UICollectionReusableView,
+        forElementOfKind elementKind: String,
+        at indexPath: IndexPath) {
+        if let method = collectionViewDelegate?
+            .collectionView(_:didEndDisplayingSupplementaryView:forElementOfKind:at:) {
+            method(collectionView, view, elementKind, indexPath)
+        }
+        guard let sectionController = self.sectionController(for: view) else {
+            assertionFailure("nil section controller for supplementary view \(view)")
+            return
+        }
+        displayHandler.listAdapter(
+            self,
+            sectionController: sectionController,
+            didEndDisplayingSupplementaryView: view,
+            at: indexPath)
+        removeSectionController(for: view)
+    }
+    
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        didHighlightItemAt indexPath: IndexPath) {
+        if let method = collectionViewDelegate?.collectionView(_:didHighlightItemAt:) {
+            method(collectionView, indexPath)
+        }
+        sectionController(forSection: indexPath.section)?.didHighlightItem(at: indexPath.item)
+    }
+    
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        didUnhighlightItemAt indexPath: IndexPath) {
+        if let method = collectionViewDelegate?.collectionView(_:didUnhighlightItemAt:) {
+            method(collectionView, indexPath)
+        }
+        sectionController(forSection: indexPath.section)?.didUnhighlightItem(at: indexPath.item)
     }
 }
 
