@@ -23,10 +23,8 @@
 		821350082108E3A400E3FEC9 /* ListAdapterDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821350072108E3A400E3FEC9 /* ListAdapterDataSource.swift */; };
 		8213500A2108E51000E3FEC9 /* ListReloadDataUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821350092108E51000E3FEC9 /* ListReloadDataUpdater.swift */; };
 		8213500C210B903200E3FEC9 /* ListTestSupplementarySource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8213500B210B903200E3FEC9 /* ListTestSupplementarySource.swift */; };
-		82135011210B916D00E3FEC9 /* ListTestStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8213500E210B916C00E3FEC9 /* ListTestStoryboard.storyboard */; };
-		82135012210B916D00E3FEC9 /* ListTestNibSupplementaryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8213500F210B916C00E3FEC9 /* ListTestNibSupplementaryView.xib */; };
-		82135013210B916D00E3FEC9 /* ListTestNibCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 82135010210B916C00E3FEC9 /* ListTestNibCell.xib */; };
 		82135015210B9AA500E3FEC9 /* ListTestNibSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82135014210B9AA500E3FEC9 /* ListTestNibSupplementaryView.swift */; };
+		8213501C210BDF0700E3FEC9 /* ListTestNibSupplementaryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8213501B210BDF0700E3FEC9 /* ListTestNibSupplementaryView.xib */; };
 		823CF4B72107E21700326E4E /* ListAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823CF4B52107E1EA00326E4E /* ListAdapterTests.swift */; };
 		823CF4B92107FC3800326E4E /* ListSectionMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823CF4B82107FC3800326E4E /* ListSectionMapTests.swift */; };
 		823CF4BB2107FCEA00326E4E /* ListTestSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823CF4BA2107FCEA00326E4E /* ListTestSection.swift */; };
@@ -101,10 +99,8 @@
 		821350072108E3A400E3FEC9 /* ListAdapterDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAdapterDataSource.swift; sourceTree = "<group>"; };
 		821350092108E51000E3FEC9 /* ListReloadDataUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListReloadDataUpdater.swift; sourceTree = "<group>"; };
 		8213500B210B903200E3FEC9 /* ListTestSupplementarySource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTestSupplementarySource.swift; sourceTree = "<group>"; };
-		8213500E210B916C00E3FEC9 /* ListTestStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ListTestStoryboard.storyboard; sourceTree = "<group>"; };
-		8213500F210B916C00E3FEC9 /* ListTestNibSupplementaryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListTestNibSupplementaryView.xib; sourceTree = "<group>"; };
-		82135010210B916C00E3FEC9 /* ListTestNibCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListTestNibCell.xib; sourceTree = "<group>"; };
 		82135014210B9AA500E3FEC9 /* ListTestNibSupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTestNibSupplementaryView.swift; sourceTree = "<group>"; };
+		8213501B210BDF0700E3FEC9 /* ListTestNibSupplementaryView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListTestNibSupplementaryView.xib; sourceTree = "<group>"; };
 		823CF4B52107E1EA00326E4E /* ListAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAdapterTests.swift; sourceTree = "<group>"; };
 		823CF4B82107FC3800326E4E /* ListSectionMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSectionMapTests.swift; sourceTree = "<group>"; };
 		823CF4BA2107FCEA00326E4E /* ListTestSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTestSection.swift; sourceTree = "<group>"; };
@@ -228,9 +224,7 @@
 		8213500D210B913600E3FEC9 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				82135010210B916C00E3FEC9 /* ListTestNibCell.xib */,
-				8213500F210B916C00E3FEC9 /* ListTestNibSupplementaryView.xib */,
-				8213500E210B916C00E3FEC9 /* ListTestStoryboard.storyboard */,
+				8213501B210BDF0700E3FEC9 /* ListTestNibSupplementaryView.xib */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -433,9 +427,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82135012210B916D00E3FEC9 /* ListTestNibSupplementaryView.xib in Resources */,
-				82135013210B916D00E3FEC9 /* ListTestNibCell.xib in Resources */,
-				82135011210B916D00E3FEC9 /* ListTestStoryboard.storyboard in Resources */,
+				8213501C210BDF0700E3FEC9 /* ListTestNibSupplementaryView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

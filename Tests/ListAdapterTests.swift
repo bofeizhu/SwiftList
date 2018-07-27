@@ -235,6 +235,15 @@ class ListAdapterTests: ListTestCase {
     func testWithEmptySectionPlusFooterThatVisibleSectionControllersAreCorrect() {
         dataSource.objects = [0].typeErased()
         adapter.reloadData(withCompletion: nil)
-        
+        let supplementarySource = ListTestSupplementarySource()
+        supplementarySource.dequeueFromNib = true
+        supplementarySource.collectionContext = adapter
+        supplementarySource.supportedElementKinds = [UICollectionElementKindSectionFooter]
+        let sectionController = adapter.sectionController(for: AnyListDiffable(0))!
+        sectionController.supplementaryViewSource = supplementarySource
+        supplementarySource.sectionController = sectionController
+        adapter.performUpdates(animated: false, completion: nil)
+        let visibleSectionControllers = adapter.visibleSectionControllers
+        XCTAssertEqual(visibleSectionControllers.count, 1)
     }
 }

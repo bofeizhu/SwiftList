@@ -9,7 +9,9 @@
 import XCTest
 @testable import ListKit
 
-class ListTestNibSupplementaryView: UICollectionReusableView {
-    @IBOutlet weak var label: UILabel?
+class ListTestNibSupplementaryView : UICollectionReusableView {
+    
+    @IBOutlet weak var label: UILabel!
+    
     weak var delegate: UICollectionViewDelegate?
 }
