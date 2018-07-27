@@ -212,5 +212,25 @@ class ListAdapterTests: ListTestCase {
             adapter.sectionController(for: AnyListDiffable(4))!))
     }
     
+    func testWhenCellsExtendBeyondBoundsWithExperimentThatVisibleSectionControllersAreLimited() {
+        // add experiment
+        adapter.experiments.insert(.fasterVisibleSectionController)
+        dataSource.objects = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        XCTAssertEqual(collectionView.numberOfSections, 12)
+        let visibleSectionControllers = adapter.visibleSectionControllers
+        // UIWindow is 100x100, each cell is 100x10 so should have the following section/cell
+        // count: 1 + 2 + 3 + 4 = 10 (100 tall)
+        XCTAssertEqual(visibleSectionControllers.count, 4)
+        XCTAssertTrue(visibleSectionControllers.contains(
+            adapter.sectionController(for: AnyListDiffable(1))!))
+        XCTAssertTrue(visibleSectionControllers.contains(
+            adapter.sectionController(for: AnyListDiffable(2))!))
+        XCTAssertTrue(visibleSectionControllers.contains(
+            adapter.sectionController(for: AnyListDiffable(3))!))
+        XCTAssertTrue(visibleSectionControllers.contains(
+            adapter.sectionController(for: AnyListDiffable(4))!))
+    }
+    
     
 }
