@@ -248,5 +248,36 @@ class ListAdapterTests: ListTestCase {
         XCTAssertEqual(visibleSectionControllers.count, 1)
     }
     
+    func testWithEmptySectionPlusFooterWithExperimentThatVisibleSectionControllersAreCorrect() {
+        // add experiment
+        adapter.experiments.insert(.fasterVisibleSectionController)
+        dataSource.objects = [0].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        let supplementarySource = ListTestSupplementarySource()
+        supplementarySource.dequeueFromNib = true
+        supplementarySource.collectionContext = adapter
+        supplementarySource.supportedElementKinds = [UICollectionElementKindSectionFooter]
+        let sectionController = adapter.sectionController(for: AnyListDiffable(0))!
+        sectionController.supplementaryViewSource = supplementarySource
+        supplementarySource.sectionController = sectionController
+        adapter.performUpdates(animated: false, completion: nil)
+        let visibleSectionControllers = adapter.visibleSectionControllers
+        
+        XCTAssertEqual(visibleSectionControllers.count, 1)
+    }
     
+    func testWhenCellsExtendBeyondBoundsThatVisibleCellsExistForSectionControllers() {
+        dataSource.objects = [2, 3, 4, 5, 6].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        let sectionController2 = adapter.sectionController(for: AnyListDiffable(2))!
+        let sectionController3 = adapter.sectionController(for: AnyListDiffable(3))!
+        let sectionController4 = adapter.sectionController(for: AnyListDiffable(4))!
+        let sectionController5 = adapter.sectionController(for: AnyListDiffable(5))!
+        let sectionController6 = adapter.sectionController(for: AnyListDiffable(6))!
+        XCTAssertEqual(adapter.visibleCells(for: sectionController2).count, 2)
+        XCTAssertEqual(adapter.visibleCells(for: sectionController3).count, 3)
+        XCTAssertEqual(adapter.visibleCells(for: sectionController4).count, 4)
+        XCTAssertEqual(adapter.visibleCells(for: sectionController5).count, 1)
+        XCTAssertEqual(adapter.visibleCells(for: sectionController6).count, 0)
+    }
 }
