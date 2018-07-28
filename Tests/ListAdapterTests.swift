@@ -442,4 +442,47 @@ class ListAdapterTests: ListTestCase {
         adapter.scrollViewDidScroll(collectionView)
         wait(for: expectations, timeout: 5)
     }
+    
+    func testWhenCollectionViewDelegateSetThatDelegateReceivesEvents() {
+        // silence display handler asserts
+        dataSource.objects = [1, 2].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        
+        let collectionViewDelegate = ListTestCollectionViewDelegate()
+        collectionViewDelegate.didEndDisplayingCellExpectation = XCTestExpectation()
+        adapter.collectionViewDelegate = collectionViewDelegate
+        let expectations = [
+            collectionViewDelegate.didEndDisplayingCellExpectation!,
+        ]
+        let indexPath = IndexPath(item: 0, section: 0)
+        let cell = collectionView.cellForItem(at: indexPath)
+        adapter.collectionView(collectionView, didEndDisplaying: cell!, forItemAt: indexPath)
+        wait(for: expectations, timeout: 5)
+    }
+    
+    func testWhenCollectionViewAndScrollViewDelegateSetThatDelegatesReceiveUniqueEvents() {
+        // silence display handler asserts
+        dataSource.objects = [1, 2].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        
+        let scrollViewDelegate = ListTestScrollViewDelegate()
+        let collectionViewDelegate = ListTestCollectionViewDelegate()
+        scrollViewDelegate.scrollViewDidScrollExpectation = XCTestExpectation()
+        collectionViewDelegate.didEndDisplayingCellExpectation = XCTestExpectation()
+        collectionViewDelegate.scrollViewDidScrollExpectation = XCTestExpectation()
+        collectionViewDelegate.scrollViewDidScrollExpectation?.isInverted = true
+        
+        adapter.scrollViewDelegate = scrollViewDelegate
+        adapter.collectionViewDelegate = collectionViewDelegate
+        let expectations = [
+            scrollViewDelegate.scrollViewDidScrollExpectation!,
+            collectionViewDelegate.didEndDisplayingCellExpectation!,
+            collectionViewDelegate.scrollViewDidScrollExpectation!,
+        ]
+        let indexPath = IndexPath(item: 0, section: 0)
+        let cell = collectionView.cellForItem(at: indexPath)
+        adapter.scrollViewDidScroll(collectionView)
+        adapter.collectionView(collectionView, didEndDisplaying: cell!, forItemAt: indexPath)
+        wait(for: expectations, timeout: 5)
+    }
 }
