@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>ListDisplayDelegate Protocol Reference</title>
+    <title>ListBatchContext Protocol Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,9 +14,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Protocol/ListDisplayDelegate" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Protocol/ListBatchContext" class="dashAnchor"></a>
 
-    <a title="ListDisplayDelegate Protocol Reference"></a>
+    <a title="ListBatchContext Protocol Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -44,7 +44,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html">ListKit Reference</a>
       <img class="carat" src="../img/carat.png" />
-      ListDisplayDelegate Protocol Reference
+      ListBatchContext Protocol Reference
     </p>
 
     <div class="content-wrapper">
@@ -223,14 +223,15 @@
 
         <section class="section">
           <div class="section-content">
-            <h1>ListDisplayDelegate</h1>
+            <h1>ListBatchContext</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">ListDisplayDelegate</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">ListBatchContext</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
 
                 </div>
               </div>
-            <p>Implement this protocol to receive display events for a section controller when it is on screen.</p>
+            <p>Objects conforming to the ListBatchContext protocol provide a way for section controllers
+to mutate their cells or reload everything within the section.</p>
 
           </div>
         </section>
@@ -242,9 +243,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7ListKit0A15DisplayDelegateP11listAdapteryAA0aF0C_AA0A17SectionControllerC04willC0tF"></a>
-                    <a name="//apple_ref/swift/Method/listAdapter(_:willDisplay:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7ListKit0A15DisplayDelegateP11listAdapteryAA0aF0C_AA0A17SectionControllerC04willC0tF">listAdapter(_:willDisplay:)</a>
+                    <a name="/s:7ListKit0A12BatchContextP17sectionControlleryAA0a7SectionF0C_10Foundation8IndexSetV13reloadItemsAttF"></a>
+                    <a name="//apple_ref/swift/Method/sectionController(_:reloadItemsAt:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A12BatchContextP17sectionControlleryAA0a7SectionF0C_10Foundation8IndexSetV13reloadItemsAttF">sectionController(_:reloadItemsAt:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -252,14 +253,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Tells the delegate that the specified section controller is about to be displayed.</p>
+                        <p>Reloads cells in the section controller.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">listAdapter</span><span class="p">(</span><span class="n">_</span> <span class="nv">listAdapter</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListAdapter.html">ListAdapter</a></span><span class="p">,</span> <span class="n">willDisplay</span> <span class="nv">sectionController</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListSectionController.html">ListSectionController</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">sectionController</span><span class="p">(</span><span class="n">_</span> <span class="nv">sectionController</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListSectionController.html">ListSectionController</a></span><span class="p">,</span> <span class="n">reloadItemsAt</span> <span class="nv">indexes</span><span class="p">:</span> <span class="kt">IndexSet</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -270,24 +271,24 @@
                             <tr>
                               <td>
                                 <code>
-                                <em>listAdapter</em>
+                                <em>sectionController</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The list adapter for the section controller.</p>
+                                  <p>The section controller who&rsquo;s cells need reloading.</p>
                                 </div>
                               </td>
                             </tr>
                             <tr>
                               <td>
                                 <code>
-                                <em>sectionController</em>
+                                <em>indexes</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The section controller about to be displayed.</p>
+                                  <p>The indexes of items that need reloading.</p>
                                 </div>
                               </td>
                             </tr>
@@ -300,9 +301,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7ListKit0A15DisplayDelegateP11listAdapteryAA0aF0C_AA0A17SectionControllerC16didEndDisplayingtF"></a>
-                    <a name="//apple_ref/swift/Method/listAdapter(_:didEndDisplaying:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7ListKit0A15DisplayDelegateP11listAdapteryAA0aF0C_AA0A17SectionControllerC16didEndDisplayingtF">listAdapter(_:didEndDisplaying:)</a>
+                    <a name="/s:7ListKit0A12BatchContextP17sectionControlleryAA0a7SectionF0C_10Foundation8IndexSetV13insertItemsAttF"></a>
+                    <a name="//apple_ref/swift/Method/sectionController(_:insertItemsAt:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A12BatchContextP17sectionControlleryAA0a7SectionF0C_10Foundation8IndexSetV13insertItemsAttF">sectionController(_:insertItemsAt:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -310,14 +311,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Tells the delegate that the specified section controller is no longer being displayed.</p>
+                        <p>Inserts cells in the list.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">listAdapter</span><span class="p">(</span><span class="n">_</span> <span class="nv">listAdapter</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListAdapter.html">ListAdapter</a></span><span class="p">,</span> <span class="n">didEndDisplaying</span> <span class="nv">sectionController</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListSectionController.html">ListSectionController</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">sectionController</span><span class="p">(</span><span class="n">_</span> <span class="nv">sectionController</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListSectionController.html">ListSectionController</a></span><span class="p">,</span> <span class="n">insertItemsAt</span> <span class="nv">indexes</span><span class="p">:</span> <span class="kt">IndexSet</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -328,24 +329,24 @@
                             <tr>
                               <td>
                                 <code>
-                                <em>listAdapter</em>
+                                <em>sectionController</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The list adapter for the section controller.</p>
+                                  <p>The section controller who&rsquo;s cells need inserting.</p>
                                 </div>
                               </td>
                             </tr>
                             <tr>
                               <td>
                                 <code>
-                                <em>sectionController</em>
+                                <em>indexes</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>he section controller that is no longer displayed.</p>
+                                  <p>The indexes of items that need inserting.</p>
                                 </div>
                               </td>
                             </tr>
@@ -358,9 +359,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7ListKit0A15DisplayDelegateP11listAdapteryAA0aF0C_AA0A17SectionControllerC07sectionH0So20UICollectionViewCellC04willcL0Si2attF"></a>
-                    <a name="//apple_ref/swift/Method/listAdapter(_:sectionController:willDisplayCell:at:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7ListKit0A15DisplayDelegateP11listAdapteryAA0aF0C_AA0A17SectionControllerC07sectionH0So20UICollectionViewCellC04willcL0Si2attF">listAdapter(_:sectionController:willDisplayCell:at:)</a>
+                    <a name="/s:7ListKit0A12BatchContextP17sectionControlleryAA0a7SectionF0C_10Foundation8IndexSetV13deleteItemsAttF"></a>
+                    <a name="//apple_ref/swift/Method/sectionController(_:deleteItemsAt:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A12BatchContextP17sectionControlleryAA0a7SectionF0C_10Foundation8IndexSetV13deleteItemsAttF">sectionController(_:deleteItemsAt:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -368,14 +369,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Tells the delegate that a cell in the specified list is about to be displayed.</p>
+                        <p>Deletes cells in the list.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">listAdapter</span><span class="p">(</span><span class="n">_</span> <span class="nv">listAdapter</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListAdapter.html">ListAdapter</a></span><span class="p">,</span> <span class="nv">sectionController</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListSectionController.html">ListSectionController</a></span><span class="p">,</span> <span class="n">willDisplayCell</span> <span class="nv">cell</span><span class="p">:</span> <span class="kt">UICollectionViewCell</span><span class="p">,</span> <span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">sectionController</span><span class="p">(</span><span class="n">_</span> <span class="nv">sectionController</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListSectionController.html">ListSectionController</a></span><span class="p">,</span> <span class="n">deleteItemsAt</span> <span class="nv">indexes</span><span class="p">:</span> <span class="kt">IndexSet</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -386,15 +387,61 @@
                             <tr>
                               <td>
                                 <code>
-                                <em>listAdapter</em>
+                                <em>sectionController</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The list adapter in which the cell will display.</p>
+                                  <p>The section controller who&rsquo;s cells need deleted.</p>
                                 </div>
                               </td>
                             </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>indexes</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The indexes of items that need deleting.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A12BatchContextP17sectionControlleryAA0a7SectionF0C_Si12moveItemfromSi2totF"></a>
+                    <a name="//apple_ref/swift/Method/sectionController(_:moveItemfrom:to:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A12BatchContextP17sectionControlleryAA0a7SectionF0C_Si12moveItemfromSi2totF">sectionController(_:moveItemfrom:to:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Moves a cell from one index to another within the section controller.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">sectionController</span><span class="p">(</span><span class="n">_</span> <span class="nv">sectionController</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListSectionController.html">ListSectionController</a></span><span class="p">,</span> <span class="n">moveItemfrom</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="n">to</span> <span class="nv">newIndex</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
                             <tr>
                               <td>
                                 <code>
@@ -403,19 +450,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>The section controller that is displaying the cell.</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>cell</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The cell about to be displayed.</p>
+                                  <p>The section controller who&rsquo;s cell needs moved.</p>
                                 </div>
                               </td>
                             </tr>
@@ -427,7 +462,19 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>The index of the cell in the section.</p>
+                                  <p>The index the cell is currently in.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>newIndex</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index the cell should move to.</p>
                                 </div>
                               </td>
                             </tr>
@@ -440,9 +487,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7ListKit0A15DisplayDelegateP11listAdapteryAA0aF0C_AA0A17SectionControllerC07sectionH0So20UICollectionViewCellC016didEndDisplayingL0Si2attF"></a>
-                    <a name="//apple_ref/swift/Method/listAdapter(_:sectionController:didEndDisplayingCell:at:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7ListKit0A15DisplayDelegateP11listAdapteryAA0aF0C_AA0A17SectionControllerC07sectionH0So20UICollectionViewCellC016didEndDisplayingL0Si2attF">listAdapter(_:sectionController:didEndDisplayingCell:at:)</a>
+                    <a name="/s:7ListKit0A12BatchContextP6reloadyAA0A17SectionControllerCF"></a>
+                    <a name="//apple_ref/swift/Method/reload(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A12BatchContextP6reloadyAA0A17SectionControllerCF">reload(_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -450,14 +497,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Tells the delegate that a cell in the specified list is no longer being displayed.</p>
+                        <p>Reloads the entire section controller.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">listAdapter</span><span class="p">(</span><span class="n">_</span> <span class="nv">listAdaper</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListAdapter.html">ListAdapter</a></span><span class="p">,</span> <span class="nv">sectionController</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListSectionController.html">ListSectionController</a></span><span class="p">,</span> <span class="n">didEndDisplayingCell</span> <span class="nv">cell</span><span class="p">:</span> <span class="kt">UICollectionViewCell</span><span class="p">,</span> <span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">reload</span><span class="p">(</span><span class="n">_</span> <span class="nv">sectionController</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListSectionController.html">ListSectionController</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -468,48 +515,12 @@
                             <tr>
                               <td>
                                 <code>
-                                <em>listAdaper</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The list adapter in which the cell was displayed.</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
                                 <em>sectionController</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The section controller that is no longer displaying the cell.</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>cell</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The cell that is no longer displayed.</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>index</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The index of the cell in the section.</p>
+                                  <p>The section controller who&rsquo;s cells need reloading.</p>
                                 </div>
                               </td>
                             </tr>

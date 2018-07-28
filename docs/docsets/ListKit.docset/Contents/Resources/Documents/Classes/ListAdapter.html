@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
           ListKit Docs
         </a>
-         (92% documented)
+         (87% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -73,6 +73,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/ListIndexSetResult.html">ListIndexSetResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ListReloadDataUpdater.html">ListReloadDataUpdater</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/ListSectionController.html">ListSectionController</a>
@@ -137,7 +140,7 @@
                 <a class="nav-group-task-link" href="../Protocols/ListAdapterUpdaterDelegate.html">ListAdapterUpdaterDelegate</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols.html#/s:7ListKit0A12BatchContextP">ListBatchContext</a>
+                <a class="nav-group-task-link" href="../Protocols/ListBatchContext.html">ListBatchContext</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/ListCollectionContext.html">ListCollectionContext</a>
@@ -204,7 +207,7 @@
                 <a class="nav-group-task-link" href="../Typealiases.html#/s:7ListKit0A19ReloadUpdateClosurea">ListReloadUpdateClosure</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Typealiases.html#/s:7ListKit0A15ToObjectClosurea">ListToObjectClosure</a>
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:7ListKit0A16ToObjectsClosurea">ListToObjectsClosure</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Typealiases.html#/s:7ListKit0A17UpdaterCompletiona">ListUpdaterCompletion</a>
@@ -1274,9 +1277,9 @@ protocol.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7ListKit0A7AdapterC24sizeForSupplementaryViewSC6CGSizeVSgSS6ofKind_10Foundation9IndexPathV2attF"></a>
+                    <a name="/s:7ListKit0A7AdapterC24sizeForSupplementaryViewSC6CGSizeVSS6ofKind_10Foundation9IndexPathV2attF"></a>
                     <a name="//apple_ref/swift/Method/sizeForSupplementaryView(ofKind:at:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7ListKit0A7AdapterC24sizeForSupplementaryViewSC6CGSizeVSgSS6ofKind_10Foundation9IndexPathV2attF">sizeForSupplementaryView(ofKind:at:)</a>
+                    <a class="token" href="#/s:7ListKit0A7AdapterC24sizeForSupplementaryViewSC6CGSizeVSS6ofKind_10Foundation9IndexPathV2attF">sizeForSupplementaryView(ofKind:at:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1285,6 +1288,12 @@ protocol.</p>
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Returns the size of a supplementary view in the list at the specified index path.</p>
+<div class="aside aside-warning">
+    <p class="aside-title">Warning</p>
+    This method returns CGSize.zero when the element kind requested is not
+registered.
+
+</div>
 
                       </div>
                       <div class="declaration">
@@ -1294,7 +1303,7 @@ protocol.</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">sizeForSupplementaryView</span><span class="p">(</span>
     <span class="n">ofKind</span> <span class="nv">elementKind</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
     <span class="n">at</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CGSize</span><span class="p">?</span></code></pre>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CGSize</span></code></pre>
 
                         </div>
                       </div>
@@ -1938,7 +1947,7 @@ protocol.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">performBatchUpdates</span><span class="p">(</span>
-    <span class="n">_</span> <span class="nv">updates</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Protocols.html#/s:7ListKit0A12BatchContextP">ListBatchContext</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">,</span>
+    <span class="n">_</span> <span class="nv">updates</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Protocols/ListBatchContext.html">ListBatchContext</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">,</span>
     <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span>
     <span class="nv">completion</span><span class="p">:</span> <span class="p">((</span><span class="kt">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?)</span></code></pre>
 
@@ -1971,6 +1980,156 @@ protocol.</p>
     <span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span>
     <span class="nv">scrollPosition</span><span class="p">:</span> <span class="kt">UICollectionViewScrollPosition</span><span class="p">,</span>
     <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/ListBatchContext"></a>
+                <a name="//apple_ref/swift/Section/ListBatchContext" class="dashAnchor"></a>
+                <a href="#/ListBatchContext">
+                  <h3 class="section-name">ListBatchContext</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A12BatchContextP17sectionControlleryAA0a7SectionF0C_10Foundation8IndexSetV13reloadItemsAttF"></a>
+                    <a name="//apple_ref/swift/Method/sectionController(_:reloadItemsAt:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A12BatchContextP17sectionControlleryAA0a7SectionF0C_10Foundation8IndexSetV13reloadItemsAttF">sectionController(_:reloadItemsAt:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">sectionController</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">sectionController</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListSectionController.html">ListSectionController</a></span><span class="p">,</span>
+    <span class="n">reloadItemsAt</span> <span class="nv">indexes</span><span class="p">:</span> <span class="kt">IndexSet</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A12BatchContextP17sectionControlleryAA0a7SectionF0C_10Foundation8IndexSetV13insertItemsAttF"></a>
+                    <a name="//apple_ref/swift/Method/sectionController(_:insertItemsAt:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A12BatchContextP17sectionControlleryAA0a7SectionF0C_10Foundation8IndexSetV13insertItemsAttF">sectionController(_:insertItemsAt:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">sectionController</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">sectionController</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListSectionController.html">ListSectionController</a></span><span class="p">,</span>
+    <span class="n">insertItemsAt</span> <span class="nv">indexes</span><span class="p">:</span> <span class="kt">IndexSet</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A12BatchContextP17sectionControlleryAA0a7SectionF0C_10Foundation8IndexSetV13deleteItemsAttF"></a>
+                    <a name="//apple_ref/swift/Method/sectionController(_:deleteItemsAt:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A12BatchContextP17sectionControlleryAA0a7SectionF0C_10Foundation8IndexSetV13deleteItemsAttF">sectionController(_:deleteItemsAt:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">sectionController</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">sectionController</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListSectionController.html">ListSectionController</a></span><span class="p">,</span>
+    <span class="n">deleteItemsAt</span> <span class="nv">indexes</span><span class="p">:</span> <span class="kt">IndexSet</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A12BatchContextP17sectionControlleryAA0a7SectionF0C_Si12moveItemfromSi2totF"></a>
+                    <a name="//apple_ref/swift/Method/sectionController(_:moveItemfrom:to:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A12BatchContextP17sectionControlleryAA0a7SectionF0C_Si12moveItemfromSi2totF">sectionController(_:moveItemfrom:to:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">sectionController</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">sectionController</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListSectionController.html">ListSectionController</a></span><span class="p">,</span>
+    <span class="n">moveItemfrom</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span>
+    <span class="n">to</span> <span class="nv">newIndex</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ListKit0A12BatchContextP6reloadyAA0A17SectionControllerCF"></a>
+                    <a name="//apple_ref/swift/Method/reload(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ListKit0A12BatchContextP6reloadyAA0A17SectionControllerCF">reload(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">reload</span><span class="p">(</span><span class="n">_</span> <span class="nv">sectionController</span><span class="p">:</span> <span class="kt"><a href="../Classes/ListSectionController.html">ListSectionController</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -2073,6 +2232,551 @@ protocol.</p>
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ListKit@objc(cs)ListAdapter(im)collectionView:viewForSupplementaryElementOfKind:atIndexPath:"></a>
+                    <a name="//apple_ref/swift/Method/collectionView(_:viewForSupplementaryElementOfKind:at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ListKit@objc(cs)ListAdapter(im)collectionView:viewForSupplementaryElementOfKind:atIndexPath:">collectionView(_:viewForSupplementaryElementOfKind:at:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">collectionView</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">,</span>
+    <span class="n">viewForSupplementaryElementOfKind</span> <span class="nv">kind</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+    <span class="n">at</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UICollectionReusableView</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ListKit@objc(cs)ListAdapter(im)collectionView:canMoveItemAtIndexPath:"></a>
+                    <a name="//apple_ref/swift/Method/collectionView(_:canMoveItemAt:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ListKit@objc(cs)ListAdapter(im)collectionView:canMoveItemAtIndexPath:">collectionView(_:canMoveItemAt:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">collectionView</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">,</span>
+    <span class="n">canMoveItemAt</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/UICollectionViewDelegateFlowLayout"></a>
+                <a name="//apple_ref/swift/Section/UICollectionViewDelegateFlowLayout" class="dashAnchor"></a>
+                <a href="#/UICollectionViewDelegateFlowLayout">
+                  <h3 class="section-name">UICollectionViewDelegateFlowLayout</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ListKit@objc(cs)ListAdapter(im)collectionView:layout:sizeForItemAtIndexPath:"></a>
+                    <a name="//apple_ref/swift/Method/collectionView(_:layout:sizeForItemAt:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ListKit@objc(cs)ListAdapter(im)collectionView:layout:sizeForItemAtIndexPath:">collectionView(_:layout:sizeForItemAt:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">collectionView</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">,</span>
+    <span class="n">layout</span> <span class="nv">collectionViewLayout</span><span class="p">:</span> <span class="kt">UICollectionViewLayout</span><span class="p">,</span>
+    <span class="n">sizeForItemAt</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CGSize</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ListKit@objc(cs)ListAdapter(im)collectionView:layout:insetForSectionAtIndex:"></a>
+                    <a name="//apple_ref/swift/Method/collectionView(_:layout:insetForSectionAt:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ListKit@objc(cs)ListAdapter(im)collectionView:layout:insetForSectionAtIndex:">collectionView(_:layout:insetForSectionAt:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">collectionView</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">,</span>
+    <span class="n">layout</span> <span class="nv">collectionViewLayout</span><span class="p">:</span> <span class="kt">UICollectionViewLayout</span><span class="p">,</span>
+    <span class="n">insetForSectionAt</span> <span class="nv">section</span><span class="p">:</span> <span class="kt">Int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UIEdgeInsets</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ListKit@objc(cs)ListAdapter(im)collectionView:layout:minimumLineSpacingForSectionAtIndex:"></a>
+                    <a name="//apple_ref/swift/Method/collectionView(_:layout:minimumLineSpacingForSectionAt:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ListKit@objc(cs)ListAdapter(im)collectionView:layout:minimumLineSpacingForSectionAtIndex:">collectionView(_:layout:minimumLineSpacingForSectionAt:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">collectionView</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">,</span>
+    <span class="n">layout</span> <span class="nv">collectionViewLayout</span><span class="p">:</span> <span class="kt">UICollectionViewLayout</span><span class="p">,</span>
+    <span class="n">minimumLineSpacingForSectionAt</span> <span class="nv">section</span><span class="p">:</span> <span class="kt">Int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CGFloat</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ListKit@objc(cs)ListAdapter(im)collectionView:layout:minimumInteritemSpacingForSectionAtIndex:"></a>
+                    <a name="//apple_ref/swift/Method/collectionView(_:layout:minimumInteritemSpacingForSectionAt:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ListKit@objc(cs)ListAdapter(im)collectionView:layout:minimumInteritemSpacingForSectionAtIndex:">collectionView(_:layout:minimumInteritemSpacingForSectionAt:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">collectionView</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">,</span>
+    <span class="n">layout</span> <span class="nv">collectionViewLayout</span><span class="p">:</span> <span class="kt">UICollectionViewLayout</span><span class="p">,</span>
+    <span class="n">minimumInteritemSpacingForSectionAt</span> <span class="nv">section</span><span class="p">:</span> <span class="kt">Int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CGFloat</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ListKit@objc(cs)ListAdapter(im)collectionView:layout:referenceSizeForHeaderInSection:"></a>
+                    <a name="//apple_ref/swift/Method/collectionView(_:layout:referenceSizeForHeaderInSection:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ListKit@objc(cs)ListAdapter(im)collectionView:layout:referenceSizeForHeaderInSection:">collectionView(_:layout:referenceSizeForHeaderInSection:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">collectionView</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">,</span>
+    <span class="n">layout</span> <span class="nv">collectionViewLayout</span><span class="p">:</span> <span class="kt">UICollectionViewLayout</span><span class="p">,</span>
+    <span class="n">referenceSizeForHeaderInSection</span> <span class="nv">section</span><span class="p">:</span> <span class="kt">Int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CGSize</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ListKit@objc(cs)ListAdapter(im)collectionView:layout:referenceSizeForFooterInSection:"></a>
+                    <a name="//apple_ref/swift/Method/collectionView(_:layout:referenceSizeForFooterInSection:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ListKit@objc(cs)ListAdapter(im)collectionView:layout:referenceSizeForFooterInSection:">collectionView(_:layout:referenceSizeForFooterInSection:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">collectionView</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">,</span>
+    <span class="n">layout</span> <span class="nv">collectionViewLayout</span><span class="p">:</span> <span class="kt">UICollectionViewLayout</span><span class="p">,</span>
+    <span class="n">referenceSizeForFooterInSection</span> <span class="nv">section</span><span class="p">:</span> <span class="kt">Int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CGSize</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/UICollectionViewDelegate"></a>
+                <a name="//apple_ref/swift/Section/UICollectionViewDelegate" class="dashAnchor"></a>
+                <a href="#/UICollectionViewDelegate">
+                  <h3 class="section-name">UICollectionViewDelegate</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ListKit@objc(cs)ListAdapter(im)collectionView:didSelectItemAtIndexPath:"></a>
+                    <a name="//apple_ref/swift/Method/collectionView(_:didSelectItemAt:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ListKit@objc(cs)ListAdapter(im)collectionView:didSelectItemAtIndexPath:">collectionView(_:didSelectItemAt:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">collectionView</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">,</span>
+    <span class="n">didSelectItemAt</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ListKit@objc(cs)ListAdapter(im)collectionView:didDeselectItemAtIndexPath:"></a>
+                    <a name="//apple_ref/swift/Method/collectionView(_:didDeselectItemAt:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ListKit@objc(cs)ListAdapter(im)collectionView:didDeselectItemAtIndexPath:">collectionView(_:didDeselectItemAt:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">collectionView</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">,</span>
+    <span class="n">didDeselectItemAt</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ListKit@objc(cs)ListAdapter(im)collectionView:willDisplayCell:forItemAtIndexPath:"></a>
+                    <a name="//apple_ref/swift/Method/collectionView(_:willDisplay:forItemAt:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ListKit@objc(cs)ListAdapter(im)collectionView:willDisplayCell:forItemAtIndexPath:">collectionView(_:willDisplay:forItemAt:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">collectionView</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">,</span>
+    <span class="n">willDisplay</span> <span class="nv">cell</span><span class="p">:</span> <span class="kt">UICollectionViewCell</span><span class="p">,</span>
+    <span class="n">forItemAt</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ListKit@objc(cs)ListAdapter(im)collectionView:didEndDisplayingCell:forItemAtIndexPath:"></a>
+                    <a name="//apple_ref/swift/Method/collectionView(_:didEndDisplaying:forItemAt:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ListKit@objc(cs)ListAdapter(im)collectionView:didEndDisplayingCell:forItemAtIndexPath:">collectionView(_:didEndDisplaying:forItemAt:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">collectionView</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">,</span>
+    <span class="n">didEndDisplaying</span> <span class="nv">cell</span><span class="p">:</span> <span class="kt">UICollectionViewCell</span><span class="p">,</span>
+    <span class="n">forItemAt</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ListKit@objc(cs)ListAdapter(im)collectionView:willDisplaySupplementaryView:forElementKind:atIndexPath:"></a>
+                    <a name="//apple_ref/swift/Method/collectionView(_:willDisplaySupplementaryView:forElementKind:at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ListKit@objc(cs)ListAdapter(im)collectionView:willDisplaySupplementaryView:forElementKind:atIndexPath:">collectionView(_:willDisplaySupplementaryView:forElementKind:at:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">collectionView</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">,</span>
+    <span class="n">willDisplaySupplementaryView</span> <span class="nv">view</span><span class="p">:</span> <span class="kt">UICollectionReusableView</span><span class="p">,</span>
+    <span class="n">forElementKind</span> <span class="nv">elementKind</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+    <span class="n">at</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ListKit@objc(cs)ListAdapter(im)collectionView:didEndDisplayingSupplementaryView:forElementOfKind:atIndexPath:"></a>
+                    <a name="//apple_ref/swift/Method/collectionView(_:didEndDisplayingSupplementaryView:forElementOfKind:at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ListKit@objc(cs)ListAdapter(im)collectionView:didEndDisplayingSupplementaryView:forElementOfKind:atIndexPath:">collectionView(_:didEndDisplayingSupplementaryView:forElementOfKind:at:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">collectionView</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">,</span>
+    <span class="n">didEndDisplayingSupplementaryView</span> <span class="nv">view</span><span class="p">:</span> <span class="kt">UICollectionReusableView</span><span class="p">,</span>
+    <span class="n">forElementOfKind</span> <span class="nv">elementKind</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+    <span class="n">at</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ListKit@objc(cs)ListAdapter(im)collectionView:didHighlightItemAtIndexPath:"></a>
+                    <a name="//apple_ref/swift/Method/collectionView(_:didHighlightItemAt:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ListKit@objc(cs)ListAdapter(im)collectionView:didHighlightItemAtIndexPath:">collectionView(_:didHighlightItemAt:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">collectionView</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">,</span>
+    <span class="n">didHighlightItemAt</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ListKit@objc(cs)ListAdapter(im)collectionView:didUnhighlightItemAtIndexPath:"></a>
+                    <a name="//apple_ref/swift/Method/collectionView(_:didUnhighlightItemAt:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ListKit@objc(cs)ListAdapter(im)collectionView:didUnhighlightItemAtIndexPath:">collectionView(_:didUnhighlightItemAt:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">collectionView</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">,</span>
+    <span class="n">didUnhighlightItemAt</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Pass%20on%20method%20calls%20to%20delegates"></a>
+                <a name="//apple_ref/swift/Section/Pass on method calls to delegates" class="dashAnchor"></a>
+                <a href="#/Pass%20on%20method%20calls%20to%20delegates">
+                  <h3 class="section-name">Pass on method calls to delegates</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ListKit@objc(cs)ListAdapter(im)scrollViewDidScroll:"></a>
+                    <a name="//apple_ref/swift/Method/scrollViewDidScroll(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ListKit@objc(cs)ListAdapter(im)scrollViewDidScroll:">scrollViewDidScroll(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">scrollViewDidScroll</span><span class="p">(</span><span class="n">_</span> <span class="nv">scrollView</span><span class="p">:</span> <span class="kt">UIScrollView</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
           </div>
@@ -2081,7 +2785,7 @@ protocol.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2018 <a class="link" href="https://twitter.com/zhubofei" target="_blank" rel="external">zhubofei</a>. All rights reserved. (Last updated: 2018-07-25)</p>
+      <p>&copy; 2018 <a class="link" href="https://twitter.com/zhubofei" target="_blank" rel="external">zhubofei</a>. All rights reserved. (Last updated: 2018-07-28)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

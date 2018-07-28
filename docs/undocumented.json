@@ -37,28 +37,147 @@
     },
     {
       "file": "/Users/zhubofei/ListKit/Source/ListAdapter.swift",
-      "line": 1363,
+      "line": 1479,
       "symbol": "ListAdapter.numberOfSections(in:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zhubofei/ListKit/Source/ListAdapter.swift",
-      "line": 1367,
+      "line": 1483,
       "symbol": "ListAdapter.collectionView(_:numberOfItemsInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zhubofei/ListKit/Source/ListAdapter.swift",
-      "line": 1382,
+      "line": 1498,
       "symbol": "ListAdapter.collectionView(_:cellForItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zhubofei/ListKit/Source/ListAdapter.swift",
-      "line": 1435,
+      "line": 1519,
+      "symbol": "ListAdapter.collectionView(_:viewForSupplementaryElementOfKind:at:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListAdapter.swift",
+      "line": 1537,
+      "symbol": "ListAdapter.collectionView(_:canMoveItemAt:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListAdapter.swift",
+      "line": 1550,
+      "symbol": "ListAdapter.collectionView(_:layout:sizeForItemAt:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListAdapter.swift",
+      "line": 1561,
+      "symbol": "ListAdapter.collectionView(_:layout:insetForSectionAt:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListAdapter.swift",
+      "line": 1573,
+      "symbol": "ListAdapter.collectionView(_:layout:minimumLineSpacingForSectionAt:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListAdapter.swift",
+      "line": 1585,
+      "symbol": "ListAdapter.collectionView(_:layout:minimumInteritemSpacingForSectionAt:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListAdapter.swift",
+      "line": 1597,
+      "symbol": "ListAdapter.collectionView(_:layout:referenceSizeForHeaderInSection:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListAdapter.swift",
+      "line": 1606,
+      "symbol": "ListAdapter.collectionView(_:layout:referenceSizeForFooterInSection:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListAdapter.swift",
+      "line": 1618,
+      "symbol": "ListAdapter.collectionView(_:didSelectItemAt:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListAdapter.swift",
+      "line": 1627,
+      "symbol": "ListAdapter.collectionView(_:didDeselectItemAt:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListAdapter.swift",
+      "line": 1636,
+      "symbol": "ListAdapter.collectionView(_:willDisplay:forItemAt:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListAdapter.swift",
+      "line": 1671,
+      "symbol": "ListAdapter.collectionView(_:didEndDisplaying:forItemAt:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListAdapter.swift",
+      "line": 1692,
+      "symbol": "ListAdapter.collectionView(_:willDisplaySupplementaryView:forElementKind:at:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListAdapter.swift",
+      "line": 1726,
+      "symbol": "ListAdapter.collectionView(_:didEndDisplayingSupplementaryView:forElementOfKind:at:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListAdapter.swift",
+      "line": 1747,
+      "symbol": "ListAdapter.collectionView(_:didHighlightItemAt:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListAdapter.swift",
+      "line": 1756,
+      "symbol": "ListAdapter.collectionView(_:didUnhighlightItemAt:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListAdapter.swift",
+      "line": 1766,
+      "symbol": "ListAdapter.scrollViewDidScroll(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zhubofei/ListKit/Source/ListAdapter.swift",
+      "line": 1793,
       "symbol": "ListQueuedCompletion",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"

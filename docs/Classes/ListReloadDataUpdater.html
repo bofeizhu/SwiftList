@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>ListAdapterUpdater Class Reference</title>
+    <title>ListReloadDataUpdater Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,9 +14,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Class/ListAdapterUpdater" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Class/ListReloadDataUpdater" class="dashAnchor"></a>
 
-    <a title="ListAdapterUpdater Class Reference"></a>
+    <a title="ListReloadDataUpdater Class Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -44,7 +44,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html">ListKit Reference</a>
       <img class="carat" src="../img/carat.png" />
-      ListAdapterUpdater Class Reference
+      ListReloadDataUpdater Class Reference
     </p>
 
     <div class="content-wrapper">
@@ -223,20 +223,18 @@
 
         <section class="section">
           <div class="section-content">
-            <h1>ListAdapterUpdater</h1>
+            <h1>ListReloadDataUpdater</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">ListAdapterUpdater</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">ListReloadDataUpdater</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/ListUpdatingDelegate.html">ListUpdatingDelegate</a></span></code></pre>
 
                 </div>
               </div>
-            <p>An <code>ListAdapterUpdater</code> is a concrete type that conforms to <code><a href="../Protocols/ListUpdatingDelegate.html">ListUpdatingDelegate</a></code>.
-It is an out-of-box updater for <code><a href="../Classes/ListAdapter.html">ListAdapter</a></code> objects to use.</p>
+            <p>An <code>ListReloadDataUpdater</code> is a concrete type that conforms to <code><a href="../Protocols/ListUpdatingDelegate.html">ListUpdatingDelegate</a></code>.
+It is an out-of-box updater for <code>IGListAdapter</code> objects to use.</p>
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
-    This updater performs re-entrant, coalesced updating for a list.
-It also uses a least-minimal diff for calculating UI updates when <code><a href="../Classes/ListAdapter.html">ListAdapter</a></code> calls
-<code>performUpdateWith(collectionView:fromObjects:toObjects:completion:)</code>.
+    This updater performs simple, synchronous updates using <code>UICollectionView.reloadData()</code>.
 
 </div>
 
@@ -246,153 +244,13 @@ It also uses a least-minimal diff for calculating UI updates when <code><a href=
         <section class="section">
           <div class="section-content">
             <div class="task-group">
-              <ul class="item-container">
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7ListKit0A14AdapterUpdaterC8delegateAA0acD8Delegate_pSgXwvp"></a>
-                    <a name="//apple_ref/swift/Property/delegate" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7ListKit0A14AdapterUpdaterC8delegateAA0acD8Delegate_pSgXwvp">delegate</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>The delegate that receives events with data on the performance of a transition.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ListAdapterUpdaterDelegate.html">ListAdapterUpdaterDelegate</a></span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7ListKit0A14AdapterUpdaterC21movesAsDeletesInsertsSbvp"></a>
-                    <a name="//apple_ref/swift/Property/movesAsDeletesInserts" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7ListKit0A14AdapterUpdaterC21movesAsDeletesInsertsSbvp">movesAsDeletesInserts</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>A flag indicating if a move should be treated as a <q>delete, then insert</q> operation.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">movesAsDeletesInserts</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7ListKit0A14AdapterUpdaterC25allowsBackgroundReloadingSbvp"></a>
-                    <a name="//apple_ref/swift/Property/allowsBackgroundReloading" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7ListKit0A14AdapterUpdaterC25allowsBackgroundReloadingSbvp">allowsBackgroundReloading</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>A flag indicating whether this updater should skip diffing and simply call <code>reloadData</code>
-for updates when the collection view is not in a window. The default value is <code>true</code>.</p>
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    This will result in better performance, but will not generate the same delegate
-callbacks. If using a custom layout, it will not receive
-<code>prepareForCollectionViewUpdates(_:)</code>.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">allowsBackgroundReloading</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7ListKit0A14AdapterUpdaterC15coalescanceTimeSivp"></a>
-                    <a name="//apple_ref/swift/Property/coalescanceTime" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7ListKit0A14AdapterUpdaterC15coalescanceTimeSivp">coalescanceTime</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Time, in seconds, to wait and coalesce batch updates. Default is 0.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">coalescanceTime</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7ListKit0A14AdapterUpdaterC11experimentsAA0A10ExperimentVvp"></a>
-                    <a name="//apple_ref/swift/Property/experiments" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7ListKit0A14AdapterUpdaterC11experimentsAA0A10ExperimentVvp">experiments</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>A bitmask of experiments to conduct on the updater.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">experiments</span><span class="p">:</span> <span class="kt"><a href="../Structs/ListExperiment.html">ListExperiment</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/ListUpdatingDelegate"></a>
+                <a name="//apple_ref/swift/Section/ListUpdatingDelegate" class="dashAnchor"></a>
+                <a href="#/ListUpdatingDelegate">
+                  <h3 class="section-name">ListUpdatingDelegate</h3>
+                </a>
+              </div>
               <ul class="item-container">
                 <li class="item">
                   <div>
