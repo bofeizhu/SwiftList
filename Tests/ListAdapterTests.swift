@@ -13,7 +13,6 @@ class ListAdapterTests: ListTestCase {
     override func setUp() {
         dataSource = ListTestAdapterDataSource()
         updater = ListReloadDataUpdater()
-        
         super.setUp()
         
         // test case doesn't use setup(with) for more control over update events
@@ -95,6 +94,53 @@ class ListAdapterTests: ListTestCase {
         XCTAssertEqual(paths, expected)
     }
     
+    func testWhenQueryingIndexPathsInsideBatchUpdateBlockThatPathsAreEqual() {
+        dataSource.objects = [0, 1, 2].typeErased()
+        adapter.performUpdates(animated: true, completion: nil)
+        let second = adapter.sectionController(for: AnyListDiffable(1))!
+        var executed = false
+        adapter.performBatchUpdates(
+            { [weak self] (batchContext) in
+                let paths = self!.adapter.indexPaths(
+                    from: second,
+                    at: IndexSet(2...3),
+                    usePreviousIfInUpdateClosure: true)
+                let expected = [
+                    IndexPath(item: 2, section: 1),
+                    IndexPath(item: 3, section: 1),
+                ]
+                XCTAssertEqual(paths, expected)
+                executed = true
+            },
+            animated: true,
+            completion: nil)
+        XCTAssertTrue(executed)
+    }
+    
+    func testWhenQueryingReusableIdentifierThatIdentifierEqualsClassName() {
+        let identifier = ListAdapter.reusableViewIdentifier(
+            viewClass: UICollectionViewCell.self,
+            kind: nil,
+            givenReuseIdentifier: nil)
+        XCTAssertEqual(identifier, "UICollectionViewCell")
+    }
+    
+    func testWhenQueryingReusableIdentifierWithGivenIdentifierTahtIdentifierIsCorrect() {
+        let identifier = ListAdapter.reusableViewIdentifier(
+            viewClass: UICollectionViewCell.self,
+            kind: nil,
+            givenReuseIdentifier: "MyCoolID")
+        XCTAssertEqual(identifier, "MyCoolIDUICollectionViewCell")
+    }
+    
+    func testWhenQueryingReusableIdentifierThatIdentifierEqualsClassNameAndSupplimentaryKind() {
+        let identifier = ListAdapter.reusableViewIdentifier(
+            viewClass: UICollectionViewCell.self,
+            kind: UICollectionElementKindSectionFooter.self,
+            givenReuseIdentifier: nil)
+        XCTAssertEqual(identifier, "UICollectionElementKindSectionFooterUICollectionViewCell")
+    }
+    
     func testWhenDataSourceChangesThatBackgroundViewVisibilityChanges() {
         self.dataSource.objects = [1].typeErased()
         let background = UIView()
@@ -159,7 +205,6 @@ class ListAdapterTests: ListTestCase {
         adapter.collectionView = self.collectionView
         collectionView.layoutIfNeeded()
         XCTAssertNotNil(collectionView.cellForItem(at: IndexPath(item: 0, section: 0)))
-        
         let otherCollectionView = UICollectionView(
             frame: collectionView.frame,
             collectionViewLayout: collectionView.collectionViewLayout)
@@ -174,7 +219,6 @@ class ListAdapterTests: ListTestCase {
         let updater1 = ListAdapterUpdater()
         let adapter1 = ListAdapter(updater: updater1, viewController: nil)
         adapter1.dataSource = dataSource1
-        
         let dataSource2 = ListTestAdapterDataSource()
         dataSource2.objects = [1].typeErased()
         let updater2 = ListAdapterUpdater()
@@ -192,5 +236,338 @@ class ListAdapterTests: ListTestCase {
         // associate collection view with adapter1
         adapter1.collectionView = self.collectionView
         XCTAssertEqual(collectionView.dataSource as! ListAdapter, adapter1)
+    }
+    
+    func testWhenCellsExtendBeyondBoundsThatVisibleSectionControllersAreLimited() {
+        dataSource.objects = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        XCTAssertEqual(collectionView.numberOfSections, 12)
+        let visibleSectionControllers = adapter.visibleSectionControllers
+        // UIWindow is 100x100, each cell is 100x10 so should have the following section/cell
+        // count: 1 + 2 + 3 + 4 = 10 (100 tall)
+        XCTAssertEqual(visibleSectionControllers.count, 4)
+        XCTAssertTrue(visibleSectionControllers.contains(
+            adapter.sectionController(for: AnyListDiffable(1))!))
+        XCTAssertTrue(visibleSectionControllers.contains(
+            adapter.sectionController(for: AnyListDiffable(2))!))
+        XCTAssertTrue(visibleSectionControllers.contains(
+            adapter.sectionController(for: AnyListDiffable(3))!))
+        XCTAssertTrue(visibleSectionControllers.contains(
+            adapter.sectionController(for: AnyListDiffable(4))!))
+    }
+    
+    func testWhenCellsExtendBeyondBoundsWithExperimentThatVisibleSectionControllersAreLimited() {
+        // add experiment
+        adapter.experiments.insert(.fasterVisibleSectionController)
+        dataSource.objects = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        XCTAssertEqual(collectionView.numberOfSections, 12)
+        let visibleSectionControllers = adapter.visibleSectionControllers
+        // UIWindow is 100x100, each cell is 100x10 so should have the following section/cell
+        // count: 1 + 2 + 3 + 4 = 10 (100 tall)
+        XCTAssertEqual(visibleSectionControllers.count, 4)
+        XCTAssertTrue(visibleSectionControllers.contains(
+            adapter.sectionController(for: AnyListDiffable(1))!))
+        XCTAssertTrue(visibleSectionControllers.contains(
+            adapter.sectionController(for: AnyListDiffable(2))!))
+        XCTAssertTrue(visibleSectionControllers.contains(
+            adapter.sectionController(for: AnyListDiffable(3))!))
+        XCTAssertTrue(visibleSectionControllers.contains(
+            adapter.sectionController(for: AnyListDiffable(4))!))
+    }
+    
+    func testWithEmptySectionPlusFooterThatVisibleSectionControllersAreCorrect() {
+        dataSource.objects = [0].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        let supplementarySource = ListTestSupplementarySource()
+        supplementarySource.dequeueFromNib = true
+        supplementarySource.collectionContext = adapter
+        supplementarySource.supportedElementKinds = [UICollectionElementKindSectionFooter]
+        let sectionController = adapter.sectionController(for: AnyListDiffable(0))!
+        sectionController.supplementaryViewSource = supplementarySource
+        supplementarySource.sectionController = sectionController
+        adapter.performUpdates(animated: false, completion: nil)
+        let visibleSectionControllers = adapter.visibleSectionControllers
+        XCTAssertEqual(visibleSectionControllers.count, 1)
+    }
+    
+    func testWithEmptySectionPlusFooterWithExperimentThatVisibleSectionControllersAreCorrect() {
+        // add experiment
+        adapter.experiments.insert(.fasterVisibleSectionController)
+        dataSource.objects = [0].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        let supplementarySource = ListTestSupplementarySource()
+        supplementarySource.dequeueFromNib = true
+        supplementarySource.collectionContext = adapter
+        supplementarySource.supportedElementKinds = [UICollectionElementKindSectionFooter]
+        let sectionController = adapter.sectionController(for: AnyListDiffable(0))!
+        sectionController.supplementaryViewSource = supplementarySource
+        supplementarySource.sectionController = sectionController
+        adapter.performUpdates(animated: false, completion: nil)
+        let visibleSectionControllers = adapter.visibleSectionControllers
+        XCTAssertEqual(visibleSectionControllers.count, 1)
+    }
+    
+    func testWhenCellsExtendBeyondBoundsThatVisibleCellsExistForSectionControllers() {
+        dataSource.objects = [2, 3, 4, 5, 6].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        let sectionController2 = adapter.sectionController(for: AnyListDiffable(2))!
+        let sectionController3 = adapter.sectionController(for: AnyListDiffable(3))!
+        let sectionController4 = adapter.sectionController(for: AnyListDiffable(4))!
+        let sectionController5 = adapter.sectionController(for: AnyListDiffable(5))!
+        let sectionController6 = adapter.sectionController(for: AnyListDiffable(6))!
+        XCTAssertEqual(adapter.visibleCells(for: sectionController2).count, 2)
+        XCTAssertEqual(adapter.visibleCells(for: sectionController3).count, 3)
+        XCTAssertEqual(adapter.visibleCells(for: sectionController4).count, 4)
+        XCTAssertEqual(adapter.visibleCells(for: sectionController5).count, 1)
+        XCTAssertEqual(adapter.visibleCells(for: sectionController6).count, 0)
+    }
+    
+    func testWhenCellsExtendBeyondBoundsThatVisibleIndexPathsExistForSectionControllers() {
+        dataSource.objects = [2, 3, 4, 5, 6].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        let sectionController2 = adapter.sectionController(for: AnyListDiffable(2))!
+        let sectionController3 = adapter.sectionController(for: AnyListDiffable(3))!
+        let sectionController4 = adapter.sectionController(for: AnyListDiffable(4))!
+        let sectionController5 = adapter.sectionController(for: AnyListDiffable(5))!
+        let sectionController6 = adapter.sectionController(for: AnyListDiffable(6))!
+        XCTAssertEqual(adapter.visibleIndexPaths(for: sectionController2).count, 2)
+        XCTAssertEqual(adapter.visibleIndexPaths(for: sectionController3).count, 3)
+        XCTAssertEqual(adapter.visibleIndexPaths(for: sectionController4).count, 4)
+        XCTAssertEqual(adapter.visibleIndexPaths(for: sectionController5).count, 1)
+        XCTAssertEqual(adapter.visibleIndexPaths(for: sectionController6).count, 0)
+    }
+    
+    func testWhenDataSourceAddsItemsThatEmptyViewBecomesVisible() {
+        dataSource.objects = []
+        let background = UIView()
+        if let adapterDataSource = dataSource as? ListTestAdapterDataSource {
+            adapterDataSource.backgroundView = background
+        }
+        adapter.reloadData(withCompletion: nil)
+        XCTAssertEqual(collectionView.backgroundView, background)
+        XCTAssertFalse(collectionView.backgroundView!.isHidden)
+        dataSource.objects = [2].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        XCTAssertTrue(collectionView.backgroundView!.isHidden)
+    }
+    
+    func testWhenInsertingIntoEmptySectionThatEmptyViewBecomesHidden() {
+        dataSource.objects = [0].typeErased()
+        let background = UIView()
+        if let adapterDataSource = dataSource as? ListTestAdapterDataSource {
+            adapterDataSource.backgroundView = background
+        }
+        adapter.reloadData(withCompletion: nil)
+        XCTAssertFalse(collectionView.backgroundView!.isHidden)
+        let sectionController = adapter.sectionController(
+            for: AnyListDiffable(0)
+        ) as! ListTestSection
+        sectionController.items = 1
+        adapter.sectionController(sectionController, insertItemsAt: IndexSet([0]))
+        XCTAssertTrue(collectionView.backgroundView!.isHidden)
+    }
+    
+    func testWhenDeletingAllItemsFromSectionThatEmptyViewBecomesVisible() {
+        dataSource.objects = [1].typeErased()
+        let background = UIView()
+        if let adapterDataSource = dataSource as? ListTestAdapterDataSource {
+            adapterDataSource.backgroundView = background
+        }
+        adapter.reloadData(withCompletion: nil)
+        XCTAssertTrue(collectionView.backgroundView!.isHidden)
+        let sectionController = adapter.sectionController(
+            for: AnyListDiffable(1)
+        ) as! ListTestSection
+        sectionController.items = 0
+        adapter.sectionController(sectionController, deleteItemsAt: IndexSet([0]))
+        XCTAssertFalse(collectionView.backgroundView!.isHidden)
+    }
+    
+    func testWhenEmptySectionAddsItemsThatEmptyViewBecomesHidden() {
+        dataSource.objects = [0].typeErased()
+        let background = UIView()
+        if let adapterDataSource = dataSource as? ListTestAdapterDataSource {
+            adapterDataSource.backgroundView = background
+        }
+        adapter.reloadData(withCompletion: nil)
+        XCTAssertFalse(collectionView.backgroundView!.isHidden)
+        let sectionController = adapter.sectionController(
+            for: AnyListDiffable(0)
+        ) as! ListTestSection
+        sectionController.items = 2
+        adapter.reload(sectionController)
+        XCTAssertTrue(collectionView.backgroundView!.isHidden)
+    }
+    
+    func testWhenSectionItemsAreDeletedAsBatchThatEmptyViewBecomesVisible() {
+        dataSource.objects = [1, 2].typeErased()
+        let background = UIView()
+        if let adapterDataSource = dataSource as? ListTestAdapterDataSource {
+            adapterDataSource.backgroundView = background
+        }
+        adapter.reloadData(withCompletion: nil)
+        XCTAssertTrue(collectionView.backgroundView!.isHidden)
+        let first = adapter.sectionController(for: AnyListDiffable(1)) as! ListTestSection
+        let second = adapter.sectionController(for: AnyListDiffable(2)) as! ListTestSection
+        let expectation = XCTestExpectation()
+        adapter.performBatchUpdates(
+            { [weak self] (batchContext) in
+                guard let strongSelf = self else { return }
+                first.items = 0
+                strongSelf.adapter.sectionController(first, deleteItemsAt: IndexSet([0]))
+                second.items = 0
+                strongSelf.adapter.sectionController(second, deleteItemsAt: IndexSet(0...1))
+            },
+            animated: true,
+            completion: { [weak self] (finished) in
+                XCTAssertFalse(self!.collectionView.backgroundView!.isHidden)
+                expectation.fulfill()
+            })
+        wait(for: [expectation], timeout: 5)
+    }
+    
+    func testWhenScrollViewDelegateSetThatDelegateReceivesEvents() {
+        let scrollViewDelegate = ListTestScrollViewDelegate()
+        scrollViewDelegate.scrollViewDidScrollExpectation = XCTestExpectation()
+        adapter.scrollViewDelegate = scrollViewDelegate
+        let expectations = [
+            scrollViewDelegate.scrollViewDidScrollExpectation!,
+        ]
+        adapter.scrollViewDidScroll(collectionView)
+        wait(for: expectations, timeout: 5)
+    }
+    
+    func testWhenCollectionViewDelegateSetThatDelegateReceivesEvents() {
+        // silence display handler asserts
+        dataSource.objects = [1, 2].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        let collectionViewDelegate = ListTestCollectionViewDelegate()
+        collectionViewDelegate.didEndDisplayingCellExpectation = XCTestExpectation()
+        adapter.collectionViewDelegate = collectionViewDelegate
+        let expectations = [
+            collectionViewDelegate.didEndDisplayingCellExpectation!,
+        ]
+        let indexPath = IndexPath(item: 0, section: 0)
+        let cell = collectionView.cellForItem(at: indexPath)
+        adapter.collectionView(collectionView, didEndDisplaying: cell!, forItemAt: indexPath)
+        wait(for: expectations, timeout: 5)
+    }
+    
+    func testWhenCollectionViewAndScrollViewDelegateSetThatDelegatesReceiveUniqueEvents() {
+        // silence display handler asserts
+        dataSource.objects = [1, 2].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        let scrollViewDelegate = ListTestScrollViewDelegate()
+        let collectionViewDelegate = ListTestCollectionViewDelegate()
+        scrollViewDelegate.scrollViewDidScrollExpectation = XCTestExpectation()
+        collectionViewDelegate.didEndDisplayingCellExpectation = XCTestExpectation()
+        collectionViewDelegate.scrollViewDidScrollExpectation = XCTestExpectation()
+        collectionViewDelegate.scrollViewDidScrollExpectation?.isInverted = true
+        adapter.scrollViewDelegate = scrollViewDelegate
+        adapter.collectionViewDelegate = collectionViewDelegate
+        let expectations = [
+            scrollViewDelegate.scrollViewDidScrollExpectation!,
+            collectionViewDelegate.didEndDisplayingCellExpectation!,
+            collectionViewDelegate.scrollViewDidScrollExpectation!,
+        ]
+        let indexPath = IndexPath(item: 0, section: 0)
+        let cell = collectionView.cellForItem(at: indexPath)
+        adapter.scrollViewDidScroll(collectionView)
+        adapter.collectionView(collectionView, didEndDisplaying: cell!, forItemAt: indexPath)
+        wait(for: expectations, timeout: 5)
+    }
+    
+    func testWhenSupplementarySourceSupportsFooterThatHeaderViewsAreNil() {
+        dataSource.objects = [1, 2].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        let supplementarySource = ListTestSupplementarySource()
+        supplementarySource.collectionContext = adapter
+        supplementarySource.supportedElementKinds = [UICollectionElementKindSectionFooter.self]
+        
+        let controller = adapter.sectionController(for: AnyListDiffable(1))!
+        controller.supplementaryViewSource = supplementarySource
+        supplementarySource.sectionController = controller
+        adapter.performUpdates(animated: false, completion: nil)
+        
+        XCTAssertNotNil(collectionView.supplementaryView(
+            forElementKind: UICollectionElementKindSectionFooter.self,
+            at: IndexPath(item: 0, section: 0)))
+        XCTAssertNil(collectionView.supplementaryView(
+            forElementKind: UICollectionElementKindSectionHeader.self,
+            at: IndexPath(item: 0, section: 0)))
+        XCTAssertNil(collectionView.supplementaryView(
+            forElementKind: UICollectionElementKindSectionFooter.self,
+            at: IndexPath(item: 0, section: 1)))
+        XCTAssertNil(collectionView.supplementaryView(
+            forElementKind: UICollectionElementKindSectionHeader.self,
+            at: IndexPath(item: 0, section: 1)))
+    }
+    
+    // TODO: Sync tests L523 - L600
+    
+    func testWhenAdapterUpdatedTwiceWithThreeSectionsThatSectionsUpdatedFirstLast() {
+        dataSource.objects = [0, 1, 2].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        XCTAssertTrue(self.adapter.sectionController(for: AnyListDiffable(0))!.isFirstSection)
+        XCTAssertFalse(self.adapter.sectionController(for: AnyListDiffable(1))!.isFirstSection)
+        XCTAssertFalse(self.adapter.sectionController(for: AnyListDiffable(2))!.isFirstSection)
+        
+        XCTAssertFalse(self.adapter.sectionController(for: AnyListDiffable(0))!.isLastSection)
+        XCTAssertFalse(self.adapter.sectionController(for: AnyListDiffable(1))!.isLastSection)
+        XCTAssertTrue(self.adapter.sectionController(for: AnyListDiffable(2))!.isLastSection)
+        
+        // update and shift objects to test that first/last flags are also updated
+        dataSource.objects = [2, 0, 1].typeErased()
+        adapter.performUpdates(animated: false, completion: nil)
+        
+        XCTAssertTrue(self.adapter.sectionController(for: AnyListDiffable(2))!.isFirstSection)
+        XCTAssertFalse(self.adapter.sectionController(for: AnyListDiffable(0))!.isFirstSection)
+        XCTAssertFalse(self.adapter.sectionController(for: AnyListDiffable(1))!.isFirstSection)
+        
+        XCTAssertFalse(self.adapter.sectionController(for: AnyListDiffable(2))!.isLastSection)
+        XCTAssertFalse(self.adapter.sectionController(for: AnyListDiffable(0))!.isLastSection)
+        XCTAssertTrue(self.adapter.sectionController(for: AnyListDiffable(1))!.isLastSection)
+    }
+    
+    func testWhenAdapterUpdatedWithObjectsOverflowThatVisibleObjectsIsSubsetOfAllObjects() {
+        dataSource.objects = [1, 2, 3, 4, 5, 6].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        collectionView.contentOffset = CGPoint(x: 0, y: 30)
+        collectionView.layoutIfNeeded()
+        let visibleObjects = adapter.visibleObjects.sorted { ($0.base as! Int) < ($1.base as! Int) }
+        let expectedObjects = [3, 4, 5].typeErased()
+        XCTAssertEqual(visibleObjects, expectedObjects)
+    }
+    
+    func testWhenAdapterUpdatedThatVisibleCellsForObjectAreFound() {
+        dataSource.objects = [2, 10, 5].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        collectionView.contentOffset = CGPoint(x: 0, y: 80)
+        collectionView.layoutIfNeeded()
+        let visibleCells10 = adapter.visibleCells(for: AnyListDiffable(10)).sorted {
+            let lhsIndexPath = self.collectionView.indexPath(for: $0)!
+            let rhsIndexPath = self.collectionView.indexPath(for: $1)!
+            if lhsIndexPath.section == rhsIndexPath.section {
+                return lhsIndexPath.item < rhsIndexPath.item
+            }
+            return lhsIndexPath.section < rhsIndexPath.section
+        }
+        let visibleCells5 = adapter.visibleCells(for: AnyListDiffable(5))
+        XCTAssertEqual(visibleCells10.count, 4)
+        XCTAssertEqual(visibleCells5.count, 5)
+        XCTAssertEqual(collectionView.indexPath(for: visibleCells10[0])?.item, 6)
+        XCTAssertEqual(collectionView.indexPath(for: visibleCells10[1])?.item, 7)
+        XCTAssertEqual(collectionView.indexPath(for: visibleCells10[2])?.item, 8)
+        XCTAssertEqual(collectionView.indexPath(for: visibleCells10[3])?.item, 9)
+    }
+    
+    func testWhenAdapterUpdatedThatVisibleCellsForNilObjectIsEmpty() {
+        dataSource.objects = [2, 10, 5].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        collectionView.contentOffset = CGPoint(x: 0, y: 80)
+        collectionView.layoutIfNeeded()
+        let visibleCells = adapter.visibleCells(for: AnyListDiffable(3))
+        XCTAssertEqual(visibleCells.count, 0)
     }
 }

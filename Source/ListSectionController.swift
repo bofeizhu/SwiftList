@@ -159,6 +159,18 @@ open class ListSectionController {
     /// interactive reordering.
     ///
     /// - Parameters:
+    ///   - sourceItemIndex: The starting index of the object.
+    ///   - destinationItemIndex: The ending index of the object.
+    /// - Returns: `true` if the object can be moved, `false` otherwise.
+    /// - Note: This method must be implemented if interactive reordering is enabled.
+    public func canMoveItem(at sourceItemIndex: Int, to destinationItemIndex: Int) -> Bool {
+        return canMoveItem(at: sourceItemIndex)
+    }
+    
+    /// Notifies the section that a list object should move within a section as the result of
+    /// interactive reordering.
+    ///
+    /// - Parameters:
     ///   - index: The starting index of the object.
     ///   - newIndex: The ending index of the object.
     /// - Note: This method must be implemented if interactive reordering is enabled.

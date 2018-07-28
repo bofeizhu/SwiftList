@@ -21,7 +21,7 @@ class ListTestSection: ListSectionController {
     }
     
     override var numberOfItems: Int {
-        return self.items
+        return items
     }
     
     override init() {

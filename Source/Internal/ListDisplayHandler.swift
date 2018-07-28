@@ -88,11 +88,17 @@ final class ListDisplayHandler {
             at: indexPath)
     }
     
+    ///  Tells the handler that a supplementary view did end display in the ListAdapter.
+    ///
+    /// - Parameters:
+    ///   - listAdapter: The adapter the supplementary view will display in.
+    ///   - sectionController: The section controller that manages the supplementary view.
+    ///   - view: A supplementary view that will be displayed.
+    ///   - indexPath: The index path of the supplementary view in the UICollectionView.
     func listAdapter(
         _ listAdapter: ListAdapter,
         sectionController: ListSectionController,
         didEndDisplayingSupplementaryView view: UICollectionReusableView,
-        for object: AnyListDiffable,
         at indexPath: IndexPath) {
         guard let object = removeObject(for: view) else {
             return
