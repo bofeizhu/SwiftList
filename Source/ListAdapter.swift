@@ -120,7 +120,7 @@ public final class ListAdapter: NSObject {
     public var visibleObjects: [AnyListDiffable] {
         dispatchPrecondition(condition: .onQueue(.main))
         guard let collectionView = collectionView else { return [] }
-        var visibleObjects: [AnyListDiffable] = []
+        var visibleObjects: [AnyHashable: AnyListDiffable] = [:]
         for cell in collectionView.visibleCells {
             guard let sectionController = sectionController(for: cell)
             else {
@@ -133,9 +133,9 @@ public final class ListAdapter: NSObject {
                 assertionFailure("Object not found for section controller \(sectionController)")
                 continue
             }
-            visibleObjects.append(object)
+            visibleObjects[object.diffIdentifier] = object
         }
-        return visibleObjects
+        return Array(visibleObjects.values)
     }
     
     /// An **unordered** array of the currently visible section controllers.

@@ -13,7 +13,6 @@ class ListAdapterTests: ListTestCase {
     override func setUp() {
         dataSource = ListTestAdapterDataSource()
         updater = ListReloadDataUpdater()
-        
         super.setUp()
         
         // test case doesn't use setup(with) for more control over update events
@@ -206,7 +205,6 @@ class ListAdapterTests: ListTestCase {
         adapter.collectionView = self.collectionView
         collectionView.layoutIfNeeded()
         XCTAssertNotNil(collectionView.cellForItem(at: IndexPath(item: 0, section: 0)))
-        
         let otherCollectionView = UICollectionView(
             frame: collectionView.frame,
             collectionViewLayout: collectionView.collectionViewLayout)
@@ -221,7 +219,6 @@ class ListAdapterTests: ListTestCase {
         let updater1 = ListAdapterUpdater()
         let adapter1 = ListAdapter(updater: updater1, viewController: nil)
         adapter1.dataSource = dataSource1
-        
         let dataSource2 = ListTestAdapterDataSource()
         dataSource2.objects = [1].typeErased()
         let updater2 = ListAdapterUpdater()
@@ -291,7 +288,6 @@ class ListAdapterTests: ListTestCase {
         supplementarySource.sectionController = sectionController
         adapter.performUpdates(animated: false, completion: nil)
         let visibleSectionControllers = adapter.visibleSectionControllers
-        
         XCTAssertEqual(visibleSectionControllers.count, 1)
     }
     
@@ -309,7 +305,6 @@ class ListAdapterTests: ListTestCase {
         supplementarySource.sectionController = sectionController
         adapter.performUpdates(animated: false, completion: nil)
         let visibleSectionControllers = adapter.visibleSectionControllers
-        
         XCTAssertEqual(visibleSectionControllers.count, 1)
     }
     
@@ -447,7 +442,6 @@ class ListAdapterTests: ListTestCase {
         // silence display handler asserts
         dataSource.objects = [1, 2].typeErased()
         adapter.reloadData(withCompletion: nil)
-        
         let collectionViewDelegate = ListTestCollectionViewDelegate()
         collectionViewDelegate.didEndDisplayingCellExpectation = XCTestExpectation()
         adapter.collectionViewDelegate = collectionViewDelegate
@@ -464,14 +458,12 @@ class ListAdapterTests: ListTestCase {
         // silence display handler asserts
         dataSource.objects = [1, 2].typeErased()
         adapter.reloadData(withCompletion: nil)
-        
         let scrollViewDelegate = ListTestScrollViewDelegate()
         let collectionViewDelegate = ListTestCollectionViewDelegate()
         scrollViewDelegate.scrollViewDidScrollExpectation = XCTestExpectation()
         collectionViewDelegate.didEndDisplayingCellExpectation = XCTestExpectation()
         collectionViewDelegate.scrollViewDidScrollExpectation = XCTestExpectation()
         collectionViewDelegate.scrollViewDidScrollExpectation?.isInverted = true
-        
         adapter.scrollViewDelegate = scrollViewDelegate
         adapter.collectionViewDelegate = collectionViewDelegate
         let expectations = [
@@ -484,5 +476,68 @@ class ListAdapterTests: ListTestCase {
         adapter.scrollViewDidScroll(collectionView)
         adapter.collectionView(collectionView, didEndDisplaying: cell!, forItemAt: indexPath)
         wait(for: expectations, timeout: 5)
+    }
+    
+    func testWhenSupplementarySourceSupportsFooterThatHeaderViewsAreNil() {
+        dataSource.objects = [1, 2].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        let supplementarySource = ListTestSupplementarySource()
+        supplementarySource.collectionContext = adapter
+        supplementarySource.supportedElementKinds = [UICollectionElementKindSectionFooter.self]
+        
+        let controller = adapter.sectionController(for: AnyListDiffable(1))!
+        controller.supplementaryViewSource = supplementarySource
+        supplementarySource.sectionController = controller
+        adapter.performUpdates(animated: false, completion: nil)
+        
+        XCTAssertNotNil(collectionView.supplementaryView(
+            forElementKind: UICollectionElementKindSectionFooter.self,
+            at: IndexPath(item: 0, section: 0)))
+        XCTAssertNil(collectionView.supplementaryView(
+            forElementKind: UICollectionElementKindSectionHeader.self,
+            at: IndexPath(item: 0, section: 0)))
+        XCTAssertNil(collectionView.supplementaryView(
+            forElementKind: UICollectionElementKindSectionFooter.self,
+            at: IndexPath(item: 0, section: 1)))
+        XCTAssertNil(collectionView.supplementaryView(
+            forElementKind: UICollectionElementKindSectionHeader.self,
+            at: IndexPath(item: 0, section: 1)))
+    }
+    
+    // TODO: Sync tests L523 - L600
+    
+    func testWhenAdapterUpdatedTwiceWithThreeSectionsThatSectionsUpdatedFirstLast() {
+        dataSource.objects = [0, 1, 2].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        XCTAssertTrue(self.adapter.sectionController(for: AnyListDiffable(0))!.isFirstSection)
+        XCTAssertFalse(self.adapter.sectionController(for: AnyListDiffable(1))!.isFirstSection)
+        XCTAssertFalse(self.adapter.sectionController(for: AnyListDiffable(2))!.isFirstSection)
+        
+        XCTAssertFalse(self.adapter.sectionController(for: AnyListDiffable(0))!.isLastSection)
+        XCTAssertFalse(self.adapter.sectionController(for: AnyListDiffable(1))!.isLastSection)
+        XCTAssertTrue(self.adapter.sectionController(for: AnyListDiffable(2))!.isLastSection)
+        
+        // update and shift objects to test that first/last flags are also updated
+        dataSource.objects = [2, 0, 1].typeErased()
+        adapter.performUpdates(animated: false, completion: nil)
+        
+        XCTAssertTrue(self.adapter.sectionController(for: AnyListDiffable(2))!.isFirstSection)
+        XCTAssertFalse(self.adapter.sectionController(for: AnyListDiffable(0))!.isFirstSection)
+        XCTAssertFalse(self.adapter.sectionController(for: AnyListDiffable(1))!.isFirstSection)
+        
+        XCTAssertFalse(self.adapter.sectionController(for: AnyListDiffable(2))!.isLastSection)
+        XCTAssertFalse(self.adapter.sectionController(for: AnyListDiffable(0))!.isLastSection)
+        XCTAssertTrue(self.adapter.sectionController(for: AnyListDiffable(1))!.isLastSection)
+    }
+    
+    func testWhenAdapterUpdatedWithObjectsOverflowThatVisibleObjectsIsSubsetOfAllObjects() {
+        dataSource.objects = [1, 2, 3, 4, 5, 6].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        collectionView.contentOffset = CGPoint(x: 0, y: 30)
+        collectionView.layoutIfNeeded()
+        
+        let visibleObjects = adapter.visibleObjects.sorted { ($0.base as! Int) < ($1.base as! Int) }
+        let expectedObjects = [3, 4, 5].typeErased()
+        XCTAssertEqual(visibleObjects, expectedObjects)
     }
 }
