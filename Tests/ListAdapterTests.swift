@@ -432,5 +432,14 @@ class ListAdapterTests: ListTestCase {
         wait(for: [expectation], timeout: 5)
     }
     
-    
+    func testWhenScrollViewDelegateSetThatDelegateReceivesEvents() {
+        let scrollViewDelegate = ListTestScrollViewDelegate()
+        scrollViewDelegate.scrollViewDidScrollExpectation = XCTestExpectation()
+        adapter.scrollViewDelegate = scrollViewDelegate
+        let expectations = [
+            scrollViewDelegate.scrollViewDidScrollExpectation!,
+        ]
+        adapter.scrollViewDidScroll(collectionView)
+        wait(for: expectations, timeout: 5)
+    }
 }

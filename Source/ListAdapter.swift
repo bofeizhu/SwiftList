@@ -1545,6 +1545,74 @@ extension ListAdapter: UICollectionViewDataSource {
     }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
+extension ListAdapter: UICollectionViewDelegateFlowLayout {
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+        ) -> CGSize {
+        guard let size = sizeForItem(at: indexPath) else {
+            preconditionFailure("No size for item at index path: \(indexPath)")
+        }
+        return size
+    }
+    
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        insetForSectionAt section: Int
+        ) -> UIEdgeInsets {
+        guard let sectionController = sectionController(forSection: section)
+            else {
+                preconditionFailure("No section controller for section: \(section)")
+        }
+        return sectionController.inset
+    }
+    
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumLineSpacingForSectionAt section: Int
+        ) -> CGFloat {
+        guard let sectionController = sectionController(forSection: section)
+            else {
+                preconditionFailure("No section controller for section: \(section)")
+        }
+        return sectionController.minimumLineSpacing
+    }
+    
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumInteritemSpacingForSectionAt section: Int
+        ) -> CGFloat {
+        guard let sectionController = sectionController(forSection: section)
+            else {
+                preconditionFailure("No section controller for section: \(section)")
+        }
+        return sectionController.minimumInteritemSpacing
+    }
+    
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForHeaderInSection section: Int
+        ) -> CGSize {
+        let indexPath = IndexPath(item: 0, section: section)
+        return sizeForSupplementaryView(ofKind: UICollectionElementKindSectionHeader, at: indexPath)
+    }
+    
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForFooterInSection section: Int
+        ) -> CGSize {
+        let indexPath = IndexPath(item: 0, section: section)
+        return sizeForSupplementaryView(ofKind: UICollectionElementKindSectionFooter, at: indexPath)
+    }
+}
+
 // MARK: - UICollectionViewDelegate
 extension ListAdapter: UICollectionViewDelegate {
     public func collectionView(
@@ -1693,80 +1761,18 @@ extension ListAdapter: UICollectionViewDelegate {
         }
         sectionController(forSection: indexPath.section)?.didUnhighlightItem(at: indexPath.item)
     }
-}
-
-// MARK: - UICollectionViewDelegateFlowLayout
-extension ListAdapter: UICollectionViewDelegateFlowLayout {
-    public func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        sizeForItemAt indexPath: IndexPath
-    ) -> CGSize {
-        guard let size = sizeForItem(at: indexPath) else {
-            preconditionFailure("No size for item at index path: \(indexPath)")
+    
+    // MARK: Pass on method calls to delegates
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if let scrollViewDelegateMethod = scrollViewDelegate?.scrollViewDidScroll(_:) {
+            scrollViewDelegateMethod(scrollView)
+        } else if let collectionViewDelegateMethod =
+            collectionViewDelegate?.scrollViewDidScroll(_:) {
+            collectionViewDelegateMethod(scrollView)
         }
-        return size
-    }
-    
-    public func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        insetForSectionAt section: Int
-    ) -> UIEdgeInsets {
-        guard let sectionController = sectionController(forSection: section)
-        else {
-            preconditionFailure("No section controller for section: \(section)")
-        }
-        return sectionController.inset
-    }
-    
-    public func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        minimumLineSpacingForSectionAt section: Int
-    ) -> CGFloat {
-        guard let sectionController = sectionController(forSection: section)
-        else {
-            preconditionFailure("No section controller for section: \(section)")
-        }
-        return sectionController.minimumLineSpacing
-    }
-    
-    public func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        minimumInteritemSpacingForSectionAt section: Int
-    ) -> CGFloat {
-        guard let sectionController = sectionController(forSection: section)
-        else {
-            preconditionFailure("No section controller for section: \(section)")
-        }
-        return sectionController.minimumInteritemSpacing
-    }
-    
-    public func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        referenceSizeForHeaderInSection section: Int
-    ) -> CGSize {
-        let indexPath = IndexPath(item: 0, section: section)
-        return sizeForSupplementaryView(ofKind: UICollectionElementKindSectionHeader, at: indexPath)
-    }
-    
-    public func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        referenceSizeForFooterInSection section: Int
-    ) -> CGSize {
-        let indexPath = IndexPath(item: 0, section: section)
-        return sizeForSupplementaryView(ofKind: UICollectionElementKindSectionFooter, at: indexPath)
     }
 }
 
-// MARK: - UIScrollViewDelegate
-extension ListAdapter: UIScrollViewDelegate {
-    
-}
 
 // MARK: - Class Methods
 extension ListAdapter {
