@@ -95,6 +95,53 @@ class ListAdapterTests: ListTestCase {
         XCTAssertEqual(paths, expected)
     }
     
+    func testWhenQueryingIndexPathsInsideBatchUpdateBlockThatPathsAreEqual() {
+        dataSource.objects = [0, 1, 2].typeErased()
+        adapter.performUpdates(animated: true, completion: nil)
+        let second = adapter.sectionController(for: AnyListDiffable(1))!
+        var executed = false
+        adapter.performBatchUpdates(
+            { [weak self] (batchContext) in
+                let paths = self!.adapter.indexPaths(
+                    from: second,
+                    at: IndexSet(2...3),
+                    usePreviousIfInUpdateClosure: true)
+                let expected = [
+                    IndexPath(item: 2, section: 1),
+                    IndexPath(item: 3, section: 1),
+                ]
+                XCTAssertEqual(paths, expected)
+                executed = true
+            },
+            animated: true,
+            completion: nil)
+        XCTAssertTrue(executed)
+    }
+    
+    func testWhenQueryingReusableIdentifierThatIdentifierEqualsClassName() {
+        let identifier = ListAdapter.reusableViewIdentifier(
+            viewClass: UICollectionViewCell.self,
+            kind: nil,
+            givenReuseIdentifier: nil)
+        XCTAssertEqual(identifier, "UICollectionViewCell")
+    }
+    
+    func testWhenQueryingReusableIdentifierWithGivenIdentifierTahtIdentifierIsCorrect() {
+        let identifier = ListAdapter.reusableViewIdentifier(
+            viewClass: UICollectionViewCell.self,
+            kind: nil,
+            givenReuseIdentifier: "MyCoolID")
+        XCTAssertEqual(identifier, "MyCoolIDUICollectionViewCell")
+    }
+    
+    func testWhenQueryingReusableIdentifierThatIdentifierEqualsClassNameAndSupplimentaryKind() {
+        let identifier = ListAdapter.reusableViewIdentifier(
+            viewClass: UICollectionViewCell.self,
+            kind: UICollectionElementKindSectionFooter.self,
+            givenReuseIdentifier: nil)
+        XCTAssertEqual(identifier, "UICollectionElementKindSectionFooterUICollectionViewCell")
+    }
+    
     func testWhenDataSourceChangesThatBackgroundViewVisibilityChanges() {
         self.dataSource.objects = [1].typeErased()
         let background = UIView()
@@ -384,4 +431,6 @@ class ListAdapterTests: ListTestCase {
             })
         wait(for: [expectation], timeout: 5)
     }
+    
+    
 }
