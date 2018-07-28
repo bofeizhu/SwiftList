@@ -280,4 +280,108 @@ class ListAdapterTests: ListTestCase {
         XCTAssertEqual(adapter.visibleCells(for: sectionController5).count, 1)
         XCTAssertEqual(adapter.visibleCells(for: sectionController6).count, 0)
     }
+    
+    func testWhenCellsExtendBeyondBoundsThatVisibleIndexPathsExistForSectionControllers() {
+        dataSource.objects = [2, 3, 4, 5, 6].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        let sectionController2 = adapter.sectionController(for: AnyListDiffable(2))!
+        let sectionController3 = adapter.sectionController(for: AnyListDiffable(3))!
+        let sectionController4 = adapter.sectionController(for: AnyListDiffable(4))!
+        let sectionController5 = adapter.sectionController(for: AnyListDiffable(5))!
+        let sectionController6 = adapter.sectionController(for: AnyListDiffable(6))!
+        XCTAssertEqual(adapter.visibleIndexPaths(for: sectionController2).count, 2)
+        XCTAssertEqual(adapter.visibleIndexPaths(for: sectionController3).count, 3)
+        XCTAssertEqual(adapter.visibleIndexPaths(for: sectionController4).count, 4)
+        XCTAssertEqual(adapter.visibleIndexPaths(for: sectionController5).count, 1)
+        XCTAssertEqual(adapter.visibleIndexPaths(for: sectionController6).count, 0)
+    }
+    
+    func testWhenDataSourceAddsItemsThatEmptyViewBecomesVisible() {
+        dataSource.objects = []
+        let background = UIView()
+        if let adapterDataSource = dataSource as? ListTestAdapterDataSource {
+            adapterDataSource.backgroundView = background
+        }
+        adapter.reloadData(withCompletion: nil)
+        XCTAssertEqual(collectionView.backgroundView, background)
+        XCTAssertFalse(collectionView.backgroundView!.isHidden)
+        dataSource.objects = [2].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        XCTAssertTrue(collectionView.backgroundView!.isHidden)
+    }
+    
+    func testWhenInsertingIntoEmptySectionThatEmptyViewBecomesHidden() {
+        dataSource.objects = [0].typeErased()
+        let background = UIView()
+        if let adapterDataSource = dataSource as? ListTestAdapterDataSource {
+            adapterDataSource.backgroundView = background
+        }
+        adapter.reloadData(withCompletion: nil)
+        XCTAssertFalse(collectionView.backgroundView!.isHidden)
+        let sectionController = adapter.sectionController(
+            for: AnyListDiffable(0)
+        ) as! ListTestSection
+        sectionController.items = 1
+        adapter.sectionController(sectionController, insertItemsAt: IndexSet([0]))
+        XCTAssertTrue(collectionView.backgroundView!.isHidden)
+    }
+    
+    func testWhenDeletingAllItemsFromSectionThatEmptyViewBecomesVisible() {
+        dataSource.objects = [1].typeErased()
+        let background = UIView()
+        if let adapterDataSource = dataSource as? ListTestAdapterDataSource {
+            adapterDataSource.backgroundView = background
+        }
+        adapter.reloadData(withCompletion: nil)
+        XCTAssertTrue(collectionView.backgroundView!.isHidden)
+        let sectionController = adapter.sectionController(
+            for: AnyListDiffable(1)
+        ) as! ListTestSection
+        sectionController.items = 0
+        adapter.sectionController(sectionController, deleteItemsAt: IndexSet([0]))
+        XCTAssertFalse(collectionView.backgroundView!.isHidden)
+    }
+    
+    func testWhenEmptySectionAddsItemsThatEmptyViewBecomesHidden() {
+        dataSource.objects = [0].typeErased()
+        let background = UIView()
+        if let adapterDataSource = dataSource as? ListTestAdapterDataSource {
+            adapterDataSource.backgroundView = background
+        }
+        adapter.reloadData(withCompletion: nil)
+        XCTAssertFalse(collectionView.backgroundView!.isHidden)
+        let sectionController = adapter.sectionController(
+            for: AnyListDiffable(0)
+        ) as! ListTestSection
+        sectionController.items = 2
+        adapter.reload(sectionController)
+        XCTAssertTrue(collectionView.backgroundView!.isHidden)
+    }
+    
+    func testWhenSectionItemsAreDeletedAsBatchThatEmptyViewBecomesVisible() {
+        dataSource.objects = [1, 2].typeErased()
+        let background = UIView()
+        if let adapterDataSource = dataSource as? ListTestAdapterDataSource {
+            adapterDataSource.backgroundView = background
+        }
+        adapter.reloadData(withCompletion: nil)
+        XCTAssertTrue(collectionView.backgroundView!.isHidden)
+        let first = adapter.sectionController(for: AnyListDiffable(1)) as! ListTestSection
+        let second = adapter.sectionController(for: AnyListDiffable(2)) as! ListTestSection
+        let expectation = XCTestExpectation()
+        adapter.performBatchUpdates(
+            { [weak self] (batchContext) in
+                guard let strongSelf = self else { return }
+                first.items = 0
+                strongSelf.adapter.sectionController(first, deleteItemsAt: IndexSet([0]))
+                second.items = 0
+                strongSelf.adapter.sectionController(second, deleteItemsAt: IndexSet(0...1))
+            },
+            animated: true,
+            completion: { [weak self] (finished) in
+                XCTAssertFalse(self!.collectionView.backgroundView!.isHidden)
+                expectation.fulfill()
+            })
+        wait(for: [expectation], timeout: 5)
+    }
 }

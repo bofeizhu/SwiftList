@@ -1043,7 +1043,7 @@ extension ListAdapter: ListCollectionContext {
         animated: Bool,
         completion: ((Bool) -> Void)?) {
         dispatchPrecondition(condition: .onQueue(.main))
-        guard viewController != nil else {
+        guard collectionView != nil else {
             assertionFailure("Performing batch updates without a collection view.")
             return
         }
@@ -1065,7 +1065,7 @@ extension ListAdapter: ListCollectionContext {
                 guard let strongSelf = self else {
                     return
                 }
-                strongSelf.updateBackgroundView(isHidden: strongSelf.isItemCountZero)
+                strongSelf.updateBackgroundView(isHidden: !strongSelf.isItemCountZero)
                 strongSelf.didFinishUpdateOfType(.itemUpdates, animated: animated)
                 completion?(finished)
                 strongSelf.exitBatchUpdates()
@@ -1209,7 +1209,7 @@ extension ListAdapter: ListBatchContext {
         guard let section = map.section(for: sectionController) else { return }
         let sections = IndexSet([section])
         updater.collectionView(collectionView, reloadSections: sections)
-        updateBackgroundView(isHidden: isItemCountZero)
+        updateBackgroundView(isHidden: !isItemCountZero)
     }
 }
 
