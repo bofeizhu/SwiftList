@@ -535,9 +535,39 @@ class ListAdapterTests: ListTestCase {
         adapter.reloadData(withCompletion: nil)
         collectionView.contentOffset = CGPoint(x: 0, y: 30)
         collectionView.layoutIfNeeded()
-        
         let visibleObjects = adapter.visibleObjects.sorted { ($0.base as! Int) < ($1.base as! Int) }
         let expectedObjects = [3, 4, 5].typeErased()
         XCTAssertEqual(visibleObjects, expectedObjects)
+    }
+    
+    func testWhenAdapterUpdatedThatVisibleCellsForObjectAreFound() {
+        dataSource.objects = [2, 10, 5].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        collectionView.contentOffset = CGPoint(x: 0, y: 80)
+        collectionView.layoutIfNeeded()
+        let visibleCells10 = adapter.visibleCells(for: AnyListDiffable(10)).sorted {
+            let lhsIndexPath = self.collectionView.indexPath(for: $0)!
+            let rhsIndexPath = self.collectionView.indexPath(for: $1)!
+            if lhsIndexPath.section == rhsIndexPath.section {
+                return lhsIndexPath.item < rhsIndexPath.item
+            }
+            return lhsIndexPath.section < rhsIndexPath.section
+        }
+        let visibleCells5 = adapter.visibleCells(for: AnyListDiffable(5))
+        XCTAssertEqual(visibleCells10.count, 4)
+        XCTAssertEqual(visibleCells5.count, 5)
+        XCTAssertEqual(collectionView.indexPath(for: visibleCells10[0])?.item, 6)
+        XCTAssertEqual(collectionView.indexPath(for: visibleCells10[1])?.item, 7)
+        XCTAssertEqual(collectionView.indexPath(for: visibleCells10[2])?.item, 8)
+        XCTAssertEqual(collectionView.indexPath(for: visibleCells10[3])?.item, 9)
+    }
+    
+    func testWhenAdapterUpdatedThatVisibleCellsForNilObjectIsEmpty() {
+        dataSource.objects = [2, 10, 5].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        collectionView.contentOffset = CGPoint(x: 0, y: 80)
+        collectionView.layoutIfNeeded()
+        let visibleCells = adapter.visibleCells(for: AnyListDiffable(3))
+        XCTAssertEqual(visibleCells.count, 0)
     }
 }
