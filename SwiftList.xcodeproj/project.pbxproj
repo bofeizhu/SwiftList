@@ -36,6 +36,7 @@
 		828DF97B20DC550700C03E36 /* SwiftList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 828DF97120DC550700C03E36 /* SwiftList.framework */; };
 		828DF98220DC550700C03E36 /* SwiftList.h in Headers */ = {isa = PBXBuildFile; fileRef = 828DF97420DC550700C03E36 /* SwiftList.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		828DF98E20DC587D00C03E36 /* ListDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828DF98D20DC587D00C03E36 /* ListDiff.swift */; };
+		828F1C03210DFD1300142373 /* ListSingleSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828F1C02210DFD1300142373 /* ListSingleSectionController.swift */; };
 		829216B120F4AA900038C596 /* Int+ListDiffable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829216B020F4AA900038C596 /* Int+ListDiffable.swift */; };
 		829216B320F4AB930038C596 /* String+ListDiffable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829216B220F4AB930038C596 /* String+ListDiffable.swift */; };
 		829216B720F502CA0038C596 /* ListAdapterUpdaterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829216B620F502CA0038C596 /* ListAdapterUpdaterTests.swift */; };
@@ -116,6 +117,7 @@
 		828DF97A20DC550700C03E36 /* SwiftListTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftListTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		828DF98120DC550700C03E36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		828DF98D20DC587D00C03E36 /* ListDiff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDiff.swift; sourceTree = "<group>"; };
+		828F1C02210DFD1300142373 /* ListSingleSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSingleSectionController.swift; sourceTree = "<group>"; };
 		829216B020F4AA900038C596 /* Int+ListDiffable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+ListDiffable.swift"; sourceTree = "<group>"; };
 		829216B220F4AB930038C596 /* String+ListDiffable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ListDiffable.swift"; sourceTree = "<group>"; };
 		829216B620F502CA0038C596 /* ListAdapterUpdaterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAdapterUpdaterTests.swift; sourceTree = "<group>"; };
@@ -264,14 +266,15 @@
 				82C93D1C20F8E1D00050B78F /* ListCollectionScrollingTraits.swift */,
 				829EF3D12103BFDE00AFB99F /* ListCollectionViewInteractiveReorderingLayout.swift */,
 				82D7DF24210173EC0089D115 /* ListDisplayDelegate.swift */,
-				828DF97420DC550700C03E36 /* SwiftList.h */,
 				821350092108E51000E3FEC9 /* ListReloadDataUpdater.swift */,
 				82D7DF28210174890089D115 /* ListScrollDelegate.swift */,
 				82C93D1A20F8E0FA0050B78F /* ListSectionController.swift */,
+				828F1C02210DFD1300142373 /* ListSingleSectionController.swift */,
 				82D7DF22210172BE0089D115 /* ListSupplementaryViewSource.swift */,
 				82D7DF2A210174A50089D115 /* ListTransitionDelegate.swift */,
 				820A0CAA20EC359A0035EC74 /* ListUpdatingDelegate.swift */,
 				82D7DF26210174340089D115 /* ListWorkingRangeDelegate.swift */,
+				828DF97420DC550700C03E36 /* SwiftList.h */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -490,6 +493,7 @@
 				829216B120F4AA900038C596 /* Int+ListDiffable.swift in Sources */,
 				820A0CAB20EC359A0035EC74 /* ListUpdatingDelegate.swift in Sources */,
 				828DF98E20DC587D00C03E36 /* ListDiff.swift in Sources */,
+				828F1C03210DFD1300142373 /* ListSingleSectionController.swift in Sources */,
 				820A0CA920EBC6AD0035EC74 /* ListAdapterUpdater.swift in Sources */,
 				82C6BA0120E010CA0085B85A /* ListMoveIndexPath.swift in Sources */,
 				829EF3D72105101E00AFB99F /* ListAdapterWeakBox.swift in Sources */,

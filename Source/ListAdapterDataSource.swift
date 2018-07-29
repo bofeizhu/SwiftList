@@ -6,7 +6,7 @@
 //  Copyright © 2018 Bofei Zhu. All rights reserved.
 //
 
-/// Implement this protocol to provide data to an `IGListAdapter`.
+/// Implement this protocol to provide data to an `ListAdapter`.
 public protocol ListAdapterDataSource: AnyObject {
     
     /// Asks the data source for the objects to display in the list.
