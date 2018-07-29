@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "828DF97020DC550700C03E36"
-               BuildableName = "ListKit.framework"
-               BlueprintName = "ListKit"
-               ReferencedContainer = "container:ListKit.xcodeproj">
+               BuildableName = "SwiftList.framework"
+               BlueprintName = "SwiftList"
+               ReferencedContainer = "container:SwiftList.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -26,27 +26,16 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      codeCoverageEnabled = "YES"
-      onlyGenerateCoverageForSpecifiedTargets = "YES"
       shouldUseLaunchSchemeArgsEnv = "YES">
-      <CodeCoverageTargets>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "828DF97020DC550700C03E36"
-            BuildableName = "ListKit.framework"
-            BlueprintName = "ListKit"
-            ReferencedContainer = "container:ListKit.xcodeproj">
-         </BuildableReference>
-      </CodeCoverageTargets>
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "828DF97920DC550700C03E36"
-               BuildableName = "ListKitTests.xctest"
-               BlueprintName = "ListKitTests"
-               ReferencedContainer = "container:ListKit.xcodeproj">
+               BuildableName = "SwiftListTests.xctest"
+               BlueprintName = "SwiftListTests"
+               ReferencedContainer = "container:SwiftList.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -54,9 +43,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "828DF97020DC550700C03E36"
-            BuildableName = "ListKit.framework"
-            BlueprintName = "ListKit"
-            ReferencedContainer = "container:ListKit.xcodeproj">
+            BuildableName = "SwiftList.framework"
+            BlueprintName = "SwiftList"
+            ReferencedContainer = "container:SwiftList.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -76,9 +65,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "828DF97020DC550700C03E36"
-            BuildableName = "ListKit.framework"
-            BlueprintName = "ListKit"
-            ReferencedContainer = "container:ListKit.xcodeproj">
+            BuildableName = "SwiftList.framework"
+            BlueprintName = "SwiftList"
+            ReferencedContainer = "container:SwiftList.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -94,9 +83,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "828DF97020DC550700C03E36"
-            BuildableName = "ListKit.framework"
-            BlueprintName = "ListKit"
-            ReferencedContainer = "container:ListKit.xcodeproj">
+            BuildableName = "SwiftList.framework"
+            BlueprintName = "SwiftList"
+            ReferencedContainer = "container:SwiftList.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

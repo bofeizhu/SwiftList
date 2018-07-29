@@ -1,6 +1,6 @@
 //
 //  ListDiffable.swift
-//  ListKit
+//  SwiftList
 //
 //  Created by Bofei Zhu on 6/27/18.
 //  Copyright © 2018 Bofei Zhu. All rights reserved.

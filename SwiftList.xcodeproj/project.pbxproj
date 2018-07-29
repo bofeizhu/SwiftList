@@ -34,7 +34,7 @@
 		8258A47120FEF2240070EDA1 /* ListAdapterUpdateListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8258A47020FEF2240070EDA1 /* ListAdapterUpdateListener.swift */; };
 		8258A47320FEF43A0070EDA1 /* ListAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8258A47220FEF43A0070EDA1 /* ListAdapter.swift */; };
 		828DF97B20DC550700C03E36 /* SwiftList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 828DF97120DC550700C03E36 /* SwiftList.framework */; };
-		828DF98220DC550700C03E36 /* ListKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 828DF97420DC550700C03E36 /* ListKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		828DF98220DC550700C03E36 /* SwiftList.h in Headers */ = {isa = PBXBuildFile; fileRef = 828DF97420DC550700C03E36 /* SwiftList.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		828DF98E20DC587D00C03E36 /* ListDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828DF98D20DC587D00C03E36 /* ListDiff.swift */; };
 		829216B120F4AA900038C596 /* Int+ListDiffable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829216B020F4AA900038C596 /* Int+ListDiffable.swift */; };
 		829216B320F4AB930038C596 /* String+ListDiffable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829216B220F4AB930038C596 /* String+ListDiffable.swift */; };
@@ -44,7 +44,7 @@
 		829EF3CE21039D5B00AFB99F /* ListDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829EF3CD21039D5B00AFB99F /* ListDebugger.swift */; };
 		829EF3D22103BFDE00AFB99F /* ListCollectionViewInteractiveReorderingLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829EF3D12103BFDE00AFB99F /* ListCollectionViewInteractiveReorderingLayout.swift */; };
 		829EF3D72105101E00AFB99F /* ListAdapterWeakBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829EF3D62105101E00AFB99F /* ListAdapterWeakBox.swift */; };
-		829EF3DB2105494C00AFB99F /* UIScrollView+ListKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829EF3DA2105494C00AFB99F /* UIScrollView+ListKit.swift */; };
+		829EF3DB2105494C00AFB99F /* UIScrollView+SwiftList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829EF3DA2105494C00AFB99F /* UIScrollView+SwiftList.swift */; };
 		829EF3DD2106451D00AFB99F /* ListLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829EF3DC2106451D00AFB99F /* ListLog.swift */; };
 		829EF3DF210773E100AFB99F /* ListAdapterUpdateListenerWeakBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829EF3DE210773E100AFB99F /* ListAdapterUpdateListenerWeakBox.swift */; };
 		82C6B9FF20E00BFE0085B85A /* ListIndexPathResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C6B9FE20E00BFE0085B85A /* ListIndexPathResult.swift */; };
@@ -108,7 +108,7 @@
 		8258A47020FEF2240070EDA1 /* ListAdapterUpdateListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAdapterUpdateListener.swift; sourceTree = "<group>"; };
 		8258A47220FEF43A0070EDA1 /* ListAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAdapter.swift; sourceTree = "<group>"; };
 		828DF97120DC550700C03E36 /* SwiftList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		828DF97420DC550700C03E36 /* ListKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListKit.h; sourceTree = "<group>"; };
+		828DF97420DC550700C03E36 /* SwiftList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftList.h; sourceTree = "<group>"; };
 		828DF97520DC550700C03E36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		828DF97A20DC550700C03E36 /* SwiftListTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftListTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		828DF98120DC550700C03E36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -121,7 +121,7 @@
 		829EF3CD21039D5B00AFB99F /* ListDebugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDebugger.swift; sourceTree = "<group>"; };
 		829EF3D12103BFDE00AFB99F /* ListCollectionViewInteractiveReorderingLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCollectionViewInteractiveReorderingLayout.swift; sourceTree = "<group>"; };
 		829EF3D62105101E00AFB99F /* ListAdapterWeakBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAdapterWeakBox.swift; sourceTree = "<group>"; };
-		829EF3DA2105494C00AFB99F /* UIScrollView+ListKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+ListKit.swift"; sourceTree = "<group>"; };
+		829EF3DA2105494C00AFB99F /* UIScrollView+SwiftList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+SwiftList.swift"; sourceTree = "<group>"; };
 		829EF3DC2106451D00AFB99F /* ListLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListLog.swift; sourceTree = "<group>"; };
 		829EF3DE210773E100AFB99F /* ListAdapterUpdateListenerWeakBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAdapterUpdateListenerWeakBox.swift; sourceTree = "<group>"; };
 		82C6B9FE20E00BFE0085B85A /* ListIndexPathResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListIndexPathResult.swift; sourceTree = "<group>"; };
@@ -195,7 +195,7 @@
 				82D7DF2C2101B7120089D115 /* ListSectionMap.swift */,
 				829EF3CB2102AFDB00AFB99F /* ListWorkingRangeHandler.swift */,
 				820A0CA420EBC07D0035EC74 /* UICollectionView+ListBatchUpdateData.swift */,
-				829EF3DA2105494C00AFB99F /* UIScrollView+ListKit.swift */,
+				829EF3DA2105494C00AFB99F /* UIScrollView+SwiftList.swift */,
 			);
 			path = Internal;
 			sourceTree = "<group>";
@@ -252,7 +252,7 @@
 				82C93D1C20F8E1D00050B78F /* ListCollectionScrollingTraits.swift */,
 				829EF3D12103BFDE00AFB99F /* ListCollectionViewInteractiveReorderingLayout.swift */,
 				82D7DF24210173EC0089D115 /* ListDisplayDelegate.swift */,
-				828DF97420DC550700C03E36 /* ListKit.h */,
+				828DF97420DC550700C03E36 /* SwiftList.h */,
 				821350092108E51000E3FEC9 /* ListReloadDataUpdater.swift */,
 				82D7DF28210174890089D115 /* ListScrollDelegate.swift */,
 				82C93D1A20F8E0FA0050B78F /* ListSectionController.swift */,
@@ -307,7 +307,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				828DF98220DC550700C03E36 /* ListKit.h in Headers */,
+				828DF98220DC550700C03E36 /* SwiftList.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,7 +430,7 @@
 				82C6B9FF20E00BFE0085B85A /* ListIndexPathResult.swift in Sources */,
 				82C93D1B20F8E0FA0050B78F /* ListSectionController.swift in Sources */,
 				82D7DF25210173EC0089D115 /* ListDisplayDelegate.swift in Sources */,
-				829EF3DB2105494C00AFB99F /* UIScrollView+ListKit.swift in Sources */,
+				829EF3DB2105494C00AFB99F /* UIScrollView+SwiftList.swift in Sources */,
 				820A0CA520EBC07D0035EC74 /* UICollectionView+ListBatchUpdateData.swift in Sources */,
 				8258A46F20FDB2080070EDA1 /* ListBatchContext.swift in Sources */,
 				82F9733120E12F8000F7D50E /* ListIndexSetResult.swift in Sources */,
@@ -628,7 +628,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.zhubofei.ListKit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zhubofei.SwiftList;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -657,7 +657,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.zhubofei.ListKit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zhubofei.SwiftList;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -678,7 +678,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.zhubofei.ListKitTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zhubofei.SwiftListTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
@@ -698,7 +698,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.zhubofei.ListKitTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zhubofei.SwiftListTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;

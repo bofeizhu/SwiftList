@@ -1,11 +1,11 @@
-# ListKit
+# SwiftList
 
 <p>
-  <a href="https://travis-ci.com/zhubofei/ListKit">
-      <img src="https://travis-ci.com/zhubofei/ListKit.svg?branch=master" alt="Build Status">
+  <a href="https://travis-ci.com/zhubofei/SwiftList">
+      <img src="https://travis-ci.com/zhubofei/SwiftList.svg?branch=master" alt="Build Status">
   </a>
-  <a href="https://codecov.io/gh/zhubofei/ListKit">
-      <img src="https://codecov.io/gh/zhubofei/ListKit/branch/master/graph/badge.svg" alt="Code coverage"/>
+  <a href="https://codecov.io/gh/zhubofei/SwiftList">
+      <img src="https://codecov.io/gh/zhubofei/SwiftList/branch/master/graph/badge.svg" alt="Code coverage"/>
   </a>
 </p>
 
@@ -13,7 +13,7 @@
 
 A data-driven `UICollectionView` framework for building fast and flexible lists.
 
-`ListKit` is forked from [`IGListKit`](https://github.com/Instagram/IGListKit) by [Instagram engineering](https://engineering.instagram.com/).
+`SwiftList` is forked from [`IGListKit`](https://github.com/Instagram/IGListKit) by [Instagram engineering](https://engineering.instagram.com/).
 
 ## Requirements
 
@@ -23,6 +23,6 @@ A data-driven `UICollectionView` framework for building fast and flexible lists.
 
 ## License
 
-`ListKit` is [MIT-licensed](./LICENSE).
+`SwiftList` is [MIT-licensed](./LICENSE).
 
 The files in the `/Examples/` directory are licensed under a separate license as specified in each file. Documentation is licensed [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/).
