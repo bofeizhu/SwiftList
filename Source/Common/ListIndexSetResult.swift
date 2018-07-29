@@ -1,6 +1,6 @@
 //
 //  ListIndexSetResult.swift
-//  ListKit
+//  SwiftList
 //
 //  Created by Bofei Zhu on 6/25/18.
 //  Copyright © 2018 Bofei Zhu. All rights reserved.

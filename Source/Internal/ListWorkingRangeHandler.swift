@@ -1,6 +1,6 @@
 //
 //  ListWorkingRangeHandler.swift
-//  ListKit
+//  SwiftList
 //
 //  Created by Bofei Zhu on 7/20/18.
 //  Copyright © 2018 Bofei Zhu. All rights reserved.
@@ -17,7 +17,7 @@ final class ListWorkingRangeHandler {
         self.workingRangeSize = workingRangeSize
     }
     
-    /// Tells the handler that a cell will be displayed in the ListKit infra.
+    /// Tells the handler that a cell will be displayed in the SwiftList infra.
     ///
     /// - Parameters:
     ///   - listAdapter: The adapter managing the infra.
@@ -29,7 +29,7 @@ final class ListWorkingRangeHandler {
         updateWorkingRanges(with: listAdapter)
     }
     
-    /// Tells the handler that a cell did end display in the ListKit infra.
+    /// Tells the handler that a cell did end display in the SwiftList infra.
     ///
     /// - Parameters:
     ///   - listAdapter: The adapter managing the infra.

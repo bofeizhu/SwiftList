@@ -1,13 +1,13 @@
 //
 //  ListTestObject.swift
-//  ListKitTests
+//  SwiftListTests
 //
 //  Created by Bofei Zhu on 6/30/18.
 //  Copyright © 2018 Bofei Zhu. All rights reserved.
 //
 
 import XCTest
-@testable import ListKit
+@testable import SwiftList
 
 struct ListTestObject: ListDiffable {
     let key: AnyHashable
