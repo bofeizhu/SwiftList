@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "SwiftList"
-  s.version      = "0.0.1"
+  s.version      = "0.1.0"
   s.summary      = "A data-driven UICollectionView framework."
   s.description  = 'A data-driven UICollectionView framework for building fast and flexible lists.'
   s.homepage     = "https://github.com/zhubofei/SwiftList"
