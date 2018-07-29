@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>ListIndexSetResult Class Reference</title>
+    <title>ListSingleSectionController Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,9 +14,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Class/ListIndexSetResult" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Class/ListSingleSectionController" class="dashAnchor"></a>
 
-    <a title="ListIndexSetResult Class Reference"></a>
+    <a title="ListSingleSectionController Class Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -44,7 +44,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html">SwiftList Reference</a>
       <img class="carat" src="../img/carat.png" />
-      ListIndexSetResult Class Reference
+      ListSingleSectionController Class Reference
     </p>
 
     <div class="content-wrapper">
@@ -235,14 +235,16 @@
 
         <section class="section">
           <div class="section-content">
-            <h1>ListIndexSetResult</h1>
+            <h1>ListSingleSectionController</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">ListIndexSetResult</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">ListSingleSectionController</span> <span class="p">:</span> <span class="kt"><a href="../Classes/ListSectionController.html">ListSectionController</a></span></code></pre>
 
                 </div>
               </div>
-            <p>A result object returned when diffing with indexes.</p>
+            <p>This section controller is meant to make building simple, single-cell lists easier. By providing
+the type of cell, a closure to configure the cell, and a closure to return the size of a cell,
+you can use an <code><a href="../Classes/ListAdapter.html">ListAdapter</a></code>-powered list with a simpler architecture.</p>
 
           </div>
         </section>
@@ -254,9 +256,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:9SwiftList0B14IndexSetResultC7inserts10Foundation0cD0Vvp"></a>
-                    <a name="//apple_ref/swift/Property/inserts" class="dashAnchor"></a>
-                    <a class="token" href="#/s:9SwiftList0B14IndexSetResultC7inserts10Foundation0cD0Vvp">inserts</a>
+                    <a name="/s:9SwiftList0B23SingleSectionControllerC17selectionDelegateAA0bcde9SelectionG0_pSgXwvp"></a>
+                    <a name="//apple_ref/swift/Property/selectionDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9SwiftList0B23SingleSectionControllerC17selectionDelegateAA0bcde9SelectionG0_pSgXwvp">selectionDelegate</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -264,14 +266,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The indexes inserted into the new collection.</p>
+                        <p>An optional delegate that handles selection and deselection.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">inserts</span><span class="p">:</span> <span class="kt">IndexSet</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">weak</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">selectionDelegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ListSingleSectionControllerSelectionDelegate.html">ListSingleSectionControllerSelectionDelegate</a></span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -281,9 +283,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:9SwiftList0B14IndexSetResultC7deletes10Foundation0cD0Vvp"></a>
-                    <a name="//apple_ref/swift/Property/deletes" class="dashAnchor"></a>
-                    <a class="token" href="#/s:9SwiftList0B14IndexSetResultC7deletes10Foundation0cD0Vvp">deletes</a>
+                    <a name="/s:9SwiftList0B23SingleSectionControllerCACyXlXp9cellClass_yAA03AnyB8DiffableV_So20UICollectionViewCellCtc16configureClosureSC6CGSizeVAF_AA0B17CollectionContext_pSgtc04sizeN0tcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(cellClass:configureClosure:sizeClosure:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9SwiftList0B23SingleSectionControllerCACyXlXp9cellClass_yAA03AnyB8DiffableV_So20UICollectionViewCellCtc16configureClosureSC6CGSizeVAF_AA0B17CollectionContext_pSgtc04sizeN0tcfc">init(cellClass:configureClosure:sizeClosure:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -291,122 +293,25 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The indexes deleted from the old collection.</p>
+                        <p>Creates a new section controller for a given cell type that will always have only one cell
+when present in a list.</p>
+<div class="aside aside-warning">
+    <p class="aside-title">Warning</p>
+    Be VERY CAREFUL not to create retain cycles by holding strong references to: the
+object that owns the adapter (usually <code>self</code>) or the <code><a href="../Classes/ListAdapter.html">ListAdapter</a></code>. Pass in locally
+scoped objects or use <code>weak</code> references!
+
+</div>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">deletes</span><span class="p">:</span> <span class="kt">IndexSet</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:9SwiftList0B14IndexSetResultC7updates10Foundation0cD0Vvp"></a>
-                    <a name="//apple_ref/swift/Property/updates" class="dashAnchor"></a>
-                    <a class="token" href="#/s:9SwiftList0B14IndexSetResultC7updates10Foundation0cD0Vvp">updates</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>The indexes in the old collection that need updated.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">updates</span><span class="p">:</span> <span class="kt">IndexSet</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:9SwiftList0B14IndexSetResultC5movesSayAA0b4MoveC0VGvp"></a>
-                    <a name="//apple_ref/swift/Property/moves" class="dashAnchor"></a>
-                    <a class="token" href="#/s:9SwiftList0B14IndexSetResultC5movesSayAA0b4MoveC0VGvp">moves</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>The moves from an index in the old collection to an index in the new collection.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">moves</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Structs/ListMoveIndex.html">ListMoveIndex</a></span><span class="p">]</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:9SwiftList0B14IndexSetResultC10hasChangesSbvp"></a>
-                    <a name="//apple_ref/swift/Property/hasChanges" class="dashAnchor"></a>
-                    <a class="token" href="#/s:9SwiftList0B14IndexSetResultC10hasChangesSbvp">hasChanges</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">hasChanges</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:9SwiftList0B14IndexSetResultC03oldC3ForSiSgs11AnyHashableVSg14diffIdentifier_tF"></a>
-                    <a name="//apple_ref/swift/Method/oldIndexFor(diffIdentifier:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:9SwiftList0B14IndexSetResultC03oldC3ForSiSgs11AnyHashableVSg14diffIdentifier_tF">oldIndexFor(diffIdentifier:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Returns the index of the object with the specified diffIdentifier <em>before</em> the diff.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">oldIndexFor</span><span class="p">(</span><span class="nv">diffIdentifier</span><span class="p">:</span> <span class="kt">AnyHashable</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Int</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span>
+    <span class="nv">cellClass</span><span class="p">:</span> <span class="kt">AnyClass</span><span class="p">,</span>
+    <span class="nv">configureClosure</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Typealiases.html#/s:9SwiftList0B33SingleSectionCellConfigureClosurea">ListSingleSectionCellConfigureClosure</a></span><span class="p">,</span>
+    <span class="nv">sizeClosure</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Typealiases.html#/s:9SwiftList0B28SingleSectionCellSizeClosurea">ListSingleSectionCellSizeClosure</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -417,21 +322,42 @@
                             <tr>
                               <td>
                                 <code>
-                                <em>diffIdentifier</em>
+                                <em>cellClass</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The diffIdentifier of the object.</p>
+                                  <p>The <code>UICollectionViewCell</code> subclass for the single cell.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>configureClosure</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure that configures the cell with the item given to the section
+controller.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sizeClosure</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure that returns the size for the cell given the collection context.</p>
                                 </div>
                               </td>
                             </tr>
                           </tbody>
                         </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>The optional index of the object before the diff.</p>
                       </div>
                     </section>
                   </div>
@@ -439,9 +365,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:9SwiftList0B14IndexSetResultC03newC3ForSiSgs11AnyHashableVSg14diffIdentifier_tF"></a>
-                    <a name="//apple_ref/swift/Method/newIndexFor(diffIdentifier:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:9SwiftList0B14IndexSetResultC03newC3ForSiSgs11AnyHashableVSg14diffIdentifier_tF">newIndexFor(diffIdentifier:)</a>
+                    <a name="/s:9SwiftList0B23SingleSectionControllerCACSS7nibName_So6BundleCSg6bundleyAA03AnyB8DiffableV_So20UICollectionViewCellCtc16configureClosureSC6CGSizeVAJ_AA0B17CollectionContext_pSgtc04sizeP0tcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(nibName:bundle:configureClosure:sizeClosure:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9SwiftList0B23SingleSectionControllerCACSS7nibName_So6BundleCSg6bundleyAA03AnyB8DiffableV_So20UICollectionViewCellCtc16configureClosureSC6CGSizeVAJ_AA0B17CollectionContext_pSgtc04sizeP0tcfc">init(nibName:bundle:configureClosure:sizeClosure:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -449,14 +375,26 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Returns the index of the object with the specified diffIdentifier <em>after</em> the diff.</p>
+                        <p>Creates a new section controller for a given nib name and bundle that will always have only
+one cell when present in a list.</p>
+<div class="aside aside-warning">
+    <p class="aside-title">Warning</p>
+    Be VERY CAREFUL not to create retain cycles by holding strong references to: the
+object that owns the adapter (usually <code>self</code>) or the <code><a href="../Classes/ListAdapter.html">ListAdapter</a></code>. Pass in locally
+scoped objects or use <code>weak</code> references!
+
+</div>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">newIndexFor</span><span class="p">(</span><span class="nv">diffIdentifier</span><span class="p">:</span> <span class="kt">AnyHashable</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Int</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span>
+    <span class="nv">nibName</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+    <span class="nv">bundle</span><span class="p">:</span> <span class="kt">Bundle</span><span class="p">?,</span>
+    <span class="nv">configureClosure</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Typealiases.html#/s:9SwiftList0B33SingleSectionCellConfigureClosurea">ListSingleSectionCellConfigureClosure</a></span><span class="p">,</span>
+    <span class="nv">sizeClosure</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Typealiases.html#/s:9SwiftList0B28SingleSectionCellSizeClosurea">ListSingleSectionCellSizeClosure</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -467,21 +405,55 @@
                             <tr>
                               <td>
                                 <code>
-                                <em>diffIdentifier</em>
+                                <em>nibName</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The diffIdentifier of the object.</p>
+                                  <p>The name of the nib file for the single cell.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>bundle</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The bundle in which to search for the nib file. If <code>nil</code>, this method looks for
+the file in the main bundle.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>configureClosure</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure that configures the cell with the item given to the section
+controller.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sizeClosure</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure that returns the size for the cell given the collection context.</p>
                                 </div>
                               </td>
                             </tr>
                           </tbody>
                         </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>The optional index of the object after the diff.</p>
                       </div>
                     </section>
                   </div>
@@ -489,9 +461,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:9SwiftList0B14IndexSetResultC21resultForBatchUpdatesACyF"></a>
-                    <a name="//apple_ref/swift/Method/resultForBatchUpdates()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:9SwiftList0B14IndexSetResultC21resultForBatchUpdatesACyF">resultForBatchUpdates()</a>
+                    <a name="/s:9SwiftList0B23SingleSectionControllerCACSS24storyboardCellIdentifier_yAA03AnyB8DiffableV_So016UICollectionViewG0Ctc16configureClosureSC6CGSizeVAF_AA0B17CollectionContext_pSgtc04sizeN0tcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(storyboardCellIdentifier:configureClosure:sizeClosure:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9SwiftList0B23SingleSectionControllerCACSS24storyboardCellIdentifier_yAA03AnyB8DiffableV_So016UICollectionViewG0Ctc16configureClosureSC6CGSizeVAF_AA0B17CollectionContext_pSgtc04sizeN0tcfc">init(storyboardCellIdentifier:configureClosure:sizeClosure:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -499,21 +471,71 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Creates a new result object with operations safe for use in <code>UITableView</code> and
-<code>UICollectionView</code> batch updates.</p>
+                        <p>Creates a new section controller for a given storyboard cell identifier that will always
+have only one cell when present in a list.</p>
+<div class="aside aside-warning">
+    <p class="aside-title">Warning</p>
+    Be VERY CAREFUL not to create retain cycles by holding strong references to: the
+object that owns the adapter (usually <code>self</code>) or the <code><a href="../Classes/ListAdapter.html">ListAdapter</a></code>. Pass in locally
+scoped objects or use <code>weak</code> references!
+
+</div>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">resultForBatchUpdates</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">ListIndexSetResult</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span>
+    <span class="nv">storyboardCellIdentifier</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+    <span class="nv">configureClosure</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Typealiases.html#/s:9SwiftList0B33SingleSectionCellConfigureClosurea">ListSingleSectionCellConfigureClosure</a></span><span class="p">,</span>
+    <span class="nv">sizeClosure</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Typealiases.html#/s:9SwiftList0B28SingleSectionCellSizeClosurea">ListSingleSectionCellSizeClosure</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
                       <div>
-                        <h4>Return Value</h4>
-                        <p>A new result object for batch updates.</p>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>storyboardCellIdentifier</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The identifier of the cell prototype in storyboard.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>configureClosure</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure that configures the cell with the item given to the section
+controller.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sizeClosure</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure that returns the size for the cell given the collection context.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -521,13 +543,20 @@
               </ul>
             </div>
             <div class="task-group">
+              <div class="task-name-container">
+                <a name="/ListSectionController%20Overrides"></a>
+                <a name="//apple_ref/swift/Section/ListSectionController Overrides" class="dashAnchor"></a>
+                <a href="#/ListSectionController%20Overrides">
+                  <h3 class="section-name">ListSectionController Overrides</h3>
+                </a>
+              </div>
               <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:s23CustomStringConvertibleP11descriptionSSvp"></a>
-                    <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
-                    <a class="token" href="#/s:s23CustomStringConvertibleP11descriptionSSvp">description</a>
+                    <a name="/s:9SwiftList0B23SingleSectionControllerC13numberOfItemsSivp"></a>
+                    <a name="//apple_ref/swift/Property/numberOfItems" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9SwiftList0B23SingleSectionControllerC13numberOfItemsSivp">numberOfItems</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -541,7 +570,137 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">numberOfItems</span><span class="p">:</span> <span class="kt">Int</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:9SwiftList0B23SingleSectionControllerC11sizeForItemSC6CGSizeVSgSi2at_tF"></a>
+                    <a name="//apple_ref/swift/Method/sizeForItem(at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9SwiftList0B23SingleSectionControllerC11sizeForItemSC6CGSizeVSgSi2at_tF">sizeForItem(at:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">override</span> <span class="kd">func</span> <span class="nf">sizeForItem</span><span class="p">(</span><span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CGSize</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:9SwiftList0B23SingleSectionControllerC11cellForItemSo20UICollectionViewCellCSgSi2at_tF"></a>
+                    <a name="//apple_ref/swift/Method/cellForItem(at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9SwiftList0B23SingleSectionControllerC11cellForItemSo20UICollectionViewCellCSgSi2at_tF">cellForItem(at:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">override</span> <span class="kd">func</span> <span class="nf">cellForItem</span><span class="p">(</span><span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UICollectionViewCell</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:9SwiftList0B23SingleSectionControllerC9didUpdateyAA03AnyB8DiffableV2to_tF"></a>
+                    <a name="//apple_ref/swift/Method/didUpdate(to:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9SwiftList0B23SingleSectionControllerC9didUpdateyAA03AnyB8DiffableV2to_tF">didUpdate(to:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">override</span> <span class="kd">func</span> <span class="nf">didUpdate</span><span class="p">(</span><span class="n">to</span> <span class="nv">object</span><span class="p">:</span> <span class="kt"><a href="../Structs/AnyListDiffable.html">AnyListDiffable</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:9SwiftList0B23SingleSectionControllerC13didSelectItemySi2at_tF"></a>
+                    <a name="//apple_ref/swift/Method/didSelectItem(at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9SwiftList0B23SingleSectionControllerC13didSelectItemySi2at_tF">didSelectItem(at:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">override</span> <span class="kd">func</span> <span class="nf">didSelectItem</span><span class="p">(</span><span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:9SwiftList0B23SingleSectionControllerC15didDeselectItemySi2at_tF"></a>
+                    <a name="//apple_ref/swift/Method/didDeselectItem(at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9SwiftList0B23SingleSectionControllerC15didDeselectItemySi2at_tF">didDeselectItem(at:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">override</span> <span class="kd">func</span> <span class="nf">didDeselectItem</span><span class="p">(</span><span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>

@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
           SwiftList Docs
         </a>
-         (87% documented)
+         (88% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -79,6 +79,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/ListSectionController.html">ListSectionController</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ListSingleSectionController.html">ListSingleSectionController</a>
               </li>
             </ul>
           </li>
@@ -155,6 +158,9 @@
                 <a class="nav-group-task-link" href="../Protocols/ListScrollDelegate.html">ListScrollDelegate</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ListSingleSectionControllerSelectionDelegate.html">ListSingleSectionControllerSelectionDelegate</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/ListSupplementaryViewSource.html">ListSupplementaryViewSource</a>
               </li>
               <li class="nav-group-task">
@@ -205,6 +211,12 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Typealiases.html#/s:9SwiftList0B19ReloadUpdateClosurea">ListReloadUpdateClosure</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:9SwiftList0B33SingleSectionCellConfigureClosurea">ListSingleSectionCellConfigureClosure</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:9SwiftList0B28SingleSectionCellSizeClosurea">ListSingleSectionCellSizeClosure</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Typealiases.html#/s:9SwiftList0B16ToObjectsClosurea">ListToObjectsClosure</a>
@@ -439,7 +451,7 @@ scrollViewDelegate.
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The object that receives <code>IGListAdapterMoveDelegate</code> events resulting from interactive
+                        <p>The object that receives <code><a href="../Protocols/ListAdapterMoveDelegate.html">ListAdapterMoveDelegate</a></code> events resulting from interactive
 reordering of sections.</p>
 
                       </div>
@@ -585,6 +597,158 @@ reordering of sections.</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">visibleSectionControllers</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/ListSectionController.html">ListSectionController</a></span><span class="p">]</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Initializers"></a>
+                <a name="//apple_ref/swift/Section/Initializers" class="dashAnchor"></a>
+                <a href="#/Initializers">
+                  <h3 class="section-name">Initializers</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:9SwiftList0B7AdapterCAcA0B16UpdatingDelegate_p7updater_So16UIViewControllerCSg04viewH0Si16workingRangeSizetcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(updater:viewController:workingRangeSize:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9SwiftList0B7AdapterCAcA0B16UpdatingDelegate_p7updater_So16UIViewControllerCSg04viewH0Si16workingRangeSizetcfc">init(updater:viewController:workingRangeSize:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initializes a new <code>ListAdapter</code> object.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>The working range is the number of objects beyond the visible objects (plus and
+minus) that should be notified when they are close to being visible. For instance, if
+you have 3 objects on screen and a working range of 2, the previous and succeeding 2
+objects will be notified that they are within the working range. As you scroll the list
+the range is updated as objects enter and exit the working range.</p>
+
+<p>To opt out of using the working range, use <code><a href="../Classes/ListAdapter.html#/s:9SwiftList0B7AdapterCAcA0B16UpdatingDelegate_p7updater_So16UIViewControllerCSg04viewH0tcfc">init(updater:viewController:)</a></code> or provide a
+working range of <code>0</code>.</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">updater</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ListUpdatingDelegate.html">ListUpdatingDelegate</a></span><span class="p">,</span> <span class="nv">viewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">?,</span> <span class="nv">workingRangeSize</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>updater</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An object that manages updates to the collection view.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>viewController</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The view controller that will house the adapter.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>workingRangeSize</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The number of objects before and after the viewport to consider within
+the working range.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:9SwiftList0B7AdapterCAcA0B16UpdatingDelegate_p7updater_So16UIViewControllerCSg04viewH0tcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(updater:viewController:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9SwiftList0B7AdapterCAcA0B16UpdatingDelegate_p7updater_So16UIViewControllerCSg04viewH0tcfc">init(updater:viewController:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initializes a new <code>ListAdapter</code> object with a working range of <code>0</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="n">convenience</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">updater</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ListUpdatingDelegate.html">ListUpdatingDelegate</a></span><span class="p">,</span> <span class="nv">viewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">?)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>updater</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An object that manages updates to the collection view.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>viewController</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The view controller that will house the adapter.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -841,7 +1005,7 @@ protocol.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>The object conforming to the <code>IGListAdapterUpdateListener</code>
+                                  <p>The object conforming to the <code><a href="../Protocols/ListAdapterUpdateListener.html">ListAdapterUpdateListener</a></code>
 protocol.</p>
                                 </div>
                               </td>
@@ -2785,7 +2949,7 @@ registered.
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2018 <a class="link" href="https://twitter.com/zhubofei" target="_blank" rel="external">zhubofei</a>. All rights reserved. (Last updated: 2018-07-28)</p>
+      <p>&copy; 2018 <a class="link" href="https://twitter.com/zhubofei" target="_blank" rel="external">zhubofei</a>. All rights reserved. (Last updated: 2018-07-29)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
