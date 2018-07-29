@@ -1,0 +1,14 @@
+platform :ios, '10.0'
+
+target 'SwiftListExamples' do
+  use_frameworks!
+
+  # Pods for SwiftListExamples
+  pod 'SwiftList', :path => '../../SwiftList.podspec'
+
+  target 'SwiftListExamplesUITests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end

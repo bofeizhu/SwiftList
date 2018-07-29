@@ -1,0 +1,6 @@
+framework module SwiftList {
+  umbrella header "SwiftList-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -165,7 +165,7 @@ public final class ListAdapter: NSObject {
     ///
     ///     To opt out of using the working range, use `init(updater:viewController:)` or provide a
     ///     working range of `0`.
-    init(updater: ListUpdatingDelegate, viewController: UIViewController?, workingRangeSize: Int) {
+    public init(updater: ListUpdatingDelegate, viewController: UIViewController?, workingRangeSize: Int) {
         dispatchPrecondition(condition: .onQueue(.main))
         
         self.updater = updater
@@ -181,7 +181,7 @@ public final class ListAdapter: NSObject {
     /// - Parameters:
     ///   - updater: An object that manages updates to the collection view.
     ///   - viewController: The view controller that will house the adapter.
-    convenience init(updater: ListUpdatingDelegate, viewController: UIViewController?) {
+    convenience public init(updater: ListUpdatingDelegate, viewController: UIViewController?) {
         self.init(updater: updater, viewController: viewController, workingRangeSize: 0)
     }
     
