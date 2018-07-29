@@ -13,6 +13,7 @@
 		828F1BE0210D5C4100142373 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 828F1BDE210D5C4100142373 /* LaunchScreen.storyboard */; };
 		828F1BEB210D5C4100142373 /* SwiftListExamplesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828F1BEA210D5C4100142373 /* SwiftListExamplesUITests.swift */; };
 		828F1BF8210D5E5C00142373 /* DemosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828F1BF7210D5E5C00142373 /* DemosViewController.swift */; };
+		828F1BFA210D60DE00142373 /* DemoSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828F1BF9210D60DE00142373 /* DemoSectionController.swift */; };
 		C948F382BC5CB315EEC5730E /* Pods_SwiftListExamplesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF2C68E8677114BD3F89E58E /* Pods_SwiftListExamplesUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -40,6 +41,7 @@
 		828F1BEA210D5C4100142373 /* SwiftListExamplesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftListExamplesUITests.swift; sourceTree = "<group>"; };
 		828F1BEC210D5C4100142373 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		828F1BF7210D5E5C00142373 /* DemosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemosViewController.swift; sourceTree = "<group>"; };
+		828F1BF9210D60DE00142373 /* DemoSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoSectionController.swift; sourceTree = "<group>"; };
 		BD28E2828111469171FF3ACA /* Pods_SwiftListExamples.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftListExamples.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF2C68E8677114BD3F89E58E /* Pods_SwiftListExamplesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftListExamplesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -128,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				828F1BF7210D5E5C00142373 /* DemosViewController.swift */,
+				828F1BF9210D60DE00142373 /* DemoSectionController.swift */,
 			);
 			path = Demos;
 			sourceTree = "<group>";
@@ -303,6 +306,7 @@
 			files = (
 				828F1BD6210D5C4100142373 /* AppDelegate.swift in Sources */,
 				828F1BF8210D5E5C00142373 /* DemosViewController.swift in Sources */,
+				828F1BFA210D60DE00142373 /* DemoSectionController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
