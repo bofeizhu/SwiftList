@@ -8,7 +8,6 @@
 
 /// Conform to `ListAdapterDelegate` to receive display events for objects in a list.
 public protocol ListAdapterDelegate: AnyObject {
-    
     /// Notifies the delegate that a list object is about to be displayed.
     ///
     /// - Parameters:

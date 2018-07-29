@@ -8,7 +8,6 @@
 
 /// The base class for section controllers used in a list. This class is intended to be subclassed.
 open class ListSectionController {
-    
     /// The view controller housing the adapter that created this section controller.
     ///
     /// - Note: Use this view controller to push, pop, present, or do other custom transitions.

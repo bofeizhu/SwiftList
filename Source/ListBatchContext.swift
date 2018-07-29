@@ -9,7 +9,6 @@
 /// Objects conforming to the ListBatchContext protocol provide a way for section controllers
 /// to mutate their cells or reload everything within the section.
 public protocol ListBatchContext: AnyObject {
-    
     /// Reloads cells in the section controller.
     ///
     /// - Parameters:

@@ -11,7 +11,6 @@
 /// The working range is a range *near* the viewport in which you can begin preparing content for
 /// display. For example, you could begin decoding images, or warming text caches.
 public protocol ListWorkingRangeDelegate: AnyObject {
-    
     /// Notifies the delegate that an section controller will enter the working range.
     ///
     /// - Parameters:

@@ -8,7 +8,6 @@
 
 /// Implement this protocol to receive display events for a section controller when it is on screen.
 public protocol ListDisplayDelegate: AnyObject {
-    
     /// Tells the delegate that the specified section controller is about to be displayed.
     ///
     /// - Parameters:

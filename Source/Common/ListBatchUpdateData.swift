@@ -10,7 +10,6 @@
 /// and performs cleanup on init in order to perform a crash-free
 /// update via `UICollectionView.performBatchUpdates(_:completion:)`.
 public final class ListBatchUpdateData {
-    
     /// Section insert indexes.
     public let insertSections: IndexSet
     

@@ -6,13 +6,13 @@
 //  Copyright © 2018 Bofei Zhu. All rights reserved.
 //
 
-typealias ListSectionMapClosure = (AnyListDiffable, ListSectionController, Int) -> Void
-
+/// The ListSectionMap provides a way to map a collection of objects to a collection of section
+/// controllers and achieve constant-time lookups O(1).
 struct ListSectionMap {
-    
     /// The objects stored in the map.
     private(set) var objects: [AnyListDiffable]
     
+    /// `true` if the item count in map is zero, `false` otherwise.
     var isItemCountZero: Bool {
         for object in objects {
             if let sectionController = sectionController(for: object) {
@@ -122,6 +122,9 @@ struct ListSectionMap {
         }
     }
     
+    /// Update an object with a new instance.
+    ///
+    /// - Parameter object: The object to update.
     mutating func update(_ object: AnyListDiffable) {
         guard let section = section(for: object),
               let sectionController = sectionController(for: object)
@@ -148,3 +151,6 @@ struct ListSectionMap {
     private var sectionControllerToSectionDict: [ListSectionController: Int]
     
 }
+
+
+typealias ListSectionMapClosure = (AnyListDiffable, ListSectionController, Int) -> Void

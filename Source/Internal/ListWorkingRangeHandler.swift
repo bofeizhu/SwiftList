@@ -7,7 +7,6 @@
 //
 
 final class ListWorkingRangeHandler {
-    
     /// Initializes the working range handler.
     ///
     /// - Parameter workingRangeSize: workingRangeSize the number of sections beyond the visible

@@ -8,7 +8,6 @@
 
 /// Implement this protocol to receive display events for a section controller when it is on screen.
 public protocol ListScrollDelegate: AnyObject {
-    
     /// Tells the delegate that the section controller was scrolled on screen.
     ///
     /// - Parameters:
