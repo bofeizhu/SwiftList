@@ -40,6 +40,10 @@
 		828F1C06210E10ED00142373 /* ListTestSingleSectionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828F1C05210E10ED00142373 /* ListTestSingleSectionDataSource.swift */; };
 		828F1C08210E122E00142373 /* ListTestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828F1C07210E122E00142373 /* ListTestCell.swift */; };
 		828F1C0A210E143400142373 /* ListSingleSectionControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828F1C09210E143400142373 /* ListSingleSectionControllerTests.swift */; };
+		828F1C0D210E334500142373 /* ListTestSingleNibSectionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828F1C0C210E334500142373 /* ListTestSingleNibSectionDataSource.swift */; };
+		828F1C0F210E33CA00142373 /* ListTestNibCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 828F1C0E210E33CA00142373 /* ListTestNibCell.xib */; };
+		828F1C11210E34B300142373 /* ListTestNibCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828F1C10210E34B300142373 /* ListTestNibCell.swift */; };
+		828F1C13210E365800142373 /* ListSingleNibSectionControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828F1C12210E365800142373 /* ListSingleNibSectionControllerTests.swift */; };
 		829216B120F4AA900038C596 /* Int+ListDiffable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829216B020F4AA900038C596 /* Int+ListDiffable.swift */; };
 		829216B320F4AB930038C596 /* String+ListDiffable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829216B220F4AB930038C596 /* String+ListDiffable.swift */; };
 		829216B720F502CA0038C596 /* ListAdapterUpdaterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829216B620F502CA0038C596 /* ListAdapterUpdaterTests.swift */; };
@@ -124,6 +128,10 @@
 		828F1C05210E10ED00142373 /* ListTestSingleSectionDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTestSingleSectionDataSource.swift; sourceTree = "<group>"; };
 		828F1C07210E122E00142373 /* ListTestCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTestCell.swift; sourceTree = "<group>"; };
 		828F1C09210E143400142373 /* ListSingleSectionControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSingleSectionControllerTests.swift; sourceTree = "<group>"; };
+		828F1C0C210E334500142373 /* ListTestSingleNibSectionDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTestSingleNibSectionDataSource.swift; sourceTree = "<group>"; };
+		828F1C0E210E33CA00142373 /* ListTestNibCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListTestNibCell.xib; sourceTree = "<group>"; };
+		828F1C10210E34B300142373 /* ListTestNibCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTestNibCell.swift; sourceTree = "<group>"; };
+		828F1C12210E365800142373 /* ListSingleNibSectionControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSingleNibSectionControllerTests.swift; sourceTree = "<group>"; };
 		829216B020F4AA900038C596 /* Int+ListDiffable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+ListDiffable.swift"; sourceTree = "<group>"; };
 		829216B220F4AB930038C596 /* String+ListDiffable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ListDiffable.swift"; sourceTree = "<group>"; };
 		829216B620F502CA0038C596 /* ListAdapterUpdaterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAdapterUpdaterTests.swift; sourceTree = "<group>"; };
@@ -189,9 +197,11 @@
 			children = (
 				821350072108E3A400E3FEC9 /* ListAdapterDataSource.swift */,
 				828F1C07210E122E00142373 /* ListTestCell.swift */,
+				828F1C10210E34B300142373 /* ListTestNibCell.swift */,
 				82135014210B9AA500E3FEC9 /* ListTestNibSupplementaryView.swift */,
 				820A0C9D20E854710035EC74 /* ListTestObject.swift */,
 				823CF4BA2107FCEA00326E4E /* ListTestSection.swift */,
+				828F1C0C210E334500142373 /* ListTestSingleNibSectionDataSource.swift */,
 				828F1C05210E10ED00142373 /* ListTestSingleSectionDataSource.swift */,
 				8213500B210B903200E3FEC9 /* ListTestSupplementarySource.swift */,
 				829216B820F5147B0038C596 /* ListTestUICollectionViewDataSource.swift */,
@@ -228,6 +238,7 @@
 		8213500D210B913600E3FEC9 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				828F1C0E210E33CA00142373 /* ListTestNibCell.xib */,
 				8213501B210BDF0700E3FEC9 /* ListTestNibSupplementaryView.xib */,
 			);
 			path = Assets;
@@ -295,6 +306,7 @@
 				82FA791D20F1A4F90010D58C /* ListDiffResultTests.swift */,
 				820A0C9A20E7EAD80035EC74 /* ListDiffTests.swift */,
 				823CF4B82107FC3800326E4E /* ListSectionMapTests.swift */,
+				828F1C12210E365800142373 /* ListSingleNibSectionControllerTests.swift */,
 				828F1C09210E143400142373 /* ListSingleSectionControllerTests.swift */,
 				821350042108D62400E3FEC9 /* ListTestCase.swift */,
 				828F1C04210E100F00142373 /* Mocks */,
@@ -454,6 +466,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8213501C210BDF0700E3FEC9 /* ListTestNibSupplementaryView.xib in Resources */,
+				828F1C0F210E33CA00142373 /* ListTestNibCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -571,6 +584,9 @@
 				820A0CA220EB175E0035EC74 /* ListBatchUpdateDataTests.swift in Sources */,
 				82135020210CC20700E3FEC9 /* ListTestCollectionViewDelegate.swift in Sources */,
 				821350062108D63B00E3FEC9 /* ListTestCase.swift in Sources */,
+				828F1C0D210E334500142373 /* ListTestSingleNibSectionDataSource.swift in Sources */,
+				828F1C13210E365800142373 /* ListSingleNibSectionControllerTests.swift in Sources */,
+				828F1C11210E34B300142373 /* ListTestNibCell.swift in Sources */,
 				82FA791E20F1A4F90010D58C /* ListDiffResultTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

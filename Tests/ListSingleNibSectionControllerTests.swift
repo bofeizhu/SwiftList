@@ -1,5 +1,5 @@
 //
-//  ListSingleSectionControllerTests.swift
+//  ListSingleNibSectionControllerTests.swift
 //  SwiftListTests
 //
 //  Created by Bofei Zhu on 7/29/18.
@@ -9,9 +9,9 @@
 import XCTest
 @testable import SwiftList
 
-class ListSingleSectionControllerTests: ListTestCase {
+class ListSingleNibSectionControllerTests: ListTestCase {
     override func setUp() {
-        dataSource = ListTestSingleSectionDataSource()
+        dataSource = ListTestSingleNibSectionDataSource()
         super.setUp()
     }
     
@@ -20,7 +20,7 @@ class ListSingleSectionControllerTests: ListTestCase {
             ListTestObject(key: 1, value: "foo"),
             ListTestObject(key: 2, value: "bar"),
             ListTestObject(key: 3, value: "baz"),
-        ].typeErased())
+            ].typeErased())
         XCTAssertEqual(collectionView.numberOfSections, 3)
         XCTAssertEqual(collectionView.numberOfItems(inSection: 0), 1)
         XCTAssertEqual(collectionView.numberOfItems(inSection: 1), 1)
@@ -32,10 +32,13 @@ class ListSingleSectionControllerTests: ListTestCase {
             ListTestObject(key: 1, value: "foo"),
             ListTestObject(key: 2, value: "bar"),
             ListTestObject(key: 3, value: "baz"),
-        ].typeErased())
-        let cell0 = collectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as! ListTestCell
-        let cell1 = collectionView.cellForItem(at: IndexPath(item: 0, section: 1)) as! ListTestCell
-        let cell2 = collectionView.cellForItem(at: IndexPath(item: 0, section: 2)) as! ListTestCell
+            ].typeErased())
+        let cell0 = collectionView.cellForItem(
+            at: IndexPath(item: 0, section: 0)) as! ListTestNibCell
+        let cell1 = collectionView.cellForItem(
+            at: IndexPath(item: 0, section: 1)) as! ListTestNibCell
+        let cell2 = collectionView.cellForItem(
+            at: IndexPath(item: 0, section: 2)) as! ListTestNibCell
         XCTAssertEqual(cell0.label.text, "foo")
         XCTAssertEqual(cell1.label.text, "bar")
         XCTAssertEqual(cell2.label.text, "baz")
@@ -46,10 +49,13 @@ class ListSingleSectionControllerTests: ListTestCase {
             ListTestObject(key: 1, value: "foo"),
             ListTestObject(key: 2, value: "bar"),
             ListTestObject(key: 3, value: "baz"),
-        ].typeErased())
-        let cell0 = collectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as! ListTestCell
-        let cell1 = collectionView.cellForItem(at: IndexPath(item: 0, section: 1)) as! ListTestCell
-        let cell2 = collectionView.cellForItem(at: IndexPath(item: 0, section: 2)) as! ListTestCell
+            ].typeErased())
+        let cell0 = collectionView.cellForItem(
+            at: IndexPath(item: 0, section: 0)) as! ListTestNibCell
+        let cell1 = collectionView.cellForItem(
+            at: IndexPath(item: 0, section: 1)) as! ListTestNibCell
+        let cell2 = collectionView.cellForItem(
+            at: IndexPath(item: 0, section: 2)) as! ListTestNibCell
         XCTAssertEqual(cell0.frame.size.height, 44)
         XCTAssertEqual(cell1.frame.size.height, 44)
         XCTAssertEqual(cell2.frame.size.height, 44)
@@ -63,19 +69,20 @@ class ListSingleSectionControllerTests: ListTestCase {
             ListTestObject(key: 1, value: "foo"),
             ListTestObject(key: 2, value: "bar"),
             ListTestObject(key: 3, value: "baz"),
-        ].typeErased())
+            ].typeErased())
         dataSource.objects = [
             ListTestObject(key: 1, value: "foo"),
             ListTestObject(key: 2, value: "qux"),
             ListTestObject(key: 3, value: "baz"),
-        ].typeErased()
+            ].typeErased()
         let expectation = XCTestExpectation()
         adapter.performUpdates(animated: true) { [weak self] (finished) in
             let cell1 = self!.collectionView.cellForItem(
-                at: IndexPath(item: 0, section: 1)) as! ListTestCell
+                at: IndexPath(item: 0, section: 1)) as! ListTestNibCell
             XCTAssertEqual(cell1.label.text, "qux")
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 5)
     }
 }
+

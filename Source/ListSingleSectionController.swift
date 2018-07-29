@@ -24,7 +24,7 @@ public final class ListSingleSectionController: ListSectionController {
     /// - Warning: Be VERY CAREFUL not to create retain cycles by holding strong references to: the
     ///     object that owns the adapter (usually `self`) or the `ListAdapter`. Pass in locally
     ///     scoped objects or use `weak` references!
-    init(
+    public init(
         cellClass: AnyClass,
         configureClosure: @escaping ListSingleSectionCellConfigureClosure,
         sizeClosure: @escaping ListSingleSectionCellSizeClosure) {
@@ -46,7 +46,7 @@ public final class ListSingleSectionController: ListSectionController {
     /// - Warning: Be VERY CAREFUL not to create retain cycles by holding strong references to: the
     ///     object that owns the adapter (usually `self`) or the `ListAdapter`. Pass in locally
     ///     scoped objects or use `weak` references!
-    init(
+    public init(
         nibName: String,
         bundle: Bundle?,
         configureClosure: @escaping ListSingleSectionCellConfigureClosure,
@@ -69,7 +69,7 @@ public final class ListSingleSectionController: ListSectionController {
     /// - Warning: Be VERY CAREFUL not to create retain cycles by holding strong references to: the
     ///     object that owns the adapter (usually `self`) or the `ListAdapter`. Pass in locally
     ///     scoped objects or use `weak` references!
-    init(
+    public init(
         storyboardCellIdentifier: String,
         configureClosure: @escaping ListSingleSectionCellConfigureClosure,
         sizeClosure: @escaping ListSingleSectionCellSizeClosure) {
