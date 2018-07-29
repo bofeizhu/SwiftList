@@ -100,7 +100,7 @@ public final class ListAdapter: NSObject {
     /// The object that receives `UIScrollViewDelegate` events.
     public weak var scrollViewDelegate: UIScrollViewDelegate?
     
-    /// The object that receives `IGListAdapterMoveDelegate` events resulting from interactive
+    /// The object that receives `ListAdapterMoveDelegate` events resulting from interactive
     /// reordering of sections.
     public weak var moveDelegate: ListAdapterMoveDelegate?
     
@@ -150,7 +150,7 @@ public final class ListAdapter: NSObject {
     
     // MARK: - Initializers
     
-    /// Initializes a new `IGListAdapter` object.
+    /// Initializes a new `ListAdapter` object.
     ///
     /// - Parameters:
     ///   - updater: An object that manages updates to the collection view.
@@ -176,7 +176,7 @@ public final class ListAdapter: NSObject {
         ListDebugger.track(adapter: self)
     }
     
-    /// Initializes a new `IGListAdapter` object with a working range of `0`.
+    /// Initializes a new `ListAdapter` object with a working range of `0`.
     ///
     /// - Parameters:
     ///   - updater: An object that manages updates to the collection view.
@@ -520,7 +520,7 @@ extension ListAdapter {
     
     /// Removes a listener from the list adapter.
     ///
-    /// - Parameter updateListener: The object conforming to the `IGListAdapterUpdateListener`
+    /// - Parameter updateListener: The object conforming to the `ListAdapterUpdateListener`
     ///     protocol.
     public func remove(_ updateListener: ListAdapterUpdateListener) {
         dispatchPrecondition(condition: .onQueue(.main))

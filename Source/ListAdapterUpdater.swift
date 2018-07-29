@@ -12,7 +12,6 @@
 ///     It also uses a least-minimal diff for calculating UI updates when `ListAdapter` calls
 ///     `performUpdateWith(collectionView:fromObjects:toObjects:completion:)`.
 public final class ListAdapterUpdater {
-
     /// The delegate that receives events with data on the performance of a transition.
     public weak var delegate: ListAdapterUpdaterDelegate?
 

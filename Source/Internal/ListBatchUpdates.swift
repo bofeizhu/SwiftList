@@ -8,10 +8,8 @@
 
 final class ListBatchUpdates {
     private(set) var sectionReloads: IndexSet = []
-    
     private(set) var itemInserts: [IndexPath] = []
     private(set) var itemDeletes: [IndexPath] = []
-    
     private(set) var itemReloads: [ListReloadIndexPath] = []
     private(set) var itemMoves: [ListMoveIndexPath] = []
     private(set) var itemUpdateClosures: [ListItemUpdateClosure] = []

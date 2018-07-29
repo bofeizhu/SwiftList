@@ -8,7 +8,6 @@
 
 /// A protocol that receives events about `ListAdapterUpdater` operations.
 public protocol ListAdapterUpdaterDelegate: AnyObject {
-    
     /// Notifies the delegate that the updater will call `performBatchUpdates(_:completion:)`
     ///
     /// - Parameters:

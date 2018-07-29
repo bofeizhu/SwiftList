@@ -6,32 +6,9 @@
 //  Copyright © 2018 Bofei Zhu. All rights reserved.
 //
 
-/// A completion closure to execute when updates are finished.
-///
-/// - Parameter finished: Specifies whether or not the update finished.
-public typealias ListUpdatingCompletion = (_ finished: Bool) -> Void
-
-///  A closure to be called when the adapter applies changes to the collection view.
-///
-/// - Parameter toObjects: The new objects in the collection.
-public typealias ListObjectTransitionClosure = (_ toObjects: [AnyListDiffable]) -> Void
-
-/// A closure that contains all of the updates.
-public typealias ListItemUpdateClosure = () -> Void
-
-/// A closure to be called when an adapter reloads the collection view.
-public typealias ListReloadUpdateClosure = () -> Void
-
-/// A closure that returns an array of objects to transition to.
-public typealias ListToObjectsClosure = () -> [AnyListDiffable]?
-
-/// A closure that returns a collection view to perform updates on.
-public typealias ListCollectionViewClosure = () -> UICollectionView?
-
 /// Implement this protocol in order to handle both section and row based update events.
 /// Implementation should forward or coalesce these events to a backing store or collection.
 public protocol ListUpdatingDelegate: AnyObject {
-    
     /// Tells the delegate to perform a section transition from an old array of objects to
     /// a new one.
     ///
@@ -143,3 +120,25 @@ public protocol ListUpdatingDelegate: AnyObject {
         reloadUpdateClosure: @escaping ListReloadUpdateClosure,
         completion: ListUpdatingCompletion?)
 }
+
+/// A completion closure to execute when updates are finished.
+///
+/// - Parameter finished: Specifies whether or not the update finished.
+public typealias ListUpdatingCompletion = (_ finished: Bool) -> Void
+
+///  A closure to be called when the adapter applies changes to the collection view.
+///
+/// - Parameter toObjects: The new objects in the collection.
+public typealias ListObjectTransitionClosure = (_ toObjects: [AnyListDiffable]) -> Void
+
+/// A closure that contains all of the updates.
+public typealias ListItemUpdateClosure = () -> Void
+
+/// A closure to be called when an adapter reloads the collection view.
+public typealias ListReloadUpdateClosure = () -> Void
+
+/// A closure that returns an array of objects to transition to.
+public typealias ListToObjectsClosure = () -> [AnyListDiffable]?
+
+/// A closure that returns a collection view to perform updates on.
+public typealias ListCollectionViewClosure = () -> UICollectionView?

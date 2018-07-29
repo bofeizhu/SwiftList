@@ -9,7 +9,6 @@
 /// Conform to `ListTransitionDelegate` to provide customized layout information for a collection
 /// view.
 public protocol ListTransitionDelegate: AnyObject {
-    
     /// Asks the delegate to customize and return the starting layout information for an item being
     /// inserted into the collection view.
     ///

@@ -7,7 +7,6 @@
 //
 
 final class ListDebugger {
-    
     static func track(adapter: ListAdapter) {
         livingAdapters.insert(ListAdapterWeakBox(adapter))
     }

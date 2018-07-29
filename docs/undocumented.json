@@ -16,21 +16,21 @@
     },
     {
       "file": "/Users/zhubofei/SwiftList/Source/Common/ListDiffable.swift",
-      "line": 36,
+      "line": 35,
       "symbol": "AnyListDiffable.base",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zhubofei/SwiftList/Source/Common/ListDiffable.swift",
-      "line": 42,
+      "line": 41,
       "symbol": "Array.typeErased()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zhubofei/SwiftList/Source/Common/ListIndexSetResult.swift",
-      "line": 26,
+      "line": 25,
       "symbol": "ListIndexSetResult.hasChanges",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
@@ -204,6 +204,13 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/zhubofei/SwiftList/Source/ListAdapterUpdater.swift",
+      "line": 55,
+      "symbol": "ListAdapterUpdater.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/zhubofei/SwiftList/Source/ListCollectionViewInteractiveReorderingLayout.swift",
       "line": 16,
       "symbol": "ListCollectionViewInteractiveReorderingLayout.listAdapter",
@@ -261,14 +268,14 @@
     },
     {
       "file": "/Users/zhubofei/SwiftList/Source/ListSectionController.swift",
-      "line": 75,
+      "line": 74,
       "symbol": "ListSectionController.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zhubofei/SwiftList/Source/ListSectionController.swift",
-      "line": 154,
+      "line": 153,
       "symbol": "ListSectionController.canMoveItem(at:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"

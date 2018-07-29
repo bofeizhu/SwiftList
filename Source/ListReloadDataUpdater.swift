@@ -7,7 +7,7 @@
 //
 
 /// An `ListReloadDataUpdater` is a concrete type that conforms to `ListUpdatingDelegate`.
-/// It is an out-of-box updater for `IGListAdapter` objects to use.
+/// It is an out-of-box updater for `ListAdapter` objects to use.
 /// - Note: This updater performs simple, synchronous updates using `UICollectionView.reloadData()`.
 public final class ListReloadDataUpdater: ListUpdatingDelegate {
     // MARK: - ListUpdatingDelegate

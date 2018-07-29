@@ -8,7 +8,6 @@
 
 /// An object representing a move between indexes.
 public struct ListMoveIndexPath: Hashable {
-
     /// An index path in the old collection.
     public let from: IndexPath
 

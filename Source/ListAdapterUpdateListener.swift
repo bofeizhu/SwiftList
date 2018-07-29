@@ -19,7 +19,6 @@ public enum ListAdapterUpdateType {
 
 /// Conform to this protocol to receive events about `ListAdapter` updates.
 public protocol ListAdapterUpdateListener: AnyObject {
-    
     /// Notifies a listener that the listAdapter was updated.
     ///
     /// - Parameters:

@@ -189,7 +189,7 @@ fileprivate func ListDiffing(
         }
     }
     
-    // symbol table uses the old/new array diffIdentifier as the key and IGListEntry as the value
+    // symbol table uses the old/new array diffIdentifier as the key and ListEntry as the value
     var table: [AnyHashable: ListEntry] = [:]
     
     // pass 1

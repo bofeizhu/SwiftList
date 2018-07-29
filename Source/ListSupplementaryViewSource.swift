@@ -11,7 +11,6 @@
 /// supplementary API reflects that in `UICollectionView`, `UICollectionViewLayout`, and
 /// `UICollectionViewDataSource`.
 public protocol ListSupplementaryViewSource: AnyObject {
-    
     /// An array of element kind strings that the supplementary source handles.
     var supportedElementKinds: [String] { get }
     

@@ -8,7 +8,6 @@
 
 /// A result object returned when diffing with indexes.
 public final class ListIndexSetResult {
-
     /// The indexes inserted into the new collection.
     public let inserts: IndexSet
 

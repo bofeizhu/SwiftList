@@ -7,7 +7,6 @@
 //
 
 final class ListDisplayHandler {
-    
     /// Act as a counted set of the currently visible section controllers.
     private(set) var visibleSections: [ListSectionController: Int] = [:]
     

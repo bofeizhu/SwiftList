@@ -10,7 +10,6 @@
 /// that section controllers need for operations like sizing, dequeuing cells,
 /// inserting, deleting, reloading, etc.
 public protocol ListCollectionContext: AnyObject {
-    
     /// The size of the collection view. You can use this for sizing cells.
     var containerSize: CGSize { get }
     

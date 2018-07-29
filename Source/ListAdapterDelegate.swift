@@ -6,9 +6,8 @@
 //  Copyright © 2018 Bofei Zhu. All rights reserved.
 //
 
-/// Conform to `IGListAdapterDelegate` to receive display events for objects in a list.
+/// Conform to `ListAdapterDelegate` to receive display events for objects in a list.
 public protocol ListAdapterDelegate: AnyObject {
-    
     /// Notifies the delegate that a list object is about to be displayed.
     ///
     /// - Parameters:
