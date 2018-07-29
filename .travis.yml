@@ -12,6 +12,8 @@ env:
    - LANG=en_US.UTF-8
    - WORKSPACE=SwiftList.xcworkspace
    - IOS_FRAMEWORK_SCHEME="SwiftList"
+   - IOS_EXAMPLE_WORKSPACE="Examples/Examples-iOS/SwiftListExamples.xcworkspace"
+   - EXAMPLE_SCHEME="SwiftListExamples"
 
    matrix:
     - DESTINATION="OS=11.4,name=iPhone X"          SCHEME="$IOS_FRAMEWORK_SCHEME"      RUN_TESTS="YES" BUILD_EXAMPLE="YES" POD_LINT="NO"
@@ -22,7 +24,10 @@ script:
   - xcodebuild -version
   - xcodebuild -showsdks
 
-  # Build Framework in Debug and Run Tests if specified
+  - if [ $BUILD_EXAMPLE == "YES" ]; then
+        xcodebuild build -workspace "$IOS_EXAMPLE_WORKSPACE" -scheme "$EXAMPLE_SCHEME" -destination "$DESTINATION" ONLY_ACTIVE_ARCH=YES CODE_SIGNING_REQUIRED=NO | xcpretty;
+    fi
+
   - if [ $RUN_TESTS == "YES" ]; then
       xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=YES ENABLE_TESTABILITY=YES -enableCodeCoverage YES test | xcpretty;
     else

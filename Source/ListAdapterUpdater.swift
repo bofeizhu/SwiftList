@@ -53,7 +53,7 @@ public final class ListAdapterUpdater {
             fromObjects != nil || toObjectsClosure != nil
     }
 
-    init() {
+    public init() {
         dispatchPrecondition(condition: .onQueue(.main))
     }
     
