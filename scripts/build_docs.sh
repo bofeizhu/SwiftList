@@ -10,10 +10,10 @@ jazzy \
 	--clean \
 	--author 'zhubofei' \
   --author_url 'https://twitter.com/zhubofei' \
-  --github_url 'https://github.com/zhubofei/ListKit' \
+  --github_url 'https://github.com/zhubofei/SwiftList' \
   --module-version 0.1.0 \
   --readme README.md \
-  --xcodebuild-arguments -workspace,'ListKit.xcworkspace',-scheme,ListKit \
-  --module 'ListKit' \
+  --xcodebuild-arguments -workspace,'SwiftList.xcworkspace',-scheme,SwiftList \
+  --module 'SwiftList' \
   --output docs/ \
   --theme fullwidth
