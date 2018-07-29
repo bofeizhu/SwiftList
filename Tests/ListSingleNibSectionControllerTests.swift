@@ -85,4 +85,3 @@ class ListSingleNibSectionControllerTests: ListTestCase {
         wait(for: [expectation], timeout: 5)
     }
 }
-
