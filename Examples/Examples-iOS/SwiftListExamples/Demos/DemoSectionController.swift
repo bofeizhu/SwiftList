@@ -50,7 +50,7 @@ final class DemoSectionController: ListSectionController {
             dequeueReusableCellOfClass: LabelCell.self,
             at: index) as? LabelCell
         else {
-            fatalError()
+            preconditionFailure()
         }
         cell.text = object?.name
         return cell
@@ -58,5 +58,12 @@ final class DemoSectionController: ListSectionController {
     
     override func didUpdate(to object: AnyListDiffable) {
         self.object = object.base as? DemoItem
+    }
+    
+    override func didSelectItem(at index: Int) {
+        if let controller = object?.controllerClass.init() {
+            controller.title = object?.name
+            viewController?.navigationController?.pushViewController(controller, animated: true)
+        }
     }
 }

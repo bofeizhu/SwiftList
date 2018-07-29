@@ -15,6 +15,8 @@
 		828F1BF8210D5E5C00142373 /* DemosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828F1BF7210D5E5C00142373 /* DemosViewController.swift */; };
 		828F1BFA210D60DE00142373 /* DemoSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828F1BF9210D60DE00142373 /* DemoSectionController.swift */; };
 		828F1BFC210D64B400142373 /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828F1BFB210D64B400142373 /* LabelCell.swift */; };
+		828F1BFF210D7EF100142373 /* LabelSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828F1BFE210D7EF100142373 /* LabelSectionController.swift */; };
+		828F1C01210D80A700142373 /* LoadMoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828F1C00210D80A700142373 /* LoadMoreViewController.swift */; };
 		C948F382BC5CB315EEC5730E /* Pods_SwiftListExamplesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF2C68E8677114BD3F89E58E /* Pods_SwiftListExamplesUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +46,8 @@
 		828F1BF7210D5E5C00142373 /* DemosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemosViewController.swift; sourceTree = "<group>"; };
 		828F1BF9210D60DE00142373 /* DemoSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoSectionController.swift; sourceTree = "<group>"; };
 		828F1BFB210D64B400142373 /* LabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
+		828F1BFE210D7EF100142373 /* LabelSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelSectionController.swift; sourceTree = "<group>"; };
+		828F1C00210D80A700142373 /* LoadMoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadMoreViewController.swift; sourceTree = "<group>"; };
 		BD28E2828111469171FF3ACA /* Pods_SwiftListExamples.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftListExamples.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF2C68E8677114BD3F89E58E /* Pods_SwiftListExamplesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftListExamplesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -107,6 +111,7 @@
 				828F1BF6210D5DD200142373 /* Demos */,
 				828F1BE1210D5C4100142373 /* Info.plist */,
 				828F1BDE210D5C4100142373 /* LaunchScreen.storyboard */,
+				828F1BFD210D7E8500142373 /* LoadMore */,
 				828F1BF5210D5D9B00142373 /* Shared */,
 			);
 			path = SwiftListExamples;
@@ -125,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				828F1BFB210D64B400142373 /* LabelCell.swift */,
+				828F1BFE210D7EF100142373 /* LabelSectionController.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -132,10 +138,18 @@
 		828F1BF6210D5DD200142373 /* Demos */ = {
 			isa = PBXGroup;
 			children = (
-				828F1BF7210D5E5C00142373 /* DemosViewController.swift */,
 				828F1BF9210D60DE00142373 /* DemoSectionController.swift */,
+				828F1BF7210D5E5C00142373 /* DemosViewController.swift */,
 			);
 			path = Demos;
+			sourceTree = "<group>";
+		};
+		828F1BFD210D7E8500142373 /* LoadMore */ = {
+			isa = PBXGroup;
+			children = (
+				828F1C00210D80A700142373 /* LoadMoreViewController.swift */,
+			);
+			path = LoadMore;
 			sourceTree = "<group>";
 		};
 		9224CADAA9D862A53AB8E1EB /* Frameworks */ = {
@@ -309,6 +323,8 @@
 			files = (
 				828F1BD6210D5C4100142373 /* AppDelegate.swift in Sources */,
 				828F1BF8210D5E5C00142373 /* DemosViewController.swift in Sources */,
+				828F1BFF210D7EF100142373 /* LabelSectionController.swift in Sources */,
+				828F1C01210D80A700142373 /* LoadMoreViewController.swift in Sources */,
 				828F1BFC210D64B400142373 /* LabelCell.swift in Sources */,
 				828F1BFA210D60DE00142373 /* DemoSectionController.swift in Sources */,
 			);

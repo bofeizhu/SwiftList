@@ -18,7 +18,7 @@ final class DemosViewController: UIViewController, ListAdapterDataSource {
         collectionViewLayout: UICollectionViewFlowLayout())
     
     let demos: [DemoItem] = [
-        DemoItem(name: "Tail Loading", controllerClass: UIViewController.self),
+        DemoItem(name: "Tail Loading", controllerClass: LoadMoreViewController.self),
     ]
     
     override func viewDidLoad() {
