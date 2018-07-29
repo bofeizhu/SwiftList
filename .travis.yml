@@ -13,7 +13,7 @@ env:
    - WORKSPACE=SwiftList.xcworkspace
    - IOS_FRAMEWORK_SCHEME="SwiftList"
    - IOS_EXAMPLE_WORKSPACE="Examples/Examples-iOS/SwiftListExamples.xcworkspace"
-   - EXAMPLE_SCHEME="IGListKitExamples"
+   - EXAMPLE_SCHEME="SwiftListExamples"
 
    matrix:
     - DESTINATION="OS=11.4,name=iPhone X"          SCHEME="$IOS_FRAMEWORK_SCHEME"      RUN_TESTS="YES" BUILD_EXAMPLE="YES" POD_LINT="NO"
