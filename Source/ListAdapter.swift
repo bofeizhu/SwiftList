@@ -1773,6 +1773,19 @@ extension ListAdapter: UICollectionViewDelegate {
             collectionViewDelegateMethod(scrollView)
         }
     }
+
+    public func scrollViewWillEndDragging(
+        _ scrollView: UIScrollView,
+        withVelocity velocity: CGPoint,
+        targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        if let scrollViewDelegateMethod =
+            scrollViewDelegate?.scrollViewWillEndDragging(_:withVelocity:targetContentOffset:) {
+            scrollViewDelegateMethod(scrollView, velocity, targetContentOffset)
+        } else if let collectionViewDelegateMethod =
+            collectionViewDelegate?.scrollViewWillEndDragging(_:withVelocity:targetContentOffset:) {
+            collectionViewDelegateMethod(scrollView, velocity, targetContentOffset)
+        }
+    }
 }
 
 // MARK: - Class Methods
