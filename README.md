@@ -15,6 +15,12 @@ A data-driven `UICollectionView` framework for building fast and flexible lists.
 - iOS 10.0+
 - Swift 4.1+
 
+## Documentation
+
+You can find [the docs here](https://zhubofei.github.io/SwiftList). Documentation is generated with [jazzy](https://github.com/realm/jazzy).
+
+To regenerate docs, run `./scripts/build_docs.sh` from the root directory in the repo.
+
 ## License
 
 `SwiftList` is [MIT-licensed](./LICENSE).
