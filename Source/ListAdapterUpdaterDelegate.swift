@@ -91,7 +91,7 @@ public protocol ListAdapterUpdaterDelegate: AnyObject {
         _ listAdapterUpdater: ListAdapterUpdater,
         willReloadSections sections: IndexSet,
         forCollectionView collectionView: UICollectionView)
-    
+
     /// Notifies the delegate that the updater will call `UICollectionView.reloadData()`.
     ///
     /// - Parameters:
@@ -100,7 +100,7 @@ public protocol ListAdapterUpdaterDelegate: AnyObject {
     func listAdapterUpdater(
         _ listAdapterUpdater: ListAdapterUpdater,
         willReloadDataForCollectionView collectionView: UICollectionView)
-    
+
     /// Notifies the delegate that the updater successfully called `UICollectionView.reloadData()`.
     ///
     /// - Parameters:

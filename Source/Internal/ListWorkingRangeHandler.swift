@@ -15,7 +15,7 @@ final class ListWorkingRangeHandler {
     init(workingRangeSize: Int) {
         self.workingRangeSize = workingRangeSize
     }
-    
+
     /// Tells the handler that a cell will be displayed in the SwiftList infra.
     ///
     /// - Parameters:
@@ -27,7 +27,7 @@ final class ListWorkingRangeHandler {
         visibleSectionIndexes.insert(indexPath)
         updateWorkingRanges(with: listAdapter)
     }
-    
+
     /// Tells the handler that a cell did end display in the SwiftList infra.
     ///
     /// - Parameters:
@@ -39,7 +39,7 @@ final class ListWorkingRangeHandler {
         visibleSectionIndexes.remove(indexPath)
         updateWorkingRanges(with: listAdapter)
     }
-    
+
     // MARK: Private
     private var workingRangeSize: Int
     private var visibleSectionIndexes: Set<IndexPath> = []
@@ -49,46 +49,46 @@ final class ListWorkingRangeHandler {
 private extension ListWorkingRangeHandler {
     func updateWorkingRanges(with listAdapter: ListAdapter) {
         dispatchPrecondition(condition: .onQueue(.main))
-        
+
         // Swift doesn't have a native ordered set implementation yet. So we use set + sorting here
         // instead. And since we don't need to know the exact index of each section. We can achieve
         // the same O(nlogn) time complexity here.
-        
+
         var visibleSectionSet: Set<Int> = []
         for indexPath in visibleSectionIndexes {
             visibleSectionSet.insert(indexPath.section)
         }
-        
+
         var start = 0
         var end = 0
-        if visibleSectionSet.count > 0 {
+        if !visibleSectionSet.isEmpty {
             let visibleSections = visibleSectionSet.sorted()
             if let first = visibleSections.first {
                 start = max(first - workingRangeSize, 0)
             }
-            
+
             if let last = visibleSections.last {
                 end = min(last + 1 + workingRangeSize, listAdapter.objects.count)
             }
-            
+
         }
-        
+
         // Build the current set of working range section controllers
         var workingRangeSectionControllers =
             Set<ListSectionController>.init(minimumCapacity: visibleSectionSet.count)
-        
+
         for section in start..<end {
             if let object = listAdapter.object(forSection: section),
                 let sectionController = listAdapter.sectionController(for: object) {
                 workingRangeSectionControllers.insert(sectionController)
             }
         }
-        
+
         assert(
             workingRangeSectionControllers.count < 1000,
             "This algorithm is way too slow with so many objects" +
                 " \(workingRangeSectionControllers.count)")
-        
+
         // Tell any new section controllers that they have entered the working range
         for sectionController in workingRangeSectionControllers {
             // Check if the item exists in the old working range item array.
@@ -100,7 +100,7 @@ private extension ListWorkingRangeHandler {
                     sectionControllerWillEnterWorkingRange: sectionController)
             }
         }
-        
+
         // Tell any removed section controllers that they have exited the working range
         for sectionController in self.workingRangeSectionControllers {
             // Check if the item exists in the new list of section controllers
@@ -112,7 +112,7 @@ private extension ListWorkingRangeHandler {
                     sectionControllerDidExitWorkingRange: sectionController)
             }
         }
-        
+
         self.workingRangeSectionControllers = workingRangeSectionControllers
     }
 }

@@ -16,7 +16,7 @@ public protocol ListDisplayDelegate: AnyObject {
     func listAdapter(
         _ listAdapter: ListAdapter,
         willDisplay sectionController: ListSectionController)
-    
+
     /// Tells the delegate that the specified section controller is no longer being displayed.
     ///
     /// - Parameters:
@@ -25,7 +25,7 @@ public protocol ListDisplayDelegate: AnyObject {
     func listAdapter(
         _ listAdapter: ListAdapter,
         didEndDisplaying sectionController: ListSectionController)
-    
+
     /// Tells the delegate that a cell in the specified list is about to be displayed.
     ///
     /// - Parameters:
@@ -38,7 +38,7 @@ public protocol ListDisplayDelegate: AnyObject {
         sectionController: ListSectionController,
         willDisplayCell cell: UICollectionViewCell,
         at index: Int)
-    
+
     /// Tells the delegate that a cell in the specified list is no longer being displayed.
     ///
     /// - Parameters:

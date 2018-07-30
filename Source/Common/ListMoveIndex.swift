@@ -13,7 +13,7 @@ public struct ListMoveIndex: Hashable {
 
     /// An index in the new collection.
     public let to: Int
-    
+
     // MARK: Private API
     init(from: Int, to: Int) {
         self.from = from
@@ -25,7 +25,7 @@ extension ListMoveIndex: Comparable {
     public static func == (lhs: ListMoveIndex, rhs: ListMoveIndex) -> Bool {
         return lhs.from == rhs.from && lhs.to == rhs.to
     }
-    
+
     public static func < (lhs: ListMoveIndex, rhs: ListMoveIndex) -> Bool {
         return lhs.from < rhs.from
     }

@@ -26,7 +26,7 @@ public final class ListReloadDataUpdater: ListUpdatingDelegate {
         guard let completion = completion else { return }
         completion(true)
     }
-    
+
     public func performUpdateWith(
         collectionViewClosure: @escaping ListCollectionViewClosure,
         animated: Bool,
@@ -37,46 +37,46 @@ public final class ListReloadDataUpdater: ListUpdatingDelegate {
         guard let completion = completion else { return }
         completion(true)
     }
-    
+
     public func collectionView(
         _ collectionView: UICollectionView,
         insertItemsAt indexPaths: [IndexPath]) {
         synchronousReloadData(with: collectionView)
     }
-    
+
     public func collectionView(
         _ collectionView: UICollectionView,
         deleteItemsAt indexPaths: [IndexPath]) {
         synchronousReloadData(with: collectionView)
     }
-    
+
     public func collectionView(
         _ collectionView: UICollectionView,
         moveItemAt indexPath: IndexPath,
         to newIndexPath: IndexPath) {
         synchronousReloadData(with: collectionView)
     }
-    
+
     public func collectionView(
         _ collectionView: UICollectionView,
         reloadItemAt indexPath: IndexPath,
         to newIndexPath: IndexPath) {
         synchronousReloadData(with: collectionView)
     }
-    
+
     public func collectionView(
         _ collectionView: UICollectionView,
         moveSection section: Int,
         toSection newSection: Int) {
         synchronousReloadData(with: collectionView)
     }
-    
+
     public func collectionView(
         _ collectionView: UICollectionView,
         reloadSections sections: IndexSet) {
         synchronousReloadData(with: collectionView)
     }
-    
+
     public func reloadDataWith(
         collectionViewClosure: @escaping ListCollectionViewClosure,
         reloadUpdateClosure: @escaping ListReloadUpdateClosure,

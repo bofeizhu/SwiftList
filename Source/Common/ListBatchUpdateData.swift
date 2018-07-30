@@ -12,19 +12,19 @@
 public final class ListBatchUpdateData {
     /// Section insert indexes.
     public let insertSections: IndexSet
-    
+
     /// Section delete indexes.
     public let deleteSections: IndexSet
-    
+
     /// Section moves.
     public let moveSections: Set<ListMoveIndex>
-    
+
     /// Item insert index paths.
     public let insertIndexPaths: [IndexPath]
-    
+
     /// Item delete index paths.
     public let deleteIndexPaths: [IndexPath]
-    
+
     /// Item moves.
     public let moveIndexPaths: [ListMoveIndexPath]
 
@@ -48,7 +48,7 @@ public final class ListBatchUpdateData {
         var mDeleteSections = deleteSections
         var mInsertSections = insertSections
         var mMoveIndexPaths = moveIndexPaths
-        
+
         // these collections should NEVER be mutated during cleanup passes,
         // otherwise sections that have multiple item changes
         // (e.g. a moved section that has a delete + reload
@@ -60,7 +60,7 @@ public final class ListBatchUpdateData {
         for move in moveSections {
             let from = move.from
             let to = move.to
-            
+
             // if the move is already deleted or inserted,
             // discard it because count-changing operations must match with data source changes
             if deleteSections.contains(from) || insertSections.contains(to) {
@@ -70,13 +70,13 @@ public final class ListBatchUpdateData {
                 toDict[to] = move
             }
         }
-        
+
         var mInsertIndexPaths = insertIndexPaths
-        
+
         // avoid a flaky UICollectionView bug when deleting from the same index path twice
         // exposes a possible data source inconsistency issue
         var mDeleteIndexPaths = Array(Set(deleteIndexPaths))
-        
+
         // avoids a bug where a cell is animated twice
         // and one of the snapshot cells is never removed from the hierarchy
         mDeleteIndexPaths.cleanIndexPathsWith(
@@ -85,7 +85,7 @@ public final class ListBatchUpdateData {
             deletes: &mDeleteSections,
             inserts: &mInsertSections
         )
-        
+
         // prevents a bug where UICollectionView corrupts the heap memory
         // when inserting into a section that is moved
         mInsertIndexPaths.cleanIndexPathsWith(
@@ -94,7 +94,7 @@ public final class ListBatchUpdateData {
             deletes: &mDeleteSections,
             inserts: &mInsertSections
         )
-        
+
         var moveIndexPathsRemoves = Set<ListMoveIndexPath>()
         var moveSectionRemoves = Set<ListMoveIndex>()
         for move in moveIndexPaths {
@@ -102,7 +102,7 @@ public final class ListBatchUpdateData {
             if deleteSections.contains(move.from.section) {
                 moveIndexPathsRemoves.insert(move)
             }
-            
+
             // if a move is inside a section that is moved,
             // convert the section move to a delete+insert
             if let sectionMove = fromDict[move.from.section] {
@@ -112,10 +112,10 @@ public final class ListBatchUpdateData {
                 mInsertSections.insert(sectionMove.to)
             }
         }
-        
+
         mMoveIndexPaths = mMoveIndexPaths.filter { !moveIndexPathsRemoves.contains($0) }
         mMoveSections = mMoveSections.filter { !moveSectionRemoves.contains($0) }
-        
+
         self.deleteSections = mDeleteSections
         self.insertSections = mInsertSections
         self.moveSections = mMoveSections
@@ -139,23 +139,23 @@ fileprivate extension Array where Element == IndexPath {
         dictionary: [Int: ListMoveIndex],
         moves: inout Set<ListMoveIndex>,
         deletes: inout IndexSet, inserts: inout IndexSet) {
-        for i in stride(from: self.count - 1, through: 0, by: -1) {
-            let indexPath = self[i]
+        for index in stride(from: self.count - 1, through: 0, by: -1) {
+            let indexPath = self[index]
             print(indexPath.section)
             if let move = dictionary[indexPath.section] {
-                self.remove(at: i)
+                self.remove(at: index)
                 convert(move: move, fromMoves: &moves, toDeletes: &deletes, andInserts: &inserts)
             }
         }
     }
-    
+
     private func convert(
         move: ListMoveIndex,
         fromMoves moves: inout Set<ListMoveIndex>,
         toDeletes deletes: inout IndexSet,
         andInserts inserts: inout IndexSet) {
         moves.remove(move)
-        
+
         // add a delete and insert respecting the move's from and to sections
         // delete + insert will result in reloading the entire section
         deletes.insert(move.from)

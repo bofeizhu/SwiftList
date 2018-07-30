@@ -17,7 +17,6 @@ public protocol ListBatchContext: AnyObject {
     func sectionController(
         _ sectionController: ListSectionController,
         reloadItemsAt indexes: IndexSet)
-    
 
     /// Inserts cells in the list.
     ///
@@ -27,7 +26,6 @@ public protocol ListBatchContext: AnyObject {
     func sectionController(
         _ sectionController: ListSectionController,
         insertItemsAt indexes: IndexSet)
-    
 
     /// Deletes cells in the list.
     ///
@@ -38,7 +36,6 @@ public protocol ListBatchContext: AnyObject {
         _ sectionController: ListSectionController,
         deleteItemsAt indexes: IndexSet)
 
-    
     /// Moves a cell from one index to another within the section controller.
     ///
     /// - Parameters:
@@ -49,7 +46,7 @@ public protocol ListBatchContext: AnyObject {
         _ sectionController: ListSectionController,
         moveItemfrom index: Int,
         to newIndex: Int)
-    
+
     /// Reloads the entire section controller.
     ///
     /// - Parameter sectionController: The section controller who's cells need reloading.

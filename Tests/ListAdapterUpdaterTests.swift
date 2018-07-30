@@ -419,7 +419,7 @@ class ListAdapterUpdaterTests: XCTestCase {
     func testWhenConvertingReloadsWithoutChangesThatOriginalIndexUsed() {
         let from: [AnyListDiffable] = []
         let to: [AnyListDiffable] = []
-        let result = ListDiff(oldArray: from, newArray: to, option: .equality)
+        let result = listDiff(oldArray: from, newArray: to, option: .equality)
         var reloads = result.updates
         reloads.insert(2)
         var deletes = result.deletes
@@ -440,7 +440,7 @@ class ListAdapterUpdaterTests: XCTestCase {
     func testWhenConvertingReloadsWithChangesThatIndexMoves() {
         let from = [1, 2, 3].typeErased()
         let to = [3, 2, 1].typeErased()
-        let result = ListDiff(oldArray: from, newArray: to, option: .equality)
+        let result = listDiff(oldArray: from, newArray: to, option: .equality)
         var reloads = result.updates
         reloads.insert(2)
         var deletes = result.deletes
@@ -461,7 +461,7 @@ class ListAdapterUpdaterTests: XCTestCase {
     func testWhenReloadingSectionWhenSectionRemovedThatConvertMethodCorrects() {
         let from = ["a", "b", "c"].typeErased()
         let to = ["a", "c"].typeErased()
-        let result = ListDiff(oldArray: from, newArray: to, option: .equality)
+        let result = listDiff(oldArray: from, newArray: to, option: .equality)
         var reloads = IndexSet(integer: 1)
         var deletes = IndexSet()
         var inserts = IndexSet()

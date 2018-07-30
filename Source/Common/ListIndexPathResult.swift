@@ -19,7 +19,7 @@ public final class ListIndexPathResult {
 
     /// The moves from an index path in the old collection to an index path in the new collection.
     public let moves: [ListMoveIndexPath]
-    
+
     /// A Read-only boolean that indicates whether the result has any changes or not.
     /// `true` if the result has changes, `false` otherwise.
     public var hasChanges: Bool {
@@ -31,25 +31,19 @@ public final class ListIndexPathResult {
     /// - Parameter diffIdentifier: The diffIdentifier of the object.
     /// - Returns: The optional index path of the object before the diff.
     public func oldIndexPathFor(diffIdentifier: AnyHashable?) -> IndexPath? {
-        guard let d = diffIdentifier else {
-            return nil
-        }
-        
-        return oldIndexPathDict[d]
+        guard let diffIdentifier = diffIdentifier else { return nil }
+        return oldIndexPathDict[diffIdentifier]
     }
-    
+
     /// Returns the index path of the object with the specified diffIdentifier *after* the diff.
     ///
     /// - Parameter diffIdentifier: The diffIdentifier of the object.
     /// - Returns: The optional index path of the object after the diff.
     public func newIndexPathFor(diffIdentifier: AnyHashable?) -> IndexPath? {
-        guard let d = diffIdentifier else {
-            return nil
-        }
-        
-        return newIndexPathDict[d]
+        guard let diffIdentifier = diffIdentifier else { return nil }
+        return newIndexPathDict[diffIdentifier]
     }
-    
+
     /// Creates a new result object with operations safe for use in `UITableView` and
     /// `UICollectionView` batch updates.
     ///
@@ -59,19 +53,19 @@ public final class ListIndexPathResult {
         var inserts = Set(self.inserts)
         var filteredUpdates = Set(self.updates)
         var filteredMoves = self.moves
-        
+
         // convert move+update to delete+insert, respecting the from/to of the move
-        let moveCount = moves.count;
-        for i in stride(from: moveCount - 1, through: 0, by: -1) {
-            let move = moves[i]
+        let moveCount = moves.count
+        for index in stride(from: moveCount - 1, through: 0, by: -1) {
+            let move = moves[index]
             if filteredUpdates.contains(move.from) {
-                filteredMoves.remove(at: i)
+                filteredMoves.remove(at: index)
                 filteredUpdates.remove(move.from)
                 deletes.insert(move.from)
                 inserts.insert(move.to)
             }
         }
-        
+
         // iterate all new identifiers. if its index is updated,
         // delete from the old index and insert the new index
         for (key, indexPath) in oldIndexPathDict {
@@ -83,7 +77,7 @@ public final class ListIndexPathResult {
                 }
             }
         }
-        
+
         return ListIndexPathResult(
             inserts: Array(inserts),
             deletes: Array(deletes),
@@ -92,12 +86,12 @@ public final class ListIndexPathResult {
             oldIndexPathDict: oldIndexPathDict,
             newIndexPathDict: newIndexPathDict)
     }
-    
+
     // MARK: Private API
     var changeCount: Int {
         return inserts.count + deletes.count + updates.count + moves.count
     }
-    
+
     init(
         inserts: [IndexPath],
         deletes: [IndexPath],
@@ -112,7 +106,7 @@ public final class ListIndexPathResult {
         self.oldIndexPathDict = oldIndexPathDict
         self.newIndexPathDict = newIndexPathDict
     }
-    
+
     // MARK: Private
     private var oldIndexPathDict: [AnyHashable: IndexPath]
     private var newIndexPathDict: [AnyHashable: IndexPath]

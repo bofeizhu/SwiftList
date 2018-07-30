@@ -10,15 +10,15 @@ extension UICollectionView {
     func apply(batchUpdateData data: ListBatchUpdateData) {
         deleteItems(at: data.deleteIndexPaths)
         insertItems(at: data.insertIndexPaths)
-        
+
         for move in data.moveIndexPaths {
             moveItem(at: move.from, to: move.to)
         }
-        
+
         for move in data.moveSections {
             moveSection(move.from, toSection: move.to)
         }
-        
+
         deleteSections(data.deleteSections)
         insertSections(data.insertSections)
     }

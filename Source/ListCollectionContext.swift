@@ -12,26 +12,26 @@
 public protocol ListCollectionContext: AnyObject {
     /// The size of the collection view. You can use this for sizing cells.
     var containerSize: CGSize { get }
-    
+
     /// The content insets of the collection view. You can use this for sizing cells.
     var containerInset: UIEdgeInsets { get }
-    
+
     /// The adjusted content insets of the collection view.
     /// Equivalent to containerInset under iOS 11.
     var adjustedContainerInset: UIEdgeInsets { get }
-    
+
     /// The size of the collection view with content insets applied.
     var insetContainerSize: CGSize { get }
 
     /// The current scrolling traits of the underlying collection view.
     var scrollingTraits: ListCollectionScrollingTraits { get }
-    
+
     /// Returns size of the collection view relative to the section controller.
     ///
     /// - Parameter sectionController: The section controller requesting this information.
     /// - Returns: The size of the collection view minus the given section controller's insets.
     func containerSize(for sectionController: ListSectionController) -> CGSize
-    
+
     /// Returns the index of the specified cell in the collection relative to
     /// the section controller.
     ///
@@ -40,7 +40,7 @@ public protocol ListCollectionContext: AnyObject {
     ///   - sectionController: The section controller requesting this information.
     /// - Returns: The index of the cell or `nil` if it does not exist in the collection.
     func index(for cell: UICollectionViewCell, in sectionController: ListSectionController) -> Int?
-    
+
     /// Returns the cell in the collection at the specified index for the section controller.
     ///
     /// - Parameters:
@@ -52,19 +52,19 @@ public protocol ListCollectionContext: AnyObject {
         _ sectionController: ListSectionController,
         cellForItemAt index: Int
     ) -> UICollectionViewCell?
-    
+
     /// Returns the visible cells for the given section controller.
     ///
     /// - Parameter sectionController: The section controller requesting this information.
     /// - Returns: An array of visible cells, or an empty array if none are found.
     func visibleCells(for sectionController: ListSectionController) -> [UICollectionViewCell]
-    
+
     /// Returns the visible paths for the given section controller.
     ///
     /// - Parameter sectionController: The section controller requesting this information.
     /// - Returns: An array of visible index paths, or an empty array if none are found.
     func visibleIndexPaths(for sectionController: ListSectionController) -> [IndexPath]
-    
+
     /// Deselects a cell in the collection.
     ///
     /// - Parameters:
@@ -75,7 +75,7 @@ public protocol ListCollectionContext: AnyObject {
         _ sectionController: ListSectionController,
         deselectItemAt index: Int,
         animated: Bool)
-    
+
     /// Selects a cell in the collection.
     ///
     /// - Parameters:
@@ -89,7 +89,7 @@ public protocol ListCollectionContext: AnyObject {
         selectItemAt index: Int,
         animated: Bool,
         scrollPosition: UICollectionViewScrollPosition)
-    
+
     /// Dequeues a cell from the collection view reuse pool.
     ///
     /// - Parameters:
@@ -105,7 +105,7 @@ public protocol ListCollectionContext: AnyObject {
         withReuseIdentifier identifier: String?,
         at index: Int
     ) -> UICollectionViewCell
-    
+
     /// Dequeues a cell from the collection view reuse pool.
     ///
     /// - Parameters:
@@ -137,7 +137,7 @@ public protocol ListCollectionContext: AnyObject {
         bundle: Bundle?,
         at index: Int
     ) -> UICollectionViewCell
-    
+
     /// Dequeues a storyboard prototype cell from the collection view reuse pool.
     ///
     /// - Parameters:
@@ -150,7 +150,7 @@ public protocol ListCollectionContext: AnyObject {
         dequeueReusableCellFromStoryboardWithIdentifier identifier: String,
         at index: Int
     ) -> UICollectionViewCell
-    
+
     /// Dequeues a supplementary view from the collection view reuse pool.
     ///
     /// - Parameters:
@@ -166,7 +166,7 @@ public protocol ListCollectionContext: AnyObject {
         viewClass: AnyClass,
         at index: Int
     ) -> UICollectionReusableView
-    
+
     /// Dequeues a supplementary view from the collection view reuse pool.
     ///
     /// - Parameters:
@@ -185,7 +185,7 @@ public protocol ListCollectionContext: AnyObject {
         bundle: Bundle?,
         at index: Int
     ) -> UICollectionReusableView
-    
+
     /// Dequeues a supplementary view from the collection view reuse pool.
     ///
     /// - Parameters:
@@ -201,7 +201,7 @@ public protocol ListCollectionContext: AnyObject {
         withIdentifier identifier: String,
         at index: Int
     ) -> UICollectionReusableView
-    
+
     /// Invalidate the backing `UICollectionViewLayout` for all items in the section controller.
     ///
     /// - Parameters:
@@ -214,7 +214,7 @@ public protocol ListCollectionContext: AnyObject {
     func invalidateLayoutFor(
         sectionController: ListSectionController,
         completion: ((Bool) -> Void)?)
-    
+
     /// Batches and performs many cell-level updates in a single transaction.
     ///
     /// - Parameters:
@@ -236,7 +236,7 @@ public protocol ListCollectionContext: AnyObject {
         _ updates: @escaping (ListBatchContext) -> Void,
         animated: Bool,
         completion: ((Bool) -> Void)?)
-    
+
     /// Scrolls to the specified section controller in the list.
     ///
     /// - Parameters:
