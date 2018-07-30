@@ -1,0 +1,14 @@
+disabled_rules: # rule identifiers to exclude from running
+  - function_parameter_count
+  - function_body_length
+  - type_name
+  - colon
+  - todo
+opt_in_rules: # some rules are only opt-in
+  - empty_count
+included: # paths to include during linting. `--path` is ignored if present.
+  - Source
+line_length: 100
+identifier_name:
+  min_length: # only min_length
+    warning: 2 # only warning
