@@ -5,6 +5,12 @@
 
 A data-driven `UICollectionView` framework for building fast and flexible lists.
 
+- [Features](#features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+
+## Features
+
 |  | Main Features  |
 ---|-----------------
 📵 | Never call `performBatchUpdates(_:completion:)` or `reloadData()` again
