@@ -15,7 +15,7 @@ public protocol ListAdapterDelegate: AnyObject {
     ///   - object: The object that will display.
     ///   - index: The index of the object in the list.
     func listAdapter(_ listAdapter: ListAdapter, willDisplay object: AnyListDiffable, at index: Int)
-    
+
     /// Notifies the delegate that a list object is no longer being displayed.
     ///
     /// - Parameters:

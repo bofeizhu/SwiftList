@@ -82,14 +82,14 @@ public protocol ListUpdatingDelegate: AnyObject {
     ///   - indexPath: The source index path of the item to reload.
     ///   - newIndexPath: The destination index path of the item to reload.
     /// - Note: Since `UICollectionView` is unable to handle calling
-    ///     `UICollectionView.reloadItems(at:)` safely while also executing insert and delete operations
-    ///     in the same batch updates, the updater must know about the origin and destination of the reload
-    ///     to perform a safe transition.
+    ///     `UICollectionView.reloadItems(at:)` safely while also executing insert and delete
+    ///     operations in the same batch updates, the updater must know about the origin and
+    ///     destination of the reload to perform a safe transition.
     func collectionView(
         _ collectionView: UICollectionView,
         reloadItemAt indexPath: IndexPath,
         to newIndexPath: IndexPath)
-    
+
     /// Tells the delegate to move a section from and to given indexes.
     ///
     /// - Parameters:

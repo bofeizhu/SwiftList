@@ -19,7 +19,7 @@ public protocol ListWorkingRangeDelegate: AnyObject {
     func listAdapter(
         _ listAdapter: ListAdapter,
         sectionControllerWillEnterWorkingRange sectionController: ListSectionController)
-    
+
     /// Notifies the delegate that an section controller exited the working range.
     ///
     /// - Parameters:

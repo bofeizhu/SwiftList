@@ -9,7 +9,7 @@
 final class ListDisplayHandler {
     /// Act as a counted set of the currently visible section controllers.
     private(set) var visibleSections: [ListSectionController: Int] = [:]
-    
+
     /// Tells the handler that a cell will be displayed in the `ListAdapter`.
     ///
     /// - Parameters:
@@ -36,7 +36,7 @@ final class ListDisplayHandler {
             for: object,
             at: indexPath)
     }
-    
+
     /// Tells the handler that a cell did end display in the `ListAdapter`.
     ///
     /// - Parameters:
@@ -64,7 +64,7 @@ final class ListDisplayHandler {
             for: object,
             at: indexPath)
     }
-    
+
     /// Tells the handler that a supplementary view will be displayed in the `ListAdapter`.
     ///
     /// - Parameters:
@@ -86,7 +86,7 @@ final class ListDisplayHandler {
             for: object,
             at: indexPath)
     }
-    
+
     ///  Tells the handler that a supplementary view did end display in the ListAdapter.
     ///
     /// - Parameters:
@@ -109,7 +109,7 @@ final class ListDisplayHandler {
             for: object,
             at: indexPath)
     }
-    
+
     // Private
     private var visibleViewObjectDict: [UICollectionReusableView: AnyListDiffable] = [:]
 }
@@ -118,7 +118,7 @@ private extension ListDisplayHandler {
     func removeObject(for view: UICollectionReusableView) -> AnyListDiffable? {
         return visibleViewObjectDict.removeValue(forKey: view)
     }
-    
+
     func listAdapter(
         _ listAdapter: ListAdapter,
         sectionController: ListSectionController,
@@ -137,7 +137,7 @@ private extension ListDisplayHandler {
         }
         visibleSections.add(sectionController)
     }
-    
+
     func listAdapter(
         _ listAdapter: ListAdapter,
         sectionController: ListSectionController,
@@ -145,9 +145,9 @@ private extension ListDisplayHandler {
         for object: AnyListDiffable,
         at indexPath: IndexPath) {
         let section = indexPath.section
-        
+
         visibleSections.remove(sectionController)
-        
+
         if visibleSections.count(sectionController) == 0 {
             sectionController.displayDelegate?.listAdapter(
                 listAdapter,
@@ -168,7 +168,7 @@ fileprivate extension Dictionary where Key == ListSectionController, Value == In
             self[sectionController] = 1
         }
     }
-    
+
     mutating func remove(_ sectionController: ListSectionController) {
         guard let count = self[sectionController] else {
             return
@@ -179,7 +179,7 @@ fileprivate extension Dictionary where Key == ListSectionController, Value == In
             removeValue(forKey: sectionController)
         }
     }
-    
+
     func count(_ sectionController: ListSectionController) -> Int {
         return self[sectionController] ?? 0
     }

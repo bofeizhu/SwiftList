@@ -21,7 +21,7 @@ extension ListAdapterUpdateListenerWeakBox: Hashable {
         }
         return 0
     }
-    
+
     static func == (
         lhs: ListAdapterUpdateListenerWeakBox,
         rhs: ListAdapterUpdateListenerWeakBox
@@ -33,4 +33,3 @@ extension ListAdapterUpdateListenerWeakBox: Hashable {
         return false
     }
 }
-

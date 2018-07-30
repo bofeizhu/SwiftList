@@ -10,11 +10,11 @@ final class ListDebugger {
     static func track(adapter: ListAdapter) {
         livingAdapters.insert(ListAdapterWeakBox(adapter))
     }
-    
+
     static func clear() {
         livingAdapters.removeAll()
     }
-    
+
     // MARK: Private
     private static var livingAdapters: Set<ListAdapterWeakBox> = []
 }

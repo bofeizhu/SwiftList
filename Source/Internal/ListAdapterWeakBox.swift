@@ -6,7 +6,6 @@
 //  Copyright © 2018 Bofei Zhu. All rights reserved.
 //
 
-
 /// A weak box for `ListAdapter`
 final class ListAdapterWeakBox {
     weak var listAdapter: ListAdapter?
@@ -22,7 +21,7 @@ extension ListAdapterWeakBox: Hashable {
         }
         return 0
     }
-    
+
     static func == (lhs: ListAdapterWeakBox, rhs: ListAdapterWeakBox) -> Bool {
         if let lhs = lhs.listAdapter,
            let rhs = rhs.listAdapter {
