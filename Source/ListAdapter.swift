@@ -1763,29 +1763,6 @@ extension ListAdapter: UICollectionViewDelegate {
         }
         sectionController(forSection: indexPath.section)?.didUnhighlightItem(at: indexPath.item)
     }
-
-    // MARK: Pass on method calls to delegates
-    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if let scrollViewDelegateMethod = scrollViewDelegate?.scrollViewDidScroll(_:) {
-            scrollViewDelegateMethod(scrollView)
-        } else if let collectionViewDelegateMethod =
-            collectionViewDelegate?.scrollViewDidScroll(_:) {
-            collectionViewDelegateMethod(scrollView)
-        }
-    }
-
-    public func scrollViewWillEndDragging(
-        _ scrollView: UIScrollView,
-        withVelocity velocity: CGPoint,
-        targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        if let scrollViewDelegateMethod =
-            scrollViewDelegate?.scrollViewWillEndDragging(_:withVelocity:targetContentOffset:) {
-            scrollViewDelegateMethod(scrollView, velocity, targetContentOffset)
-        } else if let collectionViewDelegateMethod =
-            collectionViewDelegate?.scrollViewWillEndDragging(_:withVelocity:targetContentOffset:) {
-            collectionViewDelegateMethod(scrollView, velocity, targetContentOffset)
-        }
-    }
 }
 
 // MARK: - Class Methods
