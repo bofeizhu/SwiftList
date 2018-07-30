@@ -42,7 +42,7 @@ A data-driven `UICollectionView` framework for building fast and flexible lists.
 $ gem install cocoapods
 ```
 
-To integrate SwiftList into your Xcode project using CocoaPods, specify it in your `Podfile`:
+To integrate `SwiftList` into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
 ```ruby
 source 'https://github.com/CocoaPods/Specs.git'
