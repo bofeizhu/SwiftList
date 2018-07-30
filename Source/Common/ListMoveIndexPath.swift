@@ -13,7 +13,7 @@ public struct ListMoveIndexPath: Hashable {
 
     /// An index path in the new collection.
     public let to: IndexPath
-    
+
     // MARK: Private API
     init(from: IndexPath, to: IndexPath) {
         self.from = from
@@ -25,7 +25,7 @@ extension ListMoveIndexPath: Comparable {
     public static func == (lhs: ListMoveIndexPath, rhs: ListMoveIndexPath) -> Bool {
         return lhs.from == rhs.from && lhs.to == rhs.to
     }
-    
+
     public static func < (lhs: ListMoveIndexPath, rhs: ListMoveIndexPath) -> Bool {
         return lhs.from < rhs.from
     }

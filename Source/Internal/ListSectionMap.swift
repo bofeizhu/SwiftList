@@ -11,7 +11,7 @@
 struct ListSectionMap {
     /// The objects stored in the map.
     private(set) var objects: [AnyListDiffable]
-    
+
     /// `true` if the item count in map is zero, `false` otherwise.
     var isItemCountZero: Bool {
         for object in objects {
@@ -23,13 +23,13 @@ struct ListSectionMap {
         }
         return true
     }
-    
+
     init() {
         objectIdToSectionControllerDict = [:]
         sectionControllerToSectionDict = [:]
         objects = []
     }
-    
+
     /// Fetch a section controller given a section.
     ///
     /// - Parameter section: The section index of the section controller.
@@ -40,7 +40,7 @@ struct ListSectionMap {
         }
         return nil
     }
-    
+
     /// Fetch a section controller given an object.
     ///
     /// - Parameter object: The object that maps to a section controller.
@@ -48,7 +48,7 @@ struct ListSectionMap {
     func sectionController(for object: AnyListDiffable) -> ListSectionController? {
         return objectIdToSectionControllerDict[object.diffIdentifier]
     }
-    
+
     /// Fetch the object for a section
     ///
     /// - Parameter section: The section index of the object.
@@ -59,7 +59,7 @@ struct ListSectionMap {
         }
         return objects[section]
     }
-    
+
     /// Look up the section index for a section controller.
     ///
     /// - Parameter sectionController: The sectionController to look up.
@@ -67,7 +67,7 @@ struct ListSectionMap {
     func section(for sectionController: ListSectionController) -> Int? {
         return sectionControllerToSectionDict[sectionController]
     }
-    
+
     /// Look up the section index for an object.
     ///
     /// - Parameter object: The object to look up.
@@ -78,7 +78,7 @@ struct ListSectionMap {
         }
         return nil
     }
-    
+
     ///  Applies a given closure to the entries of the section controller map.
     ///
     /// - Parameter transform: A closure to operate on entries in the section controller map.
@@ -89,7 +89,7 @@ struct ListSectionMap {
             }
         }
     }
-    
+
     /// Update the map with objects and the section controller counterparts.
     ///
     /// - Parameters:
@@ -101,27 +101,27 @@ struct ListSectionMap {
         assert(
             objects.count == sectionControllers.count,
             "Invalid parameter not satisfying objects.count == sectionControllers.count")
-        
+
         reset()
-        
+
         self.objects = objects
-        
+
         let first = objects.first
         let last = objects.last
-        
+
         for (section, object) in objects.enumerated() {
             let sectionController = sectionControllers[section]
-            
+
             // set the index of the list for easy reverse lookup
             sectionControllerToSectionDict[sectionController] = section
             objectIdToSectionControllerDict[object.diffIdentifier] = sectionController
-            
+
             sectionController.isFirstSection = (object == first)
             sectionController.isLastSection = (object == last)
             sectionController.section = section
         }
     }
-    
+
     /// Update an object with a new instance.
     ///
     /// - Parameter object: The object to update.
@@ -133,7 +133,7 @@ struct ListSectionMap {
         sectionControllerToSectionDict[sectionController] = section
         objectIdToSectionControllerDict[object.diffIdentifier] = sectionController
     }
-    
+
     /// Remove all saved objects and section controllers.
     mutating func reset() {
         map { (_, sectionController, _) in
@@ -144,13 +144,12 @@ struct ListSectionMap {
         sectionControllerToSectionDict = [:]
         objectIdToSectionControllerDict = [:]
     }
-    
+
     // MARK: Private
     // both of these dictionaries allow fast lookups of objects, list objects, and indexes
     private var objectIdToSectionControllerDict: [AnyHashable: ListSectionController]
     private var sectionControllerToSectionDict: [ListSectionController: Int]
-    
-}
 
+}
 
 typealias ListSectionMapClosure = (AnyListDiffable, ListSectionController, Int) -> Void

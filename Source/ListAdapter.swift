@@ -15,10 +15,10 @@
 /// objects and section controllers in a collection view.
 public final class ListAdapter: NSObject {
     // MARK: - Public Properties
-    
+
     /// The view controller that houses the adapter.
     public private(set) weak var viewController: UIViewController?
-    
+
     /// The collection view used with the adapter.
     ///
     /// - Note: Setting this property will automatically set isPrefetchingEnabled to `false`
@@ -26,10 +26,10 @@ public final class ListAdapter: NSObject {
     public weak var collectionView: UICollectionView? {
         willSet (newCollectionView) {
             dispatchPrecondition(condition: .onQueue(.main))
-            
+
             guard collectionView !== newCollectionView ||
                   collectionView?.dataSource !== self else { return }
-            
+
             // if collection view has been used by a different list adapter, treat it as if we were
             // using a new collection view this happens when embedding a `UICollectionView` inside a
             // `UICollectionViewCell` that is reused
@@ -37,7 +37,7 @@ public final class ListAdapter: NSObject {
                 let collectionViewID = ObjectIdentifier(collectionView)
                 ListAdapter.globalCollectionViewAdapterDict.removeValue(forKey: collectionViewID)
             }
-            
+
             if let newCollectionView = newCollectionView {
                 let newCollectionViewID = ObjectIdentifier(newCollectionView)
                 if let weakBox = ListAdapter.globalCollectionViewAdapterDict[newCollectionViewID],
@@ -45,45 +45,45 @@ public final class ListAdapter: NSObject {
                     oldAdapter.collectionView = nil
                 }
             }
-            
+
             // dump old registered section controllers in the case that we are changing collection
             // views or setting for the first time
             registeredCellClasses = []
             registeredNibNames = []
             registeredSupplementaryViewIdentifiers = []
             registeredSupplementaryViewNibNames = []
-            
+
             settingFirstCollectionView = collectionView == nil
         }
-        
+
         didSet {
             guard let collectionView = collectionView else { return }
-            
+
             let collectionViewID = ObjectIdentifier(collectionView)
             ListAdapter.globalCollectionViewAdapterDict[collectionViewID] = ListAdapterWeakBox(self)
-            
+
             collectionView.dataSource = self
             collectionView.isPrefetchingEnabled = false
             collectionView.collectionViewLayout.invalidateLayout()
             collectionView.delegate = self
-            
+
             // only construct
             if experiments.contains(.getCollectionViewAtUpdate) || settingFirstCollectionView {
                 updateAfterPublicSettingsChange()
             }
         }
     }
-    
+
     /// The object that acts as the data source for the adapter.
     public weak var dataSource: ListAdapterDataSource? {
         didSet {
             updateAfterPublicSettingsChange()
         }
     }
-    
+
     /// The object that receives top-level events for section controllers.
     public weak var delegate: ListAdapterDelegate?
-    
+
     /// The object that receives `UICollectionViewDelegate` events.
     ///
     /// - Note: This object *will not* receive `UIScrollViewDelegate` events. Instead use
@@ -96,26 +96,26 @@ public final class ListAdapter: NSObject {
                     " ListAdapter.")
         }
     }
-    
+
     /// The object that receives `UIScrollViewDelegate` events.
     public weak var scrollViewDelegate: UIScrollViewDelegate?
-    
+
     /// The object that receives `ListAdapterMoveDelegate` events resulting from interactive
     /// reordering of sections.
     public weak var moveDelegate: ListAdapterMoveDelegate?
-    
+
     /// The updater for the adapter.
     public private(set) var updater: ListUpdatingDelegate
-    
+
     /// An option set of experiments to conduct on the adapter.
     public var experiments: ListExperiment = []
-    
+
     /// All the objects currently driving the adapter.
     public var objects: [AnyListDiffable] {
         dispatchPrecondition(condition: .onQueue(.main))
         return sectionMap.objects
     }
-    
+
     /// An **unordered** array of the currently visible objects.
     public var visibleObjects: [AnyListDiffable] {
         dispatchPrecondition(condition: .onQueue(.main))
@@ -137,7 +137,7 @@ public final class ListAdapter: NSObject {
         }
         return Array(visibleObjects.values)
     }
-    
+
     /// An **unordered** array of the currently visible section controllers.
     public var visibleSectionControllers: [ListSectionController] {
         dispatchPrecondition(condition: .onQueue(.main))
@@ -147,9 +147,9 @@ public final class ListAdapter: NSObject {
             return visibleSectionControllersFromLayoutAttributes
         }
     }
-    
+
     // MARK: - Initializers
-    
+
     /// Initializes a new `ListAdapter` object.
     ///
     /// - Parameters:
@@ -165,17 +165,20 @@ public final class ListAdapter: NSObject {
     ///
     ///     To opt out of using the working range, use `init(updater:viewController:)` or provide a
     ///     working range of `0`.
-    public init(updater: ListUpdatingDelegate, viewController: UIViewController?, workingRangeSize: Int) {
+    public init(
+        updater: ListUpdatingDelegate,
+        viewController: UIViewController?,
+        workingRangeSize: Int) {
         dispatchPrecondition(condition: .onQueue(.main))
-        
+
         self.updater = updater
         self.viewController = viewController
         workingRangeHandler = ListWorkingRangeHandler(workingRangeSize: workingRangeSize)
-        
+
         super.init()
         ListDebugger.track(adapter: self)
     }
-    
+
     /// Initializes a new `ListAdapter` object with a working range of `0`.
     ///
     /// - Parameters:
@@ -184,17 +187,16 @@ public final class ListAdapter: NSObject {
     convenience public init(updater: ListUpdatingDelegate, viewController: UIViewController?) {
         self.init(updater: updater, viewController: viewController, workingRangeSize: 0)
     }
-    
+
     // MARK: - Internal Properties
     var sectionMap = ListSectionMap()
     var displayHandler = ListDisplayHandler()
     private(set) var workingRangeHandler: ListWorkingRangeHandler
     var emptyBackgroundView: UIView?
-    
+
     // we need to special case interactive section moves that are moved to the last position
     var isLastInteractiveMoveToLastSectionIndex: Bool = false
-    
-    
+
     // When making object updates inside a batch update closure, delete operations must use the
     // section /before/ any moves take place. This includes when other objects are deleted or
     // inserted ahead of the section controller making the mutations. In order to account for this
@@ -205,14 +207,14 @@ public final class ListAdapter: NSObject {
     // finished so there is no dangling objects or section controllers.
     var isInUpdateClosure = false
     var previousSectionMap: ListSectionMap?
-    
+
     // Since we only save the cell classes for debug. We will save them as `String` a.k.a.
     // `\(Class.self)`
     var registeredCellClasses: Set<String> = []
     var registeredNibNames: Set<String> = []
     var registeredSupplementaryViewIdentifiers: Set<String> = []
     var registeredSupplementaryViewNibNames: Set<String> = []
-    
+
     // MARK: - Private Properties
     private var viewSectionControllerDict: [UICollectionReusableView: ListSectionController] = [:]
     private var queuedCompletionClosures: [ListQueuedCompletion]?
@@ -225,19 +227,19 @@ public final class ListAdapter: NSObject {
             return { collectionView }
         }
     }
-    
+
     // A set of `ListAdapterUpdateListenerWeakBox`
     private var updateListeners: Set<ListAdapterUpdateListenerWeakBox> = []
     private var isDequeuingCell = false
     private var isSendingWorkingRangeDisplayUpdates = false
-    
+
     // A dictionary from collectionView's ObjectIdentifier to a weak reference of listAdapter.
     private static var globalCollectionViewAdapterDict: [ObjectIdentifier: ListAdapterWeakBox] = [:]
-    
+
     private var isItemCountZero: Bool {
         return sectionMap.isItemCountZero
     }
-    
+
     private var visibleSectionControllersFromDisplayHandler: [ListSectionController] {
         return Array(displayHandler.visibleSections.keys)
     }
@@ -261,7 +263,7 @@ public final class ListAdapter: NSObject {
         }
         return Array(visibleSectionControllers)
     }
-    
+
     // MARK: - Deinit
     deinit {
         sectionMap.reset()
@@ -279,6 +281,8 @@ extension ListAdapter {
     ///   - scrollPosition: An option that specifies where the item should be positioned when
     ///         scrolling finishes.
     ///   - animated: A flag indicating if the scrolling should be animated.
+    // TODO: Refactor
+    // swiftlint:disable:next cyclomatic_complexity
     func scroll(
         to object: AnyListDiffable,
         withSupplementaryViewOfKinds elementKinds: [String],
@@ -286,24 +290,24 @@ extension ListAdapter {
         at scrollPosition: UICollectionViewScrollPosition,
         animated: Bool) {
         dispatchPrecondition(condition: .onQueue(.main))
-        
+
         guard let section = self.section(for: object),
               let collectionView = collectionView else { return }
-        
+
         let layout = collectionView.collectionViewLayout
-        
+
         // force layout before continuing
         // this method is typcially called before pushing a view controller
         // thus, before the layout process has actually happened
         collectionView.setNeedsLayout()
         collectionView.layoutIfNeeded()
-        
+
         let firstIndexPath = IndexPath(item: 0, section: section)
-        
+
         // collect the layout attributes for the cell and supplementary views for the first index
         // this will break if there are supplementary views beyond item 0
         var attributesArray: [UICollectionViewLayoutAttributes] = []
-        
+
         let itemCount = collectionView.numberOfItems(inSection: section)
         if itemCount > 0 {
             attributesArray = layoutAttributesForSupplementaryView(
@@ -326,7 +330,7 @@ extension ListAdapter {
                 }
             }
         }
-        
+
         var minOffset: CGFloat = 0.0
         var maxOffset: CGFloat = 0.0
         for attributes in attributesArray {
@@ -341,18 +345,18 @@ extension ListAdapter {
                 originMin = frame.minY
                 endMax = frame.maxY
             }
-            
+
             // find the minimum origin value of all the layout attributes
             if attributes == attributesArray.first || originMin < minOffset {
                 minOffset = originMin
             }
-            
+
             // find the maximum end value of all the layout attributes
             if attributes == attributesArray.first || endMax > maxOffset {
                 maxOffset = endMax
             }
         }
-        
+
         let midOffset = (minOffset + maxOffset) / 2.0
         let width = collectionView.bounds.size.width
         let height = collectionView.bounds.size.height
@@ -413,7 +417,7 @@ extension ListAdapter {
             completion?(false)
             return
         }
-        
+
         let fromObjects = sectionMap.objects
         var toObjectsClosure: ListToObjectsClosure
         if experiments.contains(.deferredToObjectCreation) {
@@ -425,9 +429,9 @@ extension ListAdapter {
             let newObjects = dataSource.objects(for: self)
             toObjectsClosure = { newObjects }
         }
-        
+
         enterBatchUpdates()
-        
+
         updater.performUpdateWith(
             collectionViewClosure: collectionViewClosure,
             fromObjects: fromObjects,
@@ -449,7 +453,7 @@ extension ListAdapter {
                 strongSelf.exitBatchUpdates()
             })
     }
-    
+
     /// Perform an immediate reload of the data in the data source, discarding the old objects.
     ///
     /// - Parameter completion: The block to execute when the reload completes.
@@ -467,13 +471,13 @@ extension ListAdapter {
                 completion?(false)
                 return
         }
-        
+
         let objects = dataSource.objects(for: self)
-        
+
         #if DEBUG
         objects.checkDuplicateDiffIdentifier()
         #endif
-        
+
         updater.reloadDataWith(
             collectionViewClosure: collectionViewClosure,
             reloadUpdateClosure: { [weak self] in
@@ -488,7 +492,7 @@ extension ListAdapter {
                 strongSelf.exitBatchUpdates()
             })
     }
-    
+
     /// Reload the list for only the specified objects.
     ///
     /// - Parameter objects: The objects to reload.
@@ -501,14 +505,14 @@ extension ListAdapter {
         } else {
             sections = reloadSections(with: &sectionMap, objects: objects)
         }
-        
+
         guard let collectionView = collectionView else {
             assertionFailure("Tried to reload the adapter without a collection view")
             return
         }
         updater.collectionView(collectionView, reloadSections: sections)
     }
-    
+
     /// Adds a listener to the list adapter.
     ///
     /// - Parameter updateListener: The object conforming to the `ListAdapterUpdateListener`
@@ -517,7 +521,7 @@ extension ListAdapter {
         dispatchPrecondition(condition: .onQueue(.main))
         updateListeners.insert(ListAdapterUpdateListenerWeakBox(updateListener))
     }
-    
+
     /// Removes a listener from the list adapter.
     ///
     /// - Parameter updateListener: The object conforming to the `ListAdapterUpdateListener`
@@ -538,7 +542,7 @@ extension ListAdapter {
         dispatchPrecondition(condition: .onQueue(.main))
         return sectionMap.sectionController(forSection: section)
     }
-    
+
     /// Returns the section controller for the specified object.
     ///
     /// - Parameter object: An object from the data source.
@@ -547,7 +551,7 @@ extension ListAdapter {
         dispatchPrecondition(condition: .onQueue(.main))
         return sectionMap.sectionController(for: object)
     }
-    
+
     /// Returns the object corresponding to a section in the list.
     ///
     /// - Parameter section: A section in the list.
@@ -556,7 +560,7 @@ extension ListAdapter {
         dispatchPrecondition(condition: .onQueue(.main))
         return sectionMap.object(forSection: section)
     }
-    
+
     /// Returns the object corresponding to the specified section controller in the list.
     ///
     /// - Parameter sectionController: A section controller in the list.
@@ -568,7 +572,7 @@ extension ListAdapter {
         }
         return nil
     }
-    
+
     /// Query the section index of a list.
     ///
     /// - Parameter sectionController: A section controller in the list.
@@ -577,7 +581,7 @@ extension ListAdapter {
         dispatchPrecondition(condition: .onQueue(.main))
         return sectionMap.section(for: sectionController)
     }
-    
+
     /// Returns the section corresponding to the specified object in the list.
     ///
     /// - Parameter object: An object in the list.
@@ -586,7 +590,7 @@ extension ListAdapter {
         dispatchPrecondition(condition: .onQueue(.main))
         return sectionMap.section(for: object)
     }
-    
+
     /// An **unordered** array of the currently visible cells for a given object.
     ///
     /// - Parameter object: An object in the list
@@ -615,7 +619,7 @@ extension ListAdapter {
             let size = sectionController.sizeForItem(at: indexPath.section) else { return nil }
         return CGSize(width: max(size.width, 0.0), height: max(size.height, 0.0))
     }
-    
+
     /// Returns the size of a supplementary view in the list at the specified index path.
     ///
     /// - Parameters:
@@ -647,21 +651,21 @@ extension ListAdapter: ListCollectionContext {
         }
         return collectionView.bounds.size
     }
-    
+
     public var containerInset: UIEdgeInsets {
         guard let collectionView = collectionView else {
             preconditionFailure("Collection View is nil")
         }
         return collectionView.contentInset
     }
-    
+
     public var adjustedContainerInset: UIEdgeInsets {
         guard let collectionView = collectionView else {
             preconditionFailure("Collection View is nil")
         }
         return collectionView.listContentInset
     }
-    
+
     public var insetContainerSize: CGSize {
         guard let collectionView = collectionView else {
             preconditionFailure("Collection View is nil")
@@ -670,7 +674,7 @@ extension ListAdapter: ListCollectionContext {
             collectionView.bounds,
             collectionView.listContentInset).size
     }
-    
+
     public var scrollingTraits: ListCollectionScrollingTraits {
         guard let collectionView = collectionView else {
             preconditionFailure("Collection View is nil")
@@ -680,20 +684,20 @@ extension ListAdapter: ListCollectionContext {
             isDragging: collectionView.isDragging,
             isDecelerating: collectionView.isDecelerating)
     }
-    
+
     public func containerSize(for sectionController: ListSectionController) -> CGSize {
         let inset = sectionController.inset
         return CGSize(
             width: containerSize.width - inset.left - inset.right,
             height: containerSize.height - inset.top - inset.bottom)
     }
-    
+
     public func index(
         for cell: UICollectionViewCell,
         in sectionController: ListSectionController
     ) -> Int? {
         dispatchPrecondition(condition: .onQueue(.main))
-        
+
         guard let collectionView = collectionView else {
             return nil
         }
@@ -703,13 +707,13 @@ extension ListAdapter: ListCollectionContext {
             "Requesting a cell from another section controller is not allowed.")
         return indexPath?.item
     }
-    
+
     public func sectionController(
         _ sectionController: ListSectionController,
         cellForItemAt index: Int
     ) -> UICollectionViewCell? {
         dispatchPrecondition(condition: .onQueue(.main))
-        
+
         // if this is accessed while a cell is being dequeued or displaying working range elements,
         // just return nil
         if isDequeuingCell || isSendingWorkingRangeDisplayUpdates {
@@ -727,7 +731,7 @@ extension ListAdapter: ListCollectionContext {
         // this association is created in collectionView.cellForItem(at:)
         return cell
     }
-    
+
     public func visibleCells(
         for sectionController: ListSectionController
     ) -> [UICollectionViewCell] {
@@ -742,20 +746,18 @@ extension ListAdapter: ListCollectionContext {
         }
         return cells
     }
-    
+
     public func visibleIndexPaths(for sectionController: ListSectionController) -> [IndexPath] {
         guard let collectionView = collectionView,
               let section = section(for: sectionController) else { return [] }
         var indexPaths: [IndexPath] = []
         let visibleIndexPaths = collectionView.indexPathsForVisibleItems
-        for indexPath in visibleIndexPaths {
-            if indexPath.section == section {
-                indexPaths.append(indexPath)
-            }
+        for indexPath in visibleIndexPaths where indexPath.section == section {
+            indexPaths.append(indexPath)
         }
         return indexPaths
     }
-    
+
     public func sectionController(
         _ sectionController: ListSectionController,
         deselectItemAt index: Int,
@@ -768,7 +770,7 @@ extension ListAdapter: ListCollectionContext {
             collectionView?.deselectItem(at: indexPath, animated: animated)
         }
     }
-    
+
     public func sectionController(
         _ sectionController: ListSectionController,
         selectItemAt index: Int,
@@ -785,7 +787,7 @@ extension ListAdapter: ListCollectionContext {
                 scrollPosition: scrollPosition)
         }
     }
-    
+
     public func sectionController(
         _ sectionController: ListSectionController,
         dequeueReusableCellOfClass cellClass: AnyClass,
@@ -819,7 +821,7 @@ extension ListAdapter: ListCollectionContext {
         }
         return collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
     }
-    
+
     public func sectionController(
         _ sectionController: ListSectionController,
         dequeueReusableCellOfClass cellClass: AnyClass,
@@ -831,7 +833,7 @@ extension ListAdapter: ListCollectionContext {
             withReuseIdentifier: nil,
             at: index)
     }
-    
+
     public func sectionController(
         _ sectionController: ListSectionController,
         dequeueReusableCellWithNibName nibName: String,
@@ -865,7 +867,7 @@ extension ListAdapter: ListCollectionContext {
         }
         return collectionView.dequeueReusableCell(withReuseIdentifier: nibName, for: indexPath)
     }
-    
+
     public func sectionController(
         _ sectionController: ListSectionController,
         dequeueReusableCellFromStoryboardWithIdentifier identifier: String,
@@ -893,7 +895,7 @@ extension ListAdapter: ListCollectionContext {
         }
         return collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
     }
-    
+
     public func sectionController(
         _ sectionController: ListSectionController,
         dequeueReusableSupplementaryViewOfKind elementKind: String,
@@ -933,7 +935,7 @@ extension ListAdapter: ListCollectionContext {
             withReuseIdentifier: identifier,
             for: indexPath)
     }
-    
+
     public func sectionController(
         _ sectionController: ListSectionController,
         dequeueReusableSupplementaryViewOfKind elementKind: String,
@@ -974,7 +976,7 @@ extension ListAdapter: ListCollectionContext {
             withReuseIdentifier: nibName,
             for: indexPath)
     }
-    
+
     public func sectionController(
         _ sectionController: ListSectionController,
         dequeueReusableSupplementaryViewFromStoryboardOfKind elementKind: String,
@@ -1006,7 +1008,7 @@ extension ListAdapter: ListCollectionContext {
             withReuseIdentifier: identifier,
             for: indexPath)
     }
-    
+
     public func invalidateLayoutFor(
         sectionController: ListSectionController,
         completion: ((Bool) -> Void)?) {
@@ -1023,12 +1025,12 @@ extension ListAdapter: ListCollectionContext {
         for item in 0..<itemCount {
             indexPaths.append(IndexPath(item: item, section: section))
         }
-        
+
         let layout = collectionView.collectionViewLayout
         // FIXME: UIKit Bug https://bugs.swift.org/browse/SR-7045
         let context = UICollectionViewLayoutInvalidationContext()
         context.invalidateItems(at: indexPaths)
-        
+
         // do not call UICollectionView.performBatchUpdates(_:completion:) while already updating.
         // defer it until completed.
         deferClosureBetweenBatchUpdates { [weak collectionView = self.collectionView] in
@@ -1037,7 +1039,7 @@ extension ListAdapter: ListCollectionContext {
             }, completion: completion)
         }
     }
-    
+
     public func performBatchUpdates(
         _ updates: @escaping (ListBatchContext) -> Void,
         animated: Bool,
@@ -1048,7 +1050,7 @@ extension ListAdapter: ListCollectionContext {
             return
         }
         enterBatchUpdates()
-        
+
         updater.performUpdateWith(
             collectionViewClosure: collectionViewClosure,
             animated: animated,
@@ -1071,7 +1073,7 @@ extension ListAdapter: ListCollectionContext {
                 strongSelf.exitBatchUpdates()
             })
     }
-    
+
     public func scroll(
         to sectionController: ListSectionController,
         at index: Int,
@@ -1097,15 +1099,15 @@ extension ListAdapter: ListBatchContext {
         _ sectionController: ListSectionController,
         reloadItemsAt indexes: IndexSet) {
         dispatchPrecondition(condition: .onQueue(.main))
-        
+
         guard let collectionView = collectionView else {
             assertionFailure(
                 "Tried to reload the adapter from \(sectionController) without a collection view" +
                     " at indexes \(indexes).")
             return
         }
-        guard indexes.count > 0 else { return }
-        
+        guard !indexes.isEmpty else { return }
+
         // UICollectionView is not designed to support reload(sections:) or reload(itemsAt:) during
         // batch updates. Internally it appears to convert these operations to a delete+insert.
         // However the transformation is too simple in that it doesn't account for the item's
@@ -1137,7 +1139,7 @@ extension ListAdapter: ListBatchContext {
             updater.collectionView(collectionView, reloadItemAt: indexPath, to: newIndexPath)
         }
     }
-    
+
     public func sectionController(
         _ sectionController: ListSectionController,
         insertItemsAt indexes: IndexSet) {
@@ -1148,7 +1150,7 @@ extension ListAdapter: ListBatchContext {
                     " at indexes \(indexes).")
             return
         }
-        guard indexes.count > 0 else { return }
+        guard !indexes.isEmpty else { return }
         let indexPaths = self.indexPaths(
             from: sectionController,
             at: indexes,
@@ -1156,7 +1158,7 @@ extension ListAdapter: ListBatchContext {
         updater.collectionView(collectionView, insertItemsAt: indexPaths)
         updateBackgroundView(isHidden: !isItemCountZero)
     }
-    
+
     public func sectionController(
         _ sectionController: ListSectionController,
         deleteItemsAt indexes: IndexSet) {
@@ -1167,7 +1169,7 @@ extension ListAdapter: ListBatchContext {
                     " at indexes \(indexes).")
             return
         }
-        guard indexes.count > 0 else { return }
+        guard !indexes.isEmpty else { return }
         let indexPaths = self.indexPaths(
             from: sectionController,
             at: indexes,
@@ -1175,7 +1177,7 @@ extension ListAdapter: ListBatchContext {
         updater.collectionView(collectionView, deleteItemsAt: indexPaths)
         updateBackgroundView(isHidden: !isItemCountZero)
     }
-    
+
     public func sectionController(
         _ sectionController: ListSectionController,
         moveItemfrom index: Int,
@@ -1198,7 +1200,7 @@ extension ListAdapter: ListBatchContext {
         else { return }
         updater.collectionView(collectionView, moveItemAt: indexPath, to: newIndexPath)
     }
-    
+
     public func reload(_ sectionController: ListSectionController) {
         dispatchPrecondition(condition: .onQueue(.main))
         guard let collectionView = collectionView else {
@@ -1219,7 +1221,7 @@ extension ListAdapter {
         dispatchPrecondition(condition: .onQueue(.main))
         viewSectionControllerDict[view] = sectionController
     }
-    
+
     func indexPaths(
         from sectionController: ListSectionController,
         at indexes: IndexSet,
@@ -1234,7 +1236,7 @@ extension ListAdapter {
         }
         return indexPaths
     }
-    
+
     func indexPath(
         for sectionController: ListSectionController,
         at index: Int,
@@ -1246,12 +1248,12 @@ extension ListAdapter {
         }
         return nil
     }
-    
+
     func sectionController(for view: UICollectionReusableView) -> ListSectionController? {
         dispatchPrecondition(condition: .onQueue(.main))
         return viewSectionControllerDict[view]
     }
-    
+
     func removeSectionController(for view: UICollectionReusableView) {
         dispatchPrecondition(condition: .onQueue(.main))
         viewSectionControllerDict.removeValue(forKey: view)
@@ -1265,14 +1267,14 @@ private extension ListAdapter {
         guard collectionView != nil,
             let dataSource = dataSource else { return }
         let objects = dataSource.objects(for: self)
-        
+
         #if DEBUG
         objects.checkDuplicateDiffIdentifier()
         #endif
-        
+
         update(objects: objects, dataSource: dataSource)
     }
-    
+
     // MARK: Editing
     func didFinishUpdateOfType(_ updateType: ListAdapterUpdateType, animated: Bool) {
         for listener in updateListeners {
@@ -1282,7 +1284,7 @@ private extension ListAdapter {
                 animated: animated)
         }
     }
-    
+
     func reloadSections(
         with sectionMap: inout ListSectionMap,
         objects: [AnyListDiffable]
@@ -1292,7 +1294,7 @@ private extension ListAdapter {
             // look up the item using the map's lookup function. might not be the same item
             guard let section = sectionMap.section(for: object) else { continue }
             sections.insert(section)
-            
+
             // reverse lookup the item using the section. if the pointer has changed the trigger
             // update events and swap items
             guard object != sectionMap.object(forSection: section) else { continue }
@@ -1301,7 +1303,7 @@ private extension ListAdapter {
         }
         return sections
     }
-    
+
     // MARK: List Items & Sections
     func sectionMap(usePreviousIfInUpdateClosure: Bool) -> ListSectionMap {
         if usePreviousIfInUpdateClosure,
@@ -1312,7 +1314,7 @@ private extension ListAdapter {
             return sectionMap
         }
     }
-    
+
     func shouldUsePreviousSectionMap(usePreviousIfInUpdateClosure: Bool) -> Bool {
         if usePreviousIfInUpdateClosure,
             isInUpdateClosure,
@@ -1322,14 +1324,14 @@ private extension ListAdapter {
             return false
         }
     }
-    
+
     func supplementaryViewSource(at indexPath: IndexPath) -> ListSupplementaryViewSource? {
         guard let sectionController = sectionController(forSection: indexPath.section) else {
             return nil
         }
         return sectionController.supplementaryViewSource
     }
-    
+
     // MARK: Layout
     func layoutAttributesForSupplementaryView(
         ofKinds elementKinds: [String],
@@ -1343,7 +1345,7 @@ private extension ListAdapter {
         if let cellAttributes = layout.layoutAttributesForItem(at: indexPath) {
             attributes.append(cellAttributes)
         }
-        
+
         for kind in elementKinds {
             if let supplementaryAttributes = layout.layoutAttributesForSupplementaryView(
                 ofKind: kind,
@@ -1351,12 +1353,12 @@ private extension ListAdapter {
                 attributes.append(supplementaryAttributes)
             }
         }
-        
+
         return attributes
     }
-    
+
     // MARK: Update
-    
+
     // this method is what updates the "source of truth"
     // this should only be called just before the collection view is updated
     func update(objects: [AnyListDiffable], dataSource: ListAdapterDataSource) {
@@ -1367,63 +1369,63 @@ private extension ListAdapter {
                 "Object instance \(object) not equal to itself. This will break infra map tables.")
         }
         #endif
-        
+
         var sectionControllers: [ListSectionController] = []
         var validObjects: [AnyListDiffable] = []
-        
+
         // collect items that have changed since the last update by their diffableIdentifier
         var updatedObjectsDict: [AnyHashable: AnyListDiffable] = [:]
-        
+
         // push the view controller and collection context into a local thread container so they are
         // available on init for `ListSectionController` subclasses after calling super.init()
-        ListSectionControllerPushDispatchQueueContext(
+        listSectionControllerPushDispatchQueueContext(
             viewController: viewController,
             collectionContext: self)
-        
+
         for object in objects {
             // infra checks to see if a controller exists
             var optionalSectionController = sectionMap.sectionController(for: object)
-            
+
             // if not, query the data source for a new one
             if optionalSectionController == nil {
                 optionalSectionController = dataSource.listAdapter(
                     self,
                     sectionControllerFor: object)
             }
-            
+
             guard let sectionController = optionalSectionController else {
                 listLogDebug(
                     "WARNING: Ignoring nil section controller returned by data source" +
                     " \(dataSource) for object \(object).")
                 continue
             }
-            
+
             // in case the section controller was created outside of
             // listAdapter(_:sectionControllerForObject:)
             sectionController.collectionContext = self
             sectionController.viewController = viewController
-            
+
             // check if the item has changed instances or is new
             if let oldSection = sectionMap.section(for: object),
                 sectionMap.object(forSection: oldSection) != object {
                 updatedObjectsDict[object.diffIdentifier] = object
             }
-            
+
             sectionControllers.append(sectionController)
             validObjects.append(object)
         }
-        
+
         #if DEBUG
         assert(
             Set(sectionControllers).count == sectionControllers.count,
             "Section controllers array is not filled with unique objects; section controllers are" +
             " being reused")
         #endif
-        
+
         // clear the view controller and collection context
-        ListSectionControllerPopDispatchQueueContext()
+        listSectionControllerPopDispatchQueueContext()
         sectionMap.update(objects: validObjects, withSectionControllers: sectionControllers)
-        
+
         // now that the maps have been created and contexts are assigned, we consider the section
         // controllers "fully loaded"
         for object in objects {
@@ -1435,7 +1437,7 @@ private extension ListAdapter {
         }
         updateBackgroundView(isHidden: itemCount > 0)
     }
-    
+
     func deferClosureBetweenBatchUpdates(_ closure: @escaping ListQueuedCompletion) {
         dispatchPrecondition(condition: .onQueue(.main))
         if queuedCompletionClosures == nil {
@@ -1444,11 +1446,11 @@ private extension ListAdapter {
             queuedCompletionClosures?.append(closure)
         }
     }
-    
+
     func enterBatchUpdates() {
         queuedCompletionClosures = []
     }
-    
+
     func exitBatchUpdates() {
         guard let closures = queuedCompletionClosures else { return }
         queuedCompletionClosures = nil
@@ -1456,7 +1458,7 @@ private extension ListAdapter {
             closure()
         }
     }
-    
+
     func updateBackgroundView(isHidden: Bool) {
         if isInUpdateClosure {
             // will be called again when update closure completes
@@ -1479,7 +1481,7 @@ extension ListAdapter: UICollectionViewDataSource {
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
         return sectionMap.objects.count
     }
-    
+
     public func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int) -> Int {
@@ -1494,7 +1496,7 @@ extension ListAdapter: UICollectionViewDataSource {
         }
         return numberOfItems
     }
-    
+
     public func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -1509,13 +1511,13 @@ extension ListAdapter: UICollectionViewDataSource {
                 " section controller: \(sectionController)")
         }
         isDequeuingCell = false
-        
+
         // associate the section controller with the cell so that we know which section controller
         // is using it
         map(view: cell, to: sectionController)
         return cell
     }
-    
+
     public func collectionView(
         _ collectionView: UICollectionView,
         viewForSupplementaryElementOfKind kind: String,
@@ -1533,7 +1535,7 @@ extension ListAdapter: UICollectionViewDataSource {
         map(view: view, to: sectionController)
         return view
     }
-    
+
     public func collectionView(
         _ collectionView: UICollectionView,
         canMoveItemAt indexPath: IndexPath
@@ -1557,7 +1559,7 @@ extension ListAdapter: UICollectionViewDelegateFlowLayout {
         }
         return size
     }
-    
+
     public func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -1569,7 +1571,7 @@ extension ListAdapter: UICollectionViewDelegateFlowLayout {
         }
         return sectionController.inset
     }
-    
+
     public func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -1581,7 +1583,7 @@ extension ListAdapter: UICollectionViewDelegateFlowLayout {
         }
         return sectionController.minimumLineSpacing
     }
-    
+
     public func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -1593,7 +1595,7 @@ extension ListAdapter: UICollectionViewDelegateFlowLayout {
         }
         return sectionController.minimumInteritemSpacing
     }
-    
+
     public func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -1602,7 +1604,7 @@ extension ListAdapter: UICollectionViewDelegateFlowLayout {
         let indexPath = IndexPath(item: 0, section: section)
         return sizeForSupplementaryView(ofKind: UICollectionElementKindSectionHeader, at: indexPath)
     }
-    
+
     public func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -1623,7 +1625,7 @@ extension ListAdapter: UICollectionViewDelegate {
         }
         sectionController(forSection: indexPath.section)?.didSelectItem(at: indexPath.item)
     }
-    
+
     public func collectionView(
         _ collectionView: UICollectionView,
         didDeselectItemAt indexPath: IndexPath) {
@@ -1632,7 +1634,7 @@ extension ListAdapter: UICollectionViewDelegate {
         }
         sectionController(forSection: indexPath.section)?.didDeselectItem(at: indexPath.item)
     }
-    
+
     public func collectionView(
         _ collectionView: UICollectionView,
         willDisplay cell: UICollectionViewCell,
@@ -1667,7 +1669,7 @@ extension ListAdapter: UICollectionViewDelegate {
         workingRangeHandler.listAdapter(self, willDisplayItemAt: indexPath)
         isSendingWorkingRangeDisplayUpdates = false
     }
-    
+
     public func collectionView(
         _ collectionView: UICollectionView,
         didEndDisplaying cell: UICollectionViewCell,
@@ -1688,7 +1690,7 @@ extension ListAdapter: UICollectionViewDelegate {
         // break the association between the cell and the section controller
         removeSectionController(for: cell)
     }
-    
+
     public func collectionView(
         _ collectionView: UICollectionView,
         willDisplaySupplementaryView view: UICollectionReusableView,
@@ -1722,7 +1724,7 @@ extension ListAdapter: UICollectionViewDelegate {
             for: object,
             at: indexPath)
     }
-    
+
     public func collectionView(
         _ collectionView: UICollectionView,
         didEndDisplayingSupplementaryView view: UICollectionReusableView,
@@ -1743,7 +1745,7 @@ extension ListAdapter: UICollectionViewDelegate {
             at: indexPath)
         removeSectionController(for: view)
     }
-    
+
     public func collectionView(
         _ collectionView: UICollectionView,
         didHighlightItemAt indexPath: IndexPath) {
@@ -1752,7 +1754,7 @@ extension ListAdapter: UICollectionViewDelegate {
         }
         sectionController(forSection: indexPath.section)?.didHighlightItem(at: indexPath.item)
     }
-    
+
     public func collectionView(
         _ collectionView: UICollectionView,
         didUnhighlightItemAt indexPath: IndexPath) {
@@ -1761,7 +1763,7 @@ extension ListAdapter: UICollectionViewDelegate {
         }
         sectionController(forSection: indexPath.section)?.didUnhighlightItem(at: indexPath.item)
     }
-    
+
     // MARK: Pass on method calls to delegates
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if let scrollViewDelegateMethod = scrollViewDelegate?.scrollViewDidScroll(_:) {
@@ -1772,7 +1774,6 @@ extension ListAdapter: UICollectionViewDelegate {
         }
     }
 }
-
 
 // MARK: - Class Methods
 extension ListAdapter {

@@ -11,11 +11,11 @@ import SwiftList
 
 final class LabelSectionController: ListSectionController {
     private var object: String?
-    
+
     override func sizeForItem(at index: Int) -> CGSize? {
         return CGSize(width: collectionContext!.containerSize.width, height: 55)
     }
-    
+
     override func cellForItem(at index: Int) -> UICollectionViewCell? {
         guard let cell = collectionContext?.sectionController(
             self,
@@ -27,7 +27,7 @@ final class LabelSectionController: ListSectionController {
         cell.text = object
         return cell
     }
-    
+
     override func didUpdate(to object: AnyListDiffable) {
         self.object = String(describing: object.base)
     }

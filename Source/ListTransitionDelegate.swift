@@ -25,7 +25,7 @@ public protocol ListTransitionDelegate: AnyObject {
         customizedInitialLayoutAttributes layoutAttributes: UICollectionViewLayoutAttributes,
         at index: Int
     ) -> UICollectionViewLayoutAttributes
-    
+
     /// Asks the delegate to customize and return the final layout information for an item that is
     /// about to be removed from the collection view.
     ///

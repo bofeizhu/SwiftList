@@ -14,7 +14,7 @@ public protocol ListScrollDelegate: AnyObject {
     ///   - listAdapter: The list adapter whose collection view was scrolled.
     ///   - sectionController: The visible section controller that was scrolled.
     func listAdapter(_ listAdapter: ListAdapter, didScroll sectionController: ListSectionController)
-    
+
     /// Tells the delegate that the section controller will be dragged on screen.
     ///
     /// - Parameters:
@@ -23,7 +23,7 @@ public protocol ListScrollDelegate: AnyObject {
     func listAdapter(
         _ listAdapter: ListAdapter,
         willBeginDragging sectionController: ListSectionController)
-    
+
     /// Tells the delegate that the section controller did end dragging on screen.
     ///
     /// - Parameters:
@@ -34,7 +34,7 @@ public protocol ListScrollDelegate: AnyObject {
         _ listAdapter: ListAdapter,
         didEndDragging sectionController: ListSectionController,
         willDecelerate decelerate: Bool)
-    
+
     /// Tells the delegate that the section controller did end decelerating on screen.
     ///
     /// - Parameters:

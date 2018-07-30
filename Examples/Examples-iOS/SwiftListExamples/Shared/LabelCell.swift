@@ -9,14 +9,14 @@
 import UIKit
 
 final class LabelCell: UICollectionViewCell {
-    
+
     fileprivate static let insets = UIEdgeInsets(top: 8, left: 15, bottom: 8, right: 15)
     fileprivate static let font = UIFont.systemFont(ofSize: 17)
-    
+
     static var singleLineHeight: CGFloat {
         return font.lineHeight + insets.top + insets.bottom
     }
-    
+
     static func textHeight(_ text: String, width: CGFloat) -> CGFloat {
         let constrainedSize = CGSize(
             width: width - insets.left - insets.right,
@@ -30,7 +30,7 @@ final class LabelCell: UICollectionViewCell {
             context: nil)
         return ceil(bounds.height) + insets.top + insets.bottom
     }
-    
+
     fileprivate let label: UILabel = {
         let label = UILabel()
         label.backgroundColor = .clear
@@ -38,7 +38,7 @@ final class LabelCell: UICollectionViewCell {
         label.font = LabelCell.font
         return label
     }()
-    
+
     let separator: CALayer = {
         let layer = CALayer()
         layer.backgroundColor = UIColor(
@@ -48,7 +48,7 @@ final class LabelCell: UICollectionViewCell {
             alpha: 1).cgColor
         return layer
     }()
-    
+
     var text: String? {
         get {
             return label.text
@@ -57,18 +57,18 @@ final class LabelCell: UICollectionViewCell {
             label.text = newValue
         }
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(label)
         contentView.layer.addSublayer(separator)
         contentView.backgroundColor = .white
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         let bounds = contentView.bounds
@@ -81,11 +81,11 @@ final class LabelCell: UICollectionViewCell {
             width: bounds.width - left,
             height: height)
     }
-    
+
     override var isHighlighted: Bool {
         didSet {
             contentView.backgroundColor = UIColor(white: isHighlighted ? 0.9 : 1, alpha: 1)
         }
     }
-    
+
 }

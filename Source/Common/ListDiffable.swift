@@ -24,14 +24,14 @@ public protocol ListDiffable: Equatable {
 /// value, hiding its specific underlying type.
 public struct AnyListDiffable {
     private var box: AnyListDiffableBox
-    
+
     /// Creates a type-erased diffable value that wraps the given instance.
     ///
     /// - Parameter base: A diffable value to wrap.
     public init<T: ListDiffable>(_ base: T) {
         box = ConcreteListDiffableBox(base)
     }
-    
+
     public var base: Any {
         return box.base
     }
@@ -57,7 +57,7 @@ extension AnyListDiffable: ListDiffable {
 
 private protocol AnyListDiffableBox {
     var canonicalBox: AnyListDiffableBox { get }
-    
+
     /// Determine whether values in the boxes are equivalent.
     ///
     /// - Precondition: `self` and `box` are in canonical form.
@@ -65,9 +65,9 @@ private protocol AnyListDiffableBox {
     /// - Returns: `nil` to indicate that the boxes store different types, so
     ///     no comparison is possible. Otherwise, contains the result of `==`.
     func isEqual(to box: AnyListDiffableBox) -> Bool?
-    
+
     var diffIdentifier: AnyHashable { get }
-    
+
     var base: Any { get }
     func unbox<T: ListDiffable>() -> T?
 }
@@ -80,26 +80,26 @@ extension AnyListDiffableBox {
 
 private struct ConcreteListDiffableBox<Base: ListDiffable> : AnyListDiffableBox {
     var baseListDiffable: Base
-    
+
     init (_ base: Base) {
         baseListDiffable = base
     }
-    
+
     func unbox<T: ListDiffable>() -> T? {
         return (self as AnyListDiffableBox as? ConcreteListDiffableBox<T>)?.baseListDiffable
     }
-    
+
     var diffIdentifier: AnyHashable {
         return baseListDiffable.diffIdentifier
     }
-    
+
     func isEqual(to rhs: AnyListDiffableBox) -> Bool? {
         if let rhs: Base = rhs.unbox() {
             return baseListDiffable == rhs
         }
         return nil
     }
-    
+
     var base: Any {
         return baseListDiffable
     }

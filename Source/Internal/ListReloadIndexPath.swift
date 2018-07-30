@@ -8,13 +8,13 @@
 
 /// An object with index path information for reloading an item during a batch update.
 struct ListReloadIndexPath {
-    
+
     /// The index path of the item before batch updates are applied.
     let from: IndexPath
-    
+
     /// The index path of the item after batch updates are applied.
     let to: IndexPath
-    
+
     /// Creates a new reload object.
     ///
     /// - Parameters:

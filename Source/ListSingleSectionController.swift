@@ -12,7 +12,7 @@
 public final class ListSingleSectionController: ListSectionController {
     /// An optional delegate that handles selection and deselection.
     weak public var selectionDelegate: ListSingleSectionControllerSelectionDelegate?
-    
+
     /// Creates a new section controller for a given cell type that will always have only one cell
     /// when present in a list.
     ///
@@ -32,7 +32,7 @@ public final class ListSingleSectionController: ListSectionController {
         self.configureClosure = configureClosure
         self.sizeClosure = sizeClosure
     }
-    
+
     /// Creates a new section controller for a given nib name and bundle that will always have only
     /// one cell when present in a list.
     ///
@@ -57,7 +57,7 @@ public final class ListSingleSectionController: ListSectionController {
         self.configureClosure = configureClosure
         self.sizeClosure = sizeClosure
     }
-    
+
     /// Creates a new section controller for a given storyboard cell identifier that will always
     /// have only one cell when present in a list.
     ///
@@ -78,18 +78,18 @@ public final class ListSingleSectionController: ListSectionController {
         self.configureClosure = configureClosure
         self.sizeClosure = sizeClosure
     }
-    
+
     // MARK: - ListSectionController Overrides
     public override var numberOfItems: Int {
         return 1
     }
-    
+
     public override func sizeForItem(at index: Int) -> CGSize? {
         guard let item = item,
               let collectionContext = collectionContext else { return nil }
         return sizeClosure(item, collectionContext)
     }
-    
+
     public override func cellForItem(at index: Int) -> UICollectionViewCell? {
         assert(index == 0, "Only one cell is allowed for single section controllers")
         guard let collectionContext = collectionContext else { return nil }
@@ -115,21 +115,21 @@ public final class ListSingleSectionController: ListSectionController {
         configureClosure(item, dequeuedCell)
         return dequeuedCell
     }
-    
+
     public override func didUpdate(to object: AnyListDiffable) {
         item = object
     }
-    
+
     public override func didSelectItem(at index: Int) {
         guard let item = item else { return }
         selectionDelegate?.didSelect(self, with: item)
     }
-    
+
     public override func didDeselectItem(at index: Int) {
         guard let item = item else { return }
         selectionDelegate?.didDeselect(self, with: item)
     }
-    
+
     // MARK: - Private properties
     private var item: AnyListDiffable?
     private var nibName: String?
@@ -148,7 +148,7 @@ public protocol ListSingleSectionControllerSelectionDelegate: AnyObject {
     ///   - sectionController: The section controller that was selected.
     ///   - object: The model for the given section.
     func didSelect(_ sectionController: ListSingleSectionController, with object: AnyListDiffable)
-    
+
     /// Tells the delegate that the section controller was deselected.
     ///
     /// - Parameters:

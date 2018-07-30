@@ -13,7 +13,7 @@ public protocol ListAdapterDataSource: AnyObject {
     /// - Parameter listAdapter: The list adapter requesting this information.
     /// - Returns: An array of objects for the list.
     func objects(for listAdapter: ListAdapter) -> [AnyListDiffable]
-    
+
     /// Asks the data source for a section controller for the specified object in the list.
     ///
     /// - Parameters:
@@ -30,7 +30,7 @@ public protocol ListAdapterDataSource: AnyObject {
         _ listAdapter: ListAdapter,
         sectionControllerFor object: AnyListDiffable
     ) -> ListSectionController
-    
+
     /// Asks the data source for a view to use as the collection view background when the list is
     /// empty.
     ///

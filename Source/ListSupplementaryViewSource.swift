@@ -13,7 +13,7 @@
 public protocol ListSupplementaryViewSource: AnyObject {
     /// An array of element kind strings that the supplementary source handles.
     var supportedElementKinds: [String] { get }
-    
+
     /// Asks the SupplementaryViewSource for a configured supplementary view for the specified kind
     /// and index.
     ///
@@ -25,7 +25,7 @@ public protocol ListSupplementaryViewSource: AnyObject {
     /// - Warning: You should never init new views in this method. Instead deque a view from the
     ///     `ListCollectionContext`.
     func viewForSupplementaryElement(ofKind kind: String, at index: Int) -> UICollectionReusableView
-    
+
     /// Asks the SupplementaryViewSource for the size of a supplementary view for the given kind and
     /// index path.
     ///

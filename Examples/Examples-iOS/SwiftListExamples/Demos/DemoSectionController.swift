@@ -13,7 +13,7 @@ struct DemoItem {
     let name: String
     let controllerClass: UIViewController.Type
     let controllerIdentifier: String?
-    
+
     init(
         name: String,
         controllerClass: UIViewController.Type,
@@ -29,7 +29,7 @@ extension DemoItem: ListDiffable {
     var diffIdentifier: AnyHashable {
         return name
     }
-    
+
     static func == (lhs: DemoItem, rhs: DemoItem) -> Bool {
         return lhs.name == rhs.name &&
             lhs.controllerClass == rhs.controllerClass &&
@@ -39,11 +39,11 @@ extension DemoItem: ListDiffable {
 
 final class DemoSectionController: ListSectionController {
     private var object: DemoItem?
-    
+
     override func sizeForItem(at index: Int) -> CGSize {
         return CGSize(width: collectionContext!.containerSize.width, height: 55)
     }
-    
+
     override func cellForItem(at index: Int) -> UICollectionViewCell {
         guard let cell = collectionContext?.sectionController(
             self,
@@ -55,11 +55,11 @@ final class DemoSectionController: ListSectionController {
         cell.text = object?.name
         return cell
     }
-    
+
     override func didUpdate(to object: AnyListDiffable) {
         self.object = object.base as? DemoItem
     }
-    
+
     override func didSelectItem(at index: Int) {
         if let controller = object?.controllerClass.init() {
             controller.title = object?.name
