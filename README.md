@@ -3,9 +3,19 @@
 [![Build Status](https://travis-ci.com/zhubofei/SwiftList.svg?branch=master)](https://travis-ci.com/zhubofei/SwiftList)
 [![Code Coverage](https://codecov.io/gh/zhubofei/SwiftList/branch/master/graph/badge.svg)](https://codecov.io/gh/zhubofei/SwiftList)
 
-‼️👷‍♀️**WIP**👷‍♂️‼️
-
 A data-driven `UICollectionView` framework for building fast and flexible lists.
+
+|  | Main Features  |
+---|-----------------
+📵 | Never call `performBatchUpdates(_:completion:)` or `reloadData()` again
+🏛 | Better architecture with reusable cells and components
+🔣 | Create collections with multiple data types
+🎎 | Decoupled diffing algorithm
+👷‍♀️| Fully unit tested
+🎛 | Customize your diffing behavior for your models
+🌽 | Simply `UICollectionView` at its core
+⛄️ | Extendable API
+🐣 | Written in Swift
 
 `SwiftList` is forked from [`IGListKit`](https://github.com/Instagram/IGListKit) by [Instagram engineering](https://engineering.instagram.com/).
 
