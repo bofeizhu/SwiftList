@@ -8,6 +8,7 @@ A data-driven `UICollectionView` framework for building fast and flexible lists.
 - [Features](#features)
 - [Requirements](#requirements)
 - [Installation](#installation)
+- [Documentation](#documentation)
 
 ## Features
 
