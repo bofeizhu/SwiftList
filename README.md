@@ -25,6 +25,34 @@ A data-driven `UICollectionView` framework for building fast and flexible lists.
 - iOS 10.0+
 - Swift 4.1+
 
+## Installation
+
+### CocoaPods
+
+[CocoaPods](https://cocoapods.org) is a dependency manager for Cocoa projects. You can install it with the following command:
+
+```bash
+$ gem install cocoapods
+```
+
+To integrate SwiftList into your Xcode project using CocoaPods, specify it in your `Podfile`:
+
+```ruby
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '10.0'
+use_frameworks!
+
+target '<Your Target Name>' do
+    pod 'SwiftList'
+end
+```
+
+Then, run the following command:
+
+```bash
+$ pod install
+```
+
 ## Documentation
 
 You can find [the docs here](https://zhubofei.github.io/SwiftList). Documentation is generated with [jazzy](https://github.com/realm/jazzy).
