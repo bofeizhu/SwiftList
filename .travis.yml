@@ -27,6 +27,8 @@ script:
   - set -o pipefail
   - xcodebuild -version
   - xcodebuild -showsdks
+  
+  - swiftlint
 
   - if [ $BUILD_EXAMPLE == "YES" ]; then
         xcodebuild build -workspace "$IOS_EXAMPLE_WORKSPACE" -scheme "$EXAMPLE_SCHEME" -destination "$DESTINATION" ONLY_ACTIVE_ARCH=YES CODE_SIGNING_REQUIRED=NO | xcpretty;
