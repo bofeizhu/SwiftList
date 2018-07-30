@@ -1,13 +1,7 @@
 # SwiftList
 
-<p>
-  <a href="https://travis-ci.com/zhubofei/SwiftList">
-      <img src="https://travis-ci.com/zhubofei/SwiftList.svg?branch=master" alt="Build Status">
-  </a>
-  <a href="https://codecov.io/gh/zhubofei/SwiftList">
-      <img src="https://codecov.io/gh/zhubofei/SwiftList/branch/master/graph/badge.svg" alt="Code coverage"/>
-  </a>
-</p>
+[![Build Status](https://travis-ci.com/zhubofei/SwiftList.svg?branch=master)](https://travis-ci.com/zhubofei/SwiftList)
+[![Code Coverage](https://codecov.io/gh/zhubofei/SwiftList/branch/master/graph/badge.svg)](https://codecov.io/gh/zhubofei/SwiftList)
 
 ‼️👷‍♀️**WIP**👷‍♂️‼️
 
