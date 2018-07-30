@@ -16,11 +16,11 @@ final class DemosViewController: UIViewController, ListAdapterDataSource {
     let collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: UICollectionViewFlowLayout())
-    
+
     let demos: [DemoItem] = [
-        DemoItem(name: "Tail Loading", controllerClass: LoadMoreViewController.self),
+        DemoItem(name: "Tail Loading", controllerClass: LoadMoreViewController.self)
     ]
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Demos"
@@ -28,24 +28,24 @@ final class DemosViewController: UIViewController, ListAdapterDataSource {
         adapter.collectionView = collectionView
         adapter.dataSource = self
     }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         collectionView.frame = view.bounds
     }
-    
+
     // MARK: - ListAdapterDataSource
     func objects(for listAdapter: ListAdapter) -> [AnyListDiffable] {
         return demos.typeErased()
     }
-    
+
     func listAdapter(
         _ listAdapter: ListAdapter,
         sectionControllerFor object: AnyListDiffable
     ) -> ListSectionController {
         return DemoSectionController()
     }
-    
+
     func emptyBackgroundView(for listAdapter: ListAdapter) -> UIView? {
         return nil
     }

@@ -16,11 +16,11 @@ final class LoadMoreViewController: UIViewController, ListAdapterDataSource, UIS
     let collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: UICollectionViewFlowLayout())
-    
+
     lazy var items = Array(0...20)
     var loading = false
     let spinToken = "spinner"
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(collectionView)
@@ -28,12 +28,12 @@ final class LoadMoreViewController: UIViewController, ListAdapterDataSource, UIS
         adapter.dataSource = self
         adapter.scrollViewDelegate = self
     }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         collectionView.frame = view.bounds
     }
-    
+
     // MARK: - ListAdapterDataSource
     func objects(for listAdapter: ListAdapter) -> [AnyListDiffable] {
         var objects = items.typeErased()
@@ -42,7 +42,7 @@ final class LoadMoreViewController: UIViewController, ListAdapterDataSource, UIS
         }
         return objects
     }
-    
+
     func listAdapter(
         _ listAdapter: ListAdapter,
         sectionControllerFor object: AnyListDiffable) -> ListSectionController {
@@ -52,9 +52,9 @@ final class LoadMoreViewController: UIViewController, ListAdapterDataSource, UIS
             return LabelSectionController()
         }
     }
-    
+
     func emptyBackgroundView(for listAdapter: ListAdapter) -> UIView? { return nil }
-    
+
     // MARK: - UIScrollViewDelegate
     func scrollViewWillEndDragging(
         _ scrollView: UIScrollView,
