@@ -9,6 +9,8 @@ A data-driven `UICollectionView` framework for building fast and flexible lists.
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Documentation](#documentation)
+- [Credits](#credits)
+- [License](#license)
 
 ## Features
 
@@ -23,8 +25,6 @@ A data-driven `UICollectionView` framework for building fast and flexible lists.
 🍡 | Simply `UICollectionView` at its core
 🏗 | Extendable API
 🐥 | Written in Swift
-
-`SwiftList` is forked from [`IGListKit`](https://github.com/Instagram/IGListKit) by [Instagram engineering](https://engineering.instagram.com/).
 
 ## Requirements
 
@@ -65,6 +65,10 @@ $ pod install
 You can find [the docs here](https://zhubofei.github.io/SwiftList). Documentation is generated with [jazzy](https://github.com/realm/jazzy).
 
 To regenerate docs, run `./scripts/build_docs.sh` from the root directory in the repo.
+
+## Credits
+
+`SwiftList` is forked from [`IGListKit`](https://github.com/Instagram/IGListKit) by [Instagram engineering](https://engineering.instagram.com/).
 
 ## License
 
