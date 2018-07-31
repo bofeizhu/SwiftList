@@ -619,4 +619,33 @@ class ListAdapterTests: ListTestCase {
             animated: false)
         XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 110))
     }
+    
+    func testWhenScrollVerticallyToItemInASectionWithNoCellsAndNoSupplymentaryView() {
+        dataSource.objects = [1, 0, 300].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        XCTAssertEqual(collectionView.numberOfSections, 3)
+        adapter.scroll(
+            to: AnyListDiffable(1),
+            withSupplementaryViewOfKinds: [],
+            in: .vertical,
+            at: [],
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 0))
+        adapter.scroll(
+            to: AnyListDiffable(0),
+            withSupplementaryViewOfKinds: [],
+            in: .vertical,
+            at: [],
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 0))
+        adapter.scroll(
+            to: AnyListDiffable(300),
+            withSupplementaryViewOfKinds: [],
+            in: .vertical,
+            at: [],
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 10))
+    }
+    
+    
 }

@@ -1,6 +1,6 @@
 {
   "name": "SwiftList",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "summary": "A data-driven UICollectionView framework.",
   "description": "A data-driven UICollectionView framework for building fast and flexible lists.",
   "homepage": "https://github.com/zhubofei/SwiftList",
@@ -11,7 +11,7 @@
   "social_media_url": "https://twitter.com/bofei_zhu",
   "source": {
     "git": "https://github.com/zhubofei/SwiftList.git",
-    "tag": "0.0.1"
+    "tag": "0.1.0"
   },
   "source_files": "Source/**/*.swift",
   "platforms": {

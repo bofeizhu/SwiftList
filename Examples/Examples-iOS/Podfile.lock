@@ -1,5 +1,5 @@
 PODS:
-  - SwiftList (0.0.1)
+  - SwiftList (0.1.0)
 
 DEPENDENCIES:
   - SwiftList (from `../../SwiftList.podspec`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../../SwiftList.podspec"
 
 SPEC CHECKSUMS:
-  SwiftList: 580efbc8da38747a2752afd0c1054447d5e8f2c4
+  SwiftList: c2e2db871a17aa1af3f020ce02b67c1c0ae8e07e
 
 PODFILE CHECKSUM: a85ae9d4c34d79963b904beb50e375cc4f7b12d5
 
