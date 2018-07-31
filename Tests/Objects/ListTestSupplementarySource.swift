@@ -33,7 +33,7 @@ class ListTestSupplementarySource: ListSupplementaryViewSource {
             return collectionContext!.sectionController(
                 sectionController!,
                 dequeueReusableSupplementaryViewOfKind: kind,
-                viewClass: UICollectionViewCell.self,
+                viewClass: UICollectionReusableView.self,
                 at: index)
         }
     }
@@ -41,6 +41,4 @@ class ListTestSupplementarySource: ListSupplementaryViewSource {
     func sizeForSupplementaryView(ofKind kind: String, at index: Int) -> CGSize? {
         return size
     }
-    
-    
 }

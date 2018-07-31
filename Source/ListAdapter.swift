@@ -323,7 +323,7 @@ extension ListAdapter {
             }
         } else {
             for kind in elementKinds {
-                if let supplementaryAttributes = layout.layoutAttributesForDecorationView(
+                if let supplementaryAttributes = layout.layoutAttributesForSupplementaryView(
                        ofKind: kind,
                        at: firstIndexPath) {
                     attributesArray.append(supplementaryAttributes)

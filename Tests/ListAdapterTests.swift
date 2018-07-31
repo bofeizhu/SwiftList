@@ -647,5 +647,48 @@ class ListAdapterTests: ListTestCase {
         XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 10))
     }
     
+    func testWhenScrollVerticallyToItemInASectionWithNoCellsButAHeaderSupplymentaryView() {
+        dataSource.objects = [1, 0, 300].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        let supplementarySource = ListTestSupplementarySource()
+        supplementarySource.collectionContext = adapter
+        supplementarySource.supportedElementKinds = [UICollectionElementKindSectionHeader.self]
+        let controller = adapter.sectionController(for: AnyListDiffable(0))
+        controller?.supplementaryViewSource = supplementarySource
+        supplementarySource.sectionController = controller
+        adapter.performUpdates(animated: false, completion: nil)
+        
+        XCTAssertEqual(collectionView.numberOfSections, 3)
+        adapter.scroll(
+            to: AnyListDiffable(1),
+            withSupplementaryViewOfKinds: [],
+            in: .vertical,
+            at: [],
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 0))
+        adapter.scroll(
+            to: AnyListDiffable(0),
+            withSupplementaryViewOfKinds: [],
+            in: .vertical,
+            at: [],
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 0))
+        adapter.scroll(
+            to: AnyListDiffable(0),
+            withSupplementaryViewOfKinds: [UICollectionElementKindSectionHeader.self],
+            in: .vertical,
+            at: .top,
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 10))
+        // Content height minus collection view height is 110, can't scroll more than that
+        adapter.scroll(
+            to: AnyListDiffable(300),
+            withSupplementaryViewOfKinds: [],
+            in: .vertical,
+            at: [],
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 20))
+    }
+    
     
 }
