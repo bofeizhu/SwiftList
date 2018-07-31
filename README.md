@@ -1,4 +1,4 @@
-# SwiftList
+![SwiftList: UICollectionView made easy](https://raw.githubusercontent.com/zhubofei/SwiftList/master/Resources/swiftlist.png)
 
 [![Build Status](https://travis-ci.com/zhubofei/SwiftList.svg?branch=master)](https://travis-ci.com/zhubofei/SwiftList)
 [![Code Coverage](https://codecov.io/gh/zhubofei/SwiftList/branch/master/graph/badge.svg)](https://codecov.io/gh/zhubofei/SwiftList)
