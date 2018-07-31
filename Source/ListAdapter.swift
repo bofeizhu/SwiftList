@@ -283,7 +283,7 @@ extension ListAdapter {
     ///   - animated: A flag indicating if the scrolling should be animated.
     // TODO: Refactor
     // swiftlint:disable:next cyclomatic_complexity
-    func scroll(
+    public func scroll(
         to object: AnyListDiffable,
         withSupplementaryViewOfKinds elementKinds: [String],
         in scrollDirection: UICollectionViewScrollDirection,

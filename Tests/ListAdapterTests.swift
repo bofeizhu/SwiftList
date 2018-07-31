@@ -570,4 +570,53 @@ class ListAdapterTests: ListTestCase {
         let visibleCells = adapter.visibleCells(for: AnyListDiffable(3))
         XCTAssertEqual(visibleCells.count, 0)
     }
+    
+    func testWhenScrollVerticallyToItem() {
+        dataSource.objects = [1, 2, 3, 4, 5, 6].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        XCTAssertEqual(collectionView.numberOfSections, 6)
+        adapter.scroll(
+            to: AnyListDiffable(1),
+            withSupplementaryViewOfKinds: [],
+            in: .vertical,
+            at: [],
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 0))
+        adapter.scroll(
+            to: AnyListDiffable(2),
+            withSupplementaryViewOfKinds: [],
+            in: .vertical,
+            at: [],
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 10))
+        adapter.scroll(
+            to: AnyListDiffable(3),
+            withSupplementaryViewOfKinds: [],
+            in: .vertical,
+            at: [],
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 30))
+        adapter.scroll(
+            to: AnyListDiffable(6),
+            withSupplementaryViewOfKinds: [],
+            in: .vertical,
+            at: [],
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 110))
+        // Content height minus collection view height is 110, can't scroll more than that
+        adapter.scroll(
+            to: AnyListDiffable(6),
+            withSupplementaryViewOfKinds: [],
+            in: .vertical,
+            at: .centeredVertically,
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 110))
+        adapter.scroll(
+            to: AnyListDiffable(6),
+            withSupplementaryViewOfKinds: [],
+            in: .vertical,
+            at: .bottom,
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 110))
+    }
 }
