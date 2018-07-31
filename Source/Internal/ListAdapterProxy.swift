@@ -149,8 +149,8 @@ extension ListAdapter: UIScrollViewDelegate {
     }
 
     // MARK: Responding to Inset Changes
+    @available(iOS 11.0, *)
     public func scrollViewDidChangeAdjustedContentInset(_ scrollView: UIScrollView) {
-        guard #available(iOS 11.0, *) else { return }
         if let scrollViewDelegateMethod =
             scrollViewDelegate?.scrollViewDidChangeAdjustedContentInset(_:) {
             scrollViewDelegateMethod(scrollView)
@@ -171,6 +171,146 @@ extension ListAdapter {
     ) -> Bool {
         if let method = collectionViewDelegate?.collectionView(_:shouldSelectItemAt:) {
             return method(collectionView, indexPath)
+        }
+        // If you do not implement this method, the default return value is true.
+        return true
+    }
+
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        shouldDeselectItemAt indexPath: IndexPath
+    ) -> Bool {
+        if let method = collectionViewDelegate?.collectionView(_:shouldDeselectItemAt:) {
+            return method(collectionView, indexPath)
+        }
+        // If you do not implement this method, the default return value is true.
+        return true
+    }
+
+    // MARK: Managing Cell Highlighting
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        shouldHighlightItemAt indexPath: IndexPath
+    ) -> Bool {
+        if let method = collectionViewDelegate?.collectionView(_:shouldHighlightItemAt:) {
+            return method(collectionView, indexPath)
+        }
+        // If you do not implement this method, the default return value is true.
+        return true
+    }
+
+    // MARK: Handling Layout Changes
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        transitionLayoutForOldLayout fromLayout: UICollectionViewLayout,
+        newLayout toLayout: UICollectionViewLayout
+    ) -> UICollectionViewTransitionLayout {
+        if let method =
+            collectionViewDelegate?.collectionView(_:transitionLayoutForOldLayout:newLayout:) {
+            return method(collectionView, fromLayout, toLayout)
+        }
+        // If your delegate does not implement this method, the collection view creates a standard
+        // `UICollectionViewTransitionLayout` object and uses that object to manage the transition.
+        return UICollectionViewTransitionLayout(currentLayout: fromLayout, nextLayout: toLayout)
+    }
+
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        targetContentOffsetForProposedContentOffset proposedContentOffset: CGPoint
+    ) -> CGPoint {
+        if let method =
+            collectionViewDelegate?.collectionView(_:targetContentOffsetForProposedContentOffset:) {
+            return method(collectionView, proposedContentOffset)
+        }
+        return proposedContentOffset
+    }
+
+    // Managing Actions for Cells
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        shouldShowMenuForItemAt indexPath: IndexPath
+    ) -> Bool {
+        if let method = collectionViewDelegate?.collectionView(_:shouldShowMenuForItemAt:) {
+            return method(collectionView, indexPath)
+        }
+        // If you do not implement this method, the default return value is true.
+        return true
+    }
+
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        canPerformAction action: Selector,
+        forItemAt indexPath: IndexPath,
+        withSender sender: Any?
+    ) -> Bool {
+        if let method =
+            collectionViewDelegate?.collectionView(_:canPerformAction:forItemAt:withSender:) {
+            return method(collectionView, action, indexPath, sender)
+        }
+        // If you do not implement this method, the default return value is true.
+        return true
+    }
+
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        performAction action: Selector,
+        forItemAt indexPath: IndexPath,
+        withSender sender: Any?) {
+        if let method =
+            collectionViewDelegate?.collectionView(_:performAction:forItemAt:withSender:) {
+            method(collectionView, action, indexPath, sender)
+        }
+    }
+
+    // Managing Focus in a Collection View
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        canFocusItemAt indexPath: IndexPath
+    ) -> Bool {
+        if let method = collectionViewDelegate?.collectionView(_:canFocusItemAt:) {
+            return method(collectionView, indexPath)
+        }
+        // If you do not implement this method, the default return value is true.
+        return true
+    }
+
+    public func indexPathForPreferredFocusedView(
+        in collectionView: UICollectionView
+    ) -> IndexPath? {
+        if let method = collectionViewDelegate?.indexPathForPreferredFocusedView(in:) {
+            return method(collectionView)
+        }
+        return nil
+    }
+
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        shouldUpdateFocusIn context: UICollectionViewFocusUpdateContext
+    ) -> Bool {
+        if let method = collectionViewDelegate?.collectionView(_:shouldUpdateFocusIn:) {
+            return method(collectionView, context)
+        }
+        // If you do not implement this method, the default return value is true.
+        return true
+    }
+
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        didUpdateFocusIn context: UICollectionViewFocusUpdateContext,
+        with coordinator: UIFocusAnimationCoordinator) {
+        if let method = collectionViewDelegate?.collectionView(_:didUpdateFocusIn:with:) {
+            method(collectionView, context, coordinator)
+        }
+    }
+
+    @available(iOS 11.0, *)
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        shouldSpringLoadItemAt indexPath: IndexPath,
+        with context: UISpringLoadedInteractionContext
+    ) -> Bool {
+        if let method = collectionViewDelegate?.collectionView(_:shouldSpringLoadItemAt:with:) {
+            return method(collectionView, indexPath, context)
         }
         // If you do not implement this method, the default return value is true.
         return true
