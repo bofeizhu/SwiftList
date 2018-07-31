@@ -160,3 +160,19 @@ extension ListAdapter: UIScrollViewDelegate {
         }
     }
 }
+
+// MARK: - UICollectionViewDelegate
+/// Pass on methods to a UICollectionViewDelegate
+extension ListAdapter {
+    // MARK: Managing the Selected Cells
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        shouldSelectItemAt indexPath: IndexPath
+    ) -> Bool {
+        if let method = collectionViewDelegate?.collectionView(_:shouldSelectItemAt:) {
+            return method(collectionView, indexPath)
+        }
+        // If you do not implement this method, the default return value is true.
+        return true
+    }
+}
