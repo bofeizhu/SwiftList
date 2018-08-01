@@ -67,7 +67,7 @@ final class LoadMoreViewController: UIViewController, ListAdapterDataSource, UIS
             adapter.performUpdates(animated: true, completion: nil)
             DispatchQueue.global(qos: .default).async {
                 // fake background loading task
-                sleep(2)
+                sleep(1)
                 DispatchQueue.main.async {
                     self.loading = false
                     let itemCount = self.items.count

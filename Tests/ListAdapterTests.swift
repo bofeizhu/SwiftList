@@ -657,7 +657,6 @@ class ListAdapterTests: ListTestCase {
         controller?.supplementaryViewSource = supplementarySource
         supplementarySource.sectionController = controller
         adapter.performUpdates(animated: false, completion: nil)
-        
         XCTAssertEqual(collectionView.numberOfSections, 3)
         adapter.scroll(
             to: AnyListDiffable(1),
@@ -688,6 +687,76 @@ class ListAdapterTests: ListTestCase {
             at: [],
             animated: false)
         XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 20))
+    }
+    
+    func testWhenScrollVerticallyToItemWithPositionning() {
+        dataSource.objects = [1, 100, 200].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        adapter.scroll(
+            to: AnyListDiffable(1),
+            withSupplementaryViewOfKinds: [],
+            in: .vertical,
+            at: [],
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 0))
+        adapter.scroll(
+            to: AnyListDiffable(1),
+            withSupplementaryViewOfKinds: [],
+            in: .vertical,
+            at: .top,
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 0))
+        adapter.scroll(
+            to: AnyListDiffable(1),
+            withSupplementaryViewOfKinds: [],
+            in: .vertical,
+            at: .centeredVertically,
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 0))
+        adapter.scroll(
+            to: AnyListDiffable(1),
+            withSupplementaryViewOfKinds: [],
+            in: .vertical,
+            at: .bottom,
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 0))
+        
+        adapter.scroll(
+            to: AnyListDiffable(100),
+            withSupplementaryViewOfKinds: [],
+            in: .vertical,
+            at: [],
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 10))
+        adapter.scroll(
+            to: AnyListDiffable(100),
+            withSupplementaryViewOfKinds: [],
+            in: .vertical,
+            at: .top,
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 10))
+        adapter.scroll(
+            to: AnyListDiffable(100),
+            withSupplementaryViewOfKinds: [],
+            in: .vertical,
+            at: .centeredVertically,
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 460))
+        adapter.scroll(
+            to: AnyListDiffable(100),
+            withSupplementaryViewOfKinds: [],
+            in: .vertical,
+            at: .bottom,
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 910))
+        
+        adapter.scroll(
+            to: AnyListDiffable(200),
+            withSupplementaryViewOfKinds: [],
+            in: .vertical,
+            at: .bottom,
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 2910))
     }
     
     
