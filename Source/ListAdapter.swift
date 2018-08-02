@@ -283,7 +283,7 @@ extension ListAdapter {
     ///   - animated: A flag indicating if the scrolling should be animated.
     // TODO: Refactor
     // swiftlint:disable:next cyclomatic_complexity
-    func scroll(
+    public func scroll(
         to object: AnyListDiffable,
         withSupplementaryViewOfKinds elementKinds: [String],
         in scrollDirection: UICollectionViewScrollDirection,
@@ -323,7 +323,7 @@ extension ListAdapter {
             }
         } else {
             for kind in elementKinds {
-                if let supplementaryAttributes = layout.layoutAttributesForDecorationView(
+                if let supplementaryAttributes = layout.layoutAttributesForSupplementaryView(
                        ofKind: kind,
                        at: firstIndexPath) {
                     attributesArray.append(supplementaryAttributes)
@@ -1617,6 +1617,7 @@ extension ListAdapter: UICollectionViewDelegateFlowLayout {
 
 // MARK: - UICollectionViewDelegate
 extension ListAdapter: UICollectionViewDelegate {
+    // MARK: Managing the Selected Cells
     public func collectionView(
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath) {
@@ -1635,6 +1636,26 @@ extension ListAdapter: UICollectionViewDelegate {
         sectionController(forSection: indexPath.section)?.didDeselectItem(at: indexPath.item)
     }
 
+    // MARK: Managing Cell Highlighting
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        didHighlightItemAt indexPath: IndexPath) {
+        if let method = collectionViewDelegate?.collectionView(_:didHighlightItemAt:) {
+            method(collectionView, indexPath)
+        }
+        sectionController(forSection: indexPath.section)?.didHighlightItem(at: indexPath.item)
+    }
+
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        didUnhighlightItemAt indexPath: IndexPath) {
+        if let method = collectionViewDelegate?.collectionView(_:didUnhighlightItemAt:) {
+            method(collectionView, indexPath)
+        }
+        sectionController(forSection: indexPath.section)?.didUnhighlightItem(at: indexPath.item)
+    }
+
+    // MARK: Tracking the Addition and Removal of Views
     public func collectionView(
         _ collectionView: UICollectionView,
         willDisplay cell: UICollectionViewCell,
@@ -1672,6 +1693,40 @@ extension ListAdapter: UICollectionViewDelegate {
 
     public func collectionView(
         _ collectionView: UICollectionView,
+        willDisplaySupplementaryView view: UICollectionReusableView,
+        forElementKind elementKind: String,
+        at indexPath: IndexPath) {
+        if let method = collectionViewDelegate?
+            .collectionView(_:willDisplaySupplementaryView:forElementKind:at:) {
+            method(collectionView, view, elementKind, indexPath)
+        }
+        var sectionController = self.sectionController(for: view)
+        // if the section controller relationship was destroyed, reconnect it
+        // this happens with iOS10 UICollectionView display range changes
+        if sectionController == nil {
+            guard let newSectionController = self.sectionController(forSection: indexPath.section)
+                else {
+                    assertionFailure("No section controller to display at: \(indexPath)")
+                    return
+            }
+            map(view: view, to: newSectionController)
+            sectionController = newSectionController
+        }
+        guard let object = sectionMap.object(forSection: indexPath.section)
+            else {
+                assertionFailure("No object to display at: \(indexPath)")
+                return
+        }
+        displayHandler.listAdapter(
+            self,
+            sectionController: sectionController!,
+            willDisplaySupplementaryView: view,
+            for: object,
+            at: indexPath)
+    }
+
+    public func collectionView(
+        _ collectionView: UICollectionView,
         didEndDisplaying cell: UICollectionViewCell,
         forItemAt indexPath: IndexPath) {
         if let method = collectionViewDelegate?.collectionView(_:didEndDisplaying:forItemAt:) {
@@ -1693,40 +1748,6 @@ extension ListAdapter: UICollectionViewDelegate {
 
     public func collectionView(
         _ collectionView: UICollectionView,
-        willDisplaySupplementaryView view: UICollectionReusableView,
-        forElementKind elementKind: String,
-        at indexPath: IndexPath) {
-        if let method = collectionViewDelegate?
-            .collectionView(_:willDisplaySupplementaryView:forElementKind:at:) {
-            method(collectionView, view, elementKind, indexPath)
-        }
-        var sectionController = self.sectionController(for: view)
-        // if the section controller relationship was destroyed, reconnect it
-        // this happens with iOS10 UICollectionView display range changes
-        if sectionController == nil {
-            guard let newSectionController = self.sectionController(forSection: indexPath.section)
-            else {
-                assertionFailure("No section controller to display at: \(indexPath)")
-                return
-            }
-            map(view: view, to: newSectionController)
-            sectionController = newSectionController
-        }
-        guard let object = sectionMap.object(forSection: indexPath.section)
-        else {
-            assertionFailure("No object to display at: \(indexPath)")
-            return
-        }
-        displayHandler.listAdapter(
-            self,
-            sectionController: sectionController!,
-            willDisplaySupplementaryView: view,
-            for: object,
-            at: indexPath)
-    }
-
-    public func collectionView(
-        _ collectionView: UICollectionView,
         didEndDisplayingSupplementaryView view: UICollectionReusableView,
         forElementOfKind elementKind: String,
         at indexPath: IndexPath) {
@@ -1744,34 +1765,6 @@ extension ListAdapter: UICollectionViewDelegate {
             didEndDisplayingSupplementaryView: view,
             at: indexPath)
         removeSectionController(for: view)
-    }
-
-    public func collectionView(
-        _ collectionView: UICollectionView,
-        didHighlightItemAt indexPath: IndexPath) {
-        if let method = collectionViewDelegate?.collectionView(_:didHighlightItemAt:) {
-            method(collectionView, indexPath)
-        }
-        sectionController(forSection: indexPath.section)?.didHighlightItem(at: indexPath.item)
-    }
-
-    public func collectionView(
-        _ collectionView: UICollectionView,
-        didUnhighlightItemAt indexPath: IndexPath) {
-        if let method = collectionViewDelegate?.collectionView(_:didUnhighlightItemAt:) {
-            method(collectionView, indexPath)
-        }
-        sectionController(forSection: indexPath.section)?.didUnhighlightItem(at: indexPath.item)
-    }
-
-    // MARK: Pass on method calls to delegates
-    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if let scrollViewDelegateMethod = scrollViewDelegate?.scrollViewDidScroll(_:) {
-            scrollViewDelegateMethod(scrollView)
-        } else if let collectionViewDelegateMethod =
-            collectionViewDelegate?.scrollViewDidScroll(_:) {
-            collectionViewDelegateMethod(scrollView)
-        }
     }
 }
 

@@ -48,6 +48,7 @@
 		829216B320F4AB930038C596 /* String+ListDiffable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829216B220F4AB930038C596 /* String+ListDiffable.swift */; };
 		829216B720F502CA0038C596 /* ListAdapterUpdaterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829216B620F502CA0038C596 /* ListAdapterUpdaterTests.swift */; };
 		829216B920F5147B0038C596 /* ListTestUICollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829216B820F5147B0038C596 /* ListTestUICollectionViewDataSource.swift */; };
+		829458A0210F80180038B068 /* ListAdapterProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8294589F210F80180038B068 /* ListAdapterProxy.swift */; };
 		829EF3CC2102AFDB00AFB99F /* ListWorkingRangeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829EF3CB2102AFDB00AFB99F /* ListWorkingRangeHandler.swift */; };
 		829EF3CE21039D5B00AFB99F /* ListDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829EF3CD21039D5B00AFB99F /* ListDebugger.swift */; };
 		829EF3D22103BFDE00AFB99F /* ListCollectionViewInteractiveReorderingLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829EF3D12103BFDE00AFB99F /* ListCollectionViewInteractiveReorderingLayout.swift */; };
@@ -136,6 +137,7 @@
 		829216B220F4AB930038C596 /* String+ListDiffable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ListDiffable.swift"; sourceTree = "<group>"; };
 		829216B620F502CA0038C596 /* ListAdapterUpdaterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAdapterUpdaterTests.swift; sourceTree = "<group>"; };
 		829216B820F5147B0038C596 /* ListTestUICollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTestUICollectionViewDataSource.swift; sourceTree = "<group>"; };
+		8294589F210F80180038B068 /* ListAdapterProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAdapterProxy.swift; sourceTree = "<group>"; };
 		829EF3CB2102AFDB00AFB99F /* ListWorkingRangeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListWorkingRangeHandler.swift; sourceTree = "<group>"; };
 		829EF3CD21039D5B00AFB99F /* ListDebugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDebugger.swift; sourceTree = "<group>"; };
 		829EF3D12103BFDE00AFB99F /* ListCollectionViewInteractiveReorderingLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCollectionViewInteractiveReorderingLayout.swift; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 				829EF3CB2102AFDB00AFB99F /* ListWorkingRangeHandler.swift */,
 				820A0CA420EBC07D0035EC74 /* UICollectionView+ListBatchUpdateData.swift */,
 				829EF3DA2105494C00AFB99F /* UIScrollView+SwiftList.swift */,
+				8294589F210F80180038B068 /* ListAdapterProxy.swift */,
 			);
 			path = Internal;
 			sourceTree = "<group>";
@@ -550,6 +553,7 @@
 				820A0CB120EDA4C00035EC74 /* ListReloadIndexPath.swift in Sources */,
 				82C6B9FF20E00BFE0085B85A /* ListIndexPathResult.swift in Sources */,
 				82C93D1B20F8E0FA0050B78F /* ListSectionController.swift in Sources */,
+				829458A0210F80180038B068 /* ListAdapterProxy.swift in Sources */,
 				82D7DF25210173EC0089D115 /* ListDisplayDelegate.swift in Sources */,
 				829EF3DB2105494C00AFB99F /* UIScrollView+SwiftList.swift in Sources */,
 				820A0CA520EBC07D0035EC74 /* UICollectionView+ListBatchUpdateData.swift in Sources */,
