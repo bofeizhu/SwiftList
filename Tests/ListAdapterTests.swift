@@ -999,6 +999,9 @@ class ListAdapterTests: ListTestCase {
     func testWhenDataSourceDoesntHandleObjectThatObjectIsDropped() {
         // ListTestAdapterDataSource does not handle Strings
         dataSource.objects = [AnyListDiffable(1), AnyListDiffable("dogs"), AnyListDiffable(2)]
+        adapter.reloadData(withCompletion: nil)
+        let expected = [1, 2].typeErased()
+        XCTAssertEqual(adapter.objects, expected)
     }
 
 }

@@ -20,13 +20,14 @@ class ListTestAdapterDataSource: ListTestCaseDataSource {
     func listAdapter(
         _ listAdapter: ListAdapter,
         sectionControllerFor object: AnyListDiffable
-    ) -> ListSectionController {
-        return ListTestSection()
+    ) -> ListSectionController? {
+        if object.base is Int {
+            return ListTestSection()
+        }
+        return nil
     }
     
     func emptyBackgroundView(for listAdapter: ListAdapter) -> UIView? {
         return backgroundView
     }
-    
-    
 }
