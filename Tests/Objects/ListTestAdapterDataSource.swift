@@ -1,5 +1,5 @@
 //
-//  ListAdapterDataSource.swift
+//  ListTestAdapterDataSource.swift
 //  SwiftListTests
 //
 //  Created by Bofei Zhu on 7/25/18.
