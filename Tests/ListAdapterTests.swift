@@ -814,6 +814,7 @@ class ListAdapterTests: ListTestCase {
         XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 900))
     }
     
+    // TODO: testWhenScrollHorizontallyToItem()
     func testWhenScrollHorizontallyToItem() {}
     
     func testWhenQueryingIndexPathWithOOBSectionControllerThatNilReturned() {
@@ -874,5 +875,19 @@ class ListAdapterTests: ListTestCase {
         XCTAssertTrue(executed)
     }
     
+    // TODO: testWhenSectionControllerDeletingWithEmptyIndexesThatNoUpdatesHappen
+    func testWhenSectionControllerDeletingWithEmptyIndexesThatNoUpdatesHappen() {}
     
+    func testWhenSelectingCellThatCollectionViewDelegateReceivesMethod() {
+        dataSource.objects = [0, 1, 2].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        let collectionViewDelegate = ListTestCollectionViewDelegate()
+        collectionViewDelegate.didSelectItemAtExpectation = XCTestExpectation()
+        adapter.collectionViewDelegate = collectionViewDelegate
+        let expectations = [
+            collectionViewDelegate.didSelectItemAtExpectation!,
+        ]
+        adapter.collectionView(collectionView, didSelectItemAt: IndexPath(item: 0, section: 0))
+        wait(for: expectations, timeout: 5)
+    }
 }

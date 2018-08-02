@@ -12,6 +12,7 @@ import XCTest
 class ListTestCollectionViewDelegate: NSObject, UICollectionViewDelegate {
     var scrollViewDidScrollExpectation: XCTestExpectation?
     var didEndDisplayingCellExpectation: XCTestExpectation?
+    var didSelectItemAtExpectation: XCTestExpectation?
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         scrollViewDidScrollExpectation!.fulfill()
@@ -22,6 +23,12 @@ class ListTestCollectionViewDelegate: NSObject, UICollectionViewDelegate {
         didEndDisplaying cell: UICollectionViewCell,
         forItemAt indexPath: IndexPath) {
         didEndDisplayingCellExpectation!.fulfill()
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath) {
+        didSelectItemAtExpectation!.fulfill()
     }
 }
 
