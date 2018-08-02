@@ -946,4 +946,45 @@ class ListAdapterTests: ListTestCase {
         adapter.collectionView(collectionView, didHighlightItemAt: IndexPath(item: 0, section: 0))
         wait(for: expectations, timeout: 5)
     }
+    
+    func testWhenHighlightingCellThatSectionControllerReceivesMethod() {
+        dataSource.objects = [0, 1, 2].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        adapter.collectionView(collectionView, didHighlightItemAt: IndexPath(item: 0, section: 0))
+        
+        let s0 = adapter.sectionController(for: AnyListDiffable(0)) as! ListTestSection
+        let s1 = adapter.sectionController(for: AnyListDiffable(1)) as! ListTestSection
+        let s2 = adapter.sectionController(for: AnyListDiffable(2)) as! ListTestSection
+        
+        XCTAssertTrue(s0.wasHighlighted)
+        XCTAssertFalse(s1.wasHighlighted)
+        XCTAssertFalse(s2.wasHighlighted)
+    }
+    
+    func testWhenUnhighlightingCellThatCollectionViewDelegateReceivesMethod() {
+        dataSource.objects = [0, 1, 2].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        let collectionViewDelegate = ListTestCollectionViewDelegate()
+        collectionViewDelegate.didUnhighlightItemAtExpectation = XCTestExpectation()
+        adapter.collectionViewDelegate = collectionViewDelegate
+        let expectations = [
+            collectionViewDelegate.didUnhighlightItemAtExpectation!,
+            ]
+        adapter.collectionView(collectionView, didUnhighlightItemAt: IndexPath(item: 0, section: 0))
+        wait(for: expectations, timeout: 5)
+    }
+    
+    func testWhenUnlighlightingCellThatSectionControllerReceivesMethod() {
+        dataSource.objects = [0, 1, 2].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        adapter.collectionView(collectionView, didUnhighlightItemAt: IndexPath(item: 0, section: 0))
+        
+        let s0 = adapter.sectionController(for: AnyListDiffable(0)) as! ListTestSection
+        let s1 = adapter.sectionController(for: AnyListDiffable(1)) as! ListTestSection
+        let s2 = adapter.sectionController(for: AnyListDiffable(2)) as! ListTestSection
+        
+        XCTAssertTrue(s0.wasUnhighlighted)
+        XCTAssertFalse(s1.wasUnhighlighted)
+        XCTAssertFalse(s2.wasUnhighlighted)
+    }
 }
