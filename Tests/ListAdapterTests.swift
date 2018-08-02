@@ -890,4 +890,34 @@ class ListAdapterTests: ListTestCase {
         adapter.collectionView(collectionView, didSelectItemAt: IndexPath(item: 0, section: 0))
         wait(for: expectations, timeout: 5)
     }
+    
+    func testWhenSelectingCellThatSectionControllerReceivesMethod() {
+        dataSource.objects = [0, 1, 2].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        adapter.collectionView(collectionView, didSelectItemAt: IndexPath(item: 0, section: 0))
+        
+        let s0 = adapter.sectionController(for: AnyListDiffable(0)) as! ListTestSection
+        let s1 = adapter.sectionController(for: AnyListDiffable(1)) as! ListTestSection
+        let s2 = adapter.sectionController(for: AnyListDiffable(2)) as! ListTestSection
+        
+        XCTAssertTrue(s0.wasSelected)
+        XCTAssertFalse(s1.wasSelected)
+        XCTAssertFalse(s2.wasSelected)
+    }
+    
+    func testWhenDisplayingCellThatCollectionViewDelegateReceivesMethod() {
+        dataSource.objects = [0, 1, 2].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        let collectionViewDelegate = ListTestCollectionViewDelegate()
+        collectionViewDelegate.willDisplayCellExpectation = XCTestExpectation()
+        adapter.collectionViewDelegate = collectionViewDelegate
+        let expectations = [
+            collectionViewDelegate.willDisplayCellExpectation!,
+        ]
+        adapter.collectionView(
+            collectionView,
+            willDisplay: UICollectionViewCell(),
+            forItemAt: IndexPath(item: 0, section: 0))
+        wait(for: expectations, timeout: 5)
+    }
 }

@@ -13,6 +13,7 @@ class ListTestCollectionViewDelegate: NSObject, UICollectionViewDelegate {
     var scrollViewDidScrollExpectation: XCTestExpectation?
     var didEndDisplayingCellExpectation: XCTestExpectation?
     var didSelectItemAtExpectation: XCTestExpectation?
+    var willDisplayCellExpectation: XCTestExpectation?
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         scrollViewDidScrollExpectation!.fulfill()
@@ -29,6 +30,13 @@ class ListTestCollectionViewDelegate: NSObject, UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath) {
         didSelectItemAtExpectation!.fulfill()
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        willDisplay cell: UICollectionViewCell,
+        forItemAt indexPath: IndexPath) {
+        willDisplayCellExpectation!.fulfill()
     }
 }
 
