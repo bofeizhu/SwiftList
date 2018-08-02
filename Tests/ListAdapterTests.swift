@@ -504,7 +504,7 @@ class ListAdapterTests: ListTestCase {
             at: IndexPath(item: 0, section: 1)))
     }
     
-    // TODO: Sync tests L523 - L600
+    // TODO: - Sync tests L523 - L600
     
     func testWhenAdapterUpdatedTwiceWithThreeSectionsThatSectionsUpdatedFirstLast() {
         dataSource.objects = [0, 1, 2].typeErased()
@@ -814,7 +814,7 @@ class ListAdapterTests: ListTestCase {
         XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 900))
     }
     
-    // TODO: testWhenScrollHorizontallyToItem()
+    // TODO: - testWhenScrollHorizontallyToItem
     func testWhenScrollHorizontallyToItem() {}
     
     func testWhenQueryingIndexPathWithOOBSectionControllerThatNilReturned() {
@@ -875,7 +875,7 @@ class ListAdapterTests: ListTestCase {
         XCTAssertTrue(executed)
     }
     
-    // TODO: testWhenSectionControllerDeletingWithEmptyIndexesThatNoUpdatesHappen
+    // TODO: - testWhenSectionControllerDeletingWithEmptyIndexesThatNoUpdatesHappen
     func testWhenSectionControllerDeletingWithEmptyIndexesThatNoUpdatesHappen() {}
     
     func testWhenSelectingCellThatCollectionViewDelegateReceivesMethod() {
@@ -918,6 +918,32 @@ class ListAdapterTests: ListTestCase {
             collectionView,
             willDisplay: UICollectionViewCell(),
             forItemAt: IndexPath(item: 0, section: 0))
+        wait(for: expectations, timeout: 5)
+    }
+    
+    // TODO: - testWhenWillBeginDraggingThatScrollViewDelegateReceivesMethod
+    func testWhenWillBeginDraggingThatScrollViewDelegateReceivesMethod() {}
+    
+    func testWhenReloadingObjectsThatDontExistThatAdapterContinues() {
+        dataSource.objects = [0, 1, 2].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        adapter.reload([1, 3].typeErased())
+        XCTAssertEqual(collectionView.numberOfSections, 3)
+    }
+    
+    // TODO: - testWhenDeselectingThroughContextThatCellDeselected
+    func testWhenDeselectingThroughContextThatCellDeselected() {}
+    
+    func testWhenHighlightingCellThatCollectionViewDelegateReceivesMethod() {
+        dataSource.objects = [0, 1, 2].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        let collectionViewDelegate = ListTestCollectionViewDelegate()
+        collectionViewDelegate.didHighlightItemAtExpectation = XCTestExpectation()
+        adapter.collectionViewDelegate = collectionViewDelegate
+        let expectations = [
+            collectionViewDelegate.didHighlightItemAtExpectation!,
+        ]
+        adapter.collectionView(collectionView, didHighlightItemAt: IndexPath(item: 0, section: 0))
         wait(for: expectations, timeout: 5)
     }
 }
