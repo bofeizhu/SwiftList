@@ -759,5 +759,120 @@ class ListAdapterTests: ListTestCase {
         XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 2910))
     }
     
+    func testWhenScrollVerticallyToBottomWithContentInsetsThatFlushWithCollectionViewBounds() {
+        dataSource.objects = [100].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        
+        // no insets
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        collectionView.layoutIfNeeded()
+        adapter.scroll(
+            to: AnyListDiffable(100),
+            withSupplementaryViewOfKinds: [],
+            in: .vertical,
+            at: .bottom,
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 900))
+        
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        collectionView.layoutIfNeeded()
+        adapter.scroll(
+            to: AnyListDiffable(100),
+            withSupplementaryViewOfKinds: [],
+            in: .vertical,
+            at: .bottom,
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 900))
+        
+        collectionView.contentInset = UIEdgeInsets(top: 100, left: 0, bottom: 0, right: 0)
+        collectionView.layoutIfNeeded()
+        adapter.scroll(
+            to: AnyListDiffable(100),
+            withSupplementaryViewOfKinds: [],
+            in: .vertical,
+            at: .bottom,
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 900))
+        
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
+        collectionView.layoutIfNeeded()
+        adapter.scroll(
+            to: AnyListDiffable(100),
+            withSupplementaryViewOfKinds: [],
+            in: .vertical,
+            at: .bottom,
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 900))
+        collectionView.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 100, right: 0)
+        collectionView.layoutIfNeeded()
+        adapter.scroll(
+            to: AnyListDiffable(100),
+            withSupplementaryViewOfKinds: [],
+            in: .vertical,
+            at: .bottom,
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 900))
+    }
+    
+    func testWhenScrollHorizontallyToItem() {}
+    
+    func testWhenQueryingIndexPathWithOOBSectionControllerThatNilReturned() {
+        dataSource.objects = [1, 2, 3].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        
+        let randomSectionController = ListSectionController()
+        XCTAssertNil(adapter.indexPath(
+            for: randomSectionController,
+            at: 0,
+            usePreviousIfInUpdateClosure: false))
+    }
+    
+    func testWhenQueryingSectionForObjectThatSectionReturned() {
+        dataSource.objects = [0, 1, 2].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        XCTAssertEqual(adapter.section(for: AnyListDiffable(0)), 0)
+        XCTAssertEqual(adapter.section(for: AnyListDiffable(1)), 1)
+        XCTAssertEqual(adapter.section(for: AnyListDiffable(2)), 2)
+        XCTAssertNil(adapter.section(for: AnyListDiffable(3)))
+    }
+    
+    func testWhenQueryingSectionControllerForSectionThatControllerReturned() {
+        dataSource.objects = [0, 1, 2].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        XCTAssertEqual(
+            adapter.sectionController(for: AnyListDiffable(0))!,
+            adapter.sectionController(forSection: 0)!)
+        XCTAssertEqual(
+            adapter.sectionController(for: AnyListDiffable(1))!,
+            adapter.sectionController(forSection: 1)!)
+        XCTAssertEqual(
+            adapter.sectionController(for: AnyListDiffable(2))!,
+            adapter.sectionController(forSection: 2)!)
+    }
+    
+    func testWhenReloadingDataWithNoDataSourceThatCompletionCalledWithFalse() {
+        dataSource.objects = [1].typeErased()
+        let adapter = ListAdapter(updater: ListReloadDataUpdater(), viewController: nil)
+        adapter.collectionView = collectionView
+        var executed = false
+        adapter.reloadData { (finished) in
+            executed = true
+            XCTAssertFalse(finished)
+        }
+        XCTAssertTrue(executed)
+    }
+    
+    func testWhenReloadingDataWithNoCollectionViewThatCompletionCalledWithFalse() {
+        dataSource.objects = [1].typeErased()
+        let adapter = ListAdapter(updater: ListReloadDataUpdater(), viewController: nil)
+        adapter.dataSource = dataSource
+        var executed = false
+        adapter.reloadData { (finished) in
+            executed = true
+            XCTAssertFalse(finished)
+        }
+        XCTAssertTrue(executed)
+    }
+    
     
 }
