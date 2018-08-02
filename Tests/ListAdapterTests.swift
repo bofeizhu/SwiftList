@@ -987,15 +987,7 @@ class ListAdapterTests: ListTestCase {
         XCTAssertFalse(s1.wasUnhighlighted)
         XCTAssertFalse(s2.wasUnhighlighted)
     }
-    
-//    - (void)test_whenDataSourceDoesntHandleObject_thatObjectIsDropped {
-//    // IGListTestAdapterDataSource does not handle NSStrings
-//    self.dataSource.objects = @[@1, @"dog", @2];
-//    [self.adapter reloadDataWithCompletion:nil];
-//    NSArray *expected = @[@1, @2];
-//    XCTAssertEqualObjects(self.adapter.objects, expected);
-//    }
-    
+
     func testWhenDataSourceDoesntHandleObjectThatObjectIsDropped() {
         // ListTestAdapterDataSource does not handle Strings
         dataSource.objects = [AnyListDiffable(1), AnyListDiffable("dogs"), AnyListDiffable(2)]
@@ -1003,5 +995,6 @@ class ListAdapterTests: ListTestCase {
         let expected = [1, 2].typeErased()
         XCTAssertEqual(adapter.objects, expected)
     }
-
+    
+    
 }
