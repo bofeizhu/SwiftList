@@ -1,6 +1,6 @@
-# IGListDiffable and Equality
+# ListDiffable Equalable and AnyListDiffable
 
-This guide explains the `IGListDiffable` protocol and how to write good `-isEqual:` methods. 
+This guide explains the `ListDiffable` protocol `AnyListDiffable` type erasure. 
 
 ## Background
 
