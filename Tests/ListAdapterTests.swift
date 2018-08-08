@@ -1015,8 +1015,20 @@ class ListAdapterTests: ListTestCase {
         XCTAssertEqual(collectionView.numberOfSections, 3)
     }
     
-    // TODO: - testWhenDeselectingThroughContextThatCellDeselected
-    func testWhenDeselectingThroughContextThatCellDeselected() {}
+    func testWhenDeselectingThroughContextThatCellDeselected() {
+        dataSource.objects = [1, 2, 3].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        
+        let indexPath = IndexPath(item: 0, section: 0)
+        collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .top)
+        XCTAssertTrue(collectionView.cellForItem(at: indexPath)!.isSelected)
+        
+        let section = adapter.sectionController(for: AnyListDiffable(1))!
+        adapter.sectionController(section, deselectItemAt: 0, animated: false)
+        XCTAssertFalse(collectionView.cellForItem(at: indexPath)!.isSelected)
+    }
+    
+    
     
     func testWhenHighlightingCellThatCollectionViewDelegateReceivesMethod() {
         dataSource.objects = [0, 1, 2].typeErased()
