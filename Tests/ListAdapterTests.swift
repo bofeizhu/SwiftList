@@ -1053,7 +1053,7 @@ class ListAdapterTests: ListTestCase {
         adapter.collectionViewDelegate = collectionViewDelegate
         let expectations = [
             collectionViewDelegate.didUnhighlightItemAtExpectation!,
-            ]
+        ]
         adapter.collectionView(collectionView, didUnhighlightItemAt: IndexPath(item: 0, section: 0))
         wait(for: expectations, timeout: 5)
     }
@@ -1096,5 +1096,40 @@ class ListAdapterTests: ListTestCase {
         XCTAssertEqual(size, CGSize.zero)
     }
     
+    func testWhenSupplementarySourceReturnsNegativeSizeThatAdapterReturnsZero() {
+        dataSource.objects = [1].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        
+        let supplementarySource = ListTestSupplementarySource()
+        supplementarySource.collectionContext = adapter
+        supplementarySource.supportedElementKinds = ["UICollectionElementKindSectionHeader"]
+        supplementarySource.size = CGSize(width: -1, height: -1)
+        
+        let controller = adapter.sectionController(for: AnyListDiffable(1))!
+        controller.supplementaryViewSource = supplementarySource
+        supplementarySource.sectionController = controller
+        
+        let size = adapter.sizeForSupplementaryView(
+            ofKind: "UICollectionElementKindSectionHeader",
+            at: IndexPath(item: 0, section: 0))
+        XCTAssertEqual(size, CGSize.zero)
+    }
     
+    func testWhenQueryingContainerInsetThatMatchesCollectionView() {
+        dataSource.objects = [2].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        collectionView.contentInset = UIEdgeInsets(top: 1, left: 2, bottom: 3, right: 4)
+        let controller = adapter.sectionController(for: AnyListDiffable(2))!
+        let inset = controller.collectionContext!.containerInset
+        XCTAssertEqual(inset, UIEdgeInsets(top: 1, left: 2, bottom: 3, right: 4))
+    }
+    
+    func testWhenQueryingInsetContainerSizeThatResultIsBoundsInsetByContent() {
+        dataSource.objects = [2].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        collectionView.contentInset = UIEdgeInsets(top: 1, left: 2, bottom: 3, right: 4)
+        let controller = adapter.sectionController(for: AnyListDiffable(2))!
+        let size = controller.collectionContext!.insetContainerSize
+        XCTAssertEqual(size, CGSize(width: 94, height: 96))
+    }
 }
