@@ -899,6 +899,7 @@ class ListAdapterTests: ListTestCase {
         XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 0))
     }
     
+    // TODO: test_whenScrollToItem_thatSupplementarySourceSupportsHeaderAndFooter
     
     func testWhenQueryingIndexPathWithOOBSectionControllerThatNilReturned() {
         dataSource.objects = [1, 2, 3].typeErased()
@@ -1077,6 +1078,22 @@ class ListAdapterTests: ListTestCase {
         adapter.reloadData(withCompletion: nil)
         let expected = [1, 2].typeErased()
         XCTAssertEqual(adapter.objects, expected)
+    }
+    
+    func testWhenSectionEdgeInsetIsNotZero() {
+        dataSource.objects = [42].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        let controller = adapter.sectionController(for: AnyListDiffable(42))!
+        XCTAssertEqual(adapter.containerSize(for: controller), CGSize(width: 98, height: 98))
+    }
+    
+    func testWhenSectionControllerReturnsNegativeSizeThatAdapterReturnsZero() {
+        dataSource.objects = [1].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        let section = adapter.sectionController(for: AnyListDiffable(1)) as! ListTestSection
+        section.size = CGSize(width: -1, height: -1)
+        let size = adapter.sizeForItem(at: IndexPath(item: 0, section: 0))
+        XCTAssertEqual(size, CGSize.zero)
     }
     
     

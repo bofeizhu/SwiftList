@@ -21,10 +21,11 @@ class ListTestAdapterDataSource: ListTestCaseDataSource {
         _ listAdapter: ListAdapter,
         sectionControllerFor object: AnyListDiffable
     ) -> ListSectionController? {
-        if object.base is Int {
-            return ListTestSection()
+        guard let number = object.base as? Int else { return nil }
+        if number == 42 {
+            return ListTestContainerSizeSection()
         }
-        return nil
+        return ListTestSection()
     }
     
     func emptyBackgroundView(for listAdapter: ListAdapter) -> UIView? {

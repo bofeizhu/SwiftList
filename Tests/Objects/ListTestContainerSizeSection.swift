@@ -1,5 +1,5 @@
 //
-//  ListTestHorizontalSection.swift
+//  ListTestContainerSizeSection.swift
 //  SwiftListTests
 //
 //  Created by Bofei Zhu on 8/8/18.
@@ -9,7 +9,7 @@
 import XCTest
 @testable import SwiftList
 
-final class ListTestHorizontalSection: ListSectionController {
+final class ListTestContainerSizeSection: ListSectionController {
     var size: CGSize
     var items = 0
     var wasSelected: Bool = false
@@ -22,8 +22,10 @@ final class ListTestHorizontalSection: ListSectionController {
     }
     
     override init() {
-        size = CGSize(width: 10, height: 100)
+        size = CGSize(width: 100, height: 10)
         super.init()
+        
+        inset = UIEdgeInsets(top: 1.0, left: 1.0, bottom: 1.0, right: 1.0)
     }
     
     override func sizeForItem(at index: Int) -> CGSize? {
@@ -47,4 +49,3 @@ final class ListTestHorizontalSection: ListSectionController {
         wasSelected = true
     }
 }
-

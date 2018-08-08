@@ -35,6 +35,7 @@
 		8258A46F20FDB2080070EDA1 /* ListBatchContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8258A46E20FDB2080070EDA1 /* ListBatchContext.swift */; };
 		8258A47120FEF2240070EDA1 /* ListAdapterUpdateListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8258A47020FEF2240070EDA1 /* ListAdapterUpdateListener.swift */; };
 		8258A47320FEF43A0070EDA1 /* ListAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8258A47220FEF43A0070EDA1 /* ListAdapter.swift */; };
+		827888DB211B88FC002CE349 /* ListTestContainerSizeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827888DA211B88FC002CE349 /* ListTestContainerSizeSection.swift */; };
 		828DF97B20DC550700C03E36 /* SwiftList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 828DF97120DC550700C03E36 /* SwiftList.framework */; };
 		828DF98220DC550700C03E36 /* SwiftList.h in Headers */ = {isa = PBXBuildFile; fileRef = 828DF97420DC550700C03E36 /* SwiftList.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		828DF98E20DC587D00C03E36 /* ListDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828DF98D20DC587D00C03E36 /* ListDiff.swift */; };
@@ -123,6 +124,7 @@
 		8258A46E20FDB2080070EDA1 /* ListBatchContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListBatchContext.swift; sourceTree = "<group>"; };
 		8258A47020FEF2240070EDA1 /* ListAdapterUpdateListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAdapterUpdateListener.swift; sourceTree = "<group>"; };
 		8258A47220FEF43A0070EDA1 /* ListAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAdapter.swift; sourceTree = "<group>"; };
+		827888DA211B88FC002CE349 /* ListTestContainerSizeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTestContainerSizeSection.swift; sourceTree = "<group>"; };
 		828DF97120DC550700C03E36 /* SwiftList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		828DF97420DC550700C03E36 /* SwiftList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftList.h; sourceTree = "<group>"; };
 		828DF97520DC550700C03E36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 				821350072108E3A400E3FEC9 /* ListTestAdapterDataSource.swift */,
 				820B145D211B31920019FBF6 /* ListTestAdapterHorizontalDataSource.swift */,
 				828F1C07210E122E00142373 /* ListTestCell.swift */,
+				827888DA211B88FC002CE349 /* ListTestContainerSizeSection.swift */,
 				820B1460211B323F0019FBF6 /* ListTestHorizontalSection.swift */,
 				828F1C10210E34B300142373 /* ListTestNibCell.swift */,
 				82135014210B9AA500E3FEC9 /* ListTestNibSupplementaryView.swift */,
@@ -592,6 +595,7 @@
 			files = (
 				820A0C9E20E854710035EC74 /* ListTestObject.swift in Sources */,
 				828F1C08210E122E00142373 /* ListTestCell.swift in Sources */,
+				827888DB211B88FC002CE349 /* ListTestContainerSizeSection.swift in Sources */,
 				823CF4BB2107FCEA00326E4E /* ListTestSection.swift in Sources */,
 				828F1C06210E10ED00142373 /* ListTestSingleSectionDataSource.swift in Sources */,
 				821350082108E3A400E3FEC9 /* ListTestAdapterDataSource.swift in Sources */,
