@@ -136,7 +136,7 @@ class ListAdapterTests: ListTestCase {
     func testWhenQueryingReusableIdentifierThatIdentifierEqualsClassNameAndSupplimentaryKind() {
         let identifier = ListAdapter.reusableViewIdentifier(
             viewClass: UICollectionViewCell.self,
-            kind: UICollectionElementKindSectionFooter.self,
+            kind: "UICollectionElementKindSectionFooter",
             givenReuseIdentifier: nil)
         XCTAssertEqual(identifier, "UICollectionElementKindSectionFooterUICollectionViewCell")
     }
@@ -282,7 +282,7 @@ class ListAdapterTests: ListTestCase {
         let supplementarySource = ListTestSupplementarySource()
         supplementarySource.dequeueFromNib = true
         supplementarySource.collectionContext = adapter
-        supplementarySource.supportedElementKinds = [UICollectionElementKindSectionFooter]
+        supplementarySource.supportedElementKinds = ["UICollectionElementKindSectionFooter"]
         let sectionController = adapter.sectionController(for: AnyListDiffable(0))!
         sectionController.supplementaryViewSource = supplementarySource
         supplementarySource.sectionController = sectionController
@@ -299,7 +299,7 @@ class ListAdapterTests: ListTestCase {
         let supplementarySource = ListTestSupplementarySource()
         supplementarySource.dequeueFromNib = true
         supplementarySource.collectionContext = adapter
-        supplementarySource.supportedElementKinds = [UICollectionElementKindSectionFooter]
+        supplementarySource.supportedElementKinds = ["UICollectionElementKindSectionFooter"]
         let sectionController = adapter.sectionController(for: AnyListDiffable(0))!
         sectionController.supplementaryViewSource = supplementarySource
         supplementarySource.sectionController = sectionController
@@ -483,7 +483,7 @@ class ListAdapterTests: ListTestCase {
         adapter.reloadData(withCompletion: nil)
         let supplementarySource = ListTestSupplementarySource()
         supplementarySource.collectionContext = adapter
-        supplementarySource.supportedElementKinds = [UICollectionElementKindSectionFooter.self]
+        supplementarySource.supportedElementKinds = ["UICollectionElementKindSectionFooter"]
         
         let controller = adapter.sectionController(for: AnyListDiffable(1))!
         controller.supplementaryViewSource = supplementarySource
@@ -491,16 +491,16 @@ class ListAdapterTests: ListTestCase {
         adapter.performUpdates(animated: false, completion: nil)
         
         XCTAssertNotNil(collectionView.supplementaryView(
-            forElementKind: UICollectionElementKindSectionFooter.self,
+            forElementKind: "UICollectionElementKindSectionFooter",
             at: IndexPath(item: 0, section: 0)))
         XCTAssertNil(collectionView.supplementaryView(
-            forElementKind: UICollectionElementKindSectionHeader.self,
+            forElementKind: "UICollectionElementKindSectionHeader",
             at: IndexPath(item: 0, section: 0)))
         XCTAssertNil(collectionView.supplementaryView(
-            forElementKind: UICollectionElementKindSectionFooter.self,
+            forElementKind: "UICollectionElementKindSectionFooter",
             at: IndexPath(item: 0, section: 1)))
         XCTAssertNil(collectionView.supplementaryView(
-            forElementKind: UICollectionElementKindSectionHeader.self,
+            forElementKind: "UICollectionElementKindSectionHeader",
             at: IndexPath(item: 0, section: 1)))
     }
     
@@ -652,7 +652,7 @@ class ListAdapterTests: ListTestCase {
         adapter.reloadData(withCompletion: nil)
         let supplementarySource = ListTestSupplementarySource()
         supplementarySource.collectionContext = adapter
-        supplementarySource.supportedElementKinds = [UICollectionElementKindSectionHeader.self]
+        supplementarySource.supportedElementKinds = ["UICollectionElementKindSectionHeader"]
         let controller = adapter.sectionController(for: AnyListDiffable(0))
         controller?.supplementaryViewSource = supplementarySource
         supplementarySource.sectionController = controller
@@ -674,7 +674,7 @@ class ListAdapterTests: ListTestCase {
         XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 0))
         adapter.scroll(
             to: AnyListDiffable(0),
-            withSupplementaryViewOfKinds: [UICollectionElementKindSectionHeader.self],
+            withSupplementaryViewOfKinds: ["UICollectionElementKindSectionHeader"],
             in: .vertical,
             at: .top,
             animated: false)
@@ -866,7 +866,39 @@ class ListAdapterTests: ListTestCase {
         XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 110, y: 0))
     }
     
-    // TODO: test_whenScrollToItem_thatSupplementarySourceSupportsSingleHeader
+    func testWhenScrollToItemThatSupplementarySourceSupportsSingleHeader() {
+        dataSource.objects = [1, 2].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        
+        let supplementarySource = ListTestSupplementarySource()
+        supplementarySource.collectionContext = adapter
+        supplementarySource.supportedElementKinds = ["UICollectionElementKindSectionHeader"]
+        
+        let controller = adapter.sectionController(for: AnyListDiffable(1))!
+        controller.supplementaryViewSource = supplementarySource
+        supplementarySource.sectionController = controller
+        
+        adapter.performUpdates(animated: false, completion: nil)
+        
+        XCTAssertNotNil(collectionView.supplementaryView(
+            forElementKind: "UICollectionElementKindSectionHeader",
+            at: IndexPath(item: 0, section: 0)))
+        adapter.scroll(
+            to: AnyListDiffable(1),
+            withSupplementaryViewOfKinds: ["UICollectionElementKindSectionHeader"],
+            in: .vertical,
+            at: [],
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 0))
+        adapter.scroll(
+            to: AnyListDiffable(2),
+            withSupplementaryViewOfKinds: ["UICollectionElementKindSectionHeader"],
+            in: .vertical,
+            at: [],
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 0))
+    }
+    
     
     func testWhenQueryingIndexPathWithOOBSectionControllerThatNilReturned() {
         dataSource.objects = [1, 2, 3].typeErased()
