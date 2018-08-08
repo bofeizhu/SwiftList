@@ -814,8 +814,59 @@ class ListAdapterTests: ListTestCase {
         XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 900))
     }
     
-    // TODO: - testWhenScrollHorizontallyToItem
-    func testWhenScrollHorizontallyToItem() {}
+    func testWhenScrollHorizontallyToItem() {
+        let dataSource = ListTestAdapterHorizontalDataSource()
+        adapter.dataSource = dataSource
+        dataSource.objects = [1, 2, 3, 4, 5, 6].typeErased()
+        layout.scrollDirection = .horizontal
+        adapter.reloadData(withCompletion: nil)
+        XCTAssertEqual(collectionView.numberOfSections, 6)
+        adapter.scroll(
+            to: AnyListDiffable(1),
+            withSupplementaryViewOfKinds: [],
+            in: .horizontal,
+            at: [],
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 0))
+        adapter.scroll(
+            to: AnyListDiffable(2),
+            withSupplementaryViewOfKinds: [],
+            in: .horizontal,
+            at: [],
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 10, y: 0))
+        adapter.scroll(
+            to: AnyListDiffable(3),
+            withSupplementaryViewOfKinds: [],
+            in: .horizontal,
+            at: [],
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 30, y: 0))
+        adapter.scroll(
+            to: AnyListDiffable(6),
+            withSupplementaryViewOfKinds: [],
+            in: .horizontal,
+            at: [],
+            animated: false)
+        // Content width minus collection view width is 110, can't scroll more than that
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 110, y: 0))
+        adapter.scroll(
+            to: AnyListDiffable(6),
+            withSupplementaryViewOfKinds: [],
+            in: .horizontal,
+            at: .centeredHorizontally,
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 110, y: 0))
+        adapter.scroll(
+            to: AnyListDiffable(6),
+            withSupplementaryViewOfKinds: [],
+            in: .horizontal,
+            at: .right,
+            animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 110, y: 0))
+    }
+    
+    // TODO: test_whenScrollToItem_thatSupplementarySourceSupportsSingleHeader
     
     func testWhenQueryingIndexPathWithOOBSectionControllerThatNilReturned() {
         dataSource.objects = [1, 2, 3].typeErased()
