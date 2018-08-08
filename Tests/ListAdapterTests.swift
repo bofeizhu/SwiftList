@@ -1028,7 +1028,23 @@ class ListAdapterTests: ListTestCase {
         XCTAssertFalse(collectionView.cellForItem(at: indexPath)!.isSelected)
     }
     
+    func testWhenSelectingThroughContextThatCellSelected() {
+        dataSource.objects = [1, 2, 3].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        
+        let indexPath = IndexPath(item: 0, section: 0)
+        let section = adapter.sectionController(for: AnyListDiffable(1))!
+        adapter.sectionController(section, selectItemAt: 0, animated: false, scrollPosition: .top)
+        XCTAssertTrue(collectionView.cellForItem(at: indexPath)!.isSelected)
+    }
     
+    func testWhenScrollingToIndexWithSectionControllerThatPositionCorrect() {
+        dataSource.objects = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].typeErased()
+        adapter.reloadData(withCompletion: nil)
+        let section = adapter.sectionController(for: AnyListDiffable(8))!
+        section.collectionContext?.scroll(to: section, at: 0, scrollPosition: .top, animated: false)
+        XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 280))
+    }
     
     func testWhenHighlightingCellThatCollectionViewDelegateReceivesMethod() {
         dataSource.objects = [0, 1, 2].typeErased()
