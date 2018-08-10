@@ -5,7 +5,7 @@
 [![Build Status](https://travis-ci.com/zhubofei/SwiftList.svg?branch=master)](https://travis-ci.com/zhubofei/SwiftList)
 [![Code Coverage](https://codecov.io/gh/zhubofei/SwiftList/branch/master/graph/badge.svg)](https://codecov.io/gh/zhubofei/SwiftList)
 [![CocoaPods](https://img.shields.io/cocoapods/v/SwiftList.svg)](https://cocoapods.org/pods/SwiftList)
-[![Swift](https://img.shields.io/badge/Swift-4.2-orange.svg?longCache=true)](https://swift.org)
+[![Swift](https://img.shields.io/badge/Swift-4.1-orange.svg?longCache=true)](https://swift.org)
 [![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/zhubofei/SwiftList/blob/master/LICENSE)
 
 A data-driven `UICollectionView` framework for building fast and flexible lists.
