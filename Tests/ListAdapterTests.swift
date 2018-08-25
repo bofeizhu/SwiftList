@@ -1046,6 +1046,10 @@ class ListAdapterTests: ListTestCase {
         XCTAssertEqual(collectionView.contentOffset, CGPoint(x: 0, y: 280))
     }
     
+    func testWhenDisplayingSectionControllerWithOnlySupplementaryViewThatDisplayEventStillSent() {
+        
+    }
+    
     func testWhenHighlightingCellThatCollectionViewDelegateReceivesMethod() {
         dataSource.objects = [0, 1, 2].typeErased()
         adapter.reloadData(withCompletion: nil)
