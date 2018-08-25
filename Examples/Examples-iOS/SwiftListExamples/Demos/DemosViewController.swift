@@ -42,7 +42,7 @@ final class DemosViewController: UIViewController, ListAdapterDataSource {
     func listAdapter(
         _ listAdapter: ListAdapter,
         sectionControllerFor object: AnyListDiffable
-    ) -> ListSectionController {
+    ) -> ListSectionController? {
         return DemoSectionController()
     }
 

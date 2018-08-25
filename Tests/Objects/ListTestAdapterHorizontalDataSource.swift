@@ -1,15 +1,15 @@
 //
-//  ListAdapterDataSource.swift
-//  SwiftListTests
+//  ListTestAdapterHorizontalDataSource.swift
+//  SwiftList
 //
-//  Created by Bofei Zhu on 7/25/18.
+//  Created by Bofei Zhu on 8/8/18.
 //  Copyright © 2018 Bofei Zhu. All rights reserved.
 //
 
 import XCTest
 @testable import SwiftList
 
-class ListTestAdapterDataSource: ListTestCaseDataSource {
+final class ListTestAdapterHorizontalDataSource: ListAdapterDataSource {
     var objects: [AnyListDiffable] = []
     var backgroundView: UIView = UIView()
     
@@ -20,13 +20,14 @@ class ListTestAdapterDataSource: ListTestCaseDataSource {
     func listAdapter(
         _ listAdapter: ListAdapter,
         sectionControllerFor object: AnyListDiffable
-    ) -> ListSectionController {
-        return ListTestSection()
+        ) -> ListSectionController? {
+        if object.base is Int {
+            return ListTestHorizontalSection()
+        }
+        return nil
     }
     
     func emptyBackgroundView(for listAdapter: ListAdapter) -> UIView? {
         return backgroundView
     }
-    
-    
 }

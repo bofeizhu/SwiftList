@@ -21,7 +21,7 @@ public protocol ListAdapterDataSource: AnyObject {
     ///   - object: An object in the list.
     /// - Returns: A new section controller instance that can be displayed in the list.
     /// - Note: New section controllers should be initialized here for objects when asked. You may
-    /// pass any other data to the section controller at this time.
+    ///     pass any other data to the section controller at this time.
     ///
     /// Section controllers are initialized for all objects whenever the `ListAdapter` is created,
     /// updated, or reloaded. Section controllers are reused when objects are moved or updated.
@@ -29,7 +29,7 @@ public protocol ListAdapterDataSource: AnyObject {
     func listAdapter(
         _ listAdapter: ListAdapter,
         sectionControllerFor object: AnyListDiffable
-    ) -> ListSectionController
+    ) -> ListSectionController?
 
     /// Asks the data source for a view to use as the collection view background when the list is
     /// empty.

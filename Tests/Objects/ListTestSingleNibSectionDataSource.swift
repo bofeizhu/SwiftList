@@ -19,7 +19,7 @@ final class ListTestSingleNibSectionDataSource: ListTestCaseDataSource {
     func listAdapter(
         _ listAdapter: ListAdapter,
         sectionControllerFor object: AnyListDiffable
-        ) -> ListSectionController {
+        ) -> ListSectionController? {
         let configureClosure = { (item: AnyListDiffable, cell: UICollectionViewCell) in
             let cell = cell as! ListTestNibCell
             let item = item.base as! ListTestObject
