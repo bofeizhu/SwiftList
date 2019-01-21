@@ -286,8 +286,8 @@ extension ListAdapter {
     public func scroll(
         to object: AnyListDiffable,
         withSupplementaryViewOfKinds elementKinds: [String],
-        in scrollDirection: UICollectionViewScrollDirection,
-        at scrollPosition: UICollectionViewScrollPosition,
+        in scrollDirection: UICollectionView.ScrollDirection,
+        at scrollPosition: UICollectionView.ScrollPosition,
         animated: Bool) {
         dispatchPrecondition(condition: .onQueue(.main))
 
@@ -670,9 +670,7 @@ extension ListAdapter: ListCollectionContext {
         guard let collectionView = collectionView else {
             preconditionFailure("Collection View is nil")
         }
-        return UIEdgeInsetsInsetRect(
-            collectionView.bounds,
-            collectionView.listContentInset).size
+        return collectionView.bounds.inset(by: collectionView.listContentInset).size
     }
 
     public var scrollingTraits: ListCollectionScrollingTraits {
@@ -775,7 +773,7 @@ extension ListAdapter: ListCollectionContext {
         _ sectionController: ListSectionController,
         selectItemAt index: Int,
         animated: Bool,
-        scrollPosition: UICollectionViewScrollPosition) {
+        scrollPosition: UICollectionView.ScrollPosition) {
         dispatchPrecondition(condition: .onQueue(.main))
         if let indexPath = indexPath(
             for: sectionController,
@@ -1077,7 +1075,7 @@ extension ListAdapter: ListCollectionContext {
     public func scroll(
         to sectionController: ListSectionController,
         at index: Int,
-        scrollPosition: UICollectionViewScrollPosition,
+        scrollPosition: UICollectionView.ScrollPosition,
         animated: Bool) {
         dispatchPrecondition(condition: .onQueue(.main))
         guard let indexPath = self.indexPath(
@@ -1602,7 +1600,7 @@ extension ListAdapter: UICollectionViewDelegateFlowLayout {
         referenceSizeForHeaderInSection section: Int
         ) -> CGSize {
         let indexPath = IndexPath(item: 0, section: section)
-        return sizeForSupplementaryView(ofKind: UICollectionElementKindSectionHeader, at: indexPath)
+        return sizeForSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, at: indexPath)
     }
 
     public func collectionView(
@@ -1611,7 +1609,7 @@ extension ListAdapter: UICollectionViewDelegateFlowLayout {
         referenceSizeForFooterInSection section: Int
         ) -> CGSize {
         let indexPath = IndexPath(item: 0, section: section)
-        return sizeForSupplementaryView(ofKind: UICollectionElementKindSectionFooter, at: indexPath)
+        return sizeForSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, at: indexPath)
     }
 }
 
