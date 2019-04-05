@@ -5,8 +5,8 @@ inhibit_all_warnings!
 workspace 'SwiftList'
 
 target 'SwiftList' do
-  target 'SwiftListTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
+  pod 'DifferenceKit'
+end
+
+target 'SwiftListTests' do
 end

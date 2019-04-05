@@ -175,7 +175,7 @@ extension ListInteractiveReordering where Self: UICollectionViewLayout {
         // (like item 1 in the last section after interactively reordering an item to the end of a
         // list of 1 item sections)
         guard var invalidatedItemIndexPaths = originalContext.invalidatedItemIndexPaths,
-            let indexToRemove = invalidatedItemIndexPaths.index(
+            let indexToRemove = invalidatedItemIndexPaths.firstIndex(
                 where: { (indexPath) -> Bool in
                     if indexPath.section == numberOfSections - 1,
                        let sectionController = listAdapter.sectionController(

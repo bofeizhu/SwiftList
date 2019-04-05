@@ -88,7 +88,7 @@ public protocol ListCollectionContext: AnyObject {
         _ sectionController: ListSectionController,
         selectItemAt index: Int,
         animated: Bool,
-        scrollPosition: UICollectionViewScrollPosition)
+        scrollPosition: UICollectionView.ScrollPosition)
 
     /// Dequeues a cell from the collection view reuse pool.
     ///
@@ -248,6 +248,6 @@ public protocol ListCollectionContext: AnyObject {
     func scroll(
         to sectionController: ListSectionController,
         at index: Int,
-        scrollPosition: UICollectionViewScrollPosition,
+        scrollPosition: UICollectionView.ScrollPosition,
         animated: Bool)
 }
