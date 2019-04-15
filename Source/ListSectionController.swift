@@ -6,6 +6,8 @@
 //  Copyright © 2018 Bofei Zhu. All rights reserved.
 //
 
+import DifferenceKit
+
 /// The base class for section controllers used in a list. This class is intended to be subclassed.
 open class ListSectionController {
     /// The view controller housing the adapter that created this section controller.
@@ -114,7 +116,7 @@ open class ListSectionController {
     /// - Note: When this method is called, all available contexts and configurations have been set
     ///     for the section controller. This method will only be called when the object instance has
     ///     changed, including from `nil` or a previous object. **Calling super is not required.**
-    open func didUpdate(to object: AnyListDiffable) {}
+    open func didUpdate(to object: AnyDifferentiable) {}
 
     /// Tells the section controller that the cell at the specified index path was selected.
     ///

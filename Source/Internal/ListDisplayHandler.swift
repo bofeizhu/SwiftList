@@ -24,7 +24,7 @@ final class ListDisplayHandler {
         _ listAdapter: ListAdapter,
         sectionController: ListSectionController,
         willDisplayCell cell: UICollectionViewCell,
-        for object: AnyListDiffable,
+        for object: AnyDifferentiable,
         at indexPath: IndexPath) {
         sectionController.displayDelegate?.listAdapter(
             listAdapter,
@@ -79,7 +79,7 @@ final class ListDisplayHandler {
         _ listAdapter: ListAdapter,
         sectionController: ListSectionController,
         willDisplaySupplementaryView view: UICollectionReusableView,
-        for object: AnyListDiffable,
+        for object: AnyDifferentiable,
         at indexPath: IndexPath) {
         self.listAdapter(
             listAdapter,
@@ -113,11 +113,11 @@ final class ListDisplayHandler {
     }
 
     // Private
-    private var visibleViewObjectDict: [UICollectionReusableView: AnyListDiffable] = [:]
+    private var visibleViewObjectDict: [UICollectionReusableView: AnyDifferentiable] = [:]
 }
 
 private extension ListDisplayHandler {
-    func removeObject(for view: UICollectionReusableView) -> AnyListDiffable? {
+    func removeObject(for view: UICollectionReusableView) -> AnyDifferentiable? {
         return visibleViewObjectDict.removeValue(forKey: view)
     }
 
@@ -125,7 +125,7 @@ private extension ListDisplayHandler {
         _ listAdapter: ListAdapter,
         sectionController: ListSectionController,
         willDisplayReusableView view: UICollectionReusableView,
-        for object: AnyListDiffable,
+        for object: AnyDifferentiable,
         at indexPath: IndexPath) {
         visibleViewObjectDict[view] = object
         if visibleSections.count(sectionController) == 0 {
@@ -144,7 +144,7 @@ private extension ListDisplayHandler {
         _ listAdapter: ListAdapter,
         sectionController: ListSectionController,
         didEndDisplayingReusableView view: UICollectionReusableView,
-        for object: AnyListDiffable,
+        for object: AnyDifferentiable,
         at indexPath: IndexPath) {
         let section = indexPath.section
 

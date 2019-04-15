@@ -6,6 +6,8 @@
 //  Copyright © 2018 Bofei Zhu. All rights reserved.
 //
 
+import DifferenceKit
+
 /// Implement this protocol in order to handle both section and row based update events.
 /// Implementation should forward or coalesce these events to a backing store or collection.
 public protocol ListUpdatingDelegate: AnyObject {
@@ -31,7 +33,7 @@ public protocol ListUpdatingDelegate: AnyObject {
     /// `UICollectionView` updates, passing in the `toObjects` that the updater is applying.
     func performUpdateWith(
         collectionViewClosure: @escaping ListCollectionViewClosure,
-        fromObjects: [AnyListDiffable]?,
+        fromObjects: [AnyDifferentiable]?,
         toObjectsClosure: ListToObjectsClosure?,
         animated: Bool,
         objectTransitionClosure: @escaping ListObjectTransitionClosure,
@@ -129,7 +131,7 @@ public typealias ListUpdatingCompletion = (_ finished: Bool) -> Void
 ///  A closure to be called when the adapter applies changes to the collection view.
 ///
 /// - Parameter toObjects: The new objects in the collection.
-public typealias ListObjectTransitionClosure = (_ toObjects: [AnyListDiffable]) -> Void
+public typealias ListObjectTransitionClosure = (_ toObjects: [AnyDifferentiable]) -> Void
 
 /// A closure that contains all of the updates.
 public typealias ListItemUpdateClosure = () -> Void
@@ -138,7 +140,7 @@ public typealias ListItemUpdateClosure = () -> Void
 public typealias ListReloadUpdateClosure = () -> Void
 
 /// A closure that returns an array of objects to transition to.
-public typealias ListToObjectsClosure = () -> [AnyListDiffable]?
+public typealias ListToObjectsClosure = () -> [AnyDifferentiable]?
 
 /// A closure that returns a collection view to perform updates on.
 public typealias ListCollectionViewClosure = () -> UICollectionView?

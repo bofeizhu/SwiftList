@@ -6,13 +6,15 @@
 //  Copyright © 2018 Bofei Zhu. All rights reserved.
 //
 
+import DifferenceKit
+
 /// Implement this protocol to provide data to an `ListAdapter`.
 public protocol ListAdapterDataSource: AnyObject {
     /// Asks the data source for the objects to display in the list.
     ///
     /// - Parameter listAdapter: The list adapter requesting this information.
     /// - Returns: An array of objects for the list.
-    func objects(for listAdapter: ListAdapter) -> [AnyListDiffable]
+    func objects(for listAdapter: ListAdapter) -> [AnyDifferentiable]
 
     /// Asks the data source for a section controller for the specified object in the list.
     ///
@@ -28,7 +30,7 @@ public protocol ListAdapterDataSource: AnyObject {
     /// Maintaining the `diffIdentifier` guarantees this.
     func listAdapter(
         _ listAdapter: ListAdapter,
-        sectionControllerFor object: AnyListDiffable
+        sectionControllerFor object: AnyDifferentiable
     ) -> ListSectionController?
 
     /// Asks the data source for a view to use as the collection view background when the list is

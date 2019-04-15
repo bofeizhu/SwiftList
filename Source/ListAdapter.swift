@@ -6,6 +6,8 @@
 //  Copyright © 2018 Bofei Zhu. All rights reserved.
 //
 
+import DifferenceKit
+
 /// `ListAdapter` objects provide an abstraction for feeds of objects in a `UICollectionView`
 /// by breaking each object into individual sections, called "section controllers".
 /// These controllers (objects subclassing to `ListSectionController`) act as a data source and
@@ -111,16 +113,16 @@ public final class ListAdapter: NSObject {
     public var experiments: ListExperiment = []
 
     /// All the objects currently driving the adapter.
-    public var objects: [AnyListDiffable] {
+    public var objects: [AnyDifferentiable] {
         dispatchPrecondition(condition: .onQueue(.main))
         return sectionMap.objects
     }
 
     /// An **unordered** array of the currently visible objects.
-    public var visibleObjects: [AnyListDiffable] {
+    public var visibleObjects: [AnyDifferentiable] {
         dispatchPrecondition(condition: .onQueue(.main))
         guard let collectionView = collectionView else { return [] }
-        var visibleObjects: [AnyHashable: AnyListDiffable] = [:]
+        var visibleObjects: [AnyHashable: AnyDifferentiable] = [:]
         for cell in collectionView.visibleCells {
             guard let sectionController = sectionController(for: cell)
             else {
@@ -133,7 +135,7 @@ public final class ListAdapter: NSObject {
                 assertionFailure("Object not found for section controller \(sectionController)")
                 continue
             }
-            visibleObjects[object.diffIdentifier] = object
+            visibleObjects[object.differenceIdentifier] = object
         }
         return Array(visibleObjects.values)
     }
@@ -284,7 +286,7 @@ extension ListAdapter {
     // TODO: Refactor
     // swiftlint:disable:next cyclomatic_complexity
     public func scroll(
-        to object: AnyListDiffable,
+        to object: AnyDifferentiable,
         withSupplementaryViewOfKinds elementKinds: [String],
         in scrollDirection: UICollectionView.ScrollDirection,
         at scrollPosition: UICollectionView.ScrollPosition,
@@ -496,7 +498,7 @@ extension ListAdapter {
     /// Reload the list for only the specified objects.
     ///
     /// - Parameter objects: The objects to reload.
-    public func reload(_ objects: [AnyListDiffable]) {
+    public func reload(_ objects: [AnyDifferentiable]) {
         dispatchPrecondition(condition: .onQueue(.main))
         let shouldUsePrevious = shouldUsePreviousSectionMap(usePreviousIfInUpdateClosure: true)
         var sections: IndexSet
@@ -547,7 +549,7 @@ extension ListAdapter {
     ///
     /// - Parameter object: An object from the data source.
     /// - Returns: A section controller.
-    public func sectionController(for object: AnyListDiffable) -> ListSectionController? {
+    public func sectionController(for object: AnyDifferentiable) -> ListSectionController? {
         dispatchPrecondition(condition: .onQueue(.main))
         return sectionMap.sectionController(for: object)
     }
@@ -556,7 +558,7 @@ extension ListAdapter {
     ///
     /// - Parameter section: A section in the list.
     /// - Returns: The object for the specified section.
-    public func object(forSection section: Int) -> AnyListDiffable? {
+    public func object(forSection section: Int) -> AnyDifferentiable? {
         dispatchPrecondition(condition: .onQueue(.main))
         return sectionMap.object(forSection: section)
     }
@@ -565,7 +567,7 @@ extension ListAdapter {
     ///
     /// - Parameter sectionController: A section controller in the list.
     /// - Returns: The object for the specified section controller
-    public func object(for sectionController: ListSectionController) -> AnyListDiffable? {
+    public func object(for sectionController: ListSectionController) -> AnyDifferentiable? {
         dispatchPrecondition(condition: .onQueue(.main))
         if let section = sectionMap.section(for: sectionController) {
             return sectionMap.object(forSection: section)
@@ -586,7 +588,7 @@ extension ListAdapter {
     ///
     /// - Parameter object: An object in the list.
     /// - Returns: The section index of the list if it exists, `nil` otherwise.
-    public func section(for object: AnyListDiffable) -> Int? {
+    public func section(for object: AnyDifferentiable) -> Int? {
         dispatchPrecondition(condition: .onQueue(.main))
         return sectionMap.section(for: object)
     }
@@ -595,7 +597,7 @@ extension ListAdapter {
     ///
     /// - Parameter object: An object in the list
     /// - Returns: An array of collection view cells.
-    public func visibleCells(for object: AnyListDiffable) -> [UICollectionViewCell] {
+    public func visibleCells(for object: AnyDifferentiable) -> [UICollectionViewCell] {
          dispatchPrecondition(condition: .onQueue(.main))
         guard let section = sectionMap.section(for: object),
               let collectionView = collectionView
@@ -1285,7 +1287,7 @@ private extension ListAdapter {
 
     func reloadSections(
         with sectionMap: inout ListSectionMap,
-        objects: [AnyListDiffable]
+        objects: [AnyDifferentiable]
     ) -> IndexSet {
         var sections: IndexSet = []
         for object in objects {
@@ -1359,7 +1361,7 @@ private extension ListAdapter {
 
     // this method is what updates the "source of truth"
     // this should only be called just before the collection view is updated
-    func update(objects: [AnyListDiffable], dataSource: ListAdapterDataSource) {
+    func update(objects: [AnyDifferentiable], dataSource: ListAdapterDataSource) {
         #if DEBUG
         for object in objects {
             assert(
@@ -1369,10 +1371,10 @@ private extension ListAdapter {
         #endif
 
         var sectionControllers: [ListSectionController] = []
-        var validObjects: [AnyListDiffable] = []
+        var validObjects: [AnyDifferentiable] = []
 
         // collect items that have changed since the last update by their diffableIdentifier
-        var updatedObjectsDict: [AnyHashable: AnyListDiffable] = [:]
+        var updatedObjectsDict: [AnyHashable: AnyDifferentiable] = [:]
 
         // push the view controller and collection context into a local thread container so they are
         // available on init for `ListSectionController` subclasses after calling super.init()
@@ -1406,7 +1408,7 @@ private extension ListAdapter {
             // check if the item has changed instances or is new
             if let oldSection = sectionMap.section(for: object),
                 sectionMap.object(forSection: oldSection) != object {
-                updatedObjectsDict[object.diffIdentifier] = object
+                updatedObjectsDict[object.differenceIdentifier] = object
             }
 
             sectionControllers.append(sectionController)

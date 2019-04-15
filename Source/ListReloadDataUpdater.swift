@@ -6,6 +6,8 @@
 //  Copyright © 2018 Bofei Zhu. All rights reserved.
 //
 
+import DifferenceKit
+
 /// An `ListReloadDataUpdater` is a concrete type that conforms to `ListUpdatingDelegate`.
 /// It is an out-of-box updater for `ListAdapter` objects to use.
 /// - Note: This updater performs simple, synchronous updates using `UICollectionView.reloadData()`.
@@ -13,7 +15,7 @@ public final class ListReloadDataUpdater: ListUpdatingDelegate {
     // MARK: - ListUpdatingDelegate
     public func performUpdateWith(
         collectionViewClosure: @escaping ListCollectionViewClosure,
-        fromObjects: [AnyListDiffable]?,
+        fromObjects: [AnyDifferentiable]?,
         toObjectsClosure: ListToObjectsClosure?,
         animated: Bool,
         objectTransitionClosure: @escaping ListObjectTransitionClosure,

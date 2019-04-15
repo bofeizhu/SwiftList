@@ -6,6 +6,8 @@
 //  Copyright © 2018 Bofei Zhu. All rights reserved.
 //
 
+import DifferenceKit
+
 /// An `ListAdapterUpdater` is a concrete type that conforms to `ListUpdatingDelegate`.
 /// It is an out-of-box updater for `ListAdapter` objects to use.
 ///  - Note: This updater performs re-entrant, coalesced updating for a list.
@@ -32,9 +34,9 @@ public final class ListAdapterUpdater {
     public var experiments: ListExperiment = .none
 
     // MARK: Private API
-    var fromObjects: [AnyListDiffable]?
+    var fromObjects: [AnyDifferentiable]?
     var toObjectsClosure: ListToObjectsClosure?
-    var pendingTransitionToObjects: [AnyListDiffable]?
+    var pendingTransitionToObjects: [AnyDifferentiable]?
     var completionClosures: [ListUpdatingCompletion] = []
 
     // the default is to use animations unless NO is passed
@@ -328,7 +330,7 @@ private extension ListAdapterUpdater {
         collectionView: UICollectionView,
         withDiffResult diffResult: ListIndexSetResult,
         batchUpdates: ListBatchUpdates,
-        fromObjects: [AnyListDiffable]?
+        fromObjects: [AnyDifferentiable]?
     ) -> ListBatchUpdateData {
         var moves = Set(diffResult.moves)
 
@@ -384,7 +386,7 @@ private extension ListAdapterUpdater {
         return data
     }
 
-    func beginPerformBatchUpdatesTo(objects: [AnyListDiffable]?) {
+    func beginPerformBatchUpdatesTo(objects: [AnyDifferentiable]?) {
         pendingTransitionToObjects = objects
         state = .queuedBatchUpdate
     }
@@ -411,7 +413,7 @@ private extension ListAdapterUpdater {
 extension ListAdapterUpdater: ListUpdatingDelegate {
     public func performUpdateWith(
         collectionViewClosure: @escaping ListCollectionViewClosure,
-        fromObjects: [AnyListDiffable]?,
+        fromObjects: [AnyDifferentiable]?,
         toObjectsClosure: ListToObjectsClosure?,
         animated: Bool,
         objectTransitionClosure: @escaping ListObjectTransitionClosure,
@@ -610,7 +612,7 @@ func convert(
     toDeletes deletes: inout IndexSet,
     andInserts inserts: inout IndexSet,
     withResult result: ListIndexSetResult,
-    fromObjects: [AnyListDiffable]?) {
+    fromObjects: [AnyDifferentiable]?) {
     for index in reloads {
         // if a diff was not performed, there are no changes.
         // instead use the same index that was originally queued
@@ -620,7 +622,7 @@ func convert(
 
         if let fromObjects = fromObjects,
             !fromObjects.isEmpty {
-            diffIdentifier = fromObjects[index].diffIdentifier
+            diffIdentifier = fromObjects[index].differenceIdentifier
             from = result.oldIndexFor(diffIdentifier: diffIdentifier)
             to = result.newIndexFor(diffIdentifier: diffIdentifier)
         }

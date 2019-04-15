@@ -6,6 +6,8 @@
 //  Copyright © 2018 Bofei Zhu. All rights reserved.
 //
 
+import DifferenceKit
+
 /// This section controller is meant to make building simple, single-cell lists easier. By providing
 /// the type of cell, a closure to configure the cell, and a closure to return the size of a cell,
 /// you can use an `ListAdapter`-powered list with a simpler architecture.
@@ -116,7 +118,7 @@ public final class ListSingleSectionController: ListSectionController {
         return dequeuedCell
     }
 
-    public override func didUpdate(to object: AnyListDiffable) {
+    public override func didUpdate(to object: AnyDifferentiable) {
         item = object
     }
 
@@ -131,7 +133,7 @@ public final class ListSingleSectionController: ListSectionController {
     }
 
     // MARK: - Private properties
-    private var item: AnyListDiffable?
+    private var item: AnyDifferentiable?
     private var nibName: String?
     private var bundle: Bundle?
     private var identifier: String?
@@ -147,14 +149,14 @@ public protocol ListSingleSectionControllerSelectionDelegate: AnyObject {
     /// - Parameters:
     ///   - sectionController: The section controller that was selected.
     ///   - object: The model for the given section.
-    func didSelect(_ sectionController: ListSingleSectionController, with object: AnyListDiffable)
+    func didSelect(_ sectionController: ListSingleSectionController, with object: AnyDifferentiable)
 
     /// Tells the delegate that the section controller was deselected.
     ///
     /// - Parameters:
     ///   - sectionController: The section controller that was deselected.
     ///   - object: The model for the given section.
-    func didDeselect(_ sectionController: ListSingleSectionController, with object: AnyListDiffable)
+    func didDeselect(_ sectionController: ListSingleSectionController, with object: AnyDifferentiable)
 }
 
 /// A closure used to configure cells.
@@ -163,7 +165,7 @@ public protocol ListSingleSectionControllerSelectionDelegate: AnyObject {
 ///   - item: The model with which to configure the cell.
 ///   - cell: The cell to configure.
 public typealias ListSingleSectionCellConfigureClosure =
-    (_ item: AnyListDiffable, _ cell: UICollectionViewCell) -> Void
+    (_ item: AnyDifferentiable, _ cell: UICollectionViewCell) -> Void
 
 /// A closure that returns the size for the cell given the collection context.
 ///
@@ -172,4 +174,4 @@ public typealias ListSingleSectionCellConfigureClosure =
 ///   - collectionContext: The collection context for the section.
 /// - Returns: The size for the cell.
 public typealias ListSingleSectionCellSizeClosure =
-    (_ item: AnyListDiffable, _ collectionContext: ListCollectionContext?) -> CGSize
+    (_ item: AnyDifferentiable, _ collectionContext: ListCollectionContext?) -> CGSize
