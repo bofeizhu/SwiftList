@@ -6,11 +6,13 @@
 //  Copyright © 2018 Bofei Zhu. All rights reserved.
 //
 
+import DifferenceKit
+
 /// The ListSectionMap provides a way to map a collection of objects to a collection of section
 /// controllers and achieve constant-time lookups O(1).
 struct ListSectionMap {
     /// The objects stored in the map.
-    private(set) var objects: [AnyListDiffable]
+    private(set) var objects: [AnyDifferentiable]
 
     /// `true` if the item count in map is zero, `false` otherwise.
     var isItemCountZero: Bool {
@@ -36,7 +38,7 @@ struct ListSectionMap {
     /// - Returns: A section controller.
     func sectionController(forSection section: Int) -> ListSectionController? {
         if let object = object(forSection: section) {
-            return objectIdToSectionControllerDict[object.diffIdentifier]
+            return objectIdToSectionControllerDict[object.differenceIdentifier]
         }
         return nil
     }
@@ -45,15 +47,15 @@ struct ListSectionMap {
     ///
     /// - Parameter object: The object that maps to a section controller.
     /// - Returns: A section controller.
-    func sectionController(for object: AnyListDiffable) -> ListSectionController? {
-        return objectIdToSectionControllerDict[object.diffIdentifier]
+    func sectionController(for object: AnyDifferentiable) -> ListSectionController? {
+        return objectIdToSectionControllerDict[object.differenceIdentifier]
     }
 
     /// Fetch the object for a section
     ///
     /// - Parameter section: The section index of the object.
     /// - Returns: The object corresponding to the section.
-    func object(forSection section: Int) -> AnyListDiffable? {
+    func object(forSection section: Int) -> AnyDifferentiable? {
         guard section < objects.count else {
             return nil
         }
@@ -72,7 +74,7 @@ struct ListSectionMap {
     ///
     /// - Parameter object: The object to look up.
     /// - Returns: The section index of the given object if it exists, `nil` otherwise.
-    func section(for object: AnyListDiffable) -> Int? {
+    func section(for object: AnyDifferentiable) -> Int? {
         if let sectionController = sectionController(for: object) {
             return section(for: sectionController)
         }
@@ -96,8 +98,9 @@ struct ListSectionMap {
     ///   - objects: The objects in the collection.
     ///   - sectionControllers: The section controllers that map to each object.
     mutating func update(
-        objects: [AnyListDiffable],
-        withSectionControllers sectionControllers: [ListSectionController]) {
+        objects: [AnyDifferentiable],
+        withSectionControllers sectionControllers: [ListSectionController]
+    ) {
         assert(
             objects.count == sectionControllers.count,
             "Invalid parameter not satisfying objects.count == sectionControllers.count")
@@ -106,18 +109,23 @@ struct ListSectionMap {
 
         self.objects = objects
 
-        let first = objects.first
-        let last = objects.last
+        guard
+            let first = objects.first,
+            let last = objects.last
+        else {
+            // objects array is empty
+            return
+        }
 
         for (section, object) in objects.enumerated() {
             let sectionController = sectionControllers[section]
 
             // set the index of the list for easy reverse lookup
             sectionControllerToSectionDict[sectionController] = section
-            objectIdToSectionControllerDict[object.diffIdentifier] = sectionController
+            objectIdToSectionControllerDict[object.differenceIdentifier] = sectionController
 
-            sectionController.isFirstSection = (object == first)
-            sectionController.isLastSection = (object == last)
+            sectionController.isFirstSection = (object.differenceIdentifier == first.differenceIdentifier)
+            sectionController.isLastSection = (object.differenceIdentifier == last.differenceIdentifier)
             sectionController.section = section
         }
     }
@@ -125,13 +133,13 @@ struct ListSectionMap {
     /// Update an object with a new instance.
     ///
     /// - Parameter object: The object to update.
-    mutating func update(_ object: AnyListDiffable) {
+    mutating func update(_ object: AnyDifferentiable) {
         guard let section = section(for: object),
               let sectionController = sectionController(for: object)
         else { return }
         objects[section] = object
         sectionControllerToSectionDict[sectionController] = section
-        objectIdToSectionControllerDict[object.diffIdentifier] = sectionController
+        objectIdToSectionControllerDict[object.differenceIdentifier] = sectionController
     }
 
     /// Remove all saved objects and section controllers.
@@ -152,4 +160,4 @@ struct ListSectionMap {
 
 }
 
-typealias ListSectionMapClosure = (AnyListDiffable, ListSectionController, Int) -> Void
+typealias ListSectionMapClosure = (AnyDifferentiable, ListSectionController, Int) -> Void
