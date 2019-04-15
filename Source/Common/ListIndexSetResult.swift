@@ -104,7 +104,8 @@ public final class ListIndexSetResult {
         updates: IndexSet,
         moves: [ListMoveIndex],
         oldIndexDict: [AnyHashable: Int],
-        newIndexDict: [AnyHashable: Int]) {
+        newIndexDict: [AnyHashable: Int]
+    ) {
         self.inserts = inserts
         self.deletes = deletes
         self.updates = updates

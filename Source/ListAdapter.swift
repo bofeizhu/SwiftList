@@ -109,9 +109,6 @@ public final class ListAdapter: NSObject {
     /// The updater for the adapter.
     public private(set) var updater: ListUpdatingDelegate
 
-    /// An option set of experiments to conduct on the adapter.
-    public var experiments: ListExperiment = []
-
     /// All the objects currently driving the adapter.
     public var objects: [AnyDifferentiable] {
         dispatchPrecondition(condition: .onQueue(.main))
@@ -143,11 +140,7 @@ public final class ListAdapter: NSObject {
     /// An **unordered** array of the currently visible section controllers.
     public var visibleSectionControllers: [ListSectionController] {
         dispatchPrecondition(condition: .onQueue(.main))
-        if experiments.contains(.fasterVisibleSectionController) {
-            return visibleSectionControllersFromDisplayHandler
-        } else {
-            return visibleSectionControllersFromLayoutAttributes
-        }
+        return visibleSectionControllersFromDisplayHandler
     }
 
     // MARK: - Initializers
@@ -222,12 +215,7 @@ public final class ListAdapter: NSObject {
     private var queuedCompletionClosures: [ListQueuedCompletion]?
     private var settingFirstCollectionView = true
     private var collectionViewClosure: ListCollectionViewClosure {
-        if experiments.contains(.getCollectionViewAtUpdate) {
-            return { [weak self] in self?.collectionView }
-        } else {
-            weak var collectionView = self.collectionView
-            return { collectionView }
-        }
+        return { [weak self] in self?.collectionView }
     }
 
     // A set of `ListAdapterUpdateListenerWeakBox`
@@ -422,16 +410,11 @@ extension ListAdapter {
 
         let fromObjects = sectionMap.objects
         var toObjectsClosure: ListToObjectsClosure
-        if experiments.contains(.deferredToObjectCreation) {
-            toObjectsClosure = { [weak self] in
-                guard let strongSelf = self else { return nil }
-                return dataSource.objects(for: strongSelf)
-            }
-        } else {
-            let newObjects = dataSource.objects(for: self)
-            toObjectsClosure = { newObjects }
+        toObjectsClosure = { [weak self] in
+            guard let strongSelf = self else { return nil }
+            return dataSource.objects(for: strongSelf)
         }
-
+        
         enterBatchUpdates()
 
         updater.performUpdateWith(
@@ -475,10 +458,6 @@ extension ListAdapter {
         }
 
         let objects = dataSource.objects(for: self)
-
-        #if DEBUG
-        objects.checkDuplicateDiffIdentifier()
-        #endif
 
         updater.reloadDataWith(
             collectionViewClosure: collectionViewClosure,
@@ -1267,10 +1246,6 @@ private extension ListAdapter {
         guard collectionView != nil,
             let dataSource = dataSource else { return }
         let objects = dataSource.objects(for: self)
-
-        #if DEBUG
-        objects.checkDuplicateDiffIdentifier()
-        #endif
 
         update(objects: objects, dataSource: dataSource)
     }

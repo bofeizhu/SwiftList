@@ -5,7 +5,7 @@ inhibit_all_warnings!
 workspace 'SwiftList'
 
 target 'SwiftList' do
-  pod 'DifferenceKit'
+  pod 'DifferenceKit/Core'
 end
 
 target 'SwiftListTests' do
