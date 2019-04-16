@@ -70,7 +70,7 @@ public final class ListAdapter: NSObject {
             collectionView.delegate = self
 
             // only construct
-            if experiments.contains(.getCollectionViewAtUpdate) || settingFirstCollectionView {
+            if settingFirstCollectionView {
                 updateAfterPublicSettingsChange()
             }
         }
@@ -1272,7 +1272,10 @@ private extension ListAdapter {
 
             // reverse lookup the item using the section. if the pointer has changed the trigger
             // update events and swap items
-            guard object != sectionMap.object(forSection: section) else { continue }
+            guard
+                let sectionObject = sectionMap.object(forSection: section),
+                !object.isContentEqual(to: sectionObject)
+            else { continue }
             sectionMap.update(object)
             sectionMap.sectionController(forSection: section)?.didUpdate(to: object)
         }
@@ -1337,14 +1340,6 @@ private extension ListAdapter {
     // this method is what updates the "source of truth"
     // this should only be called just before the collection view is updated
     func update(objects: [AnyDifferentiable], dataSource: ListAdapterDataSource) {
-        #if DEBUG
-        for object in objects {
-            assert(
-                object == object,
-                "Object instance \(object) not equal to itself. This will break infra map tables.")
-        }
-        #endif
-
         var sectionControllers: [ListSectionController] = []
         var validObjects: [AnyDifferentiable] = []
 
@@ -1382,7 +1377,7 @@ private extension ListAdapter {
 
             // check if the item has changed instances or is new
             if let oldSection = sectionMap.section(for: object),
-                sectionMap.object(forSection: oldSection) != object {
+               !sectionMap.object(forSection: oldSection).isContentEqual(to: object) {
                 updatedObjectsDict[object.differenceIdentifier] = object
             }
 
