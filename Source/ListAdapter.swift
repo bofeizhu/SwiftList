@@ -427,7 +427,7 @@ extension ListAdapter {
                 // temporarily capture the item map that we are transitioning from in case
                 // there are any item deletes at the same
                 strongSelf.previousSectionMap = strongSelf.sectionMap
-                strongSelf.update(objects: toObjects, dataSource: dataSource)
+                strongSelf.update(objects: toObjects, for: dataSource)
             },
             completion: { [weak self] (finished) in
                 // release the previous items
@@ -464,7 +464,7 @@ extension ListAdapter {
             reloadUpdateClosure: { [weak self] in
                 guard let strongSelf = self else { return }
                 strongSelf.sectionMap.reset()
-                strongSelf.update(objects: objects, dataSource: dataSource)
+                strongSelf.update(objects: objects, for: dataSource)
             },
             completion: { [weak self] (finished) in
                 guard let strongSelf = self else { return }
@@ -1247,7 +1247,7 @@ private extension ListAdapter {
             let dataSource = dataSource else { return }
         let objects = dataSource.objects(for: self)
 
-        update(objects: objects, dataSource: dataSource)
+        update(objects: objects, for: dataSource)
     }
 
     // MARK: Editing
@@ -1339,7 +1339,7 @@ private extension ListAdapter {
 
     // this method is what updates the "source of truth"
     // this should only be called just before the collection view is updated
-    func update(objects: [AnyDifferentiable], dataSource: ListAdapterDataSource) {
+    func update(objects: [AnyDifferentiable], for dataSource: ListAdapterDataSource) {
         var sectionControllers: [ListSectionController] = []
         var validObjects: [AnyDifferentiable] = []
 
