@@ -334,6 +334,8 @@ extension ListAdapter {
             case .vertical:
                 originMin = frame.minY
                 endMax = frame.maxY
+            @unknown default:
+                break
             }
 
             // find the minimum origin value of all the layout attributes
@@ -383,6 +385,8 @@ extension ListAdapter {
             let minOffsetY = -contentInset.top
             contentOffset.y = min(contentOffset.y, maxOffsetY)
             contentOffset.y = max(contentOffset.y, minOffsetY)
+        @unknown default:
+            break
         }
         collectionView.setContentOffset(contentOffset, animated: animated)
     }

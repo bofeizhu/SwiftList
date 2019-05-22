@@ -10,6 +10,7 @@ import DifferenceKit
 
 /// An `ListAdapterUpdater` is a concrete type that conforms to `ListUpdatingDelegate`.
 /// It is an out-of-box updater for `ListAdapter` objects to use.
+///
 ///  - Note: This updater performs re-entrant, coalesced updating for a list.
 ///     It also uses a least-minimal diff for calculating UI updates when `ListAdapter` calls
 ///     `performUpdateWith(collectionView:fromObjects:toObjects:completion:)`.
@@ -47,8 +48,10 @@ public final class ListAdapterUpdater {
     var applyingUpdateData: ListBatchUpdateData?
 
     var hasChanges: Bool {
-        return hasQueuedReloadData || batchUpdates.hasChanges ||
-            fromObjects != nil || toObjectsClosure != nil
+        return hasQueuedReloadData ||
+            batchUpdates.hasChanges ||
+            fromObjects != nil ||
+            toObjectsClosure != nil
     }
 
     public init() {
@@ -77,7 +80,7 @@ public final class ListAdapterUpdater {
         }
 
         // item updates must not send mutations to the collection view while we are reloading
-        state = .executingBatchUpdateClosure
+        state = .executing
 
         if let reloadUpdates = reloadUpdates {
             reloadUpdates()
@@ -95,7 +98,7 @@ public final class ListAdapterUpdater {
         // in order to capture any re-entrant updates
         completionClosures.append(contentsOf: batchUpdates.itemCompletionClosures)
 
-        state = .executedBatchUpdateClosure
+        state = .executed
         cleanStateAfterUpdates()
 
         delegate?.listAdapterUpdater(self, willReloadDataForCollectionView: collectionView)
@@ -155,7 +158,7 @@ public final class ListAdapterUpdater {
             guard let strongSelf = self else {
                 return
             }
-            strongSelf.state = .executingBatchUpdateClosure
+            strongSelf.state = .executing
 
             // run the update block so that the adapter can set its items.
             // this makes sure that just before the update is committed
@@ -181,7 +184,7 @@ public final class ListAdapterUpdater {
             // re-entrant updates
             completionClosures.append(contentsOf: batchUpdates.itemCompletionClosures)
 
-            strongSelf.state = .executedBatchUpdateClosure
+            strongSelf.state = .executed
         }
 
         let reloadDataFallback = { [weak self] in
@@ -297,7 +300,7 @@ public final class ListAdapterUpdater {
         objectTransitionClosure = nil
 
         // removes all completion closures.
-        // done before updates to start collecting completion blocks for coalesced
+        // done before updates to start collecting completion closures for coalesced
         // or re-entrant object updates
         completionClosures.removeAll()
     }
@@ -374,18 +377,18 @@ private extension ListAdapterUpdater {
 
     func beginPerformBatchUpdatesTo(objects: [AnyDifferentiable]?) {
         pendingTransitionToObjects = objects
-        state = .queuedBatchUpdate
+        state = .queued
     }
 
     func queueUpdateWith(collectionViewClosure: @escaping ListCollectionViewClosure) {
         dispatchPrecondition(condition: .onQueue(.main))
         // dispatch after a given amount of time to coalesce other updates and execute as one
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(coalescanceTime)) { [weak self] in
-            guard let strongSelf = self,
+            guard
+                let strongSelf = self,
                 strongSelf.state == .idle,
-                strongSelf.hasChanges else {
-                return
-            }
+                strongSelf.hasChanges
+            else { return }
 
             if strongSelf.hasQueuedReloadData {
                 strongSelf.performReloadDataWith(collectionViewClosure: collectionViewClosure)
@@ -448,7 +451,7 @@ extension ListAdapterUpdater: ListUpdatingDelegate {
         // immediately unload the itemUpdates closure.
         // the completion closures are executed later in the lifecycle,
         // so that still needs to be added to the batch
-        if state == .executingBatchUpdateClosure {
+        if state == .executing {
             itemUpdates()
         } else {
             batchUpdates.append(updateClosure: itemUpdates)
@@ -466,7 +469,7 @@ extension ListAdapterUpdater: ListUpdatingDelegate {
     ) {
         dispatchPrecondition(condition: .onQueue(.main))
 
-        if state == .executingBatchUpdateClosure {
+        if state == .executing {
             batchUpdates.insert(items: indexPaths)
         } else {
             delegate?.listAdapterUpdater(
@@ -483,7 +486,7 @@ extension ListAdapterUpdater: ListUpdatingDelegate {
     ) {
         dispatchPrecondition(condition: .onQueue(.main))
 
-        if state == .executingBatchUpdateClosure {
+        if state == .executing {
             batchUpdates.delete(items: indexPaths)
         } else {
             delegate?.listAdapterUpdater(
@@ -499,7 +502,7 @@ extension ListAdapterUpdater: ListUpdatingDelegate {
         moveItemAt indexPath: IndexPath,
         to newIndexPath: IndexPath
     ) {
-        if state == .executingBatchUpdateClosure {
+        if state == .executing {
             let move = ListMoveIndexPath(from: indexPath, to: newIndexPath)
             batchUpdates.append(move: move)
         } else {
@@ -517,7 +520,7 @@ extension ListAdapterUpdater: ListUpdatingDelegate {
         reloadItemAt indexPath: IndexPath,
         to newIndexPath: IndexPath
     ) {
-        if state == .executingBatchUpdateClosure {
+        if state == .executing {
             let reload = ListReloadIndexPath(from: indexPath, to: newIndexPath)
             batchUpdates.append(reload: reload)
         } else {
@@ -574,7 +577,7 @@ extension ListAdapterUpdater: ListUpdatingDelegate {
         reloadSections sections: IndexSet
     ) {
         dispatchPrecondition(condition: .onQueue(.main))
-        if state == .executingBatchUpdateClosure {
+        if state == .executing {
             batchUpdates.reload(sections: sections)
         } else {
             delegate?.listAdapterUpdater(

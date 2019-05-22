@@ -59,7 +59,7 @@ open class ListSectionController {
     public weak var supplementaryViewSource: ListSupplementaryViewSource?
 
     /// An object that handles display events for the section controller.
-    public weak var  displayDelegate: ListDisplayDelegate?
+    public weak var displayDelegate: ListDisplayDelegate?
 
     /// An object that handles working range events for the section controller.
     public weak var workingRangeDelegate: ListWorkingRangeDelegate?
@@ -179,9 +179,10 @@ open class ListSectionController {
 }
 
 extension ListSectionController: Hashable {
-    public var hashValue: Int {
-        return ObjectIdentifier(self).hashValue
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(ObjectIdentifier(self))
     }
+    
     public static func == (lhs: ListSectionController, rhs: ListSectionController) -> Bool {
         return lhs === rhs
     }
